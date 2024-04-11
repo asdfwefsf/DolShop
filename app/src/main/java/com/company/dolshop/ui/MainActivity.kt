@@ -1,4 +1,4 @@
-package com.company.dolshop
+package com.company.dolshop.ui
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
