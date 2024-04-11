@@ -1,6 +1,6 @@
 package com.company.data.model
 
-import com.company.domain.entity.TestModel
+import com.company.domain.model.TestModel
 
 class TestModelResponse(val name : String?)
 
