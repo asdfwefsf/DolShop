@@ -16,3 +16,4 @@ dependencyResolutionManagement {
 rootProject.name = "DolShop"
 include(":app")
 include(":data")
+include(":domain")
