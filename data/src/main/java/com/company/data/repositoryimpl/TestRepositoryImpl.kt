@@ -1,12 +1,16 @@
 package com.company.data.repositoryimpl
 
-import com.company.data.datasource.TestDataSource
+import com.company.data.datasource.TempDataSource
 import com.company.data.model.toDomainModel
-import com.company.domain.model.TestModel
-import com.company.domain.repository.TestRepository
+import com.company.domain.model.TempModel
+import com.company.domain.repository.TempRepository
+import javax.inject.Inject
 
-class TestRepositoryImpl(val dataSource: TestDataSource) : TestRepository {
-    override fun getTestData() : TestModel? {
-        return dataSource.getTestModelResponse().toDomainModel()
+class TestRepositoryImpl @Inject constructor(
+    private val dataSource: TempDataSource
+): TempRepository {
+    override fun getTempModel(): TempModel {
+        return dataSource.getTempModel()
     }
+
 }

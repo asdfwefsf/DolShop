@@ -35,6 +35,7 @@ android {
     kotlinOptions {
         jvmTarget = JavaVersion.VERSION_17.toString()
     }
+    //
     buildFeatures {
         compose = true
     }
@@ -46,14 +47,20 @@ android {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
         }
     }
+    //
 }
 
 dependencies {
 
     implementation(project(":domain"))
     implementation("com.google.dagger:hilt-android:2.49")
-    kapt ("androidx.hilt:hilt-compiler:1.2.0")
     kapt("com.google.dagger:hilt-android-compiler:2.49")
+
+    kapt ("androidx.hilt:hilt-compiler:1.2.0")
+
+
+    implementation("androidx.navigation:navigation-compose:2.7.7")
+    implementation("androidx.hilt:hilt-navigation-compose:1.2.0")
 
     implementation ("androidx.compose.runtime:runtime:1.6.5")
     implementation("androidx.core:core-ktx:1.12.0")
