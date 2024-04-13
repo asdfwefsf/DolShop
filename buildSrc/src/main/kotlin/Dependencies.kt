@@ -45,11 +45,11 @@ object Dependencies {
     // Compose_VIEWMODEL
     const val COMPOSE_VIEWMODEL = "androidx.lifecycle:lifecycle-viewmodel-compose:${Versions.LIFECYCLE}"
     // RoomDB
-    const val roomKtx  = "androidx.room:room-ktx:${Versions.room}"
+    const val ROOMKTX  = "androidx.room:room-ktx:${Versions.room}"
     // RoomDB_Compiler
-    const val roomCompiler  = "androidx.room:room-compiler:${Versions.room}"
+    const val ROOMCOMPILER  = "androidx.room:room-compiler:${Versions.room}"
     // Room Runtime
-    const val roomRuntime = "androidx.room:room-runtime:${Versions.room}"
+    const val ROOMRUNTIME = "androidx.room:room-runtime:${Versions.room}"
 
     // CoilCompose
     const val COILCOMPOSE = "io.coil-kt:coil-compose:${Versions.COILCOMPOSE}"
@@ -62,9 +62,14 @@ object Dependencies {
 }
 
 fun DependencyHandler.room() {
-    implementation(Dependencies.roomRuntime)
-    implementation(Dependencies.roomKtx )
-    kapt(Dependencies.roomCompiler)
+    implementation(Dependencies.ROOMRUNTIME)
+    implementation(Dependencies.ROOMKTX )
+    kapt(Dependencies.ROOMCOMPILER)
+}
+
+fun DependencyHandler.navigation() {
+    implementation(Dependencies.HILTNAVIGATION)
+    implementation(Dependencies.COMPOSENAVIGATION)
 }
 
 //fun DependencyHandler.retrofit() {
