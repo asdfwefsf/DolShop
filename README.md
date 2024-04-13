@@ -5,10 +5,12 @@
 2024-04-12
 1. HILT 적용 완료
 
+2024-04-13
+1. 디자인 시스텐 세팅 완료
 
 
 # TODO
 1. Navigation Setting
 2. buildSrc Setting
-3. design System Setting
+3. design System Setting(O)
 4. ui set setting
