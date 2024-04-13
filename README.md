@@ -8,9 +8,13 @@
 2024-04-13
 1. 디자인 시스텐 세팅 완료
 2. buildSrc 세팅 완료
+3. DDD 설계 (DDD 용어 정리 완료 , DDD에서 추가로 사용할 용어 정리 완료)
 
 # TODO
-1. Navigation Setting
+1. Navigation Setting(-ing)
 2. buildSrc Setting(O)
 3. design System Setting(O)
-4. ui set setting
+4. ui set setting(not yet)
+5. DDD 설계(-ing)
+6. DDD 용어 정리(O)
+7. DDD에서 추가로 사용할 용어 정리(O)
