@@ -32,6 +32,14 @@
 9. DataStore Vs SharedPreferences
 10. Coroutine
 11. Flow
+12. BottomNavigation
+
+# 적용된 안드로이드 개념 이론 정리
+
+
+12. BottomNavigation(Scaffold -> bottomBar)
+=>
+
 
 # Network
 1. Firebase Realtime DB
