@@ -11,7 +11,7 @@
 3. DDD 설계 완료 (DDD 용어 정리 완료 , DDD에서 추가로 사용할 용어 정리 완료)
 
 2024-04-17
-1. Navigation Setting
+1. BottomBar Navigation Setting 완료
 2. Navigation UI Setting
 3. kakao 로그인 연동
 4. kakao 로그인 정보 저장
@@ -50,6 +50,7 @@
 10. kakao 로그인 정보 저장
 11. Firebase DB 연동
 12. 상품 json 데이터 받아오기 + UI에 넣기
+13. BottomBar Navigation Setting(O)
 
 
 
