@@ -35,4 +35,6 @@ object Versions {
     const val COMPOSECONSTRAINT = "1.0.1"
     // SplashScreen
     const val SPLASHSCREEN = "1.0.1"
+    // kakao
+    const val KAKAO = "2.20.1"
 }

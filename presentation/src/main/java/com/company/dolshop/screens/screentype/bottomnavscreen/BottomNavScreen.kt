@@ -1,7 +1,6 @@
 package com.company.dolshop.screens.screentype.bottomnavscreen
 
 
-import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
@@ -30,52 +29,48 @@ import com.company.dolshop.screens.screentype.announcementScreen.AnnouncementScr
 import com.company.dolshop.screens.screentype.communityScreen.CommunityScreen
 import com.company.dolshop.screens.screentype.mypageScreen.MyPageScreen
 import com.company.dolshop.screens.screentype.productScreen.ProductScreen
-import com.company.dolshop.screens.screentype.rockScreen.RockScreen
+import com.company.dolshop.screens.screentype.rockScreen.RocksScreen
 import com.company.presentation.R
 
-@OptIn(ExperimentalMaterial3Api::class, ExperimentalFoundationApi::class)
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun BottomNav() {
     val navController = rememberNavController()
 
+    // navController(실제 화면 이동 담당)의 현재 상태를 구독해서 최상위의 경로가 변경될 때마다 경로를 얻어낸다.
     val currentRoute = navController.currentBackStackEntryAsState().value?.destination?.route
 
+    // BottomBar에서 이동 할 수 있는 화면의 경로들을 정의해 놓은 리스트
     val bottomNavVisibleRoutes =
         listOf(
             ScreenList.CommunityScreen.route,
             ScreenList.ProductScreen.route,
-            ScreenList.RockScreen.route,
+            ScreenList.RocksScreen.route,
             ScreenList.AnnouncementScreen.route,
             ScreenList.MyPageScreen.route
-            )
+        )
 
     val items = listOf(
-
         BottomNavItem(
             title = "커뮤",
             selectedIcon = R.drawable.ic_launcher_background,
             unselectedIcon = R.drawable.ic_launcher_background,
-
-            ),
-
+        ),
         BottomNavItem(
             title = "상품",
             selectedIcon = R.drawable.ic_launcher_background,
             unselectedIcon = R.drawable.ic_launcher_background,
         ),
-
         BottomNavItem(
             title = "돌's",
             selectedIcon = R.drawable.ic_launcher_background,
             unselectedIcon = R.drawable.ic_launcher_background,
         ),
-
         BottomNavItem(
             title = "공지",
             selectedIcon = R.drawable.ic_launcher_background,
             unselectedIcon = R.drawable.ic_launcher_background,
         ),
-
         BottomNavItem(
             title = "마이",
             selectedIcon = R.drawable.ic_launcher_background,
@@ -84,12 +79,13 @@ fun BottomNav() {
     )
 
     var selectedItemIndex by rememberSaveable {
-        mutableStateOf(1)
+        mutableStateOf(2)
     }
 
     Scaffold(
         containerColor = MaterialTheme.colorScheme.background,
         bottomBar = {
+            // 현재 경로가 바텀네비게이션 바에서 이동 할 수 있는 경로 안에 있다면 아래 코드를 실행한다.
             if (currentRoute in bottomNavVisibleRoutes) {
                 NavigationBar(
                     containerColor = MaterialTheme.colorScheme.secondary
@@ -99,7 +95,9 @@ fun BottomNav() {
                             selected = selectedItemIndex == index,
                             onClick = {
                                 selectedItemIndex = index
+                                // 내가 클릭한 바텀네비게이션의 아이콘의 title에 해당하는 경로로 이동한다.
                                 navController.navigate(bottomNavItem.title) {
+                                    // 중복 화면을 방지한다. : 내가 이동할 화면의 경로를 navigation의 스택에 쌓지 않아.
                                     launchSingleTop = true
                                 }
                             },
@@ -128,7 +126,7 @@ fun BottomNav() {
         }
     ) {
         it
-        NavHost(navController = navController, startDestination = ScreenList.RockScreen.route) {
+        NavHost(navController = navController, startDestination = ScreenList.RocksScreen.route) {
             composable(route = ScreenList.CommunityScreen.route) {
                 CommunityScreen()
             }
@@ -137,8 +135,8 @@ fun BottomNav() {
                 ProductScreen()
             }
 
-            composable(route = ScreenList.RockScreen.route) {
-                RockScreen()
+            composable(route = ScreenList.RocksScreen.route) {
+                RocksScreen()
             }
 
             composable(route = ScreenList.AnnouncementScreen.route) {

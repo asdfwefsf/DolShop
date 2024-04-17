@@ -59,6 +59,17 @@ object Dependencies {
     const val COMPOSECONSTRAINT = "androidx.constraintlayout:constraintlayout-compose:${Versions.COMPOSECONSTRAINT}"
     // SplashScreen
     const val SPLASHSCREEN = "androidx.core:core-splashscreen:${Versions.SPLASHSCREEN}"
+
+    // kakao
+    const val kakaoAllModule = "com.kakao.sdk:v2-all:${Versions.KAKAO}"
+    const val kakaouser = "com.kakao.sdk:v2-user:${Versions.KAKAO}"
+    const val kakaoshare = "com.kakao.sdk:v2-share:${Versions.KAKAO}"
+    const val kakaotalk = "com.kakao.sdk:v2-talk:${Versions.KAKAO}"
+    const val kakaofriend = "com.kakao.sdk:v2-friend:${Versions.KAKAO}"
+    const val kakaonavi = "com.kakao.sdk:v2-navi:${Versions.KAKAO}"
+    const val kakaocert = "com.kakao.sdk:v2-cert:${Versions.KAKAO}"
+
+
 }
 
 fun DependencyHandler.room() {
@@ -71,6 +82,17 @@ fun DependencyHandler.navigation() {
     implementation(Dependencies.HILTNAVIGATION)
     implementation(Dependencies.COMPOSENAVIGATION)
 }
+
+fun DependencyHandler.kakao() {
+    api(Dependencies.kakaoAllModule)
+    api(Dependencies.kakaouser)
+    api(Dependencies.kakaoshare)
+    api(Dependencies.kakaotalk)
+    api(Dependencies.kakaofriend)
+    api(Dependencies.kakaonavi)
+    api(Dependencies.kakaocert)
+}
+
 
 //fun DependencyHandler.retrofit() {
 //    implementation(Dependencies.retrofit)

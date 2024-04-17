@@ -1,11 +1,16 @@
 import org.jetbrains.kotlin.kapt3.base.Kapt.kapt
+import org.jetbrains.kotlin.konan.properties.Properties
 
 plugins {
     id("com.android.library")
     id("org.jetbrains.kotlin.android")
     id ("com.google.dagger.hilt.android")
     id ("kotlin-kapt")
+
 }
+//
+//val properties = Properties()
+//properties.load(project.rootProject.file("local.properties").inputStream())
 
 android {
     namespace = "com.company.presentation"
@@ -16,6 +21,11 @@ android {
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
+
+//        buildConfigField("String" , "KAKAO_NATIVE_APP_KEY" ,
+//            "\"${properties["KAKAO_NATIVE_APP_KEY"]}\""
+//        )
+//        resValue("string" , "kakao_oauth_host" , "\"${properties["kakao_oauth_host"]}\"")
     }
 
 
@@ -38,6 +48,7 @@ android {
     //
     buildFeatures {
         compose = true
+//        buildConfig = true
     }
     composeOptions {
         kotlinCompilerExtensionVersion = "1.4.3"
@@ -47,7 +58,6 @@ android {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
         }
     }
-
 }
 
 dependencies {
@@ -57,9 +67,10 @@ dependencies {
     kapt("com.google.dagger:hilt-android-compiler:2.49")
     kapt ("androidx.hilt:hilt-compiler:1.2.0")
 
-
+    //
     navigation()
-
+    kakao()
+    //
 
 
 

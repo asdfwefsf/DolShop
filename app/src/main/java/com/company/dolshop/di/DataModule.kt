@@ -1,4 +1,4 @@
-package com.company.di
+package com.company.dolshop.di
 
 import com.company.data.repositoryimpl.TestRepositoryImpl
 import com.company.domain.repository.TempRepository
