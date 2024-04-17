@@ -25,11 +25,12 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.company.dolshop.screens.ScreenList
-import com.company.dolshop.screens.screentype.announcementScreen.AnnouncementScreen
-import com.company.dolshop.screens.screentype.communityScreen.CommunityScreen
-import com.company.dolshop.screens.screentype.mypageScreen.MyPageScreen
-import com.company.dolshop.screens.screentype.productScreen.ProductScreen
-import com.company.dolshop.screens.screentype.rockScreen.RocksScreen
+import com.company.dolshop.screens.screentype.announcementscreen.AnnouncementScreen
+import com.company.dolshop.screens.screentype.communityscreen.CommunityScreen
+import com.company.dolshop.screens.screentype.mypagescreen.MyPageScreen
+import com.company.dolshop.screens.screentype.productscreen.ProductScreen
+import com.company.dolshop.screens.screentype.rockscreen.RocksScreen
+import com.company.dolshop.screens.screentype.subscreen.LoginScreen
 import com.company.presentation.R
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -76,6 +77,7 @@ fun BottomNav() {
             selectedIcon = R.drawable.ic_launcher_background,
             unselectedIcon = R.drawable.ic_launcher_background,
         ),
+
     )
 
     var selectedItemIndex by rememberSaveable {
@@ -126,7 +128,7 @@ fun BottomNav() {
         }
     ) {
         it
-        NavHost(navController = navController, startDestination = ScreenList.RocksScreen.route) {
+        NavHost(navController = navController, startDestination = ScreenList.LoginScreen.route) {
             composable(route = ScreenList.CommunityScreen.route) {
                 CommunityScreen()
             }
@@ -145,6 +147,10 @@ fun BottomNav() {
 
             composable(route = ScreenList.MyPageScreen.route) {
                 MyPageScreen()
+            }
+
+            composable(route = ScreenList.LoginScreen.route) {
+                LoginScreen(navController)
             }
         }
     }

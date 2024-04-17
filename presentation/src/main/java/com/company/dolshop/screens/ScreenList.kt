@@ -6,4 +6,5 @@ sealed class ScreenList(val route : String) {
     object RocksScreen : ScreenList("돌's")
     object AnnouncementScreen : ScreenList("공지")
     object MyPageScreen : ScreenList("마이")
+    object LoginScreen : ScreenList("로그인")
 }

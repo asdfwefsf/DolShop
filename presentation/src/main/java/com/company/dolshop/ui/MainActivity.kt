@@ -12,7 +12,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import com.company.dolshop.designsystem.DolShopTheme
 import androidx.compose.ui.graphics.Color
+import androidx.navigation.compose.rememberNavController
 import com.company.dolshop.screens.screentype.bottomnavscreen.BottomNav
+import com.company.dolshop.screens.screentype.subscreen.LoginScreen
 import com.company.dolshop.viewmodel.TempViewModel
 import dagger.hilt.android.AndroidEntryPoint
 
@@ -27,6 +29,8 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
+
+//                    LoginScreen(navController)
                     BottomNav()
                 }
             }
