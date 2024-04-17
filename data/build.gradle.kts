@@ -16,6 +16,13 @@ android {
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         consumerProguardFiles("consumer-rules.pro")
+
+        //
+        buildConfigField("String" , "KAKAO_NATIVE_APP_KEY" ,
+            "\"${properties["KAKAO_NATIVE_APP_KEY"]}\""
+        )
+        resValue("string" , "kakao_oauth_host" , "\"${properties["kakao_oauth_host"]}\"")
+        //
     }
 
     buildTypes {
@@ -34,6 +41,20 @@ android {
     kotlinOptions {
         jvmTarget = JavaVersion.VERSION_17.toString()
     }
+    //
+    buildFeatures {
+        compose = true
+        buildConfig = true
+    }
+    composeOptions {
+        kotlinCompilerExtensionVersion = "1.4.3"
+    }
+    packaging {
+        resources {
+            excludes += "/META-INF/{AL2.0,LGPL2.1}"
+        }
+    }
+    //
 }
 
 dependencies {
@@ -42,6 +63,8 @@ dependencies {
     kapt ("androidx.hilt:hilt-compiler:1.2.0")
     kapt("com.google.dagger:hilt-android-compiler:2.49")
 
+    kakao()
+    implementation ("androidx.compose.runtime:runtime:1.6.5")
 
     implementation("androidx.core:core-ktx:1.12.0")
     implementation("androidx.appcompat:appcompat:1.6.1")

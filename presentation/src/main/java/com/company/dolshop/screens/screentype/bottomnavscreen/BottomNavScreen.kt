@@ -20,6 +20,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
@@ -31,6 +32,7 @@ import com.company.dolshop.screens.screentype.mypagescreen.MyPageScreen
 import com.company.dolshop.screens.screentype.productscreen.ProductScreen
 import com.company.dolshop.screens.screentype.rockscreen.RocksScreen
 import com.company.dolshop.screens.screentype.subscreen.LoginScreen
+import com.company.dolshop.viewmodel.KakaoLoginViewModel
 import com.company.presentation.R
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -84,6 +86,8 @@ fun BottomNav() {
         mutableStateOf(2)
     }
 
+    var route  : String
+
     Scaffold(
         containerColor = MaterialTheme.colorScheme.background,
         bottomBar = {
@@ -127,8 +131,13 @@ fun BottomNav() {
 
         }
     ) {
+        if (true) {
+            route = ScreenList.LoginScreen.route
+        } else {
+            route = ScreenList.RocksScreen.route
+        }
         it
-        NavHost(navController = navController, startDestination = ScreenList.LoginScreen.route) {
+        NavHost(navController = navController, startDestination = route) {
             composable(route = ScreenList.CommunityScreen.route) {
                 CommunityScreen()
             }
@@ -150,7 +159,8 @@ fun BottomNav() {
             }
 
             composable(route = ScreenList.LoginScreen.route) {
-                LoginScreen(navController)
+                val viewmodel : KakaoLoginViewModel = hiltViewModel()
+                LoginScreen(navController , viewmodel)
             }
         }
     }
