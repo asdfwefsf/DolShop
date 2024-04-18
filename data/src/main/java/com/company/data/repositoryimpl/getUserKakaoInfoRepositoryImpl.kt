@@ -33,6 +33,7 @@ class getUserKakaoInfoRepositoryImpl @Inject constructor(
 
 
 
+
     // MutableStateFlow<List<String>>
     override suspend fun getUserKakaoInfo(list: MutableStateFlow<List<String>>) {
 //        var userInfo = emptyList<String>()
