@@ -32,7 +32,7 @@ import com.company.dolshop.screens.screentype.mypagescreen.MyPageScreen
 import com.company.dolshop.screens.screentype.productscreen.ProductScreen
 import com.company.dolshop.screens.screentype.rockscreen.RocksScreen
 import com.company.dolshop.screens.screentype.subscreen.LoginScreen
-import com.company.dolshop.viewmodel.KakaoLoginViewModel
+import com.company.dolshop.viewmodel.KakaoAuthiViewModel
 import com.company.presentation.R
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -155,11 +155,12 @@ fun BottomNav() {
             }
 
             composable(route = ScreenList.MyPageScreen.route) {
-                MyPageScreen()
+                val viewmodel : KakaoAuthiViewModel = hiltViewModel()
+                MyPageScreen(viewmodel)
             }
 
             composable(route = ScreenList.LoginScreen.route) {
-                val viewmodel : KakaoLoginViewModel = hiltViewModel()
+                val viewmodel : KakaoAuthiViewModel = hiltViewModel()
                 LoginScreen(navController , viewmodel)
             }
         }

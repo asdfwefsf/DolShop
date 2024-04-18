@@ -1,8 +1,10 @@
 package com.company.dolshop.di
 
 import com.company.data.repositoryimpl.KakaoLoginRepositoryImpl
+import com.company.data.repositoryimpl.KakaoLogoutRepositoryImpl
 import com.company.data.repositoryimpl.TestRepositoryImpl
 import com.company.domain.repository.KakaoLoginRepository
+import com.company.domain.repository.KakaoLogoutRepository
 import com.company.domain.repository.TempRepository
 import dagger.Binds
 import dagger.Module
@@ -19,5 +21,8 @@ object DataModule {
     // RepositoryImpl 객체를 Repository 타입으로 주입한다. 즉, Repository를 사용하는데서는 RepositoryImpl도 사용 할 수 있게 Hilt가 인스턴스를 제공해주는거야.
     @Provides
     fun provideKakaoLoginRepository(kakaoLoginRepositoryImpl: KakaoLoginRepositoryImpl) : KakaoLoginRepository = kakaoLoginRepositoryImpl
+
+    @Provides
+    fun provideKakaoLogoutRepository(kakaoLogoutRepositoryImpl: KakaoLogoutRepositoryImpl) : KakaoLogoutRepository = kakaoLogoutRepositoryImpl
 }
 

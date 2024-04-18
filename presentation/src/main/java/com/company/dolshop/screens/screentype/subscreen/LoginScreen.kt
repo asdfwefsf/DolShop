@@ -1,19 +1,16 @@
 package com.company.dolshop.screens.screentype.subscreen
 
-import androidx.compose.foundation.clickable
 import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.ui.Modifier
-import androidx.lifecycle.ViewModel
 import androidx.navigation.NavController
 import com.company.dolshop.screens.ScreenList
-import com.company.dolshop.viewmodel.KakaoLoginViewModel
+import com.company.dolshop.viewmodel.KakaoAuthiViewModel
 import kotlinx.coroutines.launch
 
 @Composable
-fun LoginScreen(navController: NavController , viewModel : KakaoLoginViewModel) {
+fun LoginScreen(navController: NavController , viewModel : KakaoAuthiViewModel) {
     val scope = rememberCoroutineScope()
     Button(onClick = {
         // 로그인 로직 수행 후 성공적으로 로그인 되었다고 가정
@@ -26,9 +23,16 @@ fun LoginScreen(navController: NavController , viewModel : KakaoLoginViewModel) 
 //            }
 //        }
         scope.launch {
-            viewModel.kakologin()
-
+            viewModel.kakaoLogin()
+            if(viewModel.loginValue.value) {
+                navController.navigate(ScreenList.MyPageScreen.route) {
+                    popUpTo(ScreenList.MyPageScreen.route) {
+                        inclusive = true
+                    }
+                }
+            }
         }
+
     }) {
         Text("로그인"
 
