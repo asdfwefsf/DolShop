@@ -5,6 +5,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.company.domain.usecase.KakaoLoginUseCase
 import com.company.domain.usecase.KakaoLogoutUseCase
+import com.company.domain.usecase.getUserKakaoInfoUseCase
 import com.kakao.sdk.user.UserApiClient
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -16,11 +17,12 @@ import kotlin.coroutines.suspendCoroutine
 @HiltViewModel
 class KakaoAuthiViewModel @Inject constructor(
     private val kakaoLoginUsecase : KakaoLoginUseCase,
-    private val kakaoLogoutUsecase : KakaoLogoutUseCase
+    private val kakaoLogoutUsecase : KakaoLogoutUseCase,
+    private val getUserKakaoInfoUseCase: getUserKakaoInfoUseCase
 ) : ViewModel() {
 
-    val isLoggedIn = MutableStateFlow<Boolean>(false)
 
+    // 로그인 여부 확인
     private val _loginValue = MutableStateFlow<Boolean>(false)
     val loginValue = _loginValue
 
@@ -43,81 +45,42 @@ class KakaoAuthiViewModel @Inject constructor(
         }
     }
 
+    // 카카오 로그인 기능
     suspend fun kakaoLogin() {
         kakaoLoginUsecase().apply {
             if (this) {
+//                getUserKakaoInfo()
                 _loginValue.emit(true)
+                getUserKakaoInfo()
+                Log.d("auth viewmodel" , userInfoList.value[0])
             }
-//        }
-//        val loginResult = kakaoLoginUsecase()
-//        if (loginResult) {
-//            _loginValue.emit(loginResult)
-//        }
+//            getUserKakaoInfo()
         }
-
-
     }
 
+    // 카카오 로그아웃 기능
     suspend fun kakaoLogout() {
         kakaoLogoutUsecase()
     }
-}
 
-//    fun kakaoLogout() {
+    // 유저의 카카오 정보 받아오기
+
+    // 사용자 정보 반환 관련 ViewModel
+    private val _userInfoList = MutableStateFlow<List<String>>(
+        listOf("a" , "b" , "c" , "d")
+    )
+    val userInfoList = _userInfoList
+    suspend fun getUserKakaoInfo() {
+        getUserKakaoInfoUseCase(userInfoList).ma{
+
+        }
+    }
+//    init {
 //        viewModelScope.launch {
-//            if (handleKakaoLogout()) {
-//                isLoggedIn.emit(false)
-//            }
+//            getUserKakaoInfoUseCase(userInfoList)
 //        }
 //    }
-//
-//    private suspend fun handleKakaoLogout(): Boolean =
-//        suspendCoroutine { continuation ->
-//            UserApiClient.instance.logout { error ->
-//                if (error != null) {
-//                    Log.e(TAG, "로그아웃 실패 , SDK에서 토큰 삭제됨", error)
-//                    continuation.resume(false)
-//                } else {
-//                    Log.i(TAG, "로그아웃 성공 , SDK에서 토큰 삭제됨")
-//                    continuation.resume(true)
-//
-//                }
-//
-//            }
-//        }
-//    suspend fun handleKakaoLogin(): Boolean =
-//        suspendCoroutine<Boolean> { continuation ->
-//            val callback: (OAuthToken?, Throwable?) -> Unit = { token, error ->
-//                if (error != null) {
-//                    Log.e("login", "카카오계정으로 로그인 실패", error)
-//                    continuation.resume(false)
-//                } else if (token != null) {
-//                    Log.i("login", "카카오계정으로 로그인 성공 ${token.accessToken}")
-//                    viewModelScope.launch {
-////                        saveLoginState(true)
-//                    }
-//                    continuation.resume(true)
-//                }
-//            }
-//
-//            if (UserApiClient.instance.isKakaoTalkLoginAvailable(application.applicationContext)) {
-//                UserApiClient.instance.loginWithKakaoTalk(application.applicationContext) { token, error ->
-//                    if (error != null) {
-//                        Log.e("login", "카카오톡으로 로그인 실패", error)
-//
-//                        if (error is ClientError && error.reason == ClientErrorCause.Cancelled) {
-//                            return@loginWithKakaoTalk
-//                        }
-//
-//                        UserApiClient.instance.loginWithKakaoAccount(application.applicationContext, callback = callback)
-//                    } else if (token != null) {
-//                        Log.i("login", "카카오톡으로 로그인 성공 ${token.accessToken}")
-//                    }
-//                }
-//            } else {
-//                UserApiClient.instance.loginWithKakaoAccount(application.applicationContext, callback = callback)
-//            }
-//        }
 
+}
 
 

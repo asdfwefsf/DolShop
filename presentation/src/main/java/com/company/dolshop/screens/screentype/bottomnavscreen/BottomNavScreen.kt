@@ -156,7 +156,7 @@ fun BottomNav() {
 
             composable(route = ScreenList.MyPageScreen.route) {
                 val viewmodel : KakaoAuthiViewModel = hiltViewModel()
-                MyPageScreen(viewmodel)
+                MyPageScreen()
             }
 
             composable(route = ScreenList.LoginScreen.route) {
