@@ -6,5 +6,5 @@ import kotlinx.coroutines.flow.MutableStateFlow
 
 
 interface getUserKakaoInfoRepository {
-    suspend fun getUserKakaoInfo(list: MutableStateFlow<List<String>>) : MutableStateFlow<List<String>>
+    suspend fun getUserKakaoInfo(list: MutableStateFlow<List<String>>)
 }

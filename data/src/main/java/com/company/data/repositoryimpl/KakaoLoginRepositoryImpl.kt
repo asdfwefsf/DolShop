@@ -35,7 +35,6 @@ class KakaoLoginRepositoryImpl @Inject constructor(
                     Log.e("login", "카카오톡으로 로그인 실패", error)
 
                     if (error is ClientError && error.reason == ClientErrorCause.Cancelled) {
-                        returnvalue.resume(false)
 
                         return@loginWithKakaoTalk
                     }
@@ -43,7 +42,6 @@ class KakaoLoginRepositoryImpl @Inject constructor(
                     UserApiClient.instance.loginWithKakaoAccount(context, callback = callback)
                 } else if (token != null) {
                     Log.i("login", "카카오톡으로 로그인 성공 ${token.accessToken}")
-                    returnvalue.resume(true)
 
                 }
             }

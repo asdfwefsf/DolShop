@@ -49,30 +49,29 @@ class KakaoAuthiViewModel @Inject constructor(
     suspend fun kakaoLogin() {
         kakaoLoginUsecase().apply {
             if (this) {
-//                getUserKakaoInfo()
                 _loginValue.emit(true)
                 getUserKakaoInfo()
-                Log.d("auth viewmodel" , userInfoList.value[0])
             }
-//            getUserKakaoInfo()
+
         }
     }
 
     // 카카오 로그아웃 기능
     suspend fun kakaoLogout() {
-        kakaoLogoutUsecase()
+        viewModelScope.launch {
+            kakaoLogoutUsecase()
+
+        }
     }
 
     // 유저의 카카오 정보 받아오기
 
     // 사용자 정보 반환 관련 ViewModel
-    private val _userInfoList = MutableStateFlow<List<String>>(
-        listOf("a" , "b" , "c" , "d")
-    )
+    private val _userInfoList = MutableStateFlow<List<String>>(emptyList())
     val userInfoList = _userInfoList
-    suspend fun getUserKakaoInfo() {
-        getUserKakaoInfoUseCase(userInfoList).ma{
-
+    private suspend fun getUserKakaoInfo() {
+        viewModelScope.launch {
+            getUserKakaoInfoUseCase(_userInfoList)
         }
     }
 //    init {

@@ -29,10 +29,6 @@ fun MyPageScreen() {
         }) {
             Text("logout")
         }
-        Log.d("coupang" , userInfoList.value[0].toString())
-        Log.d("coupang" , userInfoList.value[1].toString())
-        Log.d("coupang" , userInfoList.value[2].toString())
-        Log.d("coupang" , userInfoList.value[3].toString())
         if(userInfoList.value.isNotEmpty()) {
             Log.d("coupangs" , userInfoList.value[0].toString())
             Log.d("coupangs" , userInfoList.value[1].toString())
