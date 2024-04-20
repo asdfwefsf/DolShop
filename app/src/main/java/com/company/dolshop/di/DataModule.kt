@@ -7,10 +7,12 @@ import com.company.data.datasource.userinfo.UserInfoDatabase
 import com.company.data.repositoryimpl.KakaoLoginRepositoryImpl
 import com.company.data.repositoryimpl.KakaoLogoutRepositoryImpl
 import com.company.data.repositoryimpl.TestRepositoryImpl
+import com.company.data.repositoryimpl.UpdateKakaoUserInfoRepositoryImpl
 import com.company.data.repositoryimpl.getUserKakaoInfoRepositoryImpl
 import com.company.domain.repository.KakaoLoginRepository
 import com.company.domain.repository.KakaoLogoutRepository
 import com.company.domain.repository.TempRepository
+import com.company.domain.repository.UpdateKakaoUserInfoRepository
 import com.company.domain.repository.getUserKakaoInfoRepository
 import dagger.Binds
 import dagger.Module
@@ -34,6 +36,8 @@ object DataModule {
     fun provideKakaoLogoutRepository(impl: KakaoLogoutRepositoryImpl) : KakaoLogoutRepository = impl
     @Provides
     fun providegetUserKakaoInfoRepository(impl: getUserKakaoInfoRepositoryImpl) : getUserKakaoInfoRepository = impl
+    @Provides
+    fun provideUpdateKakaoUserInfoRepository(impl: UpdateKakaoUserInfoRepositoryImpl) : UpdateKakaoUserInfoRepository = impl
 
     // datasource module
     @Provides

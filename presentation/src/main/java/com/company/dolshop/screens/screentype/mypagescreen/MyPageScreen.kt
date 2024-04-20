@@ -36,18 +36,21 @@ fun MyPageScreen() {
 //        }) {
 //            Text("logout")
 //        }
-        if(userInfoList.value.isNotEmpty()) {
-            Log.d("coupangs" , userInfoList.value[0].toString())
-            Log.d("coupangs" , userInfoList.value[1].toString())
-            Log.d("coupangs" , userInfoList.value[2].toString())
-            Log.d("coupangs" , userInfoList.value[3].toString())
+        if(userInfoList.value != null) {
+            Log.d("coupangs" , userInfoList.value.authEmail)
+            Log.d("coupangs" , userInfoList.value.authNicName)
+            Log.d("coupangs" , userInfoList.value.authNumber)
+            Log.d("coupangs" , userInfoList.value.authProfileImage)
+
 
             Spacer(Modifier.size(8.dp))
-            Text(userInfoList.value[0])
+            Text(userInfoList.value.authEmail)
             Spacer(Modifier.size(8.dp))
-            Text(userInfoList.value[1])
+            Text(userInfoList.value.authNicName)
             Spacer(Modifier.size(8.dp))
-            Text(userInfoList.value[2])
+            Text(userInfoList.value.authNumber)
+            Spacer(Modifier.size(8.dp))
+            Text(userInfoList.value.authProfileImage)
 
         }
 

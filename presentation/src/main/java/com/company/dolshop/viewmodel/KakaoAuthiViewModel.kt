@@ -3,8 +3,10 @@ package com.company.dolshop.viewmodel
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.company.domain.model.UserInfoModel
 import com.company.domain.usecase.KakaoLoginUseCase
 import com.company.domain.usecase.KakaoLogoutUseCase
+import com.company.domain.usecase.UpdateKakaoUserInfoUseCase
 import com.company.domain.usecase.getUserKakaoInfoUseCase
 import com.kakao.sdk.user.UserApiClient
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -18,8 +20,10 @@ import kotlin.coroutines.suspendCoroutine
 class KakaoAuthiViewModel @Inject constructor(
     private val kakaoLoginUsecase: KakaoLoginUseCase,
     private val kakaoLogoutUsecase: KakaoLogoutUseCase,
-    private val getUserKakaoInfoUseCase: getUserKakaoInfoUseCase
-) : ViewModel() {
+    private val getUserKakaoInfoUseCase: getUserKakaoInfoUseCase,
+    private val updateUserKakaoInfoUseCase: UpdateKakaoUserInfoUseCase,
+
+    ) : ViewModel() {
 
 
     // 로그인 여부 확인
@@ -53,11 +57,24 @@ class KakaoAuthiViewModel @Inject constructor(
 
     // 유저의 카카오 정보 받아오기
     // 사용자 정보 반환 관련 ViewModel
-    private val _userInfoList = MutableStateFlow<List<String>>(emptyList())
+    private val _userInfoList = MutableStateFlow<UserInfoModel>(
+        UserInfoModel("s" , "s", "s" , "s" )
+    )
     val userInfoList = _userInfoList
 
     private suspend fun getUserKakaoInfo() {
         getUserKakaoInfoUseCase()
+    }
+
+    init {
+        viewModelScope.launch {
+            kakaoInfoUpdate()
+        }
+    }
+    suspend fun kakaoInfoUpdate() {
+        updateUserKakaoInfoUseCase().collect {userInfo ->
+            _userInfoList.value = userInfo
+        }
     }
 
 
