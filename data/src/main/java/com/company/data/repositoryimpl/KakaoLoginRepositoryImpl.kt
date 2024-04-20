@@ -2,6 +2,7 @@ package com.company.data.repositoryimpl
 
 import android.content.Context
 import android.util.Log
+import com.company.data.datasource.userinfo.UserInfoDao
 import com.company.domain.repository.KakaoLoginRepository
 import com.kakao.sdk.auth.model.OAuthToken
 import com.kakao.sdk.common.model.ClientError
@@ -13,7 +14,7 @@ import javax.inject.Inject
 import kotlin.coroutines.resume
 
 class KakaoLoginRepositoryImpl @Inject constructor(
-    private val context : Context
+    private val context : Context,
 ) : KakaoLoginRepository {
     override suspend fun kakaoLogin(): Boolean = suspendCancellableCoroutine {returnvalue ->
         val callback: (OAuthToken?, Throwable?) -> Unit = { token, error ->

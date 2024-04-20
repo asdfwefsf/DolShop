@@ -1,5 +1,9 @@
 package com.company.dolshop.di
 
+import android.content.Context
+import androidx.room.Room
+import com.company.data.datasource.userinfo.UserInfoDao
+import com.company.data.datasource.userinfo.UserInfoDatabase
 import com.company.data.repositoryimpl.KakaoLoginRepositoryImpl
 import com.company.data.repositoryimpl.KakaoLogoutRepositoryImpl
 import com.company.data.repositoryimpl.TestRepositoryImpl
@@ -12,7 +16,9 @@ import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
+import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -28,4 +34,29 @@ object DataModule {
     fun provideKakaoLogoutRepository(impl: KakaoLogoutRepositoryImpl) : KakaoLogoutRepository = impl
     @Provides
     fun providegetUserKakaoInfoRepository(impl: getUserKakaoInfoRepositoryImpl) : getUserKakaoInfoRepository = impl
+
+    // datasource module
+    @Provides
+    @Singleton
+    fun provideUserInfoDatabase(@ApplicationContext appContext: Context): UserInfoDatabase {
+        return Room.databaseBuilder(
+            appContext,
+            UserInfoDatabase::class.java,
+            "user_info_database"
+        ).build()
+    }
+
+
+    @Provides
+    fun provideUserInfoDao(database: UserInfoDatabase) : UserInfoDao {
+        return database.dao
+    }
+
+    @Provides
+    @Singleton
+    fun providegetUserKakaoInfoRepositoryImpl(
+        dao : UserInfoDao
+    ) : getUserKakaoInfoRepositoryImpl = getUserKakaoInfoRepositoryImpl(dao)
+
+
 }

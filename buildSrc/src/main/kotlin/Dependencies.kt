@@ -73,8 +73,8 @@ object Dependencies {
 }
 
 fun DependencyHandler.room() {
-    implementation(Dependencies.ROOMRUNTIME)
-    implementation(Dependencies.ROOMKTX )
+    api(Dependencies.ROOMRUNTIME)
+    api(Dependencies.ROOMKTX )
     kapt(Dependencies.ROOMCOMPILER)
 }
 

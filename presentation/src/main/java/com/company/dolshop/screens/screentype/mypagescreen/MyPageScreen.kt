@@ -29,6 +29,13 @@ fun MyPageScreen() {
         }) {
             Text("logout")
         }
+//        Button(onClick = {
+//            scope.launch {
+//                viewmodel.getUserInfo()
+//            }
+//        }) {
+//            Text("logout")
+//        }
         if(userInfoList.value.isNotEmpty()) {
             Log.d("coupangs" , userInfoList.value[0].toString())
             Log.d("coupangs" , userInfoList.value[1].toString())

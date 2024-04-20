@@ -7,7 +7,7 @@ import javax.inject.Inject
 class getUserKakaoInfoUseCase @Inject constructor(
     private val repository : getUserKakaoInfoRepository
 ){
-    suspend operator fun invoke(list: MutableStateFlow<List<String>>) {
-        repository.getUserKakaoInfo(list)
+    suspend operator fun invoke() {
+        repository.getUserKakaoInfo()
     }
 }

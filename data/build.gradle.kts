@@ -64,6 +64,7 @@ dependencies {
     kapt("com.google.dagger:hilt-android-compiler:2.49")
 
     kakao()
+    room()
 //    implementation ("androidx.compose.runtime:runtime:1.6.5")
 
     implementation("androidx.core:core-ktx:1.12.0")
