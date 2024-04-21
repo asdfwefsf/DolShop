@@ -1,4 +1,3 @@
-import org.jetbrains.kotlin.kapt3.base.Kapt.kapt
 import org.jetbrains.kotlin.konan.properties.Properties
 
 plugins {
@@ -7,7 +6,6 @@ plugins {
     id ("com.google.dagger.hilt.android")
     id ("kotlin-kapt")
     id("com.google.gms.google-services")
-
 }
 
 val properties = Properties()

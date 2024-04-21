@@ -1,6 +1,5 @@
-package com.company.dolshop.screens.screentype.mypagescreen
+package com.company.dolshop.screens.screentype.settingscreen
 
-import android.util.Log
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.size
@@ -12,11 +11,13 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavController
+import com.company.dolshop.screens.ScreenList
 import com.company.dolshop.viewmodel.KakaoAuthiViewModel
 import kotlinx.coroutines.launch
 
 @Composable
-fun MyPageScreen() {
+fun SettingScreen(navController: NavController) {
     val scope = rememberCoroutineScope()
     val viewmodel : KakaoAuthiViewModel = hiltViewModel()
     val userInfoList = viewmodel.userInfoList.collectAsState().value
@@ -28,13 +29,11 @@ fun MyPageScreen() {
         }) {
             Text("logout")
         }
-//        Button(onClick = {
-//            scope.launch {
-//                viewmodel.getUserInfo()
-//            }
-//        }) {
-//            Text("logout")
-//        }
+        Button(onClick = {
+            navController.navigate(ScreenList.MyPageScreen.route)
+        }) {
+            Text("마이 페이지")
+        }
         if(userInfoList != null) {
 
             Spacer(Modifier.size(8.dp))

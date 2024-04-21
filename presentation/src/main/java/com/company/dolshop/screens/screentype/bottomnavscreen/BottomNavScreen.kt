@@ -28,9 +28,10 @@ import androidx.navigation.compose.rememberNavController
 import com.company.dolshop.screens.ScreenList
 import com.company.dolshop.screens.screentype.announcementscreen.AnnouncementScreen
 import com.company.dolshop.screens.screentype.communityscreen.CommunityScreen
-import com.company.dolshop.screens.screentype.mypagescreen.MyPageScreen
 import com.company.dolshop.screens.screentype.productscreen.ProductScreen
 import com.company.dolshop.screens.screentype.rockscreen.RocksScreen
+import com.company.dolshop.screens.screentype.settingscreen.MyPageScreen
+import com.company.dolshop.screens.screentype.settingscreen.SettingScreen
 import com.company.dolshop.screens.screentype.subscreen.LoginScreen
 import com.company.dolshop.viewmodel.KakaoAuthiViewModel
 import com.company.presentation.R
@@ -50,7 +51,7 @@ fun BottomNav() {
             ScreenList.ProductScreen.route,
             ScreenList.RocksScreen.route,
             ScreenList.AnnouncementScreen.route,
-            ScreenList.MyPageScreen.route
+            ScreenList.SettingScreen.route
         )
 
     val items = listOf(
@@ -75,7 +76,7 @@ fun BottomNav() {
             unselectedIcon = R.drawable.ic_launcher_background,
         ),
         BottomNavItem(
-            title = "마이",
+            title = "설정",
             selectedIcon = R.drawable.ic_launcher_background,
             unselectedIcon = R.drawable.ic_launcher_background,
         ),
@@ -154,8 +155,12 @@ fun BottomNav() {
                 AnnouncementScreen()
             }
 
-            composable(route = ScreenList.MyPageScreen.route) {
+            composable(route = ScreenList.SettingScreen.route) {
                 val viewmodel : KakaoAuthiViewModel = hiltViewModel()
+                SettingScreen(navController)
+            }
+
+            composable(route = ScreenList.MyPageScreen.route) {
                 MyPageScreen()
             }
 
