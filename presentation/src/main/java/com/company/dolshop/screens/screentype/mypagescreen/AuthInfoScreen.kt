@@ -1,4 +1,4 @@
-package com.company.dolshop.screens.screentype.settingscreen
+package com.company.dolshop.screens.screentype.mypagescreen
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -17,7 +17,7 @@ import com.company.dolshop.viewmodel.KakaoAuthiViewModel
 import kotlinx.coroutines.launch
 
 @Composable
-fun SettingScreen(navController: NavController) {
+fun AuthInfoScreen(navController: NavController) {
     val scope = rememberCoroutineScope()
     val viewmodel : KakaoAuthiViewModel = hiltViewModel()
     val userInfoList = viewmodel.userInfoList.collectAsState().value

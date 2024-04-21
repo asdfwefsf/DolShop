@@ -1,9 +1,9 @@
-package com.company.dolshop.screens.screentype.settingscreen
+package com.company.dolshop.screens.screentype.mypagescreen
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -19,48 +19,51 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
-import com.company.dolshop.designsystem.DolShopTheme
+import com.company.dolshop.screens.ScreenList
+import com.company.dolshop.viewmodel.KakaoAuthiViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MyPageScreen() {
+fun MyPageScreen(navController: NavController) {
+    val viewmodel : KakaoAuthiViewModel = hiltViewModel()
     Scaffold(
         topBar = {
             TopAppBar(
                 title = {
-                    Text("설정")
+                    Text(viewmodel.userInfoList.collectAsState().value.authNicName)
                 }
             )
         }
     ) { innerPadding ->
         SettingItemsList(
-            modifier = Modifier.padding(innerPadding)
+            modifier = Modifier.padding(innerPadding),
+            navController
         )
     }
 }
 
 @Composable
-fun SettingItemsList(modifier: Modifier = Modifier) {
+fun SettingItemsList(modifier: Modifier = Modifier , navController: NavController) {
     Column(modifier = modifier) {
         LeadSettingItem(icon = Icons.Default.Notifications, text = "알림설정")
-        SettingItem(icon = Icons.Default.Notifications, text = "배송 알림")
-        LastSettingItem(icon = Icons.Default.Notifications, text = "채팅 알림")
+        SettingItem(icon = Icons.Default.Notifications, text = "배송 알림" , "" , navController)
+        LastSettingItem(icon = Icons.Default.Notifications, text = "채팅 알림" , "" , navController)
         // Add more SettingItem calls for "계정설정"
         LeadSettingItem(icon = Icons.Default.Person, text = "계정설정")
-        SettingItem(icon = Icons.Default.Person, text = "개인정보")
-        LastSettingItem(icon = Icons.Default.Person, text = "로그인 보안")
+        SettingItem(icon = Icons.Default.Person, text = "개인정보" , ScreenList.AuthInfoScreen.route , navController)
+        LastSettingItem(icon = Icons.Default.Person, text = "로그아웃" , ScreenList.LogoutScreen.route , navController)
         // Add more SettingItem calls for "보안"
         LeadSettingItem(icon = Icons.Default.Person, text = "보안")
-        SettingItem(icon = Icons.Default.Person, text = "비밀번호 변경")
-        LastSettingItem(icon = Icons.Default.Person, text = "2단계 인증")
+        SettingItem(icon = Icons.Default.Person, text = "비밀번호 변경" , "" , navController)
+        LastSettingItem(icon = Icons.Default.Person, text = "2단계 인증" , "" , navController)
         // You can continue adding more items as needed
     }
 }
@@ -81,7 +84,7 @@ fun LeadSettingItem(icon: ImageVector, text: String) {
 }
 
 @Composable
-fun SettingItem(icon: ImageVector, text: String) {
+fun SettingItem(icon: ImageVector, text: String , route : String , navController: NavController) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
         modifier = Modifier
@@ -92,12 +95,14 @@ fun SettingItem(icon: ImageVector, text: String) {
         Spacer(modifier = Modifier.width(16.dp))
         Text(text, fontWeight = FontWeight.Bold)
         Spacer(modifier = Modifier.weight(1f))
-        Icon(Icons.Default.ArrowForward, contentDescription = null)
+        Icon(Icons.Default.ArrowForward, contentDescription = null , modifier = Modifier.clickable {
+            navController.navigate(route)
+        })
     }
 }
 
 @Composable
-fun LastSettingItem(icon: ImageVector, text: String) {
+fun LastSettingItem(icon: ImageVector, text: String , route : String , navController: NavController) {
     Row(
         verticalAlignment = Alignment.CenterVertically,
         modifier = Modifier
@@ -108,16 +113,10 @@ fun LastSettingItem(icon: ImageVector, text: String) {
         Spacer(modifier = Modifier.width(16.dp))
         Text(text, fontWeight = FontWeight.Bold)
         Spacer(modifier = Modifier.weight(1f))
-        Icon(Icons.Default.ArrowForward, contentDescription = null)
+        Icon(Icons.Default.ArrowForward, contentDescription = null , modifier = Modifier.clickable {
+            navController.navigate(route)
+        })
     }
-    Divider() // 항목 사이에 구분선을 추가합니다.
+    Divider()
 
-}
-
-@Preview(showBackground = true)
-@Composable
-fun PreviewSettingsScreen() {
-    DolShopTheme {
-        MyPageScreen()
-    }
 }

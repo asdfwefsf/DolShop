@@ -30,10 +30,10 @@ class getUserKakaoInfoRepositoryImpl @Inject constructor(
             } else if (user != null) {
                 val userInfo = UserInfo(
                     0,
-                    "회원번호: ${user.id}",
-                    "이메일: ${user.kakaoAccount?.email}",
-                    "닉네임: ${user.kakaoAccount?.profile?.nickname}",
-                    "프로필사진: ${user.kakaoAccount?.profile?.thumbnailImageUrl}"
+                    "${user.id}",
+                    "${user.kakaoAccount?.email}",
+                    "${user.kakaoAccount?.profile?.nickname}",
+                    "${user.kakaoAccount?.profile?.thumbnailImageUrl}"
 
                 )
                 Log.i("auth", "사용자 정보 요청 성공\n${userInfo.id}")
@@ -43,7 +43,6 @@ class getUserKakaoInfoRepositoryImpl @Inject constructor(
                 Log.i("auth", "사용자 정보 요청 성공\n${userInfo.authProfileImage}")
 
                 scope.launch {
-//                    list.value = userInfo // MutableStateFlow의 value를 갱신합니다.
                     dao.upsertUserInfo(
                         UserInfo(
                             userInfo.id,
@@ -58,7 +57,6 @@ class getUserKakaoInfoRepositoryImpl @Inject constructor(
 
             }
         }
-//        }
 
     }
 

@@ -36,8 +36,8 @@ fun LoginScreen(navController: NavController, viewModel: KakaoAuthiViewModel) {
             scope.launch {
                 viewModel.kakaoLogin()
                 if (viewModel.loginValue.value) {
-                    navController.navigate(ScreenList.SettingScreen.route) {
-                        popUpTo(ScreenList.SettingScreen.route) {
+                    navController.navigate(ScreenList.MyPageScreen.route) {
+                        popUpTo(ScreenList.MyPageScreen.route) {
                             inclusive = true
                         }
                     }
