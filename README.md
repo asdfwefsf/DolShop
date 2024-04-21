@@ -19,9 +19,9 @@
 2. kakao 로그인 정보 저장 완료
 
 2024-04-21
-1. Firebase DB 연동 완료료
+1. Firebase DB 연동 완료
 2. 상품 json 데이터 받아오기 + UI에 넣기
-
+3. SettingScreen -> MyPageScreen 완료
 
 
 
@@ -64,6 +64,7 @@
 11. Firebase DB 연동(O)
 12. 상품 json 데이터 받아오기 + UI에 넣기
 13. BottomBar Navigation Setting(O)
+14. SettingScreen -> MyPageScreen(O)
 
 
 
