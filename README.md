@@ -17,9 +17,11 @@
 2024-04-20
 1. kakao 로그인 연동 완료
 2. kakao 로그인 정보 저장 완료
-3. Firebase DB 연동
-4. 상품 json 데이터 받아오기 + UI에 넣기
-5. Diaglog 세팅
+
+2024-04-21
+1. Firebase DB 연동 완료료
+2. 상품 json 데이터 받아오기 + UI에 넣기
+
 
 
 
@@ -59,7 +61,7 @@
 8. Navigation UI Setting
 9. kakao 로그인 연동(O)
 10. kakao 로그인 정보 저장(O)
-11. Firebase DB 연동
+11. Firebase DB 연동(O)
 12. 상품 json 데이터 받아오기 + UI에 넣기
 13. BottomBar Navigation Setting(O)
 
