@@ -69,6 +69,10 @@ object Dependencies {
     const val kakaonavi = "com.kakao.sdk:v2-navi:${Versions.KAKAO}"
     const val kakaocert = "com.kakao.sdk:v2-cert:${Versions.KAKAO}"
 
+    // kakao
+    const val FIREBASE_BOM = "com.google.firebase:firebase-bom:32.8.1"
+    const val FIREBASE_REALTIMEDB = "com.google.firebase:firebase-database-ktx"
+
 
 }
 
@@ -91,6 +95,11 @@ fun DependencyHandler.kakao() {
     api(Dependencies.kakaofriend)
     api(Dependencies.kakaonavi)
     api(Dependencies.kakaocert)
+}
+
+fun DependencyHandler.firebase() {
+    api("platform(${Dependencies.FIREBASE_BOM})")
+    api(Dependencies.FIREBASE_REALTIMEDB)
 }
 
 

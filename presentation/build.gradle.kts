@@ -6,6 +6,7 @@ plugins {
     id("org.jetbrains.kotlin.android")
     id ("com.google.dagger.hilt.android")
     id ("kotlin-kapt")
+    id ("com.google.gms.google-services")
 
 }
 //
@@ -70,6 +71,10 @@ dependencies {
     //
     navigation()
     kakao()
+//    firebase()
+    api(platform("com.google.firebase:firebase-bom:32.8.1"))
+    api("com.google.firebase:firebase-database-ktx")
+
     //
 
 

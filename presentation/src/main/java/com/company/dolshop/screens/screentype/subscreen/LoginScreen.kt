@@ -1,41 +1,69 @@
 package com.company.dolshop.screens.screentype.subscreen
 
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Button
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
+import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
+import com.company.dolshop.designsystem.Paddings
 import com.company.dolshop.screens.ScreenList
 import com.company.dolshop.viewmodel.KakaoAuthiViewModel
+import com.google.firebase.database.ktx.database
+import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.launch
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun LoginScreen(navController: NavController , viewModel : KakaoAuthiViewModel) {
+fun LoginScreen(navController: NavController, viewModel: KakaoAuthiViewModel) {
     val scope = rememberCoroutineScope()
-    Button(onClick = {
-        // 로그인 로직 수행 후 성공적으로 로그인 되었다고 가정
-        // 로그인 성공 후 메인 화면으로 이동
-//        navController.navigate(ScreenList.RocksScreen.route) {
-//            // 현재 로그인 화면을 백스택에서 제거하여 뒤로 가기 했을 때 로그인 화면으로 돌아가지 않도록 설정
-//
-//            popUpTo(ScreenList.LoginScreen.route) {
-//                inclusive = true
-//            }
-//        }
-        scope.launch {
-            viewModel.kakaoLogin()
-            if(viewModel.loginValue.value) {
-                navController.navigate(ScreenList.MyPageScreen.route) {
-                    popUpTo(ScreenList.MyPageScreen.route) {
-                        inclusive = true
+
+    val realtimeDB = Firebase.database
+    val myRef = realtimeDB.getReference("message")
+    myRef.setValue("Hello , World!")
+    var text by remember { mutableStateOf("") }
+    Column {
+        Button(onClick = {
+            scope.launch {
+                viewModel.kakaoLogin()
+                if (viewModel.loginValue.value) {
+                    navController.navigate(ScreenList.MyPageScreen.route) {
+                        popUpTo(ScreenList.MyPageScreen.route) {
+                            inclusive = true
+                        }
                     }
                 }
             }
+
+        }) {
+            Text(
+                "로그인"
+            )
         }
-
-    }) {
-        Text("로그인"
-
+        Spacer(modifier = Modifier.padding(Paddings.extra))
+        TextField(
+            value = text,
+            onValueChange = { newText ->
+                text = newText
+            }
         )
+        Spacer(modifier = Modifier.padding(Paddings.extra))
+        Button(
+            onClick = { myRef.setValue(text) }
+        ) {
+            Text(text = "Test")
+        }
     }
+
+
 }
+
