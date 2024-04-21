@@ -1,7 +1,6 @@
 package com.company.dolshop.screens.screentype.mypagescreen
 
 import android.util.Log
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.size
@@ -20,7 +19,7 @@ import kotlinx.coroutines.launch
 fun MyPageScreen() {
     val scope = rememberCoroutineScope()
     val viewmodel : KakaoAuthiViewModel = hiltViewModel()
-    val userInfoList = viewmodel.userInfoList.collectAsState()
+    val userInfoList = viewmodel.userInfoList.collectAsState().value
     Column {
         Button(onClick = {
             scope.launch {
@@ -36,21 +35,16 @@ fun MyPageScreen() {
 //        }) {
 //            Text("logout")
 //        }
-        if(userInfoList.value != null) {
-            Log.d("coupangs" , userInfoList.value.authEmail)
-            Log.d("coupangs" , userInfoList.value.authNicName)
-            Log.d("coupangs" , userInfoList.value.authNumber)
-            Log.d("coupangs" , userInfoList.value.authProfileImage)
-
+        if(userInfoList != null) {
 
             Spacer(Modifier.size(8.dp))
-            Text(userInfoList.value.authEmail)
+            Text(userInfoList.authEmail)
             Spacer(Modifier.size(8.dp))
-            Text(userInfoList.value.authNicName)
+            Text(userInfoList.authNicName)
             Spacer(Modifier.size(8.dp))
-            Text(userInfoList.value.authNumber)
+            Text(userInfoList.authNumber)
             Spacer(Modifier.size(8.dp))
-            Text(userInfoList.value.authProfileImage)
+            Text(userInfoList.authProfileImage)
 
         }
 
