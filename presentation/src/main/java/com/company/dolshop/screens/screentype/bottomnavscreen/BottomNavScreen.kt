@@ -82,13 +82,13 @@ fun BottomNav() {
             unselectedIcon = R.drawable.ic_launcher_background,
         ),
 
-    )
+        )
 
     var selectedItemIndex by rememberSaveable {
         mutableStateOf(2)
     }
 
-    var route  : String
+    var route: String
 
     Scaffold(
         containerColor = MaterialTheme.colorScheme.background,
@@ -133,19 +133,20 @@ fun BottomNav() {
 
         }
     ) {
+        innerPadding ->
         if (true) {
             route = ScreenList.LoginScreen.route
         } else {
             route = ScreenList.RocksScreen.route
         }
-        it
+
         NavHost(navController = navController, startDestination = route) {
             composable(route = ScreenList.CommunityScreen.route) {
                 CommunityScreen()
             }
 
             composable(route = ScreenList.ProductScreen.route) {
-                ProductScreen()
+                ProductScreen(innerPadding)
             }
 
             composable(route = ScreenList.RocksScreen.route) {
@@ -158,7 +159,7 @@ fun BottomNav() {
 
             // 마이페이지 nested
             composable(route = ScreenList.MyPageScreen.route) {
-                val viewmodel : KakaoAuthiViewModel = hiltViewModel()
+                val viewmodel: KakaoAuthiViewModel = hiltViewModel()
                 MyPageScreen(navController)
             }
 
@@ -167,8 +168,8 @@ fun BottomNav() {
             }
 
             composable(route = ScreenList.LoginScreen.route) {
-                val viewmodel : KakaoAuthiViewModel = hiltViewModel()
-                LoginScreen(navController , viewmodel)
+                val viewmodel: KakaoAuthiViewModel = hiltViewModel()
+                LoginScreen(navController, viewmodel)
             }
 
             composable(route = ScreenList.LogoutScreen.route) {

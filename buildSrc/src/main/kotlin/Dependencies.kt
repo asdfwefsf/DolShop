@@ -102,6 +102,10 @@ fun DependencyHandler.firebase() {
     api(Dependencies.FIREBASE_REALTIMEDB)
 }
 
+fun DependencyHandler.retrofit() {
+    api(Dependencies.RETROFIT)
+}
+
 
 //fun DependencyHandler.retrofit() {
 //    implementation(Dependencies.retrofit)

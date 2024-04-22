@@ -16,6 +16,7 @@ import kotlin.coroutines.resume
 class KakaoLoginRepositoryImpl @Inject constructor(
     private val context : Context,
 ) : KakaoLoginRepository {
+
     override suspend fun kakaoLogin(): Boolean = suspendCancellableCoroutine {returnvalue ->
         val callback: (OAuthToken?, Throwable?) -> Unit = { token, error ->
             if (error != null) {

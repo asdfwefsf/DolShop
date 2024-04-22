@@ -69,6 +69,7 @@ dependencies {
     implementation(project(":presentation"))
     implementation(project(":domain"))
     implementation(project(":data"))
+    implementation(project(":core:network"))
 
     implementation("com.google.dagger:hilt-android:2.49")
     kapt ("androidx.hilt:hilt-compiler:1.2.0")
