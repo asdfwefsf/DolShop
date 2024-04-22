@@ -9,6 +9,11 @@ fun DependencyHandler.implementation(dependency: Dependency) {
     add("implementation", dependency)
 }
 
+fun DependencyHandler.testImplementation(dependency: String) {
+    add("testImplementation", dependency)
+}
+
+
 fun DependencyHandler.test(dependency: String) {
     add("test", dependency)
 }

@@ -44,6 +44,7 @@ dependencies {
     kapt("com.google.dagger:hilt-android-compiler:2.49")
 
 //    implementation ("androidx.compose.runtime:runtime:1.6.5")
+    domainPagging()
 
     implementation("androidx.core:core-ktx:1.12.0")
     implementation("androidx.appcompat:appcompat:1.6.1")

@@ -73,6 +73,12 @@ object Dependencies {
     const val FIREBASE_BOM = "com.google.firebase:firebase-bom:32.8.1"
     const val FIREBASE_REALTIMEDB = "com.google.firebase:firebase-database-ktx"
 
+    // Pagging3
+    const val PAGGING_RUNTIME = "androidx.paging:paging-runtime:3.2.1"
+    const val PAGGING_COMPOSE = "androidx.paging:paging-compose:3.3.0-beta01"
+    const val PAGGING_DOMAIN =  "androidx.paging:paging-common:3.2.1"
+
+
 
 }
 
@@ -108,6 +114,19 @@ fun DependencyHandler.retrofit() {
 
 fun DependencyHandler.coil() {
     implementation(Dependencies.COILCOMPOSE)
+}
+
+fun DependencyHandler.pagging() {
+    implementation(Dependencies.PAGGING_RUNTIME)
+    implementation(Dependencies.PAGGING_COMPOSE)
+}
+
+fun DependencyHandler.domainPagging() {
+    testImplementation(Dependencies.PAGGING_DOMAIN)
+}
+
+fun DependencyHandler.constraint() {
+    implementation(Dependencies.COMPOSECONSTRAINT)
 }
 
 

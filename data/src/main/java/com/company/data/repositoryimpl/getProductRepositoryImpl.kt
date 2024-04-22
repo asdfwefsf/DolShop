@@ -15,15 +15,13 @@ class getProductRepositoryImpl @Inject constructor(
 
 ) : getProductRepository {
 
-    override suspend fun getProductList(): Flow<List<DomainProductModel>> = flow {
+    override fun getProductList(): Flow<List<DomainProductModel>> = flow {  
         val response = productAPI.getProduct()
         if (response.isSuccessful) {
             response.body()?.let { responseBody ->
-                // Use the 'emit' function to emit the transformed list of domain models
                 emit(responseBody.map { it.toDomainProductModel() })
             }
         } else {
-            // Handle the error case, perhaps by emitting an empty list or a specific error state
             emit(emptyList<DomainProductModel>())
         }
     }.flowOn(Dispatchers.IO)

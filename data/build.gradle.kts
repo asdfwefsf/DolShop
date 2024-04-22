@@ -66,6 +66,7 @@ dependencies {
 
     kakao()
     room()
+    pagging()
 //    implementation ("androidx.compose.runtime:runtime:1.6.5")
 
     implementation("androidx.core:core-ktx:1.12.0")

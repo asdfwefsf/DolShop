@@ -33,6 +33,7 @@ android {
         resValue("string" , "kakao_oauth_host" , "\"${properties["kakao_oauth_host"]}\"")
     }
 
+
     buildTypes {
         release {
             isMinifyEnabled = false
