@@ -76,6 +76,7 @@ dependencies {
     api("com.google.firebase:firebase-database-ktx")
 
     //
+    coil()
 
 
 

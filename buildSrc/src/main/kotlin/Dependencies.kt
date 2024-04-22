@@ -106,6 +106,10 @@ fun DependencyHandler.retrofit() {
     api(Dependencies.RETROFIT)
 }
 
+fun DependencyHandler.coil() {
+    implementation(Dependencies.COILCOMPOSE)
+}
+
 
 //fun DependencyHandler.retrofit() {
 //    implementation(Dependencies.retrofit)
