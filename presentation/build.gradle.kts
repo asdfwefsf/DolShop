@@ -77,7 +77,6 @@ dependencies {
 
     //
     coil()
-    pagging()
     constraint()
     splash()
 

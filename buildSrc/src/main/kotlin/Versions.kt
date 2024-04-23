@@ -37,4 +37,14 @@ object Versions {
     const val SPLASHSCREEN = "1.0.1"
     // kakao
     const val KAKAO = "2.20.1"
+    // Firebase
+    const val FIREBASE = "32.8.1"
+    // Worker
+    const val WORKER = "2.9.0"
+    // HiltWorker
+    const val HiltWorker = "1.2.0"
+    // HiltWorker
+    const val HiltCommon = "1.2.0"
+    // HILT_WORKER_COMPILER
+    const val HILT_WORKER_COMPILER = "1.2.0"
 }

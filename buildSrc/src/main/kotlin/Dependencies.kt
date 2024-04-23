@@ -69,16 +69,17 @@ object Dependencies {
     const val kakaonavi = "com.kakao.sdk:v2-navi:${Versions.KAKAO}"
     const val kakaocert = "com.kakao.sdk:v2-cert:${Versions.KAKAO}"
 
-    // kakao
-    const val FIREBASE_BOM = "com.google.firebase:firebase-bom:32.8.1"
+    // Firebase
+    const val FIREBASE_BOM = "com.google.firebase:firebase-bom:${Versions.FIREBASE}"
     const val FIREBASE_REALTIMEDB = "com.google.firebase:firebase-database-ktx"
 
-    // Pagging3
-    const val PAGGING_RUNTIME = "androidx.paging:paging-runtime:3.2.1"
-    const val PAGGING_COMPOSE = "androidx.paging:paging-compose:3.3.0-beta01"
-    const val PAGGING_DOMAIN =  "androidx.paging:paging-common:3.2.1"
+    // Workder
+    const val WORKER = "androidx.work:work-runtime-ktx:${Versions.WORKER}"
+    const val HILTWORKER = "androidx.hilt:hilt-work:${Versions.HiltWorker}"
+    const val HILTCOMMON = "androidx.hilt:hilt-common:${Versions.HiltWorker}"
 
-
+    // Hilt + Worker
+    const val HILT_WORKER_COMPILER = "androidx.hilt:hilt-compiler:${Versions.HILT_WORKER_COMPILER}"
 
 }
 
@@ -116,21 +117,22 @@ fun DependencyHandler.coil() {
     implementation(Dependencies.COILCOMPOSE)
 }
 
-fun DependencyHandler.pagging() {
-    implementation(Dependencies.PAGGING_RUNTIME)
-    implementation(Dependencies.PAGGING_COMPOSE)
-}
-
-fun DependencyHandler.domainPagging() {
-    testImplementation(Dependencies.PAGGING_DOMAIN)
-}
-
 fun DependencyHandler.constraint() {
     implementation(Dependencies.COMPOSECONSTRAINT)
 }
 
 fun DependencyHandler.splash() {
     implementation(Dependencies.SPLASHSCREEN)
+}
+
+fun DependencyHandler.worker() {
+    api(Dependencies.WORKER)
+    api(Dependencies.HILTWORKER)
+    api(Dependencies.HILTCOMMON)
+}
+
+fun DependencyHandler.hiltWorker() {
+    kapt(Dependencies.HILT_WORKER_COMPILER)
 }
 
 

@@ -77,60 +77,60 @@ fun firstBaseScreen() {
             .padding(bottom = 64.dp)
             .background(Color.White)
     ) {
-        val (person , text , search , shoppingCart) = createRefs()
-            Icon(
-                imageVector = Icons.Default.Person,
-                contentDescription = null,
-                modifier = Modifier
-                    .constrainAs(person) {
-                        start.linkTo(parent.start)
-                    }
-                    .size(40.dp)
-                    .padding(start = 16.dp)
-            )
+        val (person, text, search, shoppingCart) = createRefs()
+        Icon(
+            imageVector = Icons.Default.Person,
+            contentDescription = null,
+            modifier = Modifier
+                .constrainAs(person) {
+                    start.linkTo(parent.start)
+                }
+                .size(40.dp)
+                .padding(start = 16.dp)
+        )
 
-            Text(
-                text = "내 친구 돌돌이",
-                modifier = Modifier
-                    .constrainAs(text) {
-                        start.linkTo(person.end)
-                        end.linkTo(search.start)
-                        bottom.linkTo(person.bottom)
-                    }
-                    .padding(start = 16.dp),
-                textAlign = TextAlign.Center,
-                fontSize = 24.sp
-                )
+        Text(
+            text = "내 친구 돌돌이",
+            modifier = Modifier
+                .constrainAs(text) {
+                    start.linkTo(person.end)
+                    end.linkTo(search.start)
+                    bottom.linkTo(person.bottom)
+                }
+                .padding(start = 16.dp),
+            textAlign = TextAlign.Center,
+            fontSize = 24.sp
+        )
 
-            Icon(
-                imageVector = Icons.Default.Search,
-                contentDescription = null,
-                modifier = Modifier
-                    .constrainAs(search) {
-                        end.linkTo(shoppingCart.start)
-                        bottom.linkTo(person.bottom)
+        Icon(
+            imageVector = Icons.Default.Search,
+            contentDescription = null,
+            modifier = Modifier
+                .constrainAs(search) {
+                    end.linkTo(shoppingCart.start)
+                    bottom.linkTo(person.bottom)
 
-                    }
-                    .padding(end = 24.dp)
-                    .size(30.dp)
+                }
+                .padding(end = 24.dp)
+                .size(30.dp)
 
-            )
+        )
 
-            Icon(
-                imageVector = Icons.Default.ShoppingCart,
-                contentDescription = null,
-                modifier = Modifier
-                    .constrainAs(shoppingCart) {
-                        end.linkTo(parent.end)
-                        bottom.linkTo(person.bottom)
+        Icon(
+            imageVector = Icons.Default.ShoppingCart,
+            contentDescription = null,
+            modifier = Modifier
+                .constrainAs(shoppingCart) {
+                    end.linkTo(parent.end)
+                    bottom.linkTo(person.bottom)
 
-                    }
-                    .size(35.dp)
-                    .padding(end = 16.dp)
+                }
+                .size(35.dp)
+                .padding(end = 16.dp)
 
-            )
+        )
 
-        }
+    }
 
 }
 
