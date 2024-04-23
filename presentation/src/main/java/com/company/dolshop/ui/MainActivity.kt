@@ -45,8 +45,6 @@ class splashScreenViewModel : ViewModel() {
 class MainActivity : ComponentActivity() {
     private val splashViewModel by viewModels<splashScreenViewModel>()
 
-
-
     private val tempViewModel : TempViewModel by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
 

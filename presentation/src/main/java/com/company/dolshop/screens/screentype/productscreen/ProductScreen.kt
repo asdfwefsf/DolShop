@@ -78,7 +78,6 @@ fun firstBaseScreen() {
             .background(Color.White)
     ) {
         val (person , text , search , shoppingCart) = createRefs()
-
             Icon(
                 imageVector = Icons.Default.Person,
                 contentDescription = null,
