@@ -137,7 +137,7 @@ fun BottomNav() {
         if (false) {
             route = ScreenList.LoginScreen.route
         } else {
-            route = ScreenList.RocksScreen.route
+            route = ScreenList.ProductScreen.route
         }
 
         NavHost(navController = navController, startDestination = route) {

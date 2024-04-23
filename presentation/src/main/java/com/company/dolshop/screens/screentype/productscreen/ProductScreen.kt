@@ -1,55 +1,53 @@
 package com.company.dolshop.screens.screentype.productscreen
 
-import android.util.Log
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.border
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Person
+import androidx.compose.material.icons.filled.Search
+import androidx.compose.material.icons.filled.ShoppingCart
 import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
-import coil.compose.rememberImagePainter
 import coil.request.ImageRequest
-import com.company.dolshop.designsystem.Paddings
+import com.company.dolshop.designsystem.DolShopTheme
 import com.company.dolshop.viewmodel.getProductViewModel
 import com.company.domain.model.DomainProductModel
-import com.company.presentation.R
-import kotlinx.coroutines.flow.MutableStateFlow
 
 @Composable
 fun ProductScreen(innerPadding: PaddingValues) {
     val getProductViewModel: getProductViewModel = hiltViewModel()
     val productList = getProductViewModel.product.collectAsState()
-    Text("ProductScreen")
     if (productList.value.isEmpty()) {
         CircularProgressIndicator()
     } else {
         Column {
+            // add BaseProduct Screen
+
+            firstBaseScreen()
+
+            // add BaseProduct Screen
 
             LazyColumn(
                 modifier = Modifier.padding(innerPadding),
@@ -58,9 +56,9 @@ fun ProductScreen(innerPadding: PaddingValues) {
             ) {
 
                 items(productList.value.size) {
+                    val product = productList.value[it]
                     productItemScreen(
-                        Image = productList.value[it].image,
-                        Name = productList.value[it].name,
+                        product,
                         onClick = {}
                     )
 
@@ -71,18 +69,83 @@ fun ProductScreen(innerPadding: PaddingValues) {
     }
 }
 
-
 @Composable
-fun productItemScreen(Image: String, Name: String, onClick: (category: String) -> Unit) {
+fun firstBaseScreen() {
     ConstraintLayout(
         modifier = Modifier
-            .fillMaxWidth(0.5f)
+            .fillMaxWidth()
+            .padding(bottom = 64.dp)
+            .background(Color.White)
+    ) {
+        val (person , text , search , shoppingCart) = createRefs()
+
+            Icon(
+                imageVector = Icons.Default.Person,
+                contentDescription = null,
+                modifier = Modifier
+                    .constrainAs(person) {
+                        start.linkTo(parent.start)
+                    }
+                    .size(40.dp)
+                    .padding(start = 16.dp)
+            )
+
+            Text(
+                text = "내 친구 돌돌이",
+                modifier = Modifier
+                    .constrainAs(text) {
+                        start.linkTo(person.end)
+                        end.linkTo(search.start)
+                        bottom.linkTo(person.bottom)
+                    }
+                    .padding(start = 16.dp),
+                textAlign = TextAlign.Center,
+                fontSize = 24.sp
+                )
+
+            Icon(
+                imageVector = Icons.Default.Search,
+                contentDescription = null,
+                modifier = Modifier
+                    .constrainAs(search) {
+                        end.linkTo(shoppingCart.start)
+                        bottom.linkTo(person.bottom)
+
+                    }
+                    .padding(end = 24.dp)
+                    .size(30.dp)
+
+            )
+
+            Icon(
+                imageVector = Icons.Default.ShoppingCart,
+                contentDescription = null,
+                modifier = Modifier
+                    .constrainAs(shoppingCart) {
+                        end.linkTo(parent.end)
+                        bottom.linkTo(person.bottom)
+
+                    }
+                    .size(35.dp)
+                    .padding(end = 16.dp)
+
+            )
+
+        }
+
+}
+
+@Composable
+fun productItemScreen(product: DomainProductModel, onClick: (category: String) -> Unit) {
+    ConstraintLayout(
+        modifier = Modifier
+            .fillMaxWidth()
             .fillMaxHeight(0.25f)
     ) {
         val (image, text) = createRefs()
         AsyncImage(
             model = ImageRequest.Builder(LocalContext.current)
-                .data(Image)
+                .data(product.image)
                 .crossfade(true)
                 .build(),
             contentDescription = null,
@@ -91,10 +154,10 @@ fun productItemScreen(Image: String, Name: String, onClick: (category: String) -
                     start.linkTo(parent.start)
                     top.linkTo(parent.top)
                 }
-                .clickable { onClick(Name) } // Handle click event
+                .clickable { onClick(product.name) } // Handle click event
         )
         Text(
-            text = Name,
+            text = product.name,
             modifier = Modifier.constrainAs(text) {
                 start.linkTo(image.start)
                 top.linkTo(image.bottom)
@@ -102,24 +165,12 @@ fun productItemScreen(Image: String, Name: String, onClick: (category: String) -
             }
         )
     }
+}
 
-//    Box(
-//        modifier = Modifier
-//            .fillMaxWidth(0.5f)
-//            .fillMaxHeight(0.25f)
-//
-//    ) {
-//        AsyncImage(
-//            model = ImageRequest.Builder(LocalContext.current)
-//                .data(Image)
-//                .crossfade(true)
-//                .build(),
-//            contentDescription = null,
-//            contentScale = ContentScale.Crop,
-//            modifier = Modifier
-//                .fillMaxSize()
-//                .clickable { Log.d("haha", "haha") }
-//        )
-//    }
-//    Text(text = Name)
+@Preview
+@Composable
+fun testFirstBaseScreen() {
+    DolShopTheme {
+        firstBaseScreen()
+    }
 }
