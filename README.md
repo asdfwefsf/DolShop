@@ -22,7 +22,7 @@
 2. SettingScreen -> MyPageScreen 완료
 
 2024-04-23
-1. Product Screen UI 
+1. Product Screen UI (ing day 1)
 2. BaseProduct Screen UI Room Db Save
 3. CoroutineWorker 앱 최초 실행 , 앱 빌드 실행 함수 : BaseProduct Screnn Data Room Db Save Function
 4. Navigation Bar Counter ViewModel Setting
