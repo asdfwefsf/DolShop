@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.room.Room
 import com.company.data.datasource.userinfo.UserInfoDao
 import com.company.data.datasource.userinfo.UserInfoDatabase
+import com.company.data.repositoryimpl.CoroutineWorkerRepositoryImpl
 import com.company.data.repositoryimpl.GetBaseProductRespositoryImpl
 import com.company.data.repositoryimpl.KakaoLoginRepositoryImpl
 import com.company.data.repositoryimpl.KakaoLogoutRepositoryImpl
@@ -11,6 +12,7 @@ import com.company.data.repositoryimpl.TestRepositoryImpl
 import com.company.data.repositoryimpl.UpdateKakaoUserInfoRepositoryImpl
 import com.company.data.repositoryimpl.getProductRepositoryImpl
 import com.company.data.repositoryimpl.getUserKakaoInfoRepositoryImpl
+import com.company.domain.repository.CoroutineWorkerRepository
 import com.company.domain.repository.GetBaseProductRepository
 import com.company.domain.repository.KakaoLoginRepository
 import com.company.domain.repository.KakaoLogoutRepository
@@ -46,6 +48,8 @@ object DataModule {
     fun provideGetProductRepository(impl: getProductRepositoryImpl) : getProductRepository = impl
     @Provides
     fun provideGetBaseProductRepository(impl: GetBaseProductRespositoryImpl) : GetBaseProductRepository = impl
+    @Provides
+    fun provideCoroutineWorkerRepository(impl: CoroutineWorkerRepositoryImpl) : CoroutineWorkerRepository = impl
 
 
 

@@ -15,7 +15,7 @@ class GetBaseProductRespositoryImpl @Inject constructor(
     private val productAPI : ProductAPI
 ) : GetBaseProductRepository {
     override fun getBaseProductList(): Flow<List<DomainProductModel>> = flow {
-        val response = productAPI.getProduct()
+        val response = productAPI.getBaseProduct()
         if (response.isSuccessful) {
             response.body()?.let { responseBody ->
                 emit(responseBody.map { it.toDomainProductModel() })

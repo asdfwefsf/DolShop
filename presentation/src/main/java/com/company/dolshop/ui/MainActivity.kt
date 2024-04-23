@@ -22,7 +22,9 @@ import androidx.lifecycle.viewModelScope
 import androidx.navigation.compose.rememberNavController
 import com.company.dolshop.screens.screentype.bottomnavscreen.BottomNav
 import com.company.dolshop.screens.screentype.subscreen.LoginScreen
+import com.company.dolshop.viewmodel.CoroutineWorkerViewModel
 import com.company.dolshop.viewmodel.TempViewModel
+import com.company.domain.usecase.CoroutineWorkerUseCase
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -44,7 +46,7 @@ class splashScreenViewModel : ViewModel() {
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     private val splashViewModel by viewModels<splashScreenViewModel>()
-
+    private val CoroutineWorkerViewModel  by viewModels<CoroutineWorkerViewModel>()
     private val tempViewModel : TempViewModel by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -85,6 +87,8 @@ class MainActivity : ComponentActivity() {
 
 
         setContent {
+            CoroutineWorkerViewModel.test(this)
+
             DolShopTheme {
                 Surface(
                     modifier = Modifier.fillMaxSize(),
