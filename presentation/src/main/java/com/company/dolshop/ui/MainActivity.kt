@@ -1,6 +1,9 @@
 package com.company.dolshop.ui
 
+import android.animation.ObjectAnimator
 import android.os.Bundle
+import android.view.View
+import android.view.animation.OvershootInterpolator
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.viewModels
@@ -12,18 +15,77 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import com.company.dolshop.designsystem.DolShopTheme
 import androidx.compose.ui.graphics.Color
+import androidx.core.animation.doOnEnd
+import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import androidx.navigation.compose.rememberNavController
 import com.company.dolshop.screens.screentype.bottomnavscreen.BottomNav
 import com.company.dolshop.screens.screentype.subscreen.LoginScreen
 import com.company.dolshop.viewmodel.TempViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.launch
+
+class splashScreenViewModel : ViewModel() {
+    private val _isReady = MutableStateFlow(false)
+    val isReady = _isReady.asStateFlow()
+
+    init {
+        viewModelScope.launch {
+            delay(10L)
+            _isReady.value = true
+        }
+    }
+}
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
+    private val splashViewModel by viewModels<splashScreenViewModel>()
+
+
+
     private val tempViewModel : TempViewModel by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
+        installSplashScreen().apply {
+            setKeepOnScreenCondition {
+                !splashViewModel.isReady.value
+            }
+            setOnExitAnimationListener { screen ->
+                val zoomX = ObjectAnimator.ofFloat(
+                    screen.iconView,
+                    View.SCALE_X,
+                    0.1f,
+                    2f,
+                    1.0f
+                )
+                zoomX.interpolator = OvershootInterpolator()
+                zoomX.duration = 1500L
+                zoomX.doOnEnd { screen.remove() }
+
+                val zoomY = ObjectAnimator.ofFloat(
+                    screen.iconView,
+                    View.SCALE_Y,
+                    0.1f,
+                    2f,
+                    1.0f
+                )
+                zoomY.interpolator = OvershootInterpolator()
+                zoomY.duration = 1500L
+                zoomY.doOnEnd { screen.remove() }
+
+
+
+                zoomX.start()
+                zoomY.start()
+            }
+        }
+
+
         setContent {
             DolShopTheme {
                 Surface(
@@ -31,10 +93,14 @@ class MainActivity : ComponentActivity() {
                     color = MaterialTheme.colorScheme.background
                 ) {
                     BottomNav()
+
+
                 }
             }
         }
+
     }
 }
+
 
 

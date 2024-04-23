@@ -129,6 +129,10 @@ fun DependencyHandler.constraint() {
     implementation(Dependencies.COMPOSECONSTRAINT)
 }
 
+fun DependencyHandler.splash() {
+    implementation(Dependencies.SPLASHSCREEN)
+}
+
 
 //fun DependencyHandler.retrofit() {
 //    implementation(Dependencies.retrofit)

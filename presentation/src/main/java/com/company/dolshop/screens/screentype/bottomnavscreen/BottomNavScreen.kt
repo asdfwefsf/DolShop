@@ -20,6 +20,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import androidx.core.splashscreen.SplashScreen
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -34,6 +35,7 @@ import com.company.dolshop.screens.screentype.mypagescreen.AuthInfoScreen
 import com.company.dolshop.screens.screentype.mypagescreen.LogoutScreen
 import com.company.dolshop.screens.screentype.mypagescreen.MyPageScreen
 import com.company.dolshop.screens.screentype.subscreen.LoginScreen
+import com.company.dolshop.ui.splashScreenViewModel
 import com.company.dolshop.viewmodel.KakaoAuthiViewModel
 import com.company.presentation.R
 
@@ -89,6 +91,7 @@ fun BottomNav() {
     }
 
     var route: String
+    var showSplashScreen by rememberSaveable { mutableStateOf(false) }
 
     Scaffold(
         containerColor = MaterialTheme.colorScheme.background,
@@ -101,6 +104,14 @@ fun BottomNav() {
                     items.forEachIndexed { index, bottomNavItem ->
                         NavigationBarItem(
                             selected = selectedItemIndex == index,
+//                            onClick = {
+//                                // Show splash screen only when navigating to the ProductScreen
+//                                selectedItemIndex = index
+//                                showSplashScreen = currentRoute != ScreenList.ProductScreen.route
+//                                navController.navigate(bottomNavItem.title) {
+//                                    launchSingleTop = true
+//                                }
+//                            },
                             onClick = {
                                 selectedItemIndex = index
                                 // 내가 클릭한 바텀네비게이션의 아이콘의 title에 해당하는 경로로 이동한다.
@@ -139,7 +150,6 @@ fun BottomNav() {
         } else {
             route = ScreenList.ProductScreen.route
         }
-
         NavHost(navController = navController, startDestination = route) {
             composable(route = ScreenList.CommunityScreen.route) {
                 CommunityScreen()
