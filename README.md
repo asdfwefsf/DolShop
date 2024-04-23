@@ -16,13 +16,18 @@
 
 2024-04-20
 1. kakao 로그인 연동 완료
-2. kakao 로그인 정보 저장 완료
 
 2024-04-21
-1. Firebase DB 연동 완료
-2. 상품 json 데이터 받아오기 + UI에 넣기
-3. SettingScreen -> MyPageScreen 완료
+1. 상품 json 데이터 받아오기 + UI에 넣기 완료
+2. SettingScreen -> MyPageScreen 완료
 
+2024-04-23
+1. Product Screen UI 
+2. BaseProduct Screen UI Room Db Save
+3. CoroutineWorker 앱 최초 실행 , 앱 빌드 실행 함수 : BaseProduct Screnn Data Room Db Save Function
+4. Navigation Bar Counter ViewModel Setting
+5. DDD 세팅
+6. Figma Setting
 
 
 # 적용된 안드로이드 개념
@@ -42,12 +47,8 @@
 # 적용된 안드로이드 개념 이론 정리
 
 
-12. BottomNavigation(Scaffold -> bottomBar)
-=>
-
-
 # Network
-1. Firebase Realtime DB
+1. Firebase Realtime DataBase
 2. JSONBin.io
 
 # TODO
@@ -58,13 +59,17 @@
 5. DDD 설계(-ing)
 6. DDD 용어 정리(O)
 7. DDD에서 추가로 사용할 용어 정리(O)
-8. Navigation UI Setting
+8. Navigation UI Setting (-ing)
 9. kakao 로그인 연동(O)
-10. kakao 로그인 정보 저장(O)
-11. Firebase DB 연동(O)
-12. 상품 json 데이터 받아오기 + UI에 넣기
+10. kakao 로그인 정보 저장
+11. Firebase DB 연동
+12. 상품 json 데이터 받아오기 + UI에 넣기(O)
 13. BottomBar Navigation Setting(O)
-14. SettingScreen -> MyPageScreen(O)
+14. MyPageScreen -> SettingScreen(O)
+15. Product Screen UI 
+16. BaseProduct Screen UI Room Db Save
+17. CoroutineWorker 앱 최초 실행 , 앱 빌드 실행 함수 : BaseProduct Screnn Data Room Db Save Function
+18. Navigation Bar Counter ViewModel Setting
 
 
 
