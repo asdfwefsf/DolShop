@@ -23,12 +23,17 @@
 
 2024-04-23
 1. Product Screen UI (ing day 1)
-2. BaseProduct Screen UI Room Db Save (완료)
-3. CoroutineWorker 앱 최초 실행 , 앱 빌드 실행 함수 : BaseProduct Screnn Data Room Db Save Function (완료)
-4. Navigation Bar Counter ViewModel Setting (완료)
-5. DDD 세팅 (미완)
-6. Figma Setting (미완)
+2. CoroutineWorker 앱 최초 실행 , 앱 빌드 실행 함수 : BaseProduct Screnn Data Room Db Save Function (완료)
+3. Navigation Bar Counter ViewModel Setting (완료)
+4. DDD 세팅 (미완)
+5. Figma Setting (미완)
 
+2024-04-24
+1. BaseProduct Screen UI Room Db Save (완료)
+
+2024-04-25
+1. Product Screen UI Perfect Setting
+2. 
 
 # 적용된 안드로이드 개념
 1. Presentation -> Domain <- Data : 공식문서에서 지향하는 클린 아키텍처와 다른 안드로이드 클린아키텍처
