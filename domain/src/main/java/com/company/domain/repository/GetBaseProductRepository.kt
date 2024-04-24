@@ -4,5 +4,5 @@ import com.company.domain.model.DomainProductModel
 import kotlinx.coroutines.flow.Flow
 
 interface GetBaseProductRepository {
-    fun getBaseProductList() : Flow<List<DomainProductModel>>
+    suspend fun getBaseProductList()
 }

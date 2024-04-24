@@ -45,16 +45,21 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.company.dolshop.designsystem.DolShopTheme
+import com.company.dolshop.viewmodel.GetBaseProductViewModel
 import com.company.dolshop.viewmodel.getProductViewModel
 import com.company.domain.model.DomainProductModel
 import kotlin.math.absoluteValue
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun ProductScreen(innerPadding: PaddingValues) {
+fun ProductScreen(innerPadding: PaddingValues , count : Int) {
     val getProductViewModel: getProductViewModel = hiltViewModel()
     val productList = getProductViewModel.product.collectAsState()
-    if (productList.value.isEmpty()) {
+
+    val getBaseProductViewModel : GetBaseProductViewModel = hiltViewModel()
+    val baseProductList = getBaseProductViewModel.Product.collectAsState()
+
+    if (productList.value.isEmpty() || baseProductList.value.isEmpty()) {
         CircularProgressIndicator()
     } else {
         Column {
@@ -66,38 +71,40 @@ fun ProductScreen(innerPadding: PaddingValues) {
             // add BaseProduct Screen
 
             // add test
-//            val horizontalPagerState = rememberPagerState(
-//                pageCount = {
-//                    10
-//                },
-//                initialPage = 0
-//
-//            )
-//            HorizontalPager(
-//                state = horizontalPagerState,
-//                modifier = Modifier.size(250.dp),
-//            ) { page ->
-//                Box(
-//                    modifier = Modifier
-//                        .size(250.dp)
-//                        .applyCubic(horizontalPagerState, page)
-//                ) {
-//                    AsyncImage(
-//                        model = ImageRequest.Builder(LocalContext.current)
-//                            .data(test[page])
-//                            .crossfade(true)
-//                            .build(),
-//                        contentDescription = null,
-//                        contentScale = ContentScale.Crop,
-//                        modifier = Modifier
-//                            .fillMaxSize()
-//                            .clickable { Log.d("haha", "haha") }
-//                    )
-//                    LaunchedEffect(key1 = horizontalPagerState.currentPage) {
-//                        imageLinkViewModel.save(horizontalPagerState.currentPage)
-//                    }
-//                }
-//            }
+            val horizontalPagerState = rememberPagerState(
+                pageCount = {
+                    baseProductList.value.size
+//                            10
+                },
+                initialPage = count
+//                initialPage = 5
+
+            )
+            HorizontalPager(
+                state = horizontalPagerState,
+                modifier = Modifier.size(250.dp),
+            ) { page ->
+                Box(
+                    modifier = Modifier
+                        .size(250.dp)
+                        .applyCubic(horizontalPagerState, page)
+                ) {
+                    AsyncImage(
+                        model = ImageRequest.Builder(LocalContext.current)
+                            .data(baseProductList.value[page].image)
+                            .crossfade(true)
+                            .build(),
+                        contentDescription = null,
+                        contentScale = ContentScale.Crop,
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .clickable { Log.d("haha", "haha") }
+                    )
+                    LaunchedEffect(key1 = horizontalPagerState.currentPage) {
+                        getBaseProductViewModel.save(horizontalPagerState.currentPage)
+                    }
+                }
+            }
             // add test
 
             LazyColumn(
@@ -219,40 +226,40 @@ fun productItemScreen(product: DomainProductModel, onClick: (category: String) -
 
 // add test
 
-//@OptIn(ExperimentalFoundationApi::class)
-//fun Modifier.applyCubic(state: PagerState, page: Int, horizontal: Boolean = true): Modifier {
-//    return graphicsLayer {
-//        val pageOffset = state.offsetForPage(page)
-//        val offScreenRight = pageOffset < 0f
-//        val def = if (horizontal) {
-//            105f
-//        } else {
-//            -90f
-//        }
-//        val interpolated = FastOutLinearInEasing.transform(pageOffset.absoluteValue)
-//        val rotation = (interpolated * if (offScreenRight) def else -def).coerceAtMost(90f)
-//        if (horizontal) {
-//            rotationY = rotation
-//        } else {
-//            rotationX = rotation
-//        }
-//
-//        transformOrigin = if (horizontal) {
-//            TransformOrigin(
-//                pivotFractionX = if (offScreenRight) 0f else 1f,
-//                pivotFractionY = .5f
-//            )
-//        } else {
-//            TransformOrigin(
-//                pivotFractionY = if (offScreenRight) 0f else 1f,
-//                pivotFractionX = .5f
-//            )
-//        }
-//    }
-//}
-//
-//@OptIn(ExperimentalFoundationApi::class)
-//fun PagerState.offsetForPage(page: Int) = (currentPage - page) + currentPageOffsetFraction
+@OptIn(ExperimentalFoundationApi::class)
+fun Modifier.applyCubic(state: PagerState, page: Int, horizontal: Boolean = true): Modifier {
+    return graphicsLayer {
+        val pageOffset = state.offsetForPage(page)
+        val offScreenRight = pageOffset < 0f
+        val def = if (horizontal) {
+            105f
+        } else {
+            -90f
+        }
+        val interpolated = FastOutLinearInEasing.transform(pageOffset.absoluteValue)
+        val rotation = (interpolated * if (offScreenRight) def else -def).coerceAtMost(90f)
+        if (horizontal) {
+            rotationY = rotation
+        } else {
+            rotationX = rotation
+        }
+
+        transformOrigin = if (horizontal) {
+            TransformOrigin(
+                pivotFractionX = if (offScreenRight) 0f else 1f,
+                pivotFractionY = .5f
+            )
+        } else {
+            TransformOrigin(
+                pivotFractionY = if (offScreenRight) 0f else 1f,
+                pivotFractionX = .5f
+            )
+        }
+    }
+}
+
+@OptIn(ExperimentalFoundationApi::class)
+fun PagerState.offsetForPage(page: Int) = (currentPage - page) + currentPageOffsetFraction
 
 // add test
 

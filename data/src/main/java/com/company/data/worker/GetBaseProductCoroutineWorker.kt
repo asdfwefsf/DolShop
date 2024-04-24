@@ -21,7 +21,6 @@ class GetBaseProductCoroutineWorker @AssistedInject constructor(
     @Assisted context: Context,
     @Assisted workerParams: WorkerParameters,
     private val GetBaseProductRespositoryImpl: GetBaseProductRespositoryImpl,
-    private val CoroutineWorkerRepositoryImpl : CoroutineWorkerRepositoryImpl
 ) : CoroutineWorker(context, workerParams) {
     override suspend fun doWork(): Result = coroutineScope{
         try {

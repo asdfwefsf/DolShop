@@ -135,6 +135,9 @@ fun DependencyHandler.hiltWorker() {
     kapt(Dependencies.HILT_WORKER_COMPILER)
 }
 
+fun DependencyHandler.composeLifeCycle() {
+    implementation(Dependencies.COMPOSELIFECYCLE)
+}
 
 //fun DependencyHandler.retrofit() {
 //    implementation(Dependencies.retrofit)

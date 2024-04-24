@@ -2,6 +2,9 @@ package com.company.dolshop.di
 
 import android.content.Context
 import androidx.room.Room
+import com.company.data.datasource.baseproductinfo.BaseProductDao
+import com.company.data.datasource.baseproductinfo.BaseProductInfo
+import com.company.data.datasource.baseproductinfo.BaseProductInfoDataBase
 import com.company.data.datasource.userinfo.UserInfoDao
 import com.company.data.datasource.userinfo.UserInfoDatabase
 import com.company.data.repositoryimpl.CoroutineWorkerRepositoryImpl
@@ -75,6 +78,29 @@ object DataModule {
     fun providegetUserKakaoInfoRepositoryImpl(
         dao : UserInfoDao
     ) : getUserKakaoInfoRepositoryImpl = getUserKakaoInfoRepositoryImpl(dao)
+
+    @Provides
+    @Singleton
+    fun provideBaseProductInfoDataBase(@ApplicationContext appContext: Context): BaseProductInfoDataBase {
+        return Room.databaseBuilder(
+            appContext,
+            BaseProductInfoDataBase::class.java,
+            "base_product_database"
+        ).build()
+    }
+
+
+    @Provides
+    fun provideBaseProductDao(database: BaseProductInfoDataBase) : BaseProductDao {
+        return database.dao
+    }
+//
+//    @Provides
+//    @Singleton
+//    fun provideGetBaseProductRespositoryImpl(
+//        dao : BaseProductDao
+//    ) : GetBaseProductRespositoryImpl = GetBaseProductRespositoryImpl(dao)
+//
 
 
 }

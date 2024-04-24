@@ -8,7 +8,7 @@ import javax.inject.Inject
 class GetBaseProductUseCase @Inject constructor(
     private val repositoy : GetBaseProductRepository
 ) {
-    operator fun invoke() : Flow<List<DomainProductModel>> {
-        return repositoy.getBaseProductList()
+    suspend operator fun  invoke() {
+        repositoy.getBaseProductList()
     }
 }
