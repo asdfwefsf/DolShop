@@ -1,4 +1,4 @@
-package com.company.data.repositoryimpl
+package com.company.data.worker
 
 import android.util.Log
 import com.company.data.datasource.baseproductinfo.BaseProductDao
@@ -8,7 +8,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
-class GetBaseProductRespositoryImpl @Inject constructor(
+class GetBaseProductWorkerFunction @Inject constructor(
     private val productAPI: ProductAPI,
     private val dao: BaseProductDao
 )  {
