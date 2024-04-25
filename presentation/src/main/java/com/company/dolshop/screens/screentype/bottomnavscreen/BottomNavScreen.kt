@@ -12,7 +12,6 @@ import androidx.compose.material3.NavigationBarItemDefaults
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
@@ -21,7 +20,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
-import androidx.core.splashscreen.SplashScreen
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.compose.NavHost
@@ -31,15 +29,14 @@ import androidx.navigation.compose.rememberNavController
 import com.company.dolshop.screens.ScreenList
 import com.company.dolshop.screens.screentype.announcementscreen.AnnouncementScreen
 import com.company.dolshop.screens.screentype.communityscreen.CommunityScreen
-import com.company.dolshop.screens.screentype.productscreen.ProductScreen
-import com.company.dolshop.screens.screentype.rockscreen.RocksScreen
 import com.company.dolshop.screens.screentype.mypagescreen.AuthInfoScreen
 import com.company.dolshop.screens.screentype.mypagescreen.LogoutScreen
 import com.company.dolshop.screens.screentype.mypagescreen.MyPageScreen
+import com.company.dolshop.screens.screentype.productscreen.ProductScreen
+import com.company.dolshop.screens.screentype.rockscreen.RocksScreen
 import com.company.dolshop.screens.screentype.subscreen.LoginScreen
-import com.company.dolshop.ui.splashScreenViewModel
-import com.company.dolshop.viewmodel.GetBaseProductViewModel
 import com.company.dolshop.viewmodel.KakaoAuthiViewModel
+import com.company.dolshop.viewmodel.UpdateBaseProductViewModel
 import com.company.presentation.R
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -159,7 +156,7 @@ fun BottomNav() {
             }
 
             composable(route = ScreenList.ProductScreen.route) {
-                val viewmodel = hiltViewModel<GetBaseProductViewModel>()
+                val viewmodel = hiltViewModel<UpdateBaseProductViewModel>()
                 val count by viewmodel.page.collectAsStateWithLifecycle()
                 ProductScreen(innerPadding , count)
             }

@@ -20,7 +20,7 @@ interface BaseProductDao {
     fun updateBaseProductInfo(baseProductInfo: BaseProductInfo)
 
     @Query("SELECT * FROM baseproductinfo ORDER BY id DESC")
-    fun getBaseProductInfo() : Flow<BaseProductInfo>
+    fun getBaseProductInfo() : Flow<List<BaseProductInfo>>
 
     @Query("SELECT EXISTS(SELECT 1 FROM baseproductinfo WHERE id = :id)")
     fun prodideProductExists(id: Int): Boolean

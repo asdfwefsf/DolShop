@@ -45,7 +45,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.company.dolshop.designsystem.DolShopTheme
-import com.company.dolshop.viewmodel.GetBaseProductViewModel
+import com.company.dolshop.viewmodel.UpdateBaseProductViewModel
 import com.company.dolshop.viewmodel.getProductViewModel
 import com.company.domain.model.DomainProductModel
 import kotlin.math.absoluteValue
@@ -54,14 +54,14 @@ import kotlin.math.absoluteValue
 @Composable
 fun ProductScreen(innerPadding: PaddingValues , count : Int) {
     val getProductViewModel: getProductViewModel = hiltViewModel()
-    val productList = getProductViewModel.product.collectAsState()
+    val changPproductList = getProductViewModel.product.collectAsState()
 
-    val getBaseProductViewModel : GetBaseProductViewModel = hiltViewModel()
-    val baseProductList = getBaseProductViewModel.Product.collectAsState()
+    val updateBaseProductViewModel : UpdateBaseProductViewModel = hiltViewModel()
+    val baseProductList = updateBaseProductViewModel.Product.collectAsState()
 
-    if (productList.value.isEmpty() || baseProductList.value.isEmpty()) {
-        CircularProgressIndicator()
-    } else {
+//    if (changPproductList.value.isEmpty() || baseProductList.value.isEmpty()) {
+//        CircularProgressIndicator()
+//    } else {
         Column {
             // add BaseProduct Screen
 
@@ -101,31 +101,31 @@ fun ProductScreen(innerPadding: PaddingValues , count : Int) {
                             .clickable { Log.d("haha", "haha") }
                     )
                     LaunchedEffect(key1 = horizontalPagerState.currentPage) {
-                        getBaseProductViewModel.save(horizontalPagerState.currentPage)
+                        updateBaseProductViewModel.save(horizontalPagerState.currentPage)
                     }
                 }
             }
             // add test
 
-            LazyColumn(
-                modifier = Modifier.padding(innerPadding),
-                contentPadding = PaddingValues(8.dp),
-                verticalArrangement = Arrangement.SpaceAround,
-            ) {
-
-                items(productList.value.size) {
-                    val product = productList.value[it]
-                    productItemScreen(
-                        product,
-                        onClick = {}
-                    )
-
-                }
-            }
+//            LazyColumn(
+//                modifier = Modifier.padding(innerPadding),
+//                contentPadding = PaddingValues(8.dp),
+//                verticalArrangement = Arrangement.SpaceAround,
+//            ) {
+//
+//                items(changPproductList.value.size) {
+//                    val product = changPproductList.value[it]
+//                    productItemScreen(
+//                        product,
+//                        onClick = {}
+//                    )
+//
+//                }
+//            }
         }
 
     }
-}
+//}
 
 @Composable
 fun firstBaseScreen() {

@@ -4,36 +4,40 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.company.dolshop.counter.ImageCounter
 import com.company.domain.model.DomainProductModel
-import com.company.domain.usecase.GetBaseProductUseCase
+import com.company.domain.usecase.UpdateBaseProductUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class GetBaseProductViewModel @Inject constructor(
-    private val GetBaseProductUseCase : GetBaseProductUseCase,
+class UpdateBaseProductViewModel @Inject constructor(
+    private val updateGetBaseProductUseCase: UpdateBaseProductUseCase,
     private val imageCounter: ImageCounter
-) : ViewModel(){
+) : ViewModel() {
 
     private val _baseProduct = MutableStateFlow<List<DomainProductModel>>(emptyList())
-    val Product : MutableStateFlow<List<DomainProductModel>> = _baseProduct
+    val Product: MutableStateFlow<List<DomainProductModel>> = _baseProduct
 
-//    suspend fun getBaseProductList() {
-//        GetBaseProductUseCase().collect {
-//            _baseProduct.value = it
-//        }
-//    }
+    suspend fun updateBaseProductList() {
+        updateGetBaseProductUseCase().collect {
+            _baseProduct.value = it
+        }
+    }
 
-//    init {
+    init {
 //        viewModelScope.launch {
-//            getBaseProductList()
+//            updateBaseProductList()
 //        }
-//    }
+        viewModelScope.launch {
+            updateBaseProductList()
+
+        }
+    }
 
 
     val page = imageCounter.count
-    fun save(pageNum : Int) {
+    fun save(pageNum: Int) {
         imageCounter.savePage(pageNum)
     }
 

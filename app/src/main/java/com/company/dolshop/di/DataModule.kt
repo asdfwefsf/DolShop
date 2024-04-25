@@ -3,27 +3,25 @@ package com.company.dolshop.di
 import android.content.Context
 import androidx.room.Room
 import com.company.data.datasource.baseproductinfo.BaseProductDao
-import com.company.data.datasource.baseproductinfo.BaseProductInfo
 import com.company.data.datasource.baseproductinfo.BaseProductInfoDataBase
 import com.company.data.datasource.userinfo.UserInfoDao
 import com.company.data.datasource.userinfo.UserInfoDatabase
 import com.company.data.repositoryimpl.CoroutineWorkerRepositoryImpl
-import com.company.data.repositoryimpl.GetBaseProductRespositoryImpl
 import com.company.data.repositoryimpl.KakaoLoginRepositoryImpl
 import com.company.data.repositoryimpl.KakaoLogoutRepositoryImpl
 import com.company.data.repositoryimpl.TestRepositoryImpl
+import com.company.data.repositoryimpl.UpdateBaseProductRepositoryImpl
 import com.company.data.repositoryimpl.UpdateKakaoUserInfoRepositoryImpl
 import com.company.data.repositoryimpl.getProductRepositoryImpl
 import com.company.data.repositoryimpl.getUserKakaoInfoRepositoryImpl
 import com.company.domain.repository.CoroutineWorkerRepository
-import com.company.domain.repository.GetBaseProductRepository
 import com.company.domain.repository.KakaoLoginRepository
 import com.company.domain.repository.KakaoLogoutRepository
 import com.company.domain.repository.TempRepository
+import com.company.domain.repository.UpdateBaseProductRepository
 import com.company.domain.repository.UpdateKakaoUserInfoRepository
 import com.company.domain.repository.getProductRepository
 import com.company.domain.repository.getUserKakaoInfoRepository
-import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -50,7 +48,7 @@ object DataModule {
     @Provides
     fun provideGetProductRepository(impl: getProductRepositoryImpl) : getProductRepository = impl
     @Provides
-    fun provideGetBaseProductRepository(impl: GetBaseProductRespositoryImpl) : GetBaseProductRepository = impl
+    fun provideUpdateBaseProductRepository(impl: UpdateBaseProductRepositoryImpl) : UpdateBaseProductRepository = impl
     @Provides
     fun provideCoroutineWorkerRepository(impl: CoroutineWorkerRepositoryImpl) : CoroutineWorkerRepository = impl
 
