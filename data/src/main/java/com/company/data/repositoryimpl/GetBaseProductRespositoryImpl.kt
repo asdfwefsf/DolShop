@@ -25,12 +25,25 @@ class GetBaseProductRespositoryImpl @Inject constructor(
         if (response.isSuccessful && responseBody != null) {
             withContext(Dispatchers.IO) {
                 responseBody.forEach {
-                    dao.upsertBaseProductInfo(
-                        BaseProductInfo(
-                            image = it.image,
-                            name = it.name
+                    if(dao.prodideProductExists(0)) {
+                        dao.insertBaseProductInfo(
+                            BaseProductInfo(
+                                image = it.image,
+                                name = it.name
+                            )
                         )
-                    )
+                        Log.d("daoTest" , "insert")
+                    } else {
+                        dao.updateBaseProductInfo(
+                            BaseProductInfo(
+                                image = it.image,
+                                name = it.name
+                            )
+                        )
+                        Log.d("daoTest" , "update")
+
+                    }
+
                 }
             }
     }
