@@ -119,7 +119,7 @@ fun ProductScreen(innerPadding: PaddingValues, count: Int) {
 
     // sujeong
     LazyColumn(
-        modifier = Modifier.fillMaxSize(),
+        modifier = Modifier.fillMaxSize().padding(innerPadding),
         state = listState
     ) {
         // sujeong
@@ -145,7 +145,7 @@ fun ProductScreen(innerPadding: PaddingValues, count: Int) {
 
         }
         item {
-            firstChangeScreen(innerPadding, changPproductList, listState, getProductViewModel)
+            firstChangeScreen(changPproductList, listState, getProductViewModel)
 
         }
 
@@ -318,7 +318,6 @@ fun circleBaseItem2() {
 
 @Composable
 fun firstChangeScreen(
-    innerPadding: PaddingValues,
     changPproductList: State<List<DomainProductModel>>,
     lazyListState: LazyListState,
     viewmodel: getProductViewModel,
