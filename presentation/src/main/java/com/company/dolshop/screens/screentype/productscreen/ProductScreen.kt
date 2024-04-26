@@ -2,6 +2,9 @@ package com.company.dolshop.screens.screentype.productscreen
 
 import android.util.Log
 import androidx.compose.animation.core.FastOutLinearInEasing
+import androidx.compose.animation.core.FastOutSlowInEasing
+import androidx.compose.animation.core.LinearOutSlowInEasing
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -49,6 +52,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.TransformOrigin
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.layout.onGloballyPositioned
+import androidx.compose.ui.layout.onSizeChanged
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
@@ -65,6 +70,8 @@ import com.company.dolshop.viewmodel.UpdateBaseProductViewModel
 import com.company.dolshop.viewmodel.getProductViewModel
 import com.company.domain.model.DomainProductModel
 import com.company.presentation.R
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.isActive
 import kotlin.math.absoluteValue
 
 @OptIn(ExperimentalFoundationApi::class)
@@ -119,7 +126,9 @@ fun ProductScreen(innerPadding: PaddingValues, count: Int) {
 
     // sujeong
     LazyColumn(
-        modifier = Modifier.fillMaxSize().padding(innerPadding),
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(innerPadding),
         state = listState
     ) {
         // sujeong
@@ -224,12 +233,15 @@ fun firstBaseScreen() {
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun secondBaseScreen(pagerState: PagerState, viewmodel: UpdateBaseProductViewModel) {
+    val isVisible = remember { mutableStateOf(false) }
 
     HorizontalPager(
         state = pagerState,
         modifier = Modifier
             .fillMaxWidth()
-            .fillMaxHeight(0.5f),
+            .fillMaxHeight(0.5f)
+            .onGloballyPositioned { isVisible.value = true }
+            .onSizeChanged { if (it.width > 0 && it.height > 0) isVisible.value = true },
     ) { page ->
         Box(
             modifier = Modifier
@@ -249,12 +261,96 @@ fun secondBaseScreen(pagerState: PagerState, viewmodel: UpdateBaseProductViewMod
                     .fillMaxSize()
                     .clickable { Log.d("haha", "haha") }
             )
+
             LaunchedEffect(key1 = pagerState.currentPage) {
                 viewmodel.save(pagerState.currentPage)
             }
         }
     }
+    if (isVisible.value) {
+        LaunchedEffect(key1 = Unit) {
+            viewmodel.save(pagerState.currentPage)
+
+            while (isActive) {
+                delay(3000)
+
+                val nextPage = (pagerState.currentPage + 1) % viewmodel.Product.value.size
+                Log.d("nextPage" , (nextPage+1).toString())
+                pagerState.animateScrollToPage(
+                    nextPage,
+                    animationSpec = tween(
+                        durationMillis = 1000,
+                        easing = FastOutSlowInEasing
+                    )
+                )
+            }
+        }
+    }
 }
+
+//@OptIn(ExperimentalFoundationApi::class)
+//@Composable
+//fun secondBaseScreen(pagerState: PagerState, viewmodel: UpdateBaseProductViewModel) {
+//    val isVisible = remember { mutableStateOf(false) }
+//
+//    // 화면에 SecondScreen이 표시될 때 isVisible 상태를 true로 설정
+//    Box(
+//        modifier = Modifier
+//            .fillMaxSize()
+//            .onGloballyPositioned { isVisible.value = true }
+//            .onSizeChanged { if (it.width > 0 && it.height > 0) isVisible.value = true }
+//    ) {
+//        HorizontalPager(
+//            state = pagerState,
+//            modifier = Modifier
+//                .fillMaxWidth()
+//                .fillMaxHeight(0.5f)
+//        ) { page ->
+//            Box(
+//                modifier = Modifier
+//                    .fillMaxWidth()
+//                    .fillMaxHeight()
+//                    .applyCubic(pagerState, page)
+//            ) {
+//                AsyncImage(
+//                    model = ImageRequest.Builder(LocalContext.current)
+//                        .data(viewmodel.Product.collectAsState().value[page].image)
+//                        .placeholder(R.drawable.ic_launcher_background)
+//                        .crossfade(true)
+//                        .build(),
+//                    contentDescription = null,
+//                    contentScale = ContentScale.Crop,
+//                    modifier = Modifier
+//                        .fillMaxSize()
+//                        .clickable { Log.d("haha", "haha") }
+//                )
+//                LaunchedEffect(key1 = pagerState.currentPage) {
+//                    viewmodel.save(pagerState.currentPage)
+//                }
+//            }
+//        }
+//    }
+//
+//    // isVisible이 true일 때만 자동 스크롤 실행
+//    if (isVisible.value) {
+//        LaunchedEffect(key1 = Unit) {
+//            viewmodel.save(pagerState.currentPage)
+//
+//            while (isActive) {
+//                delay(3000)
+//                val nextPage = (viewmodel.page.value) % viewmodel.Product.value.size
+//                Log.d("nextPage", (nextPage + 1).toString())
+//                pagerState.animateScrollToPage(
+//                    nextPage,
+//                    animationSpec = tween(
+//                        durationMillis = 1000,
+//                        easing = FastOutSlowInEasing
+//                    )
+//                )
+//            }
+//        }
+//    }
+//}
 
 @Composable
 fun thirdBaseScreen() {
@@ -480,13 +576,13 @@ fun PagerState.offsetForPage(page: Int) = (currentPage - page) + currentPageOffs
 
 // add test
 
-//@Preview
-//@Composable
-//fun testFirstBaseScreen() {
-//    DolShopTheme {
-//        firstBaseScreen()
-//    }
-//}
+@Preview
+@Composable
+fun testFirstBaseScreen() {
+    DolShopTheme {
+        firstBaseScreen()
+    }
+}
 
 @Preview()
 @Composable
@@ -510,3 +606,10 @@ fun circleBaseItem1Preview() {
     }
 }
 
+@Preview
+@Composable
+fun testProductScreen() {
+    DolShopTheme {
+        ProductScreen(PaddingValues(top = 8.dp), 0)
+    }
+}
