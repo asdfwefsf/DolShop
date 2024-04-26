@@ -258,7 +258,9 @@ fun secondBaseScreen(pagerState: PagerState, viewmodel: UpdateBaseProductViewMod
 
 @Composable
 fun thirdBaseScreen() {
-    Column {
+    Column(
+        modifier = Modifier.padding(top = 4.dp)
+    ) {
         circleBaseItem1()
         circleBaseItem2()
     }
@@ -267,27 +269,30 @@ fun thirdBaseScreen() {
 @Composable
 fun circleBaseItem1() {
     val iconList = listOf(
-        "테스트",
-        "테스트",
-        "테스트",
-        "테스트",
-        "테스트",
-        "테스트",
-        "테스트",
-        "테스트",
-        "테스트",
-        "테스트",
-        "테스트",
-        "테스트",
+        "테스트1",
+        "테스트2",
+        "테스트3",
+        "테스트4",
+        "테스트5",
+        "테스트6",
+        "테스트7",
+        "테스트8",
+        "테스트9",
+        "테스트10",
+        "테스트11",
+        "테스트12",
     )
 
     Column {
         LazyRow(
             modifier = Modifier
                 .fillMaxWidth()
+                .padding(start = 8.dp)
         ) {
             items(iconList.size) { index ->
-                Column {
+                Column(
+                    modifier = Modifier.padding(horizontal = 8.dp)
+                ) {
                     Icon(
                         painter = painterResource(id = R.drawable.ic_launcher_background),
                         contentDescription = null,
@@ -323,16 +328,16 @@ fun firstChangeScreen(
     viewmodel: getProductViewModel,
 ) {
     var test by remember { mutableStateOf(lazyListState.canScrollForward) }
-//    LaunchedEffect(key1 = test) {
-//        Log.d("launchedEffect", "안움직여")
-//
-//        if (test) {
-//            Log.d("launchedEffect", "viewmodel 동작")
-//            viewmodel.test()
-//            test = false
-//        }
-//
-//    }
+    LaunchedEffect(key1 = test) {
+        Log.d("launchedEffect", "안움직여")
+
+        if (test) {
+            Log.d("launchedEffect", "viewmodel 동작")
+            viewmodel.test()
+            test = false
+        }
+
+    }
     Column {
         (1..14).forEach {
             Text("S")

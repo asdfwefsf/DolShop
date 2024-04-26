@@ -1,6 +1,7 @@
 package com.company.macrobenchmark
 
 import androidx.benchmark.macro.CompilationMode
+import androidx.benchmark.macro.FrameTimingMetric
 import androidx.benchmark.macro.StartupMode
 import androidx.benchmark.macro.StartupTimingMetric
 import androidx.benchmark.macro.junit4.MacrobenchmarkRule
@@ -38,14 +39,31 @@ class ExampleStartupBenchmark {
     }
 
     @Test
-    fun test()= benchmarkRule.measureRepeated(
+    fun measureProductItemScreenRendering() = benchmarkRule.measureRepeated(
         packageName = "com.company.dolshop",
-        metrics = listOf(StartupTimingMetric()),
-        iterations = 5,
+        metrics = listOf(FrameTimingMetric()), // 프레임 시간 측정을 위한 메트릭
+        iterations = 10,
         startupMode = StartupMode.COLD
     ) {
+        // 데이터 로딩 및 컴포저블 렌더링 시뮬레이션
+//        benchmarkRule.measureRepeated  {
+            // 데이터 로딩 시뮬레이션
+            simulateDataLoading()
+//        }
+
+        // Composable 렌더링
+        startActivityAndWait { intent ->
+            intent.putExtra("EXTRA_COMPOSABLE_NAME", "ProductItemScreen")
+        }
+
+        // 데이터가 로드되고 나면, 실제 렌더링 타이밍 측정
         pressHome()
         startActivityAndWait()
+    }
+
+    private fun simulateDataLoading() {
+        // 서버 또는 로컬 데이터베이스에서 데이터를 로드하는 로직 구현
+        Thread.sleep(1000) // 1초간 데이터 로딩 지연을 가정
     }
 
 

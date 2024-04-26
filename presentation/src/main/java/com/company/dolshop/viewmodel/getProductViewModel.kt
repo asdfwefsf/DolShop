@@ -24,9 +24,9 @@ class getProductViewModel @Inject constructor(
         }
     }
 
-    init {
-        viewModelScope.launch {
-            test()
-        }
-    }
+//    init {
+//        viewModelScope.launch {
+//            test()
+//        }
+//    }
 }
