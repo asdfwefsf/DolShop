@@ -18,7 +18,7 @@ class GetBaseProductWorkerFunction @Inject constructor(
         if (response.isSuccessful && responseBody != null) {
             withContext(Dispatchers.IO) {
                 responseBody.forEach {
-                    if (!dao.prodideProductExists(1)) {
+                    if (!dao.prodideProductExists(responseBody.size)) {
                         dao.insertBaseProductInfo(
                             BaseProductInfo(
                                 image = it.image,
