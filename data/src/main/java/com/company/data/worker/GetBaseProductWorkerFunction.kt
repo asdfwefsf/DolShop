@@ -24,6 +24,7 @@ class GetBaseProductWorkerFunction @Inject constructor(
                                 image = it.image,
                                 name = it.name
                             )
+
                         )
                         Log.d("daoTest", "insert")
                     } else {
