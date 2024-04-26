@@ -6,4 +6,5 @@ plugins {
     id ("com.google.dagger.hilt.android") version "2.49" apply false
     // Firebase
     id("com.google.gms.google-services") version "4.4.1" apply false
+    id("com.android.test") version "8.1.2" apply false
 }

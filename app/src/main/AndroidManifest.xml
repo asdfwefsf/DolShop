@@ -40,6 +40,9 @@
             </intent-filter>
         </activity>
 
+        <profileable
+            android:shell="true"
+            tools:targetApi="34" />
 
         <provider
             android:name="androidx.startup.InitializationProvider"

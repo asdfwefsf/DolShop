@@ -22,3 +22,4 @@ include(":domain")
 include(":presentation")
 
 include(":core:network")
+include(":macrobenchmark")
