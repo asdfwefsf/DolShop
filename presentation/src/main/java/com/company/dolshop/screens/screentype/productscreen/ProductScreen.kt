@@ -13,14 +13,17 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyListState
+import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.PagerState
 import androidx.compose.foundation.pager.rememberPagerState
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Search
@@ -30,6 +33,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.State
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.derivedStateOf
@@ -40,11 +44,13 @@ import androidx.compose.runtime.setValue
 import androidx.compose.runtime.snapshotFlow
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.TransformOrigin
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -72,6 +78,19 @@ fun ProductScreen(innerPadding: PaddingValues, count: Int) {
 
     val listState = rememberLazyListState()
 
+    // sujeong
+//    var test by remember { mutableStateOf(listState.isScrollInProgress) }
+//    LaunchedEffect(key1 = test) {
+//        if (test) {
+//            Log.d("launchedEffect", "안움직여")
+//            getProductViewModel.test()
+//            test = false
+//        }
+//
+//    }
+//    val testState = remember { mutableStateOf(test) }
+
+    // sujeong
     val horizontalPagerState = rememberPagerState(
         pageCount = {
             baseProductList.value.size
@@ -92,18 +111,49 @@ fun ProductScreen(innerPadding: PaddingValues, count: Int) {
 //        CircularProgressIndicator()
 //        Log.d("circular", "loading")
 //    } else {
-    Column {
-        // add BaseProduct Screen
 
-        firstBaseScreen()
-        secondBaseScreen(horizontalPagerState, updateBaseProductViewModel)
-        Spacer(Modifier.padding(bottom = 20.dp))
-        firstChangeScreen(innerPadding, changPproductList , listState , getProductViewModel)
+
+    // sujeong
+
+    var test by remember { mutableStateOf(listState.isScrollInProgress) }
+
+    // sujeong
+    LazyColumn(
+        modifier = Modifier.fillMaxSize(),
+        state = listState
+    ) {
+        // sujeong
+//            if (listState.isScrollInProgress) {
+//                Log.d("launchedEffect", "움직이는중")
+//
+//                test = true
+//
+//            }
+
+        // sujeong
+
+        item {
+            firstBaseScreen()
+//                firstChangeScreen(innerPadding, changPproductList, listState, getProductViewModel)
+        }
+        item {
+            secondBaseScreen(horizontalPagerState, updateBaseProductViewModel)
+
+        }
+        item {
+            thirdBaseScreen()
+
+        }
+        item {
+            firstChangeScreen(innerPadding, changPproductList, listState, getProductViewModel)
+
+        }
 
 
     }
-
 }
+
+
 //}
 
 @Composable
@@ -112,6 +162,7 @@ fun firstBaseScreen() {
         modifier = Modifier
             .fillMaxWidth()
             .background(Color.White)
+
     ) {
         val (person, text, search, shoppingCart) = createRefs()
         Icon(
@@ -176,11 +227,14 @@ fun secondBaseScreen(pagerState: PagerState, viewmodel: UpdateBaseProductViewMod
 
     HorizontalPager(
         state = pagerState,
-        modifier = Modifier.size(250.dp),
+        modifier = Modifier
+            .fillMaxWidth()
+            .fillMaxHeight(0.5f),
     ) { page ->
         Box(
             modifier = Modifier
-                .size(250.dp)
+                .fillMaxWidth()
+                .fillMaxHeight()
                 .applyCubic(pagerState, page)
         ) {
             AsyncImage(
@@ -202,62 +256,140 @@ fun secondBaseScreen(pagerState: PagerState, viewmodel: UpdateBaseProductViewMod
     }
 }
 
+@Composable
+fun thirdBaseScreen() {
+    Column {
+        circleBaseItem1()
+        circleBaseItem2()
+    }
+}
+
+@Composable
+fun circleBaseItem1() {
+    val iconList = listOf(
+        "테스트",
+        "테스트",
+        "테스트",
+        "테스트",
+        "테스트",
+        "테스트",
+        "테스트",
+        "테스트",
+        "테스트",
+        "테스트",
+        "테스트",
+        "테스트",
+    )
+
+    Column {
+        LazyRow(
+            modifier = Modifier
+                .fillMaxWidth()
+        ) {
+            items(iconList.size) { index ->
+                Column {
+                    Icon(
+                        painter = painterResource(id = R.drawable.ic_launcher_background),
+                        contentDescription = null,
+                        modifier = Modifier
+                            .clip(CircleShape)
+                            .size(50.dp)
+                    )
+                    Text(
+                        text = iconList[index],
+                        modifier = Modifier
+                            .padding(top = 8.dp)
+                            .height(50.dp),
+                        color = Color.Black
+                    )
+                }
+            }
+        }
+    }
+
+}
+
+
+@Composable
+fun circleBaseItem2() {
+
+}
+
 
 @Composable
 fun firstChangeScreen(
     innerPadding: PaddingValues,
     changPproductList: State<List<DomainProductModel>>,
-    lazyListState : LazyListState,
-    viewmodel : getProductViewModel
+    lazyListState: LazyListState,
+    viewmodel: getProductViewModel,
 ) {
     var test by remember { mutableStateOf(lazyListState.canScrollForward) }
     LaunchedEffect(key1 = test) {
-        if(test) {
-            Log.d("launchedEffect" , "안움직여")
+        Log.d("launchedEffect", "안움직여")
+
+        if (test) {
+            Log.d("launchedEffect", "viewmodel 동작")
             viewmodel.test()
             test = false
         }
 
     }
-    LazyColumn(
-        modifier = Modifier.padding(innerPadding),
-        contentPadding = PaddingValues(8.dp),
-        verticalArrangement = Arrangement.SpaceAround,
-        state = lazyListState
-    ) {
-        items(14){
-            Text("S")
-            Text("S")
-            Text("S")
-            Text("S")
-            Text("S")
-            Text("S")
-            Text("S")
-            Text("S")
-            Text("S")
-            Text("S")
-            Text("S")
+    Column {
+        (1..14).forEach {
             Text("S")
             Text("S")
             Text("S")
         }
-        items(changPproductList.value.size) {
-            val product = changPproductList.value[it]
+
+        (1..changPproductList.value.size).forEach {
+
+            val product = changPproductList.value[it - 1]
             productItemScreen(
                 product,
                 onClick = {},
                 it
             )
-        }
 
-
-        if(lazyListState.isScrollInProgress) {
-            Log.d("launchedEffect" , "움직이는중")
-
-            test = true
 
         }
+//        if (lazyListState.isScrollInProgress) {
+//            Log.d("launchedEffect", "움직이는중")
+//
+//            test = true
+//
+//        }
     }
+//    LazyColumn(
+//        modifier = Modifier
+//            .padding(innerPadding)
+//            .height(500.dp),
+//        contentPadding = PaddingValues(8.dp),
+//        verticalArrangement = Arrangement.SpaceAround,
+//        state = lazyListState
+//    ) {
+//        items(14) {
+//            Text("S")
+//            Text("S")
+//            Text("S")
+//
+//        }
+//        items(changPproductList.value.size) {
+//            val product = changPproductList.value[it]
+//            productItemScreen(
+//                product,
+//                onClick = {},
+//                it
+//            )
+//        }
+//
+//
+    if (lazyListState.isScrollInProgress) {
+        Log.d("launchedEffect", "움직이는중이네요")
+
+        test = true
+
+    }
+//    }
 
 
 }
@@ -343,11 +475,32 @@ fun PagerState.offsetForPage(page: Int) = (currentPage - page) + currentPageOffs
 
 // add test
 
-@Preview
+//@Preview
+//@Composable
+//fun testFirstBaseScreen() {
+//    DolShopTheme {
+//        firstBaseScreen()
+//    }
+//}
+
+@Preview()
 @Composable
-fun testFirstBaseScreen() {
+fun circleBaseItem1Preview() {
+    val iconList = listOf(
+        "spring\nseason off",
+        "나이키",
+        "라쉬",
+        "뷰티",
+        "아웃렛",
+        "e",
+        "뷰티위크",
+        "무신사에디션",
+        "신발",
+        "키즈",
+        "플레이어",
+        "스포츠"
+    )
     DolShopTheme {
-        firstBaseScreen()
+        circleBaseItem1()
     }
 }
-
