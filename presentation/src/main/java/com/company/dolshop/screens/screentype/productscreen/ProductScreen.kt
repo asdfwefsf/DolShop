@@ -290,6 +290,7 @@ fun productItemScreen(
                 .clickable { onClick(productState.name) } // Handle click event
         )
 
+
         Text(
             text = productState.name,
             modifier = Modifier.constrainAs(text) {
