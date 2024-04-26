@@ -36,4 +36,17 @@ class ExampleStartupBenchmark {
         pressHome()
         startActivityAndWait()
     }
+
+    @Test
+    fun test()= benchmarkRule.measureRepeated(
+        packageName = "com.company.dolshop",
+        metrics = listOf(StartupTimingMetric()),
+        iterations = 5,
+        startupMode = StartupMode.COLD
+    ) {
+        pressHome()
+        startActivityAndWait()
+    }
+
+
 }

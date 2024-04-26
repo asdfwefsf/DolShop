@@ -1,10 +1,12 @@
 package com.company.dolshop.viewmodel
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import com.company.domain.model.DomainProductModel
 import com.company.domain.usecase.getProductUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
@@ -22,9 +24,9 @@ class getProductViewModel @Inject constructor(
         }
     }
 
-//    init {
-//        viewModelScope.launch {
-//            test()
-//        }
-//    }
+    init {
+        viewModelScope.launch {
+            test()
+        }
+    }
 }

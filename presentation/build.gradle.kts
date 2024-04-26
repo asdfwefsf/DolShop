@@ -81,6 +81,10 @@ dependencies {
     splash()
     composeLifeCycle()
 
+    implementation("androidx.profileinstaller:profileinstaller:1.3.1")
+
+    implementation("androidx.benchmark:benchmark-macro:1.2.4")
+
     implementation ("androidx.compose.runtime:runtime:1.6.5")
     implementation("androidx.core:core-ktx:1.12.0")
     implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.7.0")

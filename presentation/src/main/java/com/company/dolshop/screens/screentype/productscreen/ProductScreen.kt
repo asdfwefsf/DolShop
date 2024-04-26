@@ -323,16 +323,16 @@ fun firstChangeScreen(
     viewmodel: getProductViewModel,
 ) {
     var test by remember { mutableStateOf(lazyListState.canScrollForward) }
-    LaunchedEffect(key1 = test) {
-        Log.d("launchedEffect", "안움직여")
-
-        if (test) {
-            Log.d("launchedEffect", "viewmodel 동작")
-            viewmodel.test()
-            test = false
-        }
-
-    }
+//    LaunchedEffect(key1 = test) {
+//        Log.d("launchedEffect", "안움직여")
+//
+//        if (test) {
+//            Log.d("launchedEffect", "viewmodel 동작")
+//            viewmodel.test()
+//            test = false
+//        }
+//
+//    }
     Column {
         (1..14).forEach {
             Text("S")
