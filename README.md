@@ -37,6 +37,11 @@
 3. seperate logic : BaseProductInfo , GabyeonBaseProductInfo
 4. ProductScreen Logic Perfect Setting Success
 
+2024-04-26
+1. Product Screen LazyColumn Logic Sujeong(완료)
+2. Product Screen LazyColumn + innerPadding
+
+
 # 적용된 안드로이드 개념
 1. Presentation -> Domain <- Data : 공식문서에서 지향하는 클린 아키텍처와 다른 안드로이드 클린아키텍처
 2. MVVM
