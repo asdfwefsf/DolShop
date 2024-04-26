@@ -352,6 +352,7 @@ fun firstChangeScreen(
 
 
         }
+
 //        if (lazyListState.isScrollInProgress) {
 //            Log.d("launchedEffect", "움직이는중")
 //
