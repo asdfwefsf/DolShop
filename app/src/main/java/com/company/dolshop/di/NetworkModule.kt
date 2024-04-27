@@ -1,5 +1,6 @@
 package com.company.dolshop.di
 
+import com.company.network.api.AnnouncementAPI
 import com.company.network.api.ProductAPI
 import dagger.Module
 import dagger.Provides
@@ -20,8 +21,15 @@ object NetworkModule {
             .build()
             .create(ProductAPI::class.java)
     }
-//    @Provides
-//    @Singleton
-//    fun provideProductApi(retrofit: Retrofit): ProductAPI =
-//        retrofit.create(ProductAPI::class.java)
+
+    @Provides
+    fun provideAnnouncementApi() : AnnouncementAPI
+    {
+        return Retrofit.Builder()
+            .baseUrl("https://api.jsonbin.io/v3/")
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+            .create(AnnouncementAPI::class.java)
+    }
+
 }
