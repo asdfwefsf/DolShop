@@ -9,20 +9,21 @@ import androidx.work.NetworkType
 import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
 import androidx.work.WorkerParameters
-import com.company.domain.usecase.UpdateBaseProductUseCase
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
 import kotlinx.coroutines.coroutineScope
 
 @HiltWorker
-class GetBaseProductCoroutineWorker @AssistedInject constructor(
+class GetApiInfoCoroutineWorker @AssistedInject constructor(
     @Assisted context: Context,
     @Assisted workerParams: WorkerParameters,
     private val getBaseProductWorkerFunction1: GetBaseProductWorkerFunction1,
+    private val getProductSaleWorkerFunction : GetProductSaleWorkerFunction
 ) : CoroutineWorker(context, workerParams) {
     override suspend fun doWork(): Result = coroutineScope{
         try {
             getBaseProductWorkerFunction1.getBaseProductList1()
+            getProductSaleWorkerFunction.getProductSaleInfo()
             Log.d("karina", "karinaT")
         } catch (e: Exception) {
             Result.failure()
@@ -40,7 +41,7 @@ fun getInfoNowWork(context: Context) {
         .build()
 
     // 빨리 해야되서 지연시간 X
-    val immediateWorkRequest = OneTimeWorkRequestBuilder<GetBaseProductCoroutineWorker>()
+    val immediateWorkRequest = OneTimeWorkRequestBuilder<GetApiInfoCoroutineWorker>()
         .setConstraints(constraints)
         .build()
 

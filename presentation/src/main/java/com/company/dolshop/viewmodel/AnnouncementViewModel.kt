@@ -6,9 +6,10 @@ import com.company.domain.model.DomainProductModel
 import com.company.domain.usecase.AnnouncementUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
+import javax.inject.Inject
 
 @HiltViewModel
-class AnnouncementViewModel(
+class AnnouncementViewModel @Inject constructor(
     private val announcementUseCase: AnnouncementUseCase
 ) : ViewModel() {
 

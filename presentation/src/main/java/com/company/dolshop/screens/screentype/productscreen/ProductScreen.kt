@@ -67,9 +67,11 @@ import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.company.dolshop.designsystem.DolShopTheme
 import com.company.dolshop.designsystem.Paddings
+import com.company.dolshop.viewmodel.ProductSaleViewModel
 import com.company.dolshop.viewmodel.UpdateBaseProductViewModel
 import com.company.dolshop.viewmodel.getProductViewModel
 import com.company.domain.model.DomainProductModel
+import com.company.domain.model.DomainProductSaleModel
 import com.company.presentation.R
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.isActive
@@ -83,6 +85,10 @@ fun ProductScreen(innerPadding: PaddingValues, count: Int) {
 
     val updateBaseProductViewModel: UpdateBaseProductViewModel = hiltViewModel()
     val baseProductList = updateBaseProductViewModel.Product.collectAsState()
+
+    val productSaleViewModel : ProductSaleViewModel = hiltViewModel()
+    val saleMunGu = productSaleViewModel.mungu.collectAsState()
+
 
     val listState = rememberLazyListState()
     val horizontalPagerState = rememberPagerState(
@@ -109,11 +115,15 @@ fun ProductScreen(innerPadding: PaddingValues, count: Int) {
             secondBaseScreen(horizontalPagerState, updateBaseProductViewModel)
         }
         item {
+            fourthBaseScreen(saleMunGu)
+        }
+        item {
             thirdBaseScreen()
         }
         item {
             firstChangeScreen(changPproductList, listState, getProductViewModel)
         }
+
     }
 }
 
@@ -330,7 +340,18 @@ fun circleBaseItem2() {
         }
     }
 }
+@Composable
+fun fourthBaseScreen(saleMunGu : State<List<DomainProductSaleModel>>) {
+//    val st = viewModel.mungu.collectAsState()
+    Box(
+        modifier = Modifier.fillMaxWidth()
+    ) {
+        if(saleMunGu.value.isNotEmpty()) {
+            Text(saleMunGu.value[0].saleMunGu)
 
+        }
+    }
+}
 
 @Composable
 fun firstChangeScreen(
