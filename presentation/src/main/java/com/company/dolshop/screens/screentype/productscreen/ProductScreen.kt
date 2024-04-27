@@ -351,16 +351,17 @@ fun fourthBaseScreen(viewModel: UpdateProductSaleViewModel) {
         Column {
             if (munguState.value.size > 0) {
                 Text(
-                    viewModel.mungu.collectAsState().value[0].saleMunGu,
+                    munguState.value[0].saleMunGu,
                     color = Color.White
                 )
                 Text(
-                    viewModel.mungu.collectAsState().value[1].saleMunGu,
+                    munguState.value[1].saleMunGu,
                     color = Color.White
                 )
             }
 
         }
+
 
     }
 
