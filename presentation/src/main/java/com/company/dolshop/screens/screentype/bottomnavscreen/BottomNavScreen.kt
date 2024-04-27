@@ -145,7 +145,7 @@ fun BottomNav() {
         }
     ) {
         innerPadding ->
-        if (false) {
+        if (true) {
             route = ScreenList.LoginScreen.route
         } else {
             route = ScreenList.ProductScreen.route
@@ -154,6 +154,7 @@ fun BottomNav() {
             composable(route = ScreenList.CommunityScreen.route) {
                 CommunityScreen()
             }
+
 
             composable(route = ScreenList.ProductScreen.route) {
                 val viewmodel = hiltViewModel<UpdateBaseProductViewModel>()
