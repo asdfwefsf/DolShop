@@ -19,12 +19,10 @@ class GetBaseProductCoroutineWorker @AssistedInject constructor(
     @Assisted context: Context,
     @Assisted workerParams: WorkerParameters,
     private val getBaseProductWorkerFunction1: GetBaseProductWorkerFunction1,
-    private val getBaseProductWorkerFunction2: GetBaseProductWorkerFunction2,
 ) : CoroutineWorker(context, workerParams) {
     override suspend fun doWork(): Result = coroutineScope{
         try {
             getBaseProductWorkerFunction1.getBaseProductList1()
-            getBaseProductWorkerFunction2.getBaseProductList2()
             Log.d("karina", "karinaT")
         } catch (e: Exception) {
             Result.failure()

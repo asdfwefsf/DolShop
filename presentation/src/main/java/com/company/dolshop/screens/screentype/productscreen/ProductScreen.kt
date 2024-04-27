@@ -205,6 +205,13 @@ fun secondBaseScreen(pagerState: PagerState, viewmodel: UpdateBaseProductViewMod
                     .fillMaxSize()
                     .clickable { Log.d("haha", "haha") }
             )
+            Text(
+                text = viewmodel.Product.collectAsState().value[page].name,
+                modifier = Modifier
+                    .align(Alignment.Center)
+                    .background(Color.White.copy(alpha = 0.5f))
+                    .padding(8.dp)
+            )
             LaunchedEffect(key1 = pagerState.currentPage) {
                 viewmodel.save(pagerState.currentPage)
             }
