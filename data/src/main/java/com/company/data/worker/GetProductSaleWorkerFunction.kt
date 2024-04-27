@@ -20,15 +20,15 @@ class GetProductSaleWorkerFunction @Inject constructor(
         if (response.isSuccessful && responseBody != null) {
             withContext(Dispatchers.IO) {
                 responseBody.forEach {
-                    if (!dao.prodideProductExists(responseBody.size)) {
-                        dao.insertBaseProductInfo(
+                    if (!dao.prodideProductSaleInfoExists(responseBody.size)) {
+                        dao.insertProductSaleInfo(
                             ProductSaleInfo(
                                 saleMunGu = it.saleMunGu
                             )
                         )
                         Log.d("daoTest", "productSaleInsert")
                     } else {
-                        dao.updateBaseProductInfo(
+                        dao.updateProductSaleInfo(
                             ProductSaleInfo(
                                 saleMunGu = it.saleMunGu
                             )

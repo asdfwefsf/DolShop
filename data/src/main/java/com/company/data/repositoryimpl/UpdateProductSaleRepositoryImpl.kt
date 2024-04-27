@@ -13,7 +13,7 @@ class UpdateProductSaleRepositoryImpl @Inject constructor(
 ) : UpdateProductSaleRepository {
 
     override suspend fun getSaleMunGu(): Flow<List<DomainProductSaleModel>> {
-        return dao.getBaseProductInfo().map {
+        return dao.getProductSaleInfo().map {
             it.map {
                 it.toDomainProductSaleModel()
             }

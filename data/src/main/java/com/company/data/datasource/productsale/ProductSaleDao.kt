@@ -11,19 +11,19 @@ import kotlinx.coroutines.flow.Flow
 @Dao
 interface ProductSaleDao {
     @Upsert
-    fun upsertBaseProductInfo(baseProductInfo: ProductSaleInfo)
+    fun upsertProductSaleInfo(productSaleInfo: ProductSaleInfo)
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    fun insertBaseProductInfo(baseProductInfo: ProductSaleInfo)
+    fun insertProductSaleInfo(productSaleInfo: ProductSaleInfo)
 
     @Update
-    fun updateBaseProductInfo(baseProductInfo: ProductSaleInfo)
+    fun updateProductSaleInfo(productSaleInfo: ProductSaleInfo)
 
-    @Query("SELECT * FROM baseproductinfo ORDER BY id ASC")
-    fun getBaseProductInfo() : Flow<List<ProductSaleInfo>>
+    @Query("SELECT * FROM productSaleInfo ORDER BY id ASC")
+    fun getProductSaleInfo() : Flow<List<ProductSaleInfo>>
 
-    @Query("SELECT EXISTS(SELECT 1 FROM baseproductinfo WHERE id = :id)")
-    fun prodideProductExists(id: Int): Boolean
+    @Query("SELECT EXISTS(SELECT 1 FROM productSaleInfo WHERE id = :id)")
+    fun prodideProductSaleInfoExists(id: Int): Boolean
 
 
 }
