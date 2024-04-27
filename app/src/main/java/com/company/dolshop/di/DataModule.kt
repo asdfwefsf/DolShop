@@ -10,20 +10,20 @@ import com.company.data.repositoryimpl.AnnouncementRepositoryImpl
 import com.company.data.repositoryimpl.CoroutineWorkerRepositoryImpl
 import com.company.data.repositoryimpl.KakaoLoginRepositoryImpl
 import com.company.data.repositoryimpl.KakaoLogoutRepositoryImpl
-import com.company.data.repositoryimpl.ProductSaleRepositoryImpl
 import com.company.data.repositoryimpl.TestRepositoryImpl
 import com.company.data.repositoryimpl.UpdateBaseProductRepositoryImpl
 import com.company.data.repositoryimpl.UpdateKakaoUserInfoRepositoryImpl
+import com.company.data.repositoryimpl.UpdateProductSaleRepositoryImpl
 import com.company.data.repositoryimpl.getProductRepositoryImpl
 import com.company.data.repositoryimpl.getUserKakaoInfoRepositoryImpl
 import com.company.domain.repository.AnnouncementRepository
 import com.company.domain.repository.CoroutineWorkerRepository
 import com.company.domain.repository.KakaoLoginRepository
 import com.company.domain.repository.KakaoLogoutRepository
-import com.company.domain.repository.ProductSaleRepository
 import com.company.domain.repository.TempRepository
 import com.company.domain.repository.UpdateBaseProductRepository
 import com.company.domain.repository.UpdateKakaoUserInfoRepository
+import com.company.domain.repository.UpdateProductSaleRepository
 import com.company.domain.repository.getProductRepository
 import com.company.domain.repository.getUserKakaoInfoRepository
 import dagger.Module
@@ -58,7 +58,7 @@ object DataModule {
     @Provides
     fun provideAnnouncementRepository(impl: AnnouncementRepositoryImpl) : AnnouncementRepository = impl
     @Provides
-    fun provideProductSaleRepository(impl: ProductSaleRepositoryImpl) : ProductSaleRepository = impl
+    fun provideProductSaleRepository(impl: UpdateProductSaleRepositoryImpl) : UpdateProductSaleRepository = impl
 
 
 
