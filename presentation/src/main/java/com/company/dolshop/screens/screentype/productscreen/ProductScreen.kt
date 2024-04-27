@@ -208,9 +208,10 @@ fun secondBaseScreen(pagerState: PagerState, viewmodel: UpdateBaseProductViewMod
             Text(
                 text = viewmodel.Product.collectAsState().value[page].name,
                 modifier = Modifier
-                    .align(Alignment.Center)
+                    .align(Alignment.BottomEnd)
                     .background(Color.White.copy(alpha = 0.5f))
-                    .padding(8.dp)
+                    .padding(8.dp),
+                color = Color.Black
             )
             LaunchedEffect(key1 = pagerState.currentPage) {
                 viewmodel.save(pagerState.currentPage)
