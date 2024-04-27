@@ -1,14 +1,14 @@
 package com.company.domain.usecase
 
 import com.company.domain.model.DomainProductSaleModel
-import com.company.domain.repository.ProductSaleRepository
+import com.company.domain.repository.UpdateProductSaleRepository
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
-class ProductSaleUseCase @Inject constructor(
-    private val productSaleRepository: ProductSaleRepository
+class UpdateProductSaleUseCase @Inject constructor(
+    private val productSaleRepository: UpdateProductSaleRepository
 ){
-    operator fun invoke() : Flow<List<DomainProductSaleModel>> {
+    suspend operator fun invoke() : Flow<List<DomainProductSaleModel>> {
         return productSaleRepository.getSaleMunGu()
     }
 }
