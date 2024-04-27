@@ -12,7 +12,7 @@ class UpdateProductSaleRepositoryImpl @Inject constructor(
     private val dao: ProductSaleDao
 ) : UpdateProductSaleRepository {
 
-    override suspend fun getSaleMunGu(): Flow<List<DomainProductSaleModel>> {
+    override suspend fun updateSaleMunGu(): Flow<List<DomainProductSaleModel>> {
         return dao.getProductSaleInfo().map {
             it.map {
                 it.toDomainProductSaleModel()

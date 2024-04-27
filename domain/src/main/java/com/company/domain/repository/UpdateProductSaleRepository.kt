@@ -4,5 +4,5 @@ import com.company.domain.model.DomainProductSaleModel
 import kotlinx.coroutines.flow.Flow
 
 interface UpdateProductSaleRepository {
-    suspend fun getSaleMunGu() : Flow<List<DomainProductSaleModel>>
+    suspend fun updateSaleMunGu() : Flow<List<DomainProductSaleModel>>
 }

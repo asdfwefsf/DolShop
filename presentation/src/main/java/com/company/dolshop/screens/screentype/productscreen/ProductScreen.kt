@@ -11,9 +11,11 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
@@ -78,7 +80,7 @@ fun ProductScreen(innerPadding: PaddingValues, count: Int) {
     val updateBaseProductViewModel: UpdateBaseProductViewModel = hiltViewModel()
     val baseProductList = updateBaseProductViewModel.Product.collectAsState()
 
-    val productSaleViewModel : UpdateProductSaleViewModel = hiltViewModel()
+    val productSaleViewModel: UpdateProductSaleViewModel = hiltViewModel()
     val saleMunGu = productSaleViewModel.mungu.collectAsState()
 
 
@@ -109,6 +111,7 @@ fun ProductScreen(innerPadding: PaddingValues, count: Int) {
         item {
             fourthBaseScreen(productSaleViewModel)
         }
+
         item {
             thirdBaseScreen()
         }
@@ -177,6 +180,7 @@ fun firstBaseScreen() {
         )
     }
 }
+
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun secondBaseScreen(pagerState: PagerState, viewmodel: UpdateBaseProductViewModel) {
@@ -226,7 +230,7 @@ fun secondBaseScreen(pagerState: PagerState, viewmodel: UpdateBaseProductViewMod
             while (isActive) {
                 delay(3000)
                 val nextPage = (pagerState.currentPage + 1) % viewmodel.Product.value.size
-                Log.d("nextPage" , (nextPage+1).toString())
+                Log.d("nextPage", (nextPage + 1).toString())
                 pagerState.animateScrollToPage(
                     nextPage,
                     animationSpec = tween(
@@ -291,6 +295,7 @@ fun circleBaseItem1() {
         }
     }
 }
+
 @Composable
 fun circleBaseItem2() {
     val iconList = listOf(
@@ -332,19 +337,31 @@ fun circleBaseItem2() {
         }
     }
 }
+
 @Composable
 fun fourthBaseScreen(viewModel: UpdateProductSaleViewModel) {
-//    val st = viewModel.mungu.collectAsState()
-//    text = viewmodel.Product.collectAsState().value[page].name,
+    val munguState = viewModel.mungu.collectAsState()
 
     Box(
-        modifier = Modifier.fillMaxWidth()
-    ) {
-        if(viewModel.mungu.value.isNotEmpty()) {
-            Text(viewModel.mungu.collectAsState().value[0].saleMunGu)
-            Text(viewModel.mungu.collectAsState().value[1].saleMunGu)
+        modifier = Modifier
+            .fillMaxWidth()
+            .background(Color.Black),
+
+        ) {
+        Column {
+            if (munguState.value.size > 0) {
+                Text(
+                    viewModel.mungu.collectAsState().value[0].saleMunGu,
+                    color = Color.White
+                )
+                Text(
+                    viewModel.mungu.collectAsState().value[1].saleMunGu,
+                    color = Color.White
+                )
+            }
 
         }
+
     }
 }
 
@@ -449,6 +466,7 @@ fun Modifier.applyCubic(state: PagerState, page: Int, horizontal: Boolean = true
         }
     }
 }
+
 @OptIn(ExperimentalFoundationApi::class)
 fun PagerState.offsetForPage(page: Int) = (currentPage - page) + currentPageOffsetFraction
 

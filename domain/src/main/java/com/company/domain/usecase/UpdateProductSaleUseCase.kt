@@ -9,6 +9,6 @@ class UpdateProductSaleUseCase @Inject constructor(
     private val productSaleRepository: UpdateProductSaleRepository
 ){
     suspend operator fun invoke() : Flow<List<DomainProductSaleModel>> {
-        return productSaleRepository.getSaleMunGu()
+        return productSaleRepository.updateSaleMunGu()
     }
 }

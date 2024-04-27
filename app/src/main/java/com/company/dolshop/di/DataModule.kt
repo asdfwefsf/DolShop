@@ -4,6 +4,8 @@ import android.content.Context
 import androidx.room.Room
 import com.company.data.datasource.baseproductinfo1.BaseProductDao
 import com.company.data.datasource.baseproductinfo1.BaseProductInfoDataBase
+import com.company.data.datasource.productsale.ProductSaleDao
+import com.company.data.datasource.productsale.ProductSaleDataBase
 import com.company.data.datasource.userinfo.UserInfoDao
 import com.company.data.datasource.userinfo.UserInfoDatabase
 import com.company.data.repositoryimpl.AnnouncementRepositoryImpl
@@ -63,6 +65,8 @@ object DataModule {
 
 
     // datasource module
+
+    // userinfo db
     @Provides
     @Singleton
     fun provideUserInfoDatabase(@ApplicationContext appContext: Context): UserInfoDatabase {
@@ -72,8 +76,6 @@ object DataModule {
             "user_info_database"
         ).build()
     }
-
-
     @Provides
     fun provideUserInfoDao(database: UserInfoDatabase) : UserInfoDao {
         return database.dao
@@ -85,6 +87,31 @@ object DataModule {
         dao : UserInfoDao
     ) : getUserKakaoInfoRepositoryImpl = getUserKakaoInfoRepositoryImpl(dao)
 
+
+    // product sale db
+    @Provides
+    @Singleton
+    fun provideProductSaleDataBase(@ApplicationContext appContext: Context): ProductSaleDataBase {
+        return Room.databaseBuilder(
+            appContext,
+            ProductSaleDataBase::class.java,
+            "product_sale_database"
+        ).build()
+    }
+    @Provides
+    fun provideProductSaleDao(database: ProductSaleDataBase) : ProductSaleDao {
+        return database.dao
+    }
+
+//    @Provides
+//    @Singleton
+//    fun providegetUserKakaoInfoRepositoryImpl(
+//        dao : ProductSaleDao
+//    ) : getUserKakaoInfoRepositoryImpl = getUserKakaoInfoRepositoryImpl(dao)
+//
+
+
+    // baseproduct db
     @Provides
     @Singleton
     fun provideBaseProductInfoDataBase(@ApplicationContext appContext: Context): BaseProductInfoDataBase {
@@ -100,13 +127,6 @@ object DataModule {
     fun provideBaseProductDao(database: BaseProductInfoDataBase) : BaseProductDao {
         return database.dao
     }
-//
-//    @Provides
-//    @Singleton
-//    fun provideGetBaseProductRespositoryImpl(
-//        dao : BaseProductDao
-//    ) : GetBaseProductRespositoryImpl = GetBaseProductRespositoryImpl(dao)
-//
 
 
 }

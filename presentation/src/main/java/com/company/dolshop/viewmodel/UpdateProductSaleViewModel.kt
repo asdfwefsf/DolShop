@@ -18,8 +18,8 @@ class UpdateProductSaleViewModel @Inject constructor(
     val mungu: MutableStateFlow<List<DomainProductSaleModel>> = _mungu
 
     suspend fun updateSaleMunGu() {
-        productSaleUseCase().collect { mungudat->
-            _mungu.value = mungudat
+        productSaleUseCase().collect {
+            _mungu.value = it
         }
     }
 

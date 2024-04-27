@@ -26,9 +26,7 @@ class UpdateBaseProductViewModel @Inject constructor(
     }
 
     init {
-//        viewModelScope.launch {
-//            updateBaseProductList()
-//        }
+
         viewModelScope.launch {
             updateBaseProductList()
 
