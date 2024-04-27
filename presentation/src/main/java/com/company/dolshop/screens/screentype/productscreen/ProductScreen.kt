@@ -85,7 +85,6 @@ fun ProductScreen(innerPadding: PaddingValues, count: Int) {
     val baseProductList = updateBaseProductViewModel.Product.collectAsState()
 
     val listState = rememberLazyListState()
-
     val horizontalPagerState = rememberPagerState(
         pageCount = {
             baseProductList.value.size
@@ -93,17 +92,10 @@ fun ProductScreen(innerPadding: PaddingValues, count: Int) {
         initialPage = count
     )
 
-
-    // add
-    // LaunchedEffect : Composable 내에서 코루틴을 실행하기 위한 API
-    // snapshotFlow : Compose 상태 관찰하고 변하면 Flow로 변환할때 사용한다.
-    // add
-
 //    if (changPproductList.value.isEmpty() || baseProductList.value.isEmpty()) {
 //        CircularProgressIndicator()
 //        Log.d("circular", "loading")
 //    } else {
-
     LazyColumn(
         modifier = Modifier
             .fillMaxSize()
@@ -115,23 +107,15 @@ fun ProductScreen(innerPadding: PaddingValues, count: Int) {
         }
         item {
             secondBaseScreen(horizontalPagerState, updateBaseProductViewModel)
-
         }
         item {
             thirdBaseScreen()
-
         }
         item {
             firstChangeScreen(changPproductList, listState, getProductViewModel)
-
         }
-
-
     }
 }
-
-
-//}
 
 @Composable
 fun firstBaseScreen() {
@@ -139,7 +123,6 @@ fun firstBaseScreen() {
         modifier = Modifier
             .fillMaxWidth()
             .background(Color.White)
-
     ) {
         val (person, text, search, shoppingCart) = createRefs()
         Icon(
@@ -152,7 +135,6 @@ fun firstBaseScreen() {
                 .size(40.dp)
                 .padding(start = 16.dp)
         )
-
         Text(
             text = "내 친구 돌돌이",
             modifier = Modifier
@@ -165,7 +147,6 @@ fun firstBaseScreen() {
             textAlign = TextAlign.Center,
             fontSize = 24.sp
         )
-
         Icon(
             imageVector = Icons.Default.Search,
             contentDescription = null,
@@ -179,7 +160,6 @@ fun firstBaseScreen() {
                 .size(30.dp)
 
         )
-
         Icon(
             imageVector = Icons.Default.ShoppingCart,
             contentDescription = null,
@@ -193,16 +173,12 @@ fun firstBaseScreen() {
                 .padding(end = 16.dp)
 
         )
-
     }
-
 }
-
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun secondBaseScreen(pagerState: PagerState, viewmodel: UpdateBaseProductViewModel) {
     val isVisible = remember { mutableStateOf(false) }
-
     HorizontalPager(
         state = pagerState,
         modifier = Modifier
@@ -229,7 +205,6 @@ fun secondBaseScreen(pagerState: PagerState, viewmodel: UpdateBaseProductViewMod
                     .fillMaxSize()
                     .clickable { Log.d("haha", "haha") }
             )
-
             LaunchedEffect(key1 = pagerState.currentPage) {
                 viewmodel.save(pagerState.currentPage)
             }
@@ -238,10 +213,8 @@ fun secondBaseScreen(pagerState: PagerState, viewmodel: UpdateBaseProductViewMod
     if (isVisible.value) {
         LaunchedEffect(key1 = Unit) {
             viewmodel.save(pagerState.currentPage)
-
             while (isActive) {
                 delay(3000)
-
                 val nextPage = (pagerState.currentPage + 1) % viewmodel.Product.value.size
                 Log.d("nextPage" , (nextPage+1).toString())
                 pagerState.animateScrollToPage(
@@ -267,7 +240,6 @@ fun thirdBaseScreen() {
     }
 }
 
-
 @Composable
 fun circleBaseItem1() {
     val iconList = listOf(
@@ -279,16 +251,13 @@ fun circleBaseItem1() {
         "테스트6",
         "테스트7",
         "테스트8",
-        
     )
-
     Column(
         verticalArrangement = Arrangement.spacedBy(0.dp)
     ) {
         LazyRow(
             modifier = Modifier
                 .fillMaxWidth()
-//                .padding(start = 8.dp)
         ) {
             items(iconList.size) { index ->
                 Column(
@@ -311,10 +280,7 @@ fun circleBaseItem1() {
             }
         }
     }
-
 }
-
-
 @Composable
 fun circleBaseItem2() {
     val iconList = listOf(
@@ -327,14 +293,12 @@ fun circleBaseItem2() {
         "테스트15",
         "테스트16",
     )
-
     Column(
         verticalArrangement = Arrangement.spacedBy(0.dp)
     ) {
         LazyRow(
             modifier = Modifier
                 .fillMaxWidth()
-//                .padding(start = 8.dp)
         ) {
             items(iconList.size) { index ->
                 Column(
@@ -357,7 +321,6 @@ fun circleBaseItem2() {
             }
         }
     }
-
 }
 
 
@@ -370,13 +333,11 @@ fun firstChangeScreen(
     var test by remember { mutableStateOf(lazyListState.canScrollForward) }
     LaunchedEffect(key1 = test) {
         Log.d("launchedEffect", "안움직여")
-
         if (test) {
             Log.d("launchedEffect", "viewmodel 동작")
             viewmodel.test()
             test = false
         }
-
     }
     Column {
         (1..14).forEach {
@@ -384,35 +345,25 @@ fun firstChangeScreen(
             Text("S")
             Text("S")
         }
-
         (1..changPproductList.value.size).forEach {
-
             val product = changPproductList.value[it - 1]
             productItemScreen(
                 product,
                 onClick = {},
-                it
             )
-
-
         }
-
     }
-
     if (lazyListState.isScrollInProgress) {
         Log.d("launchedEffect", "움직이는중이네요")
         test = true
     }
 }
 
-
 @Composable
 fun productItemScreen(
     productState: DomainProductModel,
-    onClick: (category: String) -> Unit,
-    i: Int
+    onClick: (category: String) -> Unit
 ) {
-
     ConstraintLayout(
         modifier = Modifier
             .fillMaxWidth()
@@ -432,8 +383,6 @@ fun productItemScreen(
                 }
                 .clickable { onClick(productState.name) } // Handle click event
         )
-
-
         Text(
             text = productState.name,
             modifier = Modifier.constrainAs(text) {
@@ -442,12 +391,8 @@ fun productItemScreen(
                 width = Dimension.fillToConstraints // Fill width within constraints
             }
         )
-
     }
 }
-
-
-// add test
 
 @OptIn(ExperimentalFoundationApi::class)
 fun Modifier.applyCubic(state: PagerState, page: Int, horizontal: Boolean = true): Modifier {
@@ -480,11 +425,8 @@ fun Modifier.applyCubic(state: PagerState, page: Int, horizontal: Boolean = true
         }
     }
 }
-
 @OptIn(ExperimentalFoundationApi::class)
 fun PagerState.offsetForPage(page: Int) = (currentPage - page) + currentPageOffsetFraction
-
-// add test
 
 @Preview
 @Composable
