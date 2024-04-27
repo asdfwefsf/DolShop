@@ -25,8 +25,8 @@
 1. Product Screen UI (ing day 1)
 2. CoroutineWorker 앱 최초 실행 , 앱 빌드 실행 함수 : BaseProduct Screnn Data Room Db Save Function (완료)
 3. Navigation Bar Counter ViewModel Setting (완료)
-4. DDD 세팅 (미완)
-5. Figma Setting (미완)
+4. DDD 세팅 (-ing)
+5. Figma Setting (-ing)
 
 2024-04-24
 1. BaseProduct Screen UI Room Db Save (완료)
@@ -39,7 +39,11 @@
 
 2024-04-26
 1. Product Screen LazyColumn Logic Sujeong(완료)
-2. Product Screen LazyColumn + innerPadding
+2. Product Screen LazyColumn + innerPadding(완료)
+
+2024-04-27
+1. Firebase RealtimeDB 개인정보 연동
+2. MyPageScreen에서 배송지 정보 저장
 
 
 # 적용된 안드로이드 개념
