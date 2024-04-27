@@ -107,7 +107,7 @@ fun ProductScreen(innerPadding: PaddingValues, count: Int) {
             secondBaseScreen(horizontalPagerState, updateBaseProductViewModel)
         }
         item {
-            fourthBaseScreen(saleMunGu)
+            fourthBaseScreen(productSaleViewModel)
         }
         item {
             thirdBaseScreen()
@@ -333,13 +333,16 @@ fun circleBaseItem2() {
     }
 }
 @Composable
-fun fourthBaseScreen(saleMunGu : State<List<DomainProductSaleModel>>) {
+fun fourthBaseScreen(viewModel: UpdateProductSaleViewModel) {
 //    val st = viewModel.mungu.collectAsState()
+//    text = viewmodel.Product.collectAsState().value[page].name,
+
     Box(
         modifier = Modifier.fillMaxWidth()
     ) {
-        if(saleMunGu.value.isNotEmpty()) {
-            Text(saleMunGu.value[0].saleMunGu)
+        if(viewModel.mungu.value.isNotEmpty()) {
+            Text(viewModel.mungu.collectAsState().value[0].saleMunGu)
+            Text(viewModel.mungu.collectAsState().value[1].saleMunGu)
 
         }
     }
