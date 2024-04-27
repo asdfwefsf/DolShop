@@ -145,7 +145,7 @@ fun BottomNav() {
         }
     ) {
         innerPadding ->
-        if (true) {
+        if (false) {
             route = ScreenList.LoginScreen.route
         } else {
             route = ScreenList.ProductScreen.route

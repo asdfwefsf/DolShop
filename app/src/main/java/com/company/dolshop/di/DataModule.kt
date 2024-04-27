@@ -2,8 +2,8 @@ package com.company.dolshop.di
 
 import android.content.Context
 import androidx.room.Room
-import com.company.data.datasource.baseproductinfo.BaseProductDao
-import com.company.data.datasource.baseproductinfo.BaseProductInfoDataBase
+import com.company.data.datasource.baseproductinfo1.BaseProductDao
+import com.company.data.datasource.baseproductinfo1.BaseProductInfoDataBase
 import com.company.data.datasource.userinfo.UserInfoDao
 import com.company.data.datasource.userinfo.UserInfoDatabase
 import com.company.data.repositoryimpl.CoroutineWorkerRepositoryImpl

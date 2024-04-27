@@ -9,6 +9,7 @@ import androidx.work.NetworkType
 import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
 import androidx.work.WorkerParameters
+import com.company.domain.usecase.UpdateBaseProductUseCase
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedInject
 import kotlinx.coroutines.coroutineScope
@@ -17,11 +18,13 @@ import kotlinx.coroutines.coroutineScope
 class GetBaseProductCoroutineWorker @AssistedInject constructor(
     @Assisted context: Context,
     @Assisted workerParams: WorkerParameters,
-    private val getBaseProductWorkerFunction: GetBaseProductWorkerFunction,
+    private val getBaseProductWorkerFunction1: GetBaseProductWorkerFunction1,
+    private val getBaseProductWorkerFunction2: GetBaseProductWorkerFunction2,
 ) : CoroutineWorker(context, workerParams) {
     override suspend fun doWork(): Result = coroutineScope{
         try {
-            getBaseProductWorkerFunction.getBaseProductList()
+            getBaseProductWorkerFunction1.getBaseProductList1()
+            getBaseProductWorkerFunction2.getBaseProductList2()
             Log.d("karina", "karinaT")
         } catch (e: Exception) {
             Result.failure()

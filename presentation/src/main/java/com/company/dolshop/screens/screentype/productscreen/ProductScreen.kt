@@ -66,6 +66,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.company.dolshop.designsystem.DolShopTheme
+import com.company.dolshop.designsystem.Paddings
 import com.company.dolshop.viewmodel.UpdateBaseProductViewModel
 import com.company.dolshop.viewmodel.getProductViewModel
 import com.company.domain.model.DomainProductModel
@@ -85,19 +86,6 @@ fun ProductScreen(innerPadding: PaddingValues, count: Int) {
 
     val listState = rememberLazyListState()
 
-    // sujeong
-//    var test by remember { mutableStateOf(listState.isScrollInProgress) }
-//    LaunchedEffect(key1 = test) {
-//        if (test) {
-//            Log.d("launchedEffect", "안움직여")
-//            getProductViewModel.test()
-//            test = false
-//        }
-//
-//    }
-//    val testState = remember { mutableStateOf(test) }
-
-    // sujeong
     val horizontalPagerState = rememberPagerState(
         pageCount = {
             baseProductList.value.size
@@ -105,9 +93,6 @@ fun ProductScreen(innerPadding: PaddingValues, count: Int) {
         initialPage = count
     )
 
-//    LaunchedEffect(key1 = listState) {
-//        getProductViewModel.test()
-//    }
 
     // add
     // LaunchedEffect : Composable 내에서 코루틴을 실행하기 위한 API
@@ -119,31 +104,14 @@ fun ProductScreen(innerPadding: PaddingValues, count: Int) {
 //        Log.d("circular", "loading")
 //    } else {
 
-
-    // sujeong
-
-    var test by remember { mutableStateOf(listState.isScrollInProgress) }
-
-    // sujeong
     LazyColumn(
         modifier = Modifier
             .fillMaxSize()
             .padding(innerPadding),
         state = listState
     ) {
-        // sujeong
-//            if (listState.isScrollInProgress) {
-//                Log.d("launchedEffect", "움직이는중")
-//
-//                test = true
-//
-//            }
-
-        // sujeong
-
         item {
             firstBaseScreen()
-//                firstChangeScreen(innerPadding, changPproductList, listState, getProductViewModel)
         }
         item {
             secondBaseScreen(horizontalPagerState, updateBaseProductViewModel)
@@ -279,7 +247,7 @@ fun secondBaseScreen(pagerState: PagerState, viewmodel: UpdateBaseProductViewMod
                 pagerState.animateScrollToPage(
                     nextPage,
                     animationSpec = tween(
-                        durationMillis = 1000,
+                        durationMillis = 500,
                         easing = FastOutSlowInEasing
                     )
                 )
@@ -288,79 +256,17 @@ fun secondBaseScreen(pagerState: PagerState, viewmodel: UpdateBaseProductViewMod
     }
 }
 
-//@OptIn(ExperimentalFoundationApi::class)
-//@Composable
-//fun secondBaseScreen(pagerState: PagerState, viewmodel: UpdateBaseProductViewModel) {
-//    val isVisible = remember { mutableStateOf(false) }
-//
-//    // 화면에 SecondScreen이 표시될 때 isVisible 상태를 true로 설정
-//    Box(
-//        modifier = Modifier
-//            .fillMaxSize()
-//            .onGloballyPositioned { isVisible.value = true }
-//            .onSizeChanged { if (it.width > 0 && it.height > 0) isVisible.value = true }
-//    ) {
-//        HorizontalPager(
-//            state = pagerState,
-//            modifier = Modifier
-//                .fillMaxWidth()
-//                .fillMaxHeight(0.5f)
-//        ) { page ->
-//            Box(
-//                modifier = Modifier
-//                    .fillMaxWidth()
-//                    .fillMaxHeight()
-//                    .applyCubic(pagerState, page)
-//            ) {
-//                AsyncImage(
-//                    model = ImageRequest.Builder(LocalContext.current)
-//                        .data(viewmodel.Product.collectAsState().value[page].image)
-//                        .placeholder(R.drawable.ic_launcher_background)
-//                        .crossfade(true)
-//                        .build(),
-//                    contentDescription = null,
-//                    contentScale = ContentScale.Crop,
-//                    modifier = Modifier
-//                        .fillMaxSize()
-//                        .clickable { Log.d("haha", "haha") }
-//                )
-//                LaunchedEffect(key1 = pagerState.currentPage) {
-//                    viewmodel.save(pagerState.currentPage)
-//                }
-//            }
-//        }
-//    }
-//
-//    // isVisible이 true일 때만 자동 스크롤 실행
-//    if (isVisible.value) {
-//        LaunchedEffect(key1 = Unit) {
-//            viewmodel.save(pagerState.currentPage)
-//
-//            while (isActive) {
-//                delay(3000)
-//                val nextPage = (viewmodel.page.value) % viewmodel.Product.value.size
-//                Log.d("nextPage", (nextPage + 1).toString())
-//                pagerState.animateScrollToPage(
-//                    nextPage,
-//                    animationSpec = tween(
-//                        durationMillis = 1000,
-//                        easing = FastOutSlowInEasing
-//                    )
-//                )
-//            }
-//        }
-//    }
-//}
-
 @Composable
 fun thirdBaseScreen() {
     Column(
-        modifier = Modifier.padding(top = 4.dp)
+        modifier = Modifier.padding(top = 4.dp),
+        verticalArrangement = Arrangement.spacedBy(0.dp)
     ) {
         circleBaseItem1()
         circleBaseItem2()
     }
 }
+
 
 @Composable
 fun circleBaseItem1() {
@@ -373,17 +279,16 @@ fun circleBaseItem1() {
         "테스트6",
         "테스트7",
         "테스트8",
-        "테스트9",
-        "테스트10",
-        "테스트11",
-        "테스트12",
+        
     )
 
-    Column {
+    Column(
+        verticalArrangement = Arrangement.spacedBy(0.dp)
+    ) {
         LazyRow(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(start = 8.dp)
+//                .padding(start = 8.dp)
         ) {
             items(iconList.size) { index ->
                 Column(
@@ -399,8 +304,7 @@ fun circleBaseItem1() {
                     Text(
                         text = iconList[index],
                         modifier = Modifier
-                            .padding(top = 8.dp)
-                            .height(50.dp),
+                            .padding(top = 8.dp),
                         color = Color.Black
                     )
                 }
@@ -413,6 +317,46 @@ fun circleBaseItem1() {
 
 @Composable
 fun circleBaseItem2() {
+    val iconList = listOf(
+        "테스트9",
+        "테스트10",
+        "테스트11",
+        "테스트12",
+        "테스트13",
+        "테스트14",
+        "테스트15",
+        "테스트16",
+    )
+
+    Column(
+        verticalArrangement = Arrangement.spacedBy(0.dp)
+    ) {
+        LazyRow(
+            modifier = Modifier
+                .fillMaxWidth()
+//                .padding(start = 8.dp)
+        ) {
+            items(iconList.size) { index ->
+                Column(
+                    modifier = Modifier.padding(horizontal = 8.dp)
+                ) {
+                    Icon(
+                        painter = painterResource(id = R.drawable.ic_launcher_background),
+                        contentDescription = null,
+                        modifier = Modifier
+                            .clip(CircleShape)
+                            .size(50.dp)
+                    )
+                    Text(
+                        text = iconList[index],
+                        modifier = Modifier
+                            .padding(top = 8.dp),
+                        color = Color.Black
+                    )
+                }
+            }
+        }
+    }
 
 }
 
@@ -453,46 +397,12 @@ fun firstChangeScreen(
 
         }
 
-//        if (lazyListState.isScrollInProgress) {
-//            Log.d("launchedEffect", "움직이는중")
-//
-//            test = true
-//
-//        }
     }
-//    LazyColumn(
-//        modifier = Modifier
-//            .padding(innerPadding)
-//            .height(500.dp),
-//        contentPadding = PaddingValues(8.dp),
-//        verticalArrangement = Arrangement.SpaceAround,
-//        state = lazyListState
-//    ) {
-//        items(14) {
-//            Text("S")
-//            Text("S")
-//            Text("S")
-//
-//        }
-//        items(changPproductList.value.size) {
-//            val product = changPproductList.value[it]
-//            productItemScreen(
-//                product,
-//                onClick = {},
-//                it
-//            )
-//        }
-//
-//
+
     if (lazyListState.isScrollInProgress) {
         Log.d("launchedEffect", "움직이는중이네요")
-
         test = true
-
     }
-//    }
-
-
 }
 
 
@@ -608,8 +518,8 @@ fun circleBaseItem1Preview() {
 
 @Preview
 @Composable
-fun testProductScreen() {
+fun testThirdBaseScreen() {
     DolShopTheme {
-        ProductScreen(PaddingValues(top = 8.dp), 0)
+        thirdBaseScreen()
     }
 }

@@ -1,4 +1,4 @@
-package com.company.data.datasource.baseproductinfo
+package com.company.data.datasource.baseproductinfo1
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey
