@@ -6,6 +6,7 @@ import com.company.data.datasource.baseproductinfo1.BaseProductDao
 import com.company.data.datasource.baseproductinfo1.BaseProductInfoDataBase
 import com.company.data.datasource.userinfo.UserInfoDao
 import com.company.data.datasource.userinfo.UserInfoDatabase
+import com.company.data.repositoryimpl.AnnouncementRepositoryImpl
 import com.company.data.repositoryimpl.CoroutineWorkerRepositoryImpl
 import com.company.data.repositoryimpl.KakaoLoginRepositoryImpl
 import com.company.data.repositoryimpl.KakaoLogoutRepositoryImpl
@@ -14,6 +15,7 @@ import com.company.data.repositoryimpl.UpdateBaseProductRepositoryImpl
 import com.company.data.repositoryimpl.UpdateKakaoUserInfoRepositoryImpl
 import com.company.data.repositoryimpl.getProductRepositoryImpl
 import com.company.data.repositoryimpl.getUserKakaoInfoRepositoryImpl
+import com.company.domain.repository.AnnouncementRepository
 import com.company.domain.repository.CoroutineWorkerRepository
 import com.company.domain.repository.KakaoLoginRepository
 import com.company.domain.repository.KakaoLogoutRepository
@@ -51,6 +53,8 @@ object DataModule {
     fun provideUpdateBaseProductRepository(impl: UpdateBaseProductRepositoryImpl) : UpdateBaseProductRepository = impl
     @Provides
     fun provideCoroutineWorkerRepository(impl: CoroutineWorkerRepositoryImpl) : CoroutineWorkerRepository = impl
+    @Provides
+    fun provideAnnouncementRepository(impl: AnnouncementRepositoryImpl) : AnnouncementRepository = impl
 
 
 
