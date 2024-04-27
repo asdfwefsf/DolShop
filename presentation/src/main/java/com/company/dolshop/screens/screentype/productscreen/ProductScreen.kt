@@ -355,6 +355,7 @@ fun fourthBaseScreen(viewModel: UpdateProductSaleViewModel) {
                     color = Color.White
                 )
                 Text(
+
                     munguState.value[1].saleMunGu,
                     color = Color.White
                 )
