@@ -10,3 +10,4 @@ fun AnnouncementResponse.toDomainAnnouncementModel(): DomainAnnouncementModel {
     )
 }
 
+
