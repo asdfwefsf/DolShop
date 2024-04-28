@@ -12,6 +12,7 @@ class GetBaseProductWorkerFunction1 @Inject constructor(
     private val productAPI: ProductAPI,
     private val dao: BaseProductDao
 ) {
+
     suspend fun getBaseProductList1() {
         val response = productAPI.getBaseProduct1()
         val responseBody = response.body() ?: emptyList()
