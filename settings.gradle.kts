@@ -17,13 +17,18 @@ dependencyResolutionManagement {
 
 rootProject.name = "DolShop"
 include(":app")
+
 include(":data")
+include(":data:data-mapper")
+include(":data:data-mapper:saletodomain")
+
 include(":domain")
 include(":presentation")
 
 include(":core:network:product")
 include(":core:network:announcement")
 
-
-
 include(":macrobenchmark")
+include(":data:mapper:saletodomain")
+include(":data:data-datasource")
+include(":data:data-impl")

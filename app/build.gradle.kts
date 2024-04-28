@@ -78,6 +78,10 @@ dependencies {
     implementation(project(":data"))
     implementation(project(":core:network:product"))
     implementation(project(":core:network:announcement"))
+    implementation(project(":data:data-impl"))
+    implementation(project(":data:data-mapper:saletodomain"))
+    implementation(project(":data:data-datasource"))
+
 
     implementation("com.google.dagger:hilt-android:2.49")
     kapt ("androidx.hilt:hilt-compiler:1.2.0")

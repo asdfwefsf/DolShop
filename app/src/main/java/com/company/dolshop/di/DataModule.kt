@@ -4,8 +4,6 @@ import android.content.Context
 import androidx.room.Room
 import com.company.data.datasource.baseproductinfo1.BaseProductDao
 import com.company.data.datasource.baseproductinfo1.BaseProductInfoDataBase
-import com.company.data.datasource.productsale.ProductSaleDao
-import com.company.data.datasource.productsale.ProductSaleDataBase
 import com.company.data.datasource.userinfo.UserInfoDao
 import com.company.data.datasource.userinfo.UserInfoDatabase
 import com.company.data.repositoryimpl.AnnouncementRepositoryImpl
@@ -15,9 +13,10 @@ import com.company.data.repositoryimpl.KakaoLogoutRepositoryImpl
 import com.company.data.repositoryimpl.TestRepositoryImpl
 import com.company.data.repositoryimpl.UpdateBaseProductRepositoryImpl
 import com.company.data.repositoryimpl.UpdateKakaoUserInfoRepositoryImpl
-import com.company.data.repositoryimpl.UpdateProductSaleRepositoryImpl
 import com.company.data.repositoryimpl.getProductRepositoryImpl
 import com.company.data.repositoryimpl.getUserKakaoInfoRepositoryImpl
+import com.company.data_datasource.productsale.ProductSaleDao
+import com.company.data_datasource.productsale.ProductSaleDataBase
 import com.company.domain.repository.AnnouncementRepository
 import com.company.domain.repository.CoroutineWorkerRepository
 import com.company.domain.repository.KakaoLoginRepository
@@ -60,7 +59,7 @@ object DataModule {
     @Provides
     fun provideAnnouncementRepository(impl: AnnouncementRepositoryImpl) : AnnouncementRepository = impl
     @Provides
-    fun provideProductSaleRepository(impl: UpdateProductSaleRepositoryImpl) : UpdateProductSaleRepository = impl
+    fun provideProductSaleRepository(impl: com.company.data_impl.updatesaleinfo.UpdateProductSaleRepositoryImpl) : UpdateProductSaleRepository = impl
 
 
 
@@ -102,13 +101,6 @@ object DataModule {
     fun provideProductSaleDao(database: ProductSaleDataBase) : ProductSaleDao {
         return database.dao
     }
-
-//    @Provides
-//    @Singleton
-//    fun providegetUserKakaoInfoRepositoryImpl(
-//        dao : ProductSaleDao
-//    ) : getUserKakaoInfoRepositoryImpl = getUserKakaoInfoRepositoryImpl(dao)
-//
 
 
     // baseproduct db

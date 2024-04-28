@@ -4,7 +4,7 @@ plugins {
 }
 
 android {
-    namespace = "com.company.product"
+    namespace = "com.company.saletodomain"
     compileSdk = 33
 
     defaultConfig {
@@ -33,9 +33,10 @@ android {
 }
 
 dependencies {
-    retrofit()
+    implementation(project(":domain"))
+    implementation(project(":data:data-datasource"))
 
-    implementation("androidx.core:core-ktx:1.9.0")
+    implementation("androidx.core:core-ktx:1.13.0")
     implementation("androidx.appcompat:appcompat:1.6.1")
     implementation("com.google.android.material:material:1.11.0")
     testImplementation("junit:junit:4.13.2")

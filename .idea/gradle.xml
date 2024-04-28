@@ -18,6 +18,12 @@
             <option value="$PROJECT_DIR$/core/network/announcement" />
             <option value="$PROJECT_DIR$/core/network/product" />
             <option value="$PROJECT_DIR$/data" />
+            <option value="$PROJECT_DIR$/data/data-datasource" />
+            <option value="$PROJECT_DIR$/data/data-impl" />
+            <option value="$PROJECT_DIR$/data/data-mapper" />
+            <option value="$PROJECT_DIR$/data/data-mapper/saletodomain" />
+            <option value="$PROJECT_DIR$/data/mapper" />
+            <option value="$PROJECT_DIR$/data/mapper/saletodomain" />
             <option value="$PROJECT_DIR$/domain" />
             <option value="$PROJECT_DIR$/macrobenchmark" />
             <option value="$PROJECT_DIR$/presentation" />

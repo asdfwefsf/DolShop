@@ -1,4 +1,4 @@
-package com.company.data.datasource.productsale
+package com.company.data_datasource.productsale
 
 import androidx.room.Database
 import androidx.room.RoomDatabase
