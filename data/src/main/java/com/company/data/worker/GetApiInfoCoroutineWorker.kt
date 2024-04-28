@@ -35,6 +35,7 @@ class GetApiInfoCoroutineWorker @AssistedInject constructor(
 
 }
 
+
 fun getInfoNowWork(context: Context) {
     val constraints = Constraints.Builder()
         .setRequiredNetworkType(NetworkType.CONNECTED)
