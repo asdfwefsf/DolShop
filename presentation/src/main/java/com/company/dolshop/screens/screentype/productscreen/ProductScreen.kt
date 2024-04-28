@@ -360,9 +360,7 @@ fun fourthBaseScreen(viewModel: UpdateProductSaleViewModel) {
                     color = Color.White
                 )
             }
-
         }
-
 
     }
 
