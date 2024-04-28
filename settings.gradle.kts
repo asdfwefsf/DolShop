@@ -31,4 +31,6 @@ include(":core:network:announcement")
 include(":macrobenchmark")
 include(":data:mapper:saletodomain")
 include(":data:data-datasource")
+
 include(":data:data-impl")
+include(":data:data-impl:update-productsale-impl")

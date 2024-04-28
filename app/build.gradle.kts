@@ -78,7 +78,7 @@ dependencies {
     implementation(project(":data"))
     implementation(project(":core:network:product"))
     implementation(project(":core:network:announcement"))
-    implementation(project(":data:data-impl"))
+    implementation(project(":data:data-impl:update-productsale-impl"))
     implementation(project(":data:data-mapper:saletodomain"))
     implementation(project(":data:data-datasource"))
 

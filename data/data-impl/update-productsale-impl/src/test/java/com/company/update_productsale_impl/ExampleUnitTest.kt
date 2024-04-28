@@ -1,4 +1,4 @@
-package com.company.data_impl
+package com.company.update_productsale_impl
 
 import org.junit.Test
 

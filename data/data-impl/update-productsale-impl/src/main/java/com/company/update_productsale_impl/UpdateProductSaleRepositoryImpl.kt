@@ -1,4 +1,4 @@
-package com.company.data_impl.updatesaleinfo
+package com.company.update_productsale_impl
 
 
 import com.company.data_datasource.productsale.ProductSaleDao

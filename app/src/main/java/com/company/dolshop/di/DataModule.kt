@@ -59,7 +59,7 @@ object DataModule {
     @Provides
     fun provideAnnouncementRepository(impl: AnnouncementRepositoryImpl) : AnnouncementRepository = impl
     @Provides
-    fun provideProductSaleRepository(impl: com.company.data_impl.updatesaleinfo.UpdateProductSaleRepositoryImpl) : UpdateProductSaleRepository = impl
+    fun provideProductSaleRepository(impl: com.company.update_productsale_impl.UpdateProductSaleRepositoryImpl) : UpdateProductSaleRepository = impl
 
 
 
