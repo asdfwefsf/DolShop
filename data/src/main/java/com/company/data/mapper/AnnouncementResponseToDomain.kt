@@ -9,3 +9,4 @@ fun AnnouncementResponse.toDomainAnnouncementModel(): DomainAnnouncementModel {
         name = this.name
     )
 }
+
