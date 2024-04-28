@@ -1,18 +1,14 @@
 package com.company.data.worker
 
-import android.util.Log
 import com.company.data.datasource.baseproductinfo1.BaseProductDao
-import com.company.data.datasource.baseproductinfo1.BaseProductInfo
-import com.company.network.api.ProductAPI
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
+import com.company.product.api.ProductAPI
 import javax.inject.Inject
 
 class GetBaseProductWorkerFunction2  @Inject constructor(
     private val productAPI: ProductAPI,
     private val dao: BaseProductDao,
 
-)  {
+    )  {
     suspend fun getBaseProductList2() {
 //        val response = productAPI.getBaseProduct2()
 //        val responseBody = response.body() ?: emptyList()

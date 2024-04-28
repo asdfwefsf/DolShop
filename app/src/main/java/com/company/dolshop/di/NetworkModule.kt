@@ -1,7 +1,7 @@
 package com.company.dolshop.di
 
-import com.company.network.api.AnnouncementAPI
-import com.company.network.api.ProductAPI
+import com.company.announcement.api.AnnouncementAPI
+import com.company.product.api.ProductAPI
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -19,7 +19,7 @@ object NetworkModule {
             .baseUrl("https://api.jsonbin.io/v3/")
             .addConverterFactory(GsonConverterFactory.create())
             .build()
-            .create(ProductAPI::class.java)
+            .create(com.company.product.api.ProductAPI::class.java)
     }
 
     @Provides

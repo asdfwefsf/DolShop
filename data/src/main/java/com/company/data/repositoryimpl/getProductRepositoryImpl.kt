@@ -3,7 +3,7 @@ package com.company.data.repositoryimpl
 import com.company.data.mapper.toDomainProductModel
 import com.company.domain.model.DomainProductModel
 import com.company.domain.repository.getProductRepository
-import com.company.network.api.ProductAPI
+import com.company.product.api.ProductAPI
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow

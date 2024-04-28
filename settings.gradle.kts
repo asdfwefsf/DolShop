@@ -21,5 +21,9 @@ include(":data")
 include(":domain")
 include(":presentation")
 
-include(":core:network")
+include(":core:network:product")
+include(":core:network:announcement")
+
+
+
 include(":macrobenchmark")

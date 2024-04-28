@@ -1,7 +1,7 @@
 package com.company.data.mapper
 
 import com.company.domain.model.DomainProductModel
-import com.company.network.model.ProductResponse
+import com.company.product.model.ProductResponse
 
 fun ProductResponse.toDomainProductModel(): DomainProductModel {
     return DomainProductModel(
