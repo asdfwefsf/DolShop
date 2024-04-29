@@ -61,7 +61,7 @@ dependencies {
     implementation(project(":domain"))
     implementation(project(":core:network:product"))
     implementation(project(":core:network:announcement"))
-
+    implementation(project(":datasource-local-productsale"))
     implementation(project(":data:data-datasource"))
     implementation(project(":data:data-impl:update-productsale-impl"))
     implementation(project(":data:data-mapper:saletodomain"))

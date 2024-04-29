@@ -1,4 +1,4 @@
-package com.company.data_datasource.productsale
+package com.company.datasource_local_productsale.productsale
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey

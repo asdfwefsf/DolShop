@@ -14,8 +14,8 @@ import com.company.data.repositoryimpl.UpdateBaseProductRepositoryImpl
 import com.company.data.repositoryimpl.UpdateKakaoUserInfoRepositoryImpl
 import com.company.data.repositoryimpl.getProductRepositoryImpl
 import com.company.data.repositoryimpl.getUserKakaoInfoRepositoryImpl
-import com.company.data_datasource.productsale.ProductSaleDao
-import com.company.data_datasource.productsale.ProductSaleDataBase
+import com.company.datasource_local_productsale.productsale.ProductSaleDao
+import com.company.datasource_local_productsale.productsale.ProductSaleDataBase
 import com.company.domain.repository.AnnouncementRepository
 import com.company.domain.repository.CoroutineWorkerRepository
 import com.company.domain.repository.KakaoLoginRepository
@@ -86,15 +86,15 @@ object DataModule {
     // product sale db
     @Provides
     @Singleton
-    fun provideProductSaleDataBase(@ApplicationContext appContext: Context): ProductSaleDataBase {
+    fun provideProductSaleDataBase(@ApplicationContext appContext: Context): com.company.datasource_local_productsale.productsale.ProductSaleDataBase {
         return Room.databaseBuilder(
             appContext,
-            ProductSaleDataBase::class.java,
+            com.company.datasource_local_productsale.productsale.ProductSaleDataBase::class.java,
             "product_sale_database"
         ).build()
     }
     @Provides
-    fun provideProductSaleDao(database: ProductSaleDataBase) : ProductSaleDao {
+    fun provideProductSaleDao(database: com.company.datasource_local_productsale.productsale.ProductSaleDataBase) : com.company.datasource_local_productsale.productsale.ProductSaleDao {
         return database.dao
     }
 

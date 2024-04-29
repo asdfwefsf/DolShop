@@ -81,6 +81,7 @@ dependencies {
     implementation(project(":data:data-impl:update-productsale-impl"))
     implementation(project(":data:data-mapper:saletodomain"))
     implementation(project(":data:data-datasource"))
+    implementation(project(":datasource-local-productsale"))
 
 
     implementation("com.google.dagger:hilt-android:2.49")

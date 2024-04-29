@@ -1,16 +1,14 @@
 import org.jetbrains.kotlin.kapt3.base.Kapt.kapt
 
-
 plugins {
     id("com.android.library")
     id("org.jetbrains.kotlin.android")
-
     id ("kotlin-kapt")
 
 }
 
 android {
-    namespace = "com.company.update_productsale_impl"
+    namespace = "com.company.datasource_local_productsale"
     compileSdk = 33
 
     defaultConfig {
@@ -39,15 +37,7 @@ android {
 }
 
 dependencies {
-
-
-    implementation(project(":domain"))
-    implementation(project(":datasource-local-productsale"))
-    implementation(project(":data:data-mapper:saletodomain"))
-
-    implementation("com.google.dagger:hilt-android:2.49")
-    kapt ("androidx.hilt:hilt-compiler:1.2.0")
-    kapt("com.google.dagger:hilt-android-compiler:2.49")
+    room()
 
     implementation("androidx.core:core-ktx:1.9.0")
     implementation("androidx.appcompat:appcompat:1.6.1")
