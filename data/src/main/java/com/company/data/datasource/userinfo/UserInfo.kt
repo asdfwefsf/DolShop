@@ -10,5 +10,6 @@ data class UserInfo(
     val authNumber : String,
     val authEmail : String,
     val authNicName : String,
-    val authProfileImage : String
+    val authProfileImage : String,
+    val authAddress : String
 )

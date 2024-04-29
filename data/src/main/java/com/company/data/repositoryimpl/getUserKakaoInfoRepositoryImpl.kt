@@ -7,11 +7,7 @@ import com.company.domain.repository.getUserKakaoInfoRepository
 import com.kakao.sdk.user.UserApiClient
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
-import java.time.LocalDateTime
 import javax.inject.Inject
 
 class getUserKakaoInfoRepositoryImpl @Inject constructor(
@@ -33,7 +29,8 @@ class getUserKakaoInfoRepositoryImpl @Inject constructor(
                     "${user.id}",
                     "${user.kakaoAccount?.email}",
                     "${user.kakaoAccount?.profile?.nickname}",
-                    "${user.kakaoAccount?.profile?.thumbnailImageUrl}"
+                    "${user.kakaoAccount?.profile?.thumbnailImageUrl}",
+                    " "
 
                 )
                 Log.i("auth", "사용자 정보 요청 성공\n${userInfo.id}")
@@ -50,6 +47,7 @@ class getUserKakaoInfoRepositoryImpl @Inject constructor(
                             userInfo.authEmail,
                             userInfo.authNicName,
                             userInfo.authProfileImage,
+                            " "
                         )
                     )
                 }

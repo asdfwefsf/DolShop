@@ -52,10 +52,9 @@ fun AuthInfoScreen(navController: NavController) {
             Column {
                 AsyncImage(model = userInfoList.authProfileImage, contentDescription = null)
                 InfoItems("이름" , userInfoList.authNicName)
-                InfoItems("이메일 주소" , userInfoList.authNicName)
-                InfoItems("아이디 번호" , userInfoList.authNicName)
+                InfoItems("이메일 주소" , userInfoList.authEmail)
+                InfoItems("아이디 번호" , userInfoList.authNumber)
                 InfoItems("주소" , userInfoList.authNicName)
-                InfoItems("프사" , userInfoList.authNicName)
             }
 
 //            Spacer(Modifier.size(8.dp))
