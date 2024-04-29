@@ -34,3 +34,5 @@ include(":data:data-datasource")
 
 include(":data:data-impl")
 include(":data:data-impl:update-productsale-impl")
+include(":core:networks")
+include(":core:network-product")

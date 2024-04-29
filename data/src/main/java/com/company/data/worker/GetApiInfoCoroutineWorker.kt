@@ -41,7 +41,6 @@ fun getInfoNowWork(context: Context) {
         .setRequiredNetworkType(NetworkType.CONNECTED)
         .build()
 
-    // 빨리 해야되서 지연시간 X
     val immediateWorkRequest = OneTimeWorkRequestBuilder<GetApiInfoCoroutineWorker>()
         .setConstraints(constraints)
         .build()
