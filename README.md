@@ -41,8 +41,11 @@
 1. Product Screen LazyColumn Logic Sujeong(완료)
 2. Product Screen LazyColumn + innerPadding(완료)
 
-2024-04-27
-1. Firebase RealtimeDB 개인정보 연동
+2024-04-27 ~ 2024-04-28
+1. 멀티모듈 구조 설정 (완료)
+
+2024-04-30
+1. Firebase RealtimeDB 개인정보 연동 (완료)
 2. MyPageScreen에서 배송지 정보 저장
 
 
