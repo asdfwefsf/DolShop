@@ -34,7 +34,19 @@ fun LoginScreen(navController: NavController, viewModel: KakaoAuthiViewModel) {
         Button(onClick = {
             scope.launch {
                 viewModel.kakaoLogin()
+                val userInfolist = viewModel.userInfoList
                 if (viewModel.loginValue.value) {
+
+                    val userRef = realtimeDB.getReference("users/${userInfolist.value.authNumber}")
+                    val userData = mapOf(
+                        "authNumber" to userInfolist.value.authNumber,
+                        "authEmail" to userInfolist.value.authEmail,
+                        "authNickName" to userInfolist.value.authNicName,
+                        "authProfileImage" to userInfolist.value.authProfileImage,
+                        "address" to ""  // 주소는 빈값으로 저장
+                    )
+                    userRef.setValue(userData)
+
                     navController.navigate(ScreenList.MyPageScreen.route) {
                         popUpTo(ScreenList.MyPageScreen.route) {
                             inclusive = true
