@@ -10,7 +10,7 @@ import javax.inject.Inject
 
 class GetProductSaleWorkerFunction @Inject constructor(
     private val productAPI: ProductAPI,
-    private val dao: com.company.data_datasource.productsale.ProductSaleDao
+    private val dao: ProductSaleDao
 ) {
     suspend fun getProductSaleInfo() {
         val response = productAPI.getProductSale()
@@ -20,14 +20,14 @@ class GetProductSaleWorkerFunction @Inject constructor(
                 responseBody.forEach {
                     if (!dao.prodideProductSaleInfoExists(responseBody.size)) {
                         dao.insertProductSaleInfo(
-                            com.company.data_datasource.productsale.ProductSaleInfo(
+                            ProductSaleInfo(
                                 saleMunGu = it.saleMunGu
                             )
                         )
                         Log.d("daoTest", "productSaleInsert")
                     } else {
                         dao.updateProductSaleInfo(
-                            com.company.data_datasource.productsale.ProductSaleInfo(
+                            ProductSaleInfo(
                                 saleMunGu = it.saleMunGu
                             )
                         )
