@@ -18,7 +18,6 @@ class KakaoAuthiViewModel @Inject constructor(
     private val kakaoLogoutUsecase: KakaoLogoutUseCase,
     private val getUserKakaoInfoUseCase: getUserKakaoInfoUseCase,
     private val updateUserKakaoInfoUseCase: UpdateKakaoUserInfoUseCase,
-
     ) : ViewModel() {
 
 
@@ -28,12 +27,6 @@ class KakaoAuthiViewModel @Inject constructor(
 
     // 카카오 로그인 기능
     suspend fun kakaoLogin() {
-//        val sibal = kakaoLoginUsecase()
-//        if (sibal) {
-//            getUserKakaoInfo()
-//        }
-//        _loginValue.emit(true)
-
         kakaoLoginUsecase().apply {
             if (this) {
                 getUserKakaoInfo()
@@ -54,7 +47,7 @@ class KakaoAuthiViewModel @Inject constructor(
     // 유저의 카카오 정보 받아오기
     // 사용자 정보 반환 관련 ViewModel
     private val _userInfoList = MutableStateFlow<DomainUserInfoModel>(
-        DomainUserInfoModel("s" , "s", "s" , "s" )
+        DomainUserInfoModel("s", "s", "s", "s")
     )
     val userInfoList = _userInfoList
 
@@ -67,8 +60,9 @@ class KakaoAuthiViewModel @Inject constructor(
             kakaoInfoUpdate()
         }
     }
+
     suspend fun kakaoInfoUpdate() {
-        updateUserKakaoInfoUseCase().collect {userInfo ->
+        updateUserKakaoInfoUseCase().collect { userInfo ->
             _userInfoList.value = userInfo
         }
     }

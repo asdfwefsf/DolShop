@@ -1,5 +1,6 @@
 package com.company.dolshop.screens.screentype.mypagescreen
 
+import android.util.Log
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -50,11 +51,15 @@ fun AuthInfoScreen(navController: NavController) {
 //        }
         if(userInfoList != null) {
             Column {
+
                 AsyncImage(model = userInfoList.authProfileImage, contentDescription = null)
                 InfoItems("이름" , userInfoList.authNicName)
                 InfoItems("이메일 주소" , userInfoList.authEmail)
                 InfoItems("아이디 번호" , userInfoList.authNumber)
-                InfoItems("주소" , userInfoList.authNicName)
+                Row {
+                    InfoItems("주소" , userInfoList.authNicName)
+                    Text("주소 변경하기" , modifier = Modifier.clickable { Log.d("address" , "address change") })
+                }
             }
 
 //            Spacer(Modifier.size(8.dp))
@@ -67,10 +72,7 @@ fun AuthInfoScreen(navController: NavController) {
 //            Text(userInfoList.authProfileImage)
 
         }
-
     }
-
-
 }
 @Composable
 fun InfoItems(indextext : String , text: String) {
