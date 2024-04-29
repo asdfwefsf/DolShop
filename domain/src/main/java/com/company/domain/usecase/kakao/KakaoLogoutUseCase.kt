@@ -1,4 +1,4 @@
-package com.company.domain.usecase
+package com.company.domain.usecase.kakao
 
 import com.company.domain.repository.KakaoLogoutRepository
 import javax.inject.Inject

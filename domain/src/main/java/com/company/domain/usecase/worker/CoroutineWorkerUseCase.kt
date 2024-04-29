@@ -1,4 +1,4 @@
-package com.company.domain.usecase
+package com.company.domain.usecase.worker
 
 import android.content.Context
 import com.company.domain.repository.CoroutineWorkerRepository

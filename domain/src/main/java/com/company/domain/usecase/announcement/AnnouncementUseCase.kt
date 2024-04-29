@@ -1,4 +1,4 @@
-package com.company.domain.usecase
+package com.company.domain.usecase.announcement
 
 import com.company.domain.model.DomainAnnouncementModel
 import com.company.domain.model.DomainProductModel

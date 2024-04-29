@@ -3,10 +3,10 @@ package com.company.dolshop.viewmodel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.company.domain.model.DomainUserInfoModel
-import com.company.domain.usecase.KakaoLoginUseCase
-import com.company.domain.usecase.KakaoLogoutUseCase
-import com.company.domain.usecase.UpdateKakaoUserInfoUseCase
-import com.company.domain.usecase.getUserKakaoInfoUseCase
+import com.company.domain.usecase.kakao.KakaoLoginUseCase
+import com.company.domain.usecase.kakao.KakaoLogoutUseCase
+import com.company.domain.usecase.kakao.UpdateKakaoUserInfoUseCase
+import com.company.domain.usecase.kakao.getUserKakaoInfoUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch

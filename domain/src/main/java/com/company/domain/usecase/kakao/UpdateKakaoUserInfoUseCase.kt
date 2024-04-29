@@ -1,4 +1,4 @@
-package com.company.domain.usecase
+package com.company.domain.usecase.kakao
 
 import com.company.domain.model.DomainUserInfoModel
 import com.company.domain.repository.UpdateKakaoUserInfoRepository

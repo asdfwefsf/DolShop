@@ -10,7 +10,6 @@ import com.company.data.repositoryimpl.AnnouncementRepositoryImpl
 import com.company.data.repositoryimpl.CoroutineWorkerRepositoryImpl
 import com.company.data.repositoryimpl.KakaoLoginRepositoryImpl
 import com.company.data.repositoryimpl.KakaoLogoutRepositoryImpl
-import com.company.data.repositoryimpl.TestRepositoryImpl
 import com.company.data.repositoryimpl.UpdateBaseProductRepositoryImpl
 import com.company.data.repositoryimpl.UpdateKakaoUserInfoRepositoryImpl
 import com.company.data.repositoryimpl.getProductRepositoryImpl
@@ -21,7 +20,6 @@ import com.company.domain.repository.AnnouncementRepository
 import com.company.domain.repository.CoroutineWorkerRepository
 import com.company.domain.repository.KakaoLoginRepository
 import com.company.domain.repository.KakaoLogoutRepository
-import com.company.domain.repository.TempRepository
 import com.company.domain.repository.UpdateBaseProductRepository
 import com.company.domain.repository.UpdateKakaoUserInfoRepository
 import com.company.domain.repository.UpdateProductSaleRepository
@@ -38,8 +36,6 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 object DataModule {
 
-    @Provides
-    fun bindTempRepository(tempRepositoryImpl: TestRepositoryImpl) : TempRepository = tempRepositoryImpl
     // RepositoryImpl 객체를 Repository 타입으로 주입한다. 즉, Repository를 사용하는데서는 RepositoryImpl도 사용 할 수 있게 Hilt가 인스턴스를 제공해주는거야.
     @Provides
     fun provideKakaoLoginRepository(impl: KakaoLoginRepositoryImpl) : KakaoLoginRepository = impl

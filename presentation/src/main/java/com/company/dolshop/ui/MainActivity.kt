@@ -10,21 +10,14 @@ import androidx.activity.viewModels
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import com.company.dolshop.designsystem.DolShopTheme
-import androidx.compose.ui.graphics.Color
 import androidx.core.animation.doOnEnd
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import androidx.navigation.compose.rememberNavController
 import com.company.dolshop.screens.screentype.bottomnavscreen.BottomNav
-import com.company.dolshop.screens.screentype.subscreen.LoginScreen
 import com.company.dolshop.viewmodel.CoroutineWorkerViewModel
-import com.company.dolshop.viewmodel.TempViewModel
-import com.company.domain.usecase.CoroutineWorkerUseCase
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -47,7 +40,6 @@ class splashScreenViewModel : ViewModel() {
 class MainActivity : ComponentActivity() {
     private val splashViewModel by viewModels<splashScreenViewModel>()
     private val CoroutineWorkerViewModel  by viewModels<CoroutineWorkerViewModel>()
-    private val tempViewModel : TempViewModel by viewModels()
     override fun onCreate(savedInstanceState: Bundle?) {
 
         super.onCreate(savedInstanceState)
