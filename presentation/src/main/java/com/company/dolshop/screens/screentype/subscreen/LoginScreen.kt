@@ -46,17 +46,18 @@ fun LoginScreen(navController: NavController, viewModel: KakaoAuthiViewModel) {
 
         }) {
             Text(
-                "로그인"
+                "로그인",
             )
+            Spacer(modifier = Modifier.padding(Paddings.extra))
         }
-        Spacer(modifier = Modifier.padding(com.company.designsystem.designsystem.Paddings.extra))
+        Spacer(modifier = Modifier.padding(Paddings.extra))
         TextField(
             value = text,
             onValueChange = { newText ->
                 text = newText
             }
         )
-        Spacer(modifier = Modifier.padding(com.company.designsystem.designsystem.Paddings.extra))
+        Spacer(modifier = Modifier.padding(Paddings.extra))
         Button(
             onClick = { myRef.setValue(text) }
         ) {
