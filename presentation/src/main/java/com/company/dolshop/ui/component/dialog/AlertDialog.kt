@@ -52,8 +52,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.em
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.core.text.HtmlCompat
-import com.company.dolshop.designsystem.DolShopTheme
-import com.company.dolshop.designsystem.Paddings
+import com.company.designsystem.designsystem.DolShopTheme
+import com.company.designsystem.designsystem.Paddings
 
 //data class LeadingIconData(
 //    @DrawableRes val iconDrawable: Int,
@@ -570,7 +570,7 @@ fun PrimaryButton(
 //            }
             Text(
                 text = id?.let { stringResource(id = id) } ?: text,
-                modifier = Modifier.padding(Paddings.small)
+                modifier = Modifier.padding(com.company.designsystem.designsystem.Paddings.small)
             )
         }
     }
@@ -602,7 +602,7 @@ fun SecondaryButton(
             Text(
                 text = id?.let { stringResource(id = id) } ?: text,
                 style = MaterialTheme.typography.headlineLarge,
-                modifier = Modifier.padding(Paddings.small)
+                modifier = Modifier.padding(com.company.designsystem.designsystem.Paddings.small)
             )
         }
     }

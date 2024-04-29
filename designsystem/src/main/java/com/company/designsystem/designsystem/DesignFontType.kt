@@ -1,4 +1,4 @@
-package com.company.dolshop.designsystem
+package com.company.designsystem.designsystem
 
 import androidx.compose.material3.Typography
 import androidx.compose.runtime.Composable
@@ -7,7 +7,7 @@ import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontFamily
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.sp
-import com.company.presentation.R
+import com.company.designsystem.R
 
 
 private val spoqaBold = FontFamily(

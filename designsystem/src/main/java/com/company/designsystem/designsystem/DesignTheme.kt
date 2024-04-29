@@ -1,4 +1,4 @@
-package com.company.dolshop.designsystem
+package com.company.designsystem.designsystem
 
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme

@@ -60,7 +60,7 @@ import androidx.constraintlayout.compose.Dimension
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
-import com.company.dolshop.designsystem.DolShopTheme
+import com.company.designsystem.designsystem.DolShopTheme
 import com.company.dolshop.viewmodel.UpdateBaseProductViewModel
 import com.company.dolshop.viewmodel.UpdateProductSaleViewModel
 import com.company.dolshop.viewmodel.getProductViewModel
@@ -474,7 +474,7 @@ fun PagerState.offsetForPage(page: Int) = (currentPage - page) + currentPageOffs
 @Preview
 @Composable
 fun testFirstBaseScreen() {
-    DolShopTheme {
+    com.company.designsystem.designsystem.DolShopTheme {
         firstBaseScreen()
     }
 }
@@ -496,7 +496,7 @@ fun circleBaseItem1Preview() {
         "플레이어",
         "스포츠"
     )
-    DolShopTheme {
+    com.company.designsystem.designsystem.DolShopTheme {
         circleBaseItem1()
     }
 }
@@ -504,7 +504,7 @@ fun circleBaseItem1Preview() {
 @Preview
 @Composable
 fun testThirdBaseScreen() {
-    DolShopTheme {
+    com.company.designsystem.designsystem.DolShopTheme {
         thirdBaseScreen()
     }
 }

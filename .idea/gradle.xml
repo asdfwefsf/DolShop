@@ -27,6 +27,7 @@
             <option value="$PROJECT_DIR$/data/data-mapper/saletodomain" />
             <option value="$PROJECT_DIR$/data/mapper" />
             <option value="$PROJECT_DIR$/data/mapper/saletodomain" />
+            <option value="$PROJECT_DIR$/designsystem" />
             <option value="$PROJECT_DIR$/domain" />
             <option value="$PROJECT_DIR$/macrobenchmark" />
             <option value="$PROJECT_DIR$/presentation" />

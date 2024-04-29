@@ -15,7 +15,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavController
-import com.company.dolshop.designsystem.Paddings
+import com.company.designsystem.designsystem.Paddings
 import com.company.dolshop.screens.ScreenList
 import com.company.dolshop.viewmodel.KakaoAuthiViewModel
 import com.google.firebase.database.ktx.database
@@ -49,14 +49,14 @@ fun LoginScreen(navController: NavController, viewModel: KakaoAuthiViewModel) {
                 "로그인"
             )
         }
-        Spacer(modifier = Modifier.padding(Paddings.extra))
+        Spacer(modifier = Modifier.padding(com.company.designsystem.designsystem.Paddings.extra))
         TextField(
             value = text,
             onValueChange = { newText ->
                 text = newText
             }
         )
-        Spacer(modifier = Modifier.padding(Paddings.extra))
+        Spacer(modifier = Modifier.padding(com.company.designsystem.designsystem.Paddings.extra))
         Button(
             onClick = { myRef.setValue(text) }
         ) {

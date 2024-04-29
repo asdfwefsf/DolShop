@@ -8,8 +8,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import com.company.dolshop.designsystem.DolShopTheme
-import com.company.dolshop.designsystem.Paddings
+import com.company.designsystem.designsystem.DolShopTheme
+import com.company.designsystem.designsystem.Paddings
 import com.company.dolshop.ui.component.dialog.DialogButton
 import com.company.dolshop.ui.component.dialog.PrimaryButton
 import com.company.dolshop.ui.component.dialog.SecondaryButton
@@ -24,7 +24,7 @@ fun TestDialogButtonsColumn(
     ) {
         buttons?.forEachIndexed { index, dialogButton ->
             if (index > 0) {
-                Spacer(modifier = Modifier.height(Paddings.large))
+                Spacer(modifier = Modifier.height(com.company.designsystem.designsystem.Paddings.large))
             }
             when (dialogButton) {
                 is DialogButton.Primary -> {

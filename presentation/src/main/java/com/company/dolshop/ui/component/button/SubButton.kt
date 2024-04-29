@@ -16,8 +16,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.company.dolshop.designsystem.DolShopTheme
-import com.company.dolshop.designsystem.Paddings
+import com.company.designsystem.designsystem.DolShopTheme
+import com.company.designsystem.designsystem.Paddings
 
 @Composable
 fun SubButton(
@@ -45,7 +45,7 @@ fun SubButton(
         ) {
             Text(
                 text = id?.let { stringResource(id = id) } ?: text,
-                modifier = Modifier.padding(Paddings.small)
+                modifier = Modifier.padding(com.company.designsystem.designsystem.Paddings.small)
             )
         }
     }
@@ -54,7 +54,7 @@ fun SubButton(
 @Preview
 @Composable
 fun SecondaryButtonPreview() {
-    DolShopTheme {
+    com.company.designsystem.designsystem.DolShopTheme {
         SubButton(
             text = "확인"
         ) {}

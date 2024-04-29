@@ -11,7 +11,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
-import com.company.dolshop.designsystem.DolShopTheme
+import com.company.designsystem.designsystem.DolShopTheme
 import androidx.core.animation.doOnEnd
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.lifecycle.ViewModel
@@ -81,7 +81,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             CoroutineWorkerViewModel.test(this)
 
-            DolShopTheme {
+            com.company.designsystem.designsystem.DolShopTheme {
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background

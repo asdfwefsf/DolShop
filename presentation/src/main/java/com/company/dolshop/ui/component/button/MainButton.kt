@@ -20,8 +20,8 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.company.dolshop.designsystem.DolShopTheme
-import com.company.dolshop.designsystem.Paddings
+import com.company.designsystem.designsystem.DolShopTheme
+import com.company.designsystem.designsystem.Paddings
 import com.company.dolshop.ui.model.LeadingIconData
 
 val LEADING_ICON_SIZE = 24.dp
@@ -57,11 +57,11 @@ fun PrimaryButton(
                         )
                     }
                 )
-                Spacer(modifier = Modifier.width(Paddings.small))
+                Spacer(modifier = Modifier.width(com.company.designsystem.designsystem.Paddings.small))
             }
             Text(
                 text = id?.let { stringResource(id = id) } ?: text,
-                modifier = Modifier.padding(Paddings.small)
+                modifier = Modifier.padding(com.company.designsystem.designsystem.Paddings.small)
             )
         }
     }
@@ -70,7 +70,7 @@ fun PrimaryButton(
 @Preview
 @Composable
 fun PrimaryButtonPreview() {
-    DolShopTheme {
+    com.company.designsystem.designsystem.DolShopTheme {
         PrimaryButton(
             text = "로그아웃"
         ) {}
