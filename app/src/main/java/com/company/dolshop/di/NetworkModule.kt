@@ -19,7 +19,7 @@ object NetworkModule {
             .baseUrl("https://api.jsonbin.io/v3/")
             .addConverterFactory(GsonConverterFactory.create())
             .build()
-            .create(com.company.product.api.ProductAPI::class.java)
+            .create(ProductAPI::class.java)
     }
 
     @Provides
