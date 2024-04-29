@@ -26,7 +26,6 @@ import kotlinx.coroutines.launch
 @Composable
 fun LoginScreen(navController: NavController, viewModel: KakaoAuthiViewModel) {
     val scope = rememberCoroutineScope()
-
     val realtimeDB = Firebase.database
     val myRef = realtimeDB.getReference("message")
     myRef.setValue("Hello , World!")
