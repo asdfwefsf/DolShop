@@ -14,6 +14,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
@@ -21,6 +22,7 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.LifecycleCoroutineScope
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -33,6 +35,7 @@ import com.company.dolshop.screens.screentype.mypagescreen.AddressScreen
 import com.company.dolshop.screens.screentype.mypagescreen.AuthInfoScreen
 import com.company.dolshop.screens.screentype.mypagescreen.LogoutScreen
 import com.company.dolshop.screens.screentype.mypagescreen.MyPageScreen
+import com.company.dolshop.screens.screentype.mypagescreen.ToAddressScreen
 import com.company.dolshop.screens.screentype.productscreen.ProductScreen
 import com.company.dolshop.screens.screentype.rockscreen.RocksScreen
 import com.company.dolshop.screens.screentype.subscreen.LoginScreen
@@ -44,6 +47,7 @@ import com.company.presentation.R
 @Composable
 fun BottomNav() {
     val navController = rememberNavController()
+    val coroutineScope = rememberCoroutineScope()
 
     // navController(실제 화면 이동 담당)의 현재 상태를 구독해서 최상위의 경로가 변경될 때마다 경로를 얻어낸다.
     val currentRoute = navController.currentBackStackEntryAsState().value?.destination?.route
@@ -191,7 +195,11 @@ fun BottomNav() {
             }
 
             composable(route = ScreenList.AddressScreen.route) {
-                AddressScreen()
+                AddressScreen(navController , coroutineScope)
+            }
+
+            composable(route = ScreenList.ToAddressScreen.route) {
+                ToAddressScreen(navController)
             }
         }
     }

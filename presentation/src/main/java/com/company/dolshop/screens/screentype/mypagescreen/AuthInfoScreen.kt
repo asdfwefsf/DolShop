@@ -57,7 +57,7 @@ fun AuthInfoScreen(navController: NavController) {
                 LeadingIconInfoItems(navController , "배송지" , Icons.Default.KeyboardArrowRight, userInfoList.authNicName)
                 Text(
                     "주소 변경하기",
-                    modifier = Modifier.clickable { navController.navigate(ScreenList.AddressScreen.route) }
+                    modifier = Modifier.clickable { navController.navigate(ScreenList.ToAddressScreen.route) }
                 )
 
             }
@@ -126,7 +126,7 @@ fun LeadingIconInfoItems(navController : NavController , defaultText: String , i
         Spacer(modifier = Modifier.width(16.dp))
         Text(defaultText, fontWeight = FontWeight.Bold)
         Icon(icon, contentDescription = null, modifier = Modifier.size(24.dp).clickable {
-            navController.navigate(ScreenList.AddressScreen.route)
+            navController.navigate(ScreenList.ToAddressScreen.route)
         })
         Text(address)
 
