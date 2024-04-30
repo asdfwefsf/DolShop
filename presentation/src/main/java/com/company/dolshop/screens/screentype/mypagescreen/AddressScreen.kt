@@ -15,7 +15,7 @@ fun AddressScreen() {
             WebView(context).apply {
                 webViewClient = WebViewClient()
                 settings.javaScriptEnabled = true
-                loadUrl("https://postcode.map.daum.net/guide")
+                loadUrl("https://dolshop-aa5e8.web.app")
             }
         }
     )
