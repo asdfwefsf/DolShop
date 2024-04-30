@@ -29,6 +29,7 @@ import androidx.navigation.compose.rememberNavController
 import com.company.dolshop.screens.ScreenList
 import com.company.dolshop.screens.screentype.announcementscreen.AnnouncementScreen
 import com.company.dolshop.screens.screentype.communityscreen.CommunityScreen
+import com.company.dolshop.screens.screentype.mypagescreen.AddressScreen
 import com.company.dolshop.screens.screentype.mypagescreen.AuthInfoScreen
 import com.company.dolshop.screens.screentype.mypagescreen.LogoutScreen
 import com.company.dolshop.screens.screentype.mypagescreen.MyPageScreen
@@ -187,6 +188,10 @@ fun BottomNav() {
 
             composable(route = ScreenList.LogoutScreen.route) {
                 LogoutScreen()
+            }
+
+            composable(route = ScreenList.AddressScreen.route) {
+                AddressScreen()
             }
         }
     }
