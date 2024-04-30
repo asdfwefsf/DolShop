@@ -44,29 +44,38 @@ fun AuthInfoScreen(navController: NavController) {
             Column {
 
                 AsyncImage(model = userInfoList.authProfileImage, contentDescription = null)
-                InfoItems("이름", userInfoList.authNicName)
+                TopInfoItems("이름", userInfoList.authNicName)
                 InfoItems("이메일 주소", userInfoList.authEmail)
                 InfoItems("아이디 번호", userInfoList.authNumber)
                 ClickableInfoItems("주소", userInfoList.authNicName)
                 Text(
                     "주소 변경하기",
-                    modifier = Modifier.clickable { Log.d("address", "address change") })
+                    modifier = Modifier.clickable { Log.d("address", "address change") }
+                )
 
             }
-
-//            Spacer(Modifier.size(8.dp))
-//            Text(userInfoList.authEmail)
-//            Spacer(Modifier.size(8.dp))
-//            Text(userInfoList.authNicName)
-//            Spacer(Modifier.size(8.dp))
-//            Text(userInfoList.authNumber)
-//            Spacer(Modifier.size(8.dp))
-//            Text(userInfoList.authProfileImage)
-
         }
     }
 }
 
+@Composable
+fun TopInfoItems(indextext: String, text: String) {
+    Divider()
+
+    Row(
+        verticalAlignment = Alignment.CenterVertically,
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(16.dp)
+    ) {
+//        Spacer(modifier = Modifier.width(16.dp))
+        Text(indextext, fontWeight = FontWeight.Bold)
+        Spacer(modifier = Modifier.weight(1f))
+        Text(text, fontWeight = FontWeight.Bold)
+
+    }
+    Divider()
+}
 @Composable
 fun InfoItems(indextext: String, text: String) {
     Row(
@@ -75,7 +84,7 @@ fun InfoItems(indextext: String, text: String) {
             .fillMaxWidth()
             .padding(16.dp)
     ) {
-        Spacer(modifier = Modifier.width(16.dp))
+//        Spacer(modifier = Modifier.width(16.dp))
         Text(indextext, fontWeight = FontWeight.Bold)
         Spacer(modifier = Modifier.weight(1f))
         Text(text, fontWeight = FontWeight.Bold)
@@ -92,7 +101,7 @@ fun ClickableInfoItems(indextext: String, text: String) {
             .fillMaxWidth()
             .padding(16.dp)
     ) {
-        Spacer(modifier = Modifier.width(16.dp))
+//        Spacer(modifier = Modifier.width(16.dp))
         Text(indextext, fontWeight = FontWeight.Bold)
         Spacer(modifier = Modifier.weight(1f))
         Text(text, fontWeight = FontWeight.Bold)
