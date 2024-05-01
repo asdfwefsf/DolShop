@@ -22,7 +22,6 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.lifecycle.LifecycleCoroutineScope
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -33,9 +32,9 @@ import com.company.dolshop.screens.screentype.announcementscreen.AnnouncementScr
 import com.company.dolshop.screens.screentype.communityscreen.CommunityScreen
 import com.company.dolshop.screens.screentype.mypagescreen.AddressScreen
 import com.company.dolshop.screens.screentype.mypagescreen.AuthInfoScreen
+import com.company.dolshop.screens.screentype.mypagescreen.InputAddressInfoScreen
 import com.company.dolshop.screens.screentype.mypagescreen.LogoutScreen
 import com.company.dolshop.screens.screentype.mypagescreen.MyPageScreen
-import com.company.dolshop.screens.screentype.mypagescreen.ToAddressScreen
 import com.company.dolshop.screens.screentype.productscreen.ProductScreen
 import com.company.dolshop.screens.screentype.rockscreen.RocksScreen
 import com.company.dolshop.screens.screentype.subscreen.LoginScreen
@@ -150,7 +149,7 @@ fun BottomNav() {
         }
     ) {
         innerPadding ->
-        if (false) {
+        if (true) {
             route = ScreenList.LoginScreen.route
         } else {
             route = ScreenList.ProductScreen.route
@@ -198,8 +197,8 @@ fun BottomNav() {
                 AddressScreen(navController , coroutineScope)
             }
 
-            composable(route = ScreenList.ToAddressScreen.route) {
-                ToAddressScreen(navController)
+            composable(route = ScreenList.InputAddressInfoScreen.route) {
+                InputAddressInfoScreen()
             }
         }
     }

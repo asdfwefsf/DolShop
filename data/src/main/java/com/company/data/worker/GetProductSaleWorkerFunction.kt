@@ -10,7 +10,7 @@ import javax.inject.Inject
 
 class GetProductSaleWorkerFunction @Inject constructor(
     private val productAPI: ProductAPI,
-    private val dao: com.company.datasource_local_productsale.productsale.ProductSaleDao
+    private val dao: ProductSaleDao
 ) {
     suspend fun getProductSaleInfo() {
         val response = productAPI.getProductSale()

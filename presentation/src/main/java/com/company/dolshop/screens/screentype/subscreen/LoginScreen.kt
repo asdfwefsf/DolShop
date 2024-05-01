@@ -37,7 +37,7 @@ fun LoginScreen(navController: NavController, viewModel: KakaoAuthiViewModel) {
                 val userInfolist = viewModel.userInfoList
                 if (viewModel.loginValue.value) {
 
-                    val userRef = realtimeDB.getReference("users/${userInfolist.value.authNumber}")
+                    val userRef = realtimeDB.getReference("users/${userInfolist.value.authNumber}/kakaoAuth")
                     val userData = mapOf(
                         "authNumber" to userInfolist.value.authNumber,
                         "authEmail" to userInfolist.value.authEmail,

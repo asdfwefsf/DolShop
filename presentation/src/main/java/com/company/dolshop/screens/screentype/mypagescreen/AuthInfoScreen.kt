@@ -11,12 +11,17 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.KeyboardArrowRight
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Divider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.vector.ImageVector
@@ -33,19 +38,8 @@ fun AuthInfoScreen(navController: NavController) {
     val scope = rememberCoroutineScope()
     val viewmodel: KakaoAuthiViewModel = hiltViewModel()
     val userInfoList = viewmodel.userInfoList.collectAsState().value
+    var detailAddress by remember { mutableStateOf(" ") }
     Column {
-//        Button(onClick = {
-//            scope.launch {
-//                viewmodel.kakaoLogout()
-//            }
-//        }) {
-//            Text("logout")
-//        }
-//        Button(onClick = {
-//            navController.navigate(ScreenList.MyPageScreen.route)
-//        }) {
-//            Text("마이 페이지")
-//        }
         if (userInfoList != null) {
             Column {
                 Spacer(modifier = Modifier.padding(top = 8.dp))
@@ -54,12 +48,12 @@ fun AuthInfoScreen(navController: NavController) {
                 TopInfoItems("이름", userInfoList.authNicName)
                 InfoItems("이메일 주소", userInfoList.authEmail)
                 InfoItems("아이디 번호", userInfoList.authNumber)
-                LeadingIconInfoItems(navController , "배송지" , Icons.Default.KeyboardArrowRight, userInfoList.authNicName)
-                Text(
-                    "주소 변경하기",
-                    modifier = Modifier.clickable { navController.navigate(ScreenList.ToAddressScreen.route) }
-                )
-
+                LeadingIconInfoItems(navController , "배송지 정보" , Icons.Default.KeyboardArrowRight, "입력하기" , ScreenList.InputAddressInfoScreen.route)
+                InfoItems("전화번호", "")
+                InfoItems("배송지 주소", "")
+                Row {
+                    InfoItems("상세주소", "")
+                }
             }
         }
 
@@ -116,20 +110,24 @@ fun ClickableInfoItems(indextext: String, text: String) {
 }
 
 @Composable
-fun LeadingIconInfoItems(navController : NavController , defaultText: String , icon : ImageVector, address: String) {
+fun LeadingIconInfoItems(navController : NavController , defaultText: String , icon : ImageVector, address: String , route : String) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(start = 16.dp)
+            .padding(16.dp)
     ) {
-        Spacer(modifier = Modifier.width(16.dp))
         Text(defaultText, fontWeight = FontWeight.Bold)
-        Icon(icon, contentDescription = null, modifier = Modifier.size(24.dp).clickable {
-            navController.navigate(ScreenList.AddressScreen.route) {
-                launchSingleTop = true
-            }
-        })
-        Text(address)
+        Spacer(modifier = Modifier.weight(1f))
+        Text(address, fontWeight = FontWeight.Bold)
+        Icon(icon, contentDescription = null, modifier = Modifier
+            .size(24.dp)
+            .clickable {
+                navController.navigate(route) {
+                    launchSingleTop = true
+                }
+            })
 
     }
+    Divider()
+
 }
