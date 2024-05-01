@@ -53,7 +53,7 @@ class getUserKakaoInfoRepositoryImpl @Inject constructor(
                             )
 
 
-                            g
+
                         )
                         Log.d("daoTest", "userinfo insert")
                     } else {

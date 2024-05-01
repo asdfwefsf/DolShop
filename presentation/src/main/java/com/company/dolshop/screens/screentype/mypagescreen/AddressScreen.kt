@@ -24,39 +24,30 @@ fun AddressScreen(navController: NavController , coroutineScope: CoroutineScope)
         factory = { context ->
             WebView(context).apply {
                 webViewClient = object : WebViewClient() {
+                    // Android -> JavaScript
                     override fun onPageFinished(view: WebView?, url: String?) {
                         super.onPageFinished(view, url)
                         view?.loadUrl("javascript:sample2_execDaumPostcode();")
                     }
                 }
-
                 settings.javaScriptEnabled = true
-
-//                setWebViewRenderProcessClient(WebViewClient().onPageFinished() {
-//                    // android -> javascript
-//                    loadUrl("javascript:sample2_execDaumPostcode()")
-//                })
-
                 loadUrl("https://dolshop-aa5e8.web.app")
-
                 addJavascriptInterface(BridgeInterface(navController , coroutineScope), "Android")
             }
-
         },
     )
-
 }
 
 class BridgeInterface(
     val navController: NavController,
     val coroutineScope: CoroutineScope
 ) {
-    // javascript -> android
+    // JavaScript -> Android
     @JavascriptInterface
     fun processDATA(data: String) {
         Log.d("WebView", "Received data: $data")
         coroutineScope.launch {
-            navController.navigate(ScreenList.ToAddressScreen.route)
+            navController.navigate(ScreenList.AuthInfoScreen.route)
 
         }
     }

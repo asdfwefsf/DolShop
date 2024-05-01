@@ -56,15 +56,14 @@ fun SettingItemsList(modifier: Modifier = Modifier , navController: NavControlle
         LeadSettingItem(icon = Icons.Default.Notifications, text = "알림설정")
         SettingItem(icon = Icons.Default.Notifications, text = "배송 알림" , "" , navController)
         LastSettingItem(icon = Icons.Default.Notifications, text = "채팅 알림" , "" , navController)
-        // Add more SettingItem calls for "계정설정"
+
         LeadSettingItem(icon = Icons.Default.Person, text = "계정설정")
         SettingItem(icon = Icons.Default.Person, text = "개인정보" , ScreenList.AuthInfoScreen.route , navController)
         LastSettingItem(icon = Icons.Default.Person, text = "로그아웃" , ScreenList.LogoutScreen.route , navController)
-        // Add more SettingItem calls for "보안"
+
         LeadSettingItem(icon = Icons.Default.Person, text = "보안")
         SettingItem(icon = Icons.Default.Person, text = "비밀번호 변경" , "" , navController)
         LastSettingItem(icon = Icons.Default.Person, text = "2단계 인증" , "" , navController)
-        // You can continue adding more items as needed
     }
 }
 

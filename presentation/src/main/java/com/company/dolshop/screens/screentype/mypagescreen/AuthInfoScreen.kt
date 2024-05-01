@@ -118,15 +118,16 @@ fun ClickableInfoItems(indextext: String, text: String) {
 @Composable
 fun LeadingIconInfoItems(navController : NavController , defaultText: String , icon : ImageVector, address: String) {
     Row(
-        verticalAlignment = Alignment.CenterVertically,
         modifier = Modifier
             .fillMaxWidth()
-            .padding(16.dp)
+            .padding(start = 16.dp)
     ) {
         Spacer(modifier = Modifier.width(16.dp))
         Text(defaultText, fontWeight = FontWeight.Bold)
         Icon(icon, contentDescription = null, modifier = Modifier.size(24.dp).clickable {
-            navController.navigate(ScreenList.ToAddressScreen.route)
+            navController.navigate(ScreenList.AddressScreen.route) {
+                launchSingleTop = true
+            }
         })
         Text(address)
 
