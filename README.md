@@ -52,6 +52,10 @@
 1. MyPageScreen에서 배송지 정보 저장
 2. 배송지 정보 UI 렌더링
 
+2024-05-02
+1. AuthInfo (완료)
+2. Dols , Commu Firebase Realtime DB Logic
+
 # 적용된 안드로이드 개념
 1. Presentation -> Domain <- Data : 공식문서에서 지향하는 클린 아키텍처와 다른 안드로이드 클린아키텍처
 2. MVVM
