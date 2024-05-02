@@ -5,6 +5,7 @@ import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.company.domain.model.DomainAddress
+import com.company.domain.usecase.address.GetAddressUseCase
 import com.company.domain.usecase.address.SaveAddressUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -16,7 +17,8 @@ import javax.inject.Inject
 @HiltViewModel
 class AddressViewModel @Inject constructor(
     private val savedStateHandle: SavedStateHandle,
-    private val saveAddressUseCase: SaveAddressUseCase
+    private val saveAddressUseCase: SaveAddressUseCase,
+    private val getAddressUseCase: GetAddressUseCase
 ) : ViewModel() {
 
 
@@ -63,6 +65,21 @@ class AddressViewModel @Inject constructor(
     fun saveAddress(domainAddress: DomainAddress) {
         viewModelScope.launch {
             saveAddressUseCase(domainAddress)
+        }
+    }
+
+    // 저장된 주소 불러오기
+    private val _addressList = MutableStateFlow<List<DomainAddress>>(emptyList())
+    val addressList : MutableStateFlow<List<DomainAddress>> = _addressList
+    suspend fun updateAddressInfo() {
+        getAddressUseCase().collect{
+            _addressList.value = it
+        }
+    }
+
+    init {
+        viewModelScope.launch {
+            updateAddressInfo()
         }
     }
 

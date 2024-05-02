@@ -12,6 +12,7 @@ import com.company.data.repositoryimpl.KakaoLoginRepositoryImpl
 import com.company.data.repositoryimpl.KakaoLogoutRepositoryImpl
 import com.company.data.repositoryimpl.UpdateBaseProductRepositoryImpl
 import com.company.data.repositoryimpl.UpdateKakaoUserInfoRepositoryImpl
+import com.company.data.repositoryimpl.address.GetAddressRepositoryImpl
 import com.company.data.repositoryimpl.address.SaveAddressRepositoryImpl
 import com.company.data.repositoryimpl.getProductRepositoryImpl
 import com.company.data.repositoryimpl.getUserKakaoInfoRepositoryImpl
@@ -21,6 +22,7 @@ import com.company.datasource_local_productsale.productsale.ProductSaleDao
 import com.company.datasource_local_productsale.productsale.ProductSaleDataBase
 import com.company.domain.repository.AnnouncementRepository
 import com.company.domain.repository.CoroutineWorkerRepository
+import com.company.domain.repository.GetAddressRepository
 import com.company.domain.repository.KakaoLoginRepository
 import com.company.domain.repository.KakaoLogoutRepository
 import com.company.domain.repository.SaveAddressRepository
@@ -62,6 +64,8 @@ object DataModule {
     fun provideProductSaleRepository(impl: com.company.update_productsale_impl.UpdateProductSaleRepositoryImpl) : UpdateProductSaleRepository = impl
     @Provides
     fun provideSaveAddressRepository(impl: SaveAddressRepositoryImpl) : SaveAddressRepository = impl
+    @Provides
+    fun provideGetAddressRepository(impl: GetAddressRepositoryImpl) : GetAddressRepository = impl
 
 
 

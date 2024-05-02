@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -31,14 +32,18 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import com.company.dolshop.screens.ScreenList
+import com.company.dolshop.viewmodel.AddressViewModel
 import com.company.dolshop.viewmodel.KakaoAuthiViewModel
 
 @Composable
 fun AuthInfoScreen(navController: NavController) {
-    val scope = rememberCoroutineScope()
-    val viewmodel: KakaoAuthiViewModel = hiltViewModel()
-    val userInfoList = viewmodel.userInfoList.collectAsState().value
-    var detailAddress by remember { mutableStateOf(" ") }
+
+    val kakaoViewmodel: KakaoAuthiViewModel = hiltViewModel()
+    val userInfoList = kakaoViewmodel.userInfoList.collectAsState().value
+
+    val addressViewModel : AddressViewModel = hiltViewModel()
+    val addressList = addressViewModel.addressList.collectAsState().value
+
     Column {
         if (userInfoList != null) {
             Column {
@@ -49,11 +54,23 @@ fun AuthInfoScreen(navController: NavController) {
                 InfoItems("이메일 주소", userInfoList.authEmail)
                 InfoItems("아이디 번호", userInfoList.authNumber)
                 LeadingIconInfoItems(navController , "배송지 정보" , Icons.Default.KeyboardArrowRight, "입력하기" , ScreenList.InputAddressInfoScreen.route)
-                InfoItems("전화번호", "")
-                InfoItems("배송지 주소", "")
-                Row {
-                    InfoItems("상세주소", "")
+
+                if(addressList.isNotEmpty()) {
+                    InfoItems("전화번호", addressList[0].phoneNumber)
+                    InfoItems("우편번호", addressList[0].addressNumber)
+                    InfoItems("배송지 주소", addressList[0].address)
+                    Row {
+                        InfoItems("상세주소", addressList[0].addressDetailName)
+                    }
+                } else {
+                    InfoItems("전화번호", "")
+                    InfoItems("우편번호", "")
+                    InfoItems("배송지 주소", "")
+                    Row {
+                        InfoItems("상세주소", "")
+                    }
                 }
+
             }
         }
 
@@ -77,22 +94,34 @@ fun TopInfoItems(indextext: String, text: String) {
     }
     Divider()
 }
+//@Composable
+//fun InfoItems(indextext: String, text: String) {
+//    Row(
+//        verticalAlignment = Alignment.CenterVertically,
+//        modifier = Modifier
+//            .fillMaxWidth()
+//            .padding(16.dp)
+//    ) {
+//        Text(indextext, fontWeight = FontWeight.Bold)
+//        Spacer(modifier = Modifier.weight(1f))
+//        Text(text, fontWeight = FontWeight.Bold)
+//
+//    }
+//    Divider()
+//}
 @Composable
 fun InfoItems(indextext: String, text: String) {
-    Row(
-        verticalAlignment = Alignment.CenterVertically,
+    Column(
         modifier = Modifier
             .fillMaxWidth()
             .padding(16.dp)
     ) {
         Text(indextext, fontWeight = FontWeight.Bold)
-        Spacer(modifier = Modifier.weight(1f))
+        Spacer(modifier = Modifier.height(4.dp))
         Text(text, fontWeight = FontWeight.Bold)
-
     }
     Divider()
 }
-
 @Composable
 fun LeadingIconInfoItems(navController : NavController , defaultText: String , icon : ImageVector, address: String , route : String) {
     Row(

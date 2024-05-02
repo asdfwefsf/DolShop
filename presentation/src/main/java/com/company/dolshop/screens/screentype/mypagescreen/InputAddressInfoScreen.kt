@@ -117,6 +117,7 @@ fun InputAddressInfoScreen(navController: NavController) {
             modifier = Modifier.fillMaxWidth()
         )
 
+        // 전화번호
         Spacer(modifier = Modifier.height(8.dp))
         OutlinedTextField(
             value = phoneNumber,
@@ -127,6 +128,7 @@ fun InputAddressInfoScreen(navController: NavController) {
             modifier = Modifier.fillMaxWidth()
         )
 
+        // 저장버튼
         Spacer(modifier = Modifier.height(16.dp))
         Button(
             onClick = {

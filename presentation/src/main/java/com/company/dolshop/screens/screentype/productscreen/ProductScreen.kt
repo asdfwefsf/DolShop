@@ -11,11 +11,9 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
@@ -60,12 +58,10 @@ import androidx.constraintlayout.compose.Dimension
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
-import com.company.designsystem.designsystem.DolShopTheme
 import com.company.dolshop.viewmodel.UpdateBaseProductViewModel
 import com.company.dolshop.viewmodel.UpdateProductSaleViewModel
 import com.company.dolshop.viewmodel.getProductViewModel
 import com.company.domain.model.DomainProductModel
-import com.company.domain.model.DomainProductSaleModel
 import com.company.presentation.R
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.isActive
