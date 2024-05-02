@@ -94,22 +94,6 @@ fun InfoItems(indextext: String, text: String) {
 }
 
 @Composable
-fun ClickableInfoItems(indextext: String, text: String) {
-    Row(
-        verticalAlignment = Alignment.CenterVertically,
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(16.dp)
-    ) {
-        Text(indextext, fontWeight = FontWeight.Bold)
-        Spacer(modifier = Modifier.weight(1f))
-        Text(text, fontWeight = FontWeight.Bold)
-
-    }
-    Divider()
-}
-
-@Composable
 fun LeadingIconInfoItems(navController : NavController , defaultText: String , icon : ImageVector, address: String , route : String) {
     Row(
         modifier = Modifier

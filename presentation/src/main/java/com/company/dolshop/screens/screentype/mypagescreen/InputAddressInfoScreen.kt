@@ -54,7 +54,7 @@ fun InputAddressInfoScreen(navController: NavController) {
     LaunchedEffect(key1 = savedStateHandle) {
         addressNumber = savedStateHandle?.get<String>("addressNumber") ?: ""
         address = savedStateHandle?.get<String>("address") ?: ""
-        Log.d("jisung" , addressNumber + address)
+        Log.d("jisung", addressNumber + address)
     }
 
     Column(
@@ -122,20 +122,28 @@ fun InputAddressInfoScreen(navController: NavController) {
             value = phoneNumber,
             onValueChange = {
                 addressViewModel.setPhoneNumber(it)
-            },            label = { Text("전화번호") },
+            }, label = { Text("전화번호") },
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Phone),
             modifier = Modifier.fillMaxWidth()
         )
 
         Spacer(modifier = Modifier.height(16.dp))
         Button(
-            onClick = { addressViewModel.saveAddress(DomainAddress(
-                addressName = addressName,
-                addressNumber = addressNumber.toString(),
-                address = address.toString(),
-                addressDetailName = detailedAddress,
-                phoneNumber = phoneNumber
-            )) },
+            onClick = {
+                addressViewModel.saveAddress(
+                    DomainAddress(
+                        addressName = addressName,
+                        addressNumber = addressNumber.toString(),
+                        address = address.toString(),
+                        addressDetailName = detailedAddress,
+                        phoneNumber = phoneNumber
+                    )
+                )
+                navController.navigate(ScreenList.AuthInfoScreen.route) {
+                    launchSingleTop = true
+
+                }
+            },
             modifier = Modifier.fillMaxWidth()
         ) {
             Text("저장")

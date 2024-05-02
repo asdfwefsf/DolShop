@@ -37,27 +37,27 @@ class AddressViewModel @Inject constructor(
 
     fun setAddressName(name: String) {
         _addressName.value = name
-        savedStateHandle["addressName"] = name  // 상태 저장
+        savedStateHandle["addressName"] = name
     }
 
     fun setAddressNumber(Number: String) {
         _addressNumber.value = Number
-        savedStateHandle["addressNumber"] = Number  // 상태 저장
+        savedStateHandle["addressNumber"] = Number
     }
 
     fun setAddress(address: String) {
         _address.value = address
-        savedStateHandle["address"] = address  // 상태 저장
+        savedStateHandle["address"] = address
     }
 
     fun setDetailAddressName(detailName: String) {
         _detailedAddress.value = detailName
-        savedStateHandle["addressDetailName"] = detailName  // 상태 저장
+        savedStateHandle["addressDetailName"] = detailName
     }
 
     fun setPhoneNumber(number: String) {
         _phoneNumber.value = number
-        savedStateHandle["phoneNumber"] = number  // 상태 저장
+        savedStateHandle["phoneNumber"] = number
     }
 
     fun saveAddress(domainAddress: DomainAddress) {
@@ -73,6 +73,3 @@ class AddressViewModel @Inject constructor(
 //        }
 //    }
 }
-
-//    private val _thingOn = MutableStateFlow<List<String>>(emptyList())
-//    val thingOn: StateFlow<List<String>> = _thingOn.asStateFlow()
