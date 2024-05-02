@@ -149,7 +149,7 @@ fun BottomNav() {
         }
     ) {
         innerPadding ->
-        if (true) {
+        if (false) {
             route = ScreenList.LoginScreen.route
         } else {
             route = ScreenList.ProductScreen.route
@@ -198,7 +198,7 @@ fun BottomNav() {
             }
 
             composable(route = ScreenList.InputAddressInfoScreen.route) {
-                InputAddressInfoScreen()
+                InputAddressInfoScreen(navController)
             }
         }
     }

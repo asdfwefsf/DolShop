@@ -12,14 +12,18 @@ import com.company.data.repositoryimpl.KakaoLoginRepositoryImpl
 import com.company.data.repositoryimpl.KakaoLogoutRepositoryImpl
 import com.company.data.repositoryimpl.UpdateBaseProductRepositoryImpl
 import com.company.data.repositoryimpl.UpdateKakaoUserInfoRepositoryImpl
+import com.company.data.repositoryimpl.address.SaveAddressRepositoryImpl
 import com.company.data.repositoryimpl.getProductRepositoryImpl
 import com.company.data.repositoryimpl.getUserKakaoInfoRepositoryImpl
+import com.company.datasource_local_address.AddressDao
+import com.company.datasource_local_address.AddressDataBase
 import com.company.datasource_local_productsale.productsale.ProductSaleDao
 import com.company.datasource_local_productsale.productsale.ProductSaleDataBase
 import com.company.domain.repository.AnnouncementRepository
 import com.company.domain.repository.CoroutineWorkerRepository
 import com.company.domain.repository.KakaoLoginRepository
 import com.company.domain.repository.KakaoLogoutRepository
+import com.company.domain.repository.SaveAddressRepository
 import com.company.domain.repository.UpdateBaseProductRepository
 import com.company.domain.repository.UpdateKakaoUserInfoRepository
 import com.company.domain.repository.UpdateProductSaleRepository
@@ -56,6 +60,8 @@ object DataModule {
     fun provideAnnouncementRepository(impl: AnnouncementRepositoryImpl) : AnnouncementRepository = impl
     @Provides
     fun provideProductSaleRepository(impl: com.company.update_productsale_impl.UpdateProductSaleRepositoryImpl) : UpdateProductSaleRepository = impl
+    @Provides
+    fun provideSaveAddressRepository(impl: SaveAddressRepositoryImpl) : SaveAddressRepository = impl
 
 
 
@@ -86,19 +92,17 @@ object DataModule {
     // product sale db
     @Provides
     @Singleton
-    fun provideProductSaleDataBase(@ApplicationContext appContext: Context): com.company.datasource_local_productsale.productsale.ProductSaleDataBase {
+    fun provideProductSaleDataBase(@ApplicationContext appContext: Context): ProductSaleDataBase {
         return Room.databaseBuilder(
             appContext,
-            com.company.datasource_local_productsale.productsale.ProductSaleDataBase::class.java,
+            ProductSaleDataBase::class.java,
             "product_sale_database"
         ).build()
     }
     @Provides
-    fun provideProductSaleDao(database: com.company.datasource_local_productsale.productsale.ProductSaleDataBase) : com.company.datasource_local_productsale.productsale.ProductSaleDao {
+    fun provideProductSaleDao(database: ProductSaleDataBase) : ProductSaleDao {
         return database.dao
     }
-
-
 
     // baseproduct db
     @Provides
@@ -110,12 +114,27 @@ object DataModule {
             "base_product_database"
         ).build()
     }
-
-
     @Provides
     fun provideBaseProductDao(database: BaseProductInfoDataBase) : BaseProductDao {
         return database.dao
     }
+
+    // address
+    @Provides
+    @Singleton
+    fun provideAddressDataBase(@ApplicationContext appContext: Context): AddressDataBase {
+        return Room.databaseBuilder(
+            appContext,
+            AddressDataBase::class.java,
+            "address_database"
+        ).build()
+    }
+
+    @Provides
+    fun provideAddresstDao(database: AddressDataBase) : AddressDao {
+        return database.dao
+    }
+
 
 
 }

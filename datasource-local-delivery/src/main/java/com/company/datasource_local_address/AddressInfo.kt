@@ -7,7 +7,9 @@ import androidx.room.PrimaryKey
 data class AddressInfo (
     @PrimaryKey(autoGenerate = true)
     val id : Int = 0,
-    val phoneNumber : String,
+    val addressName : String,
+    val addressNumber : String,
     val address : String,
-    val detailAddress : String
+    val addressDetailName : String,
+    val phoneNumber : String
 )
