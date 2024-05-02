@@ -106,6 +106,7 @@ fun TopInfoItems(indextext: String, text: String) {
 //        Spacer(modifier = Modifier.weight(1f))
 //        Text(text, fontWeight = FontWeight.Bold)
 //
+//
 //    }
 //    Divider()
 //}
