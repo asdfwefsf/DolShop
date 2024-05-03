@@ -59,6 +59,8 @@
 2024-05-03
 1. Dol's Logic ()
 2. 커뮤 Logic ()
+3. FirebaseStorage setting(완료)
+4. FirebaseStorage Logic OK (완료)
 
 
 # 적용된 안드로이드 개념
