@@ -19,6 +19,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -31,11 +32,19 @@ import androidx.navigation.NavController
 import com.company.dolshop.screens.ScreenList
 import com.company.dolshop.ui.theme.DolShopTheme
 import com.company.dolshop.viewmodel.AddressViewModel
+import com.company.dolshop.viewmodel.KakaoAuthiViewModel
 import com.company.domain.model.DomainAddress
+import com.google.firebase.database.ktx.database
+import com.google.firebase.ktx.Firebase
 
 @Composable
 @ExperimentalMaterial3Api
 fun InputAddressInfoScreen(navController: NavController) {
+    val kakaoAuthiViewModel: KakaoAuthiViewModel = hiltViewModel()
+
+    val scope = rememberCoroutineScope()
+    val realtimeDB = Firebase.database
+    val authNumber = kakaoAuthiViewModel.userInfoList.value.authNumber
 
     val savedStateHandle = navController.currentBackStackEntry?.savedStateHandle
     val addressViewModel: AddressViewModel = hiltViewModel()
@@ -145,6 +154,17 @@ fun InputAddressInfoScreen(navController: NavController) {
                     launchSingleTop = true
 
                 }
+
+                val userRef = realtimeDB.getReference("users/$authNumber/address")
+                val userData = mapOf(
+                    "addressName" to addressName,
+                    "addressNumber" to addressNumber,
+                    "address" to address,
+                    "detailedAddress" to detailedAddress,
+                    "phoneNumber" to phoneNumber
+                )
+                userRef.setValue(userData)
+
             },
             modifier = Modifier.fillMaxWidth()
         ) {
@@ -153,6 +173,7 @@ fun InputAddressInfoScreen(navController: NavController) {
     }
 
 }
+
 
 //var addressNumber: String? by remember { mutableStateOf("") }
 //var address: String? by remember { mutableStateOf("") }
