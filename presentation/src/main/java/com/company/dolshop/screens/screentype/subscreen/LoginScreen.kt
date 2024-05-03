@@ -47,6 +47,7 @@ fun LoginScreen(navController: NavController, viewModel: KakaoAuthiViewModel) {
                     )
                     userRef.setValue(userData)
 
+
                     navController.navigate(ScreenList.MyPageScreen.route) {
                         popUpTo(ScreenList.MyPageScreen.route) {
                             inclusive = true
