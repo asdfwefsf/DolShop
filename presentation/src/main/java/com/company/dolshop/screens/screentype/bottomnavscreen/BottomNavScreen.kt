@@ -167,7 +167,8 @@ fun BottomNav() {
             }
 
             composable(route = ScreenList.RocksScreen.route) {
-                RocksScreen()
+                val viewmodel = hiltViewModel<KakaoAuthiViewModel>()
+                RocksScreen(viewmodel)
             }
 
             composable(route = ScreenList.AnnouncementScreen.route) {
