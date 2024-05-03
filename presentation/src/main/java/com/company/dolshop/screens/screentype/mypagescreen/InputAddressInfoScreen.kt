@@ -174,17 +174,6 @@ fun InputAddressInfoScreen(navController: NavController) {
 
 }
 
-
-//var addressNumber: String? by remember { mutableStateOf("") }
-//var address: String? by remember { mutableStateOf("") }
-//var changeResult = savedStateHandle?.get<Boolean>("change") ?: false
-//
-//val addressName by addressViewModel.addressName.collectAsState()
-////    var addressNumber = addressViewModel.addressNumber.collectAsState().value
-////    var address = addressViewModel.address.collectAsState().value
-//var detailedAddress = addressViewModel.detailedAddress.collectAsState().value
-//var phoneNumber = addressViewModel.phoneNumber.collectAsState().value
-
 //@OptIn(ExperimentalMaterial3Api::class)
 //@Preview
 //@Composable
