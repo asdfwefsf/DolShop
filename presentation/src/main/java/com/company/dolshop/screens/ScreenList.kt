@@ -5,7 +5,11 @@ sealed class ScreenList(val route : String) {
 
     object CommunityScreen : ScreenList("커뮤")
     object ProductScreen : ScreenList("상품")
+
+    // Dol's
     object RocksScreen : ScreenList("돌's")
+    object AddRockScreen : ScreenList("돌 더하기")
+
     object AnnouncementScreen : ScreenList("공지")
 
 

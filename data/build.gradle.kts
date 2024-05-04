@@ -67,6 +67,17 @@ dependencies {
     implementation(project(":data:data-impl:update-productsale-impl"))
     implementation(project(":data:data-mapper:saletodomain"))
 
+    // 차후에 수정
+    implementation ("androidx.paging:paging-runtime-ktx:3.1.1")
+    implementation ("androidx.paging:paging-compose:1.0.0-alpha18")
+    implementation ("androidx.room:room-paging:2.4.3")
+    api(platform("com.google.firebase:firebase-bom:32.8.1"))
+    api("com.google.firebase:firebase-database-ktx")
+    api("com.google.firebase:firebase-storage-ktx:20.3.0")
+//    implementation(project(":presentation"))
+    // 차후에 수정
+
+
 
     implementation("com.google.dagger:hilt-android:2.49")
     kapt ("androidx.hilt:hilt-compiler:1.2.0")

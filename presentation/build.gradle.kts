@@ -78,6 +78,19 @@ dependencies {
     api("com.google.firebase:firebase-storage-ktx:20.3.0")
 
     //
+
+    //test
+//    implementation ("androidx.paging:paging-runtime:3.2.1")
+//    implementation("androidx.paging:paging-compose:3.2.1")
+//    implementation ("androidx.paging:paging-runtime-ktx:3.2.1")
+//    implementation ("androidx.paging:paging-compose:3.3.0-rc01")
+    implementation ("androidx.paging:paging-runtime-ktx:3.1.1")
+    implementation ("androidx.paging:paging-compose:1.0.0-alpha18")
+    implementation ("androidx.room:room-paging:2.4.3")
+    implementation(project(":data"))
+
+    //test
+
     coil()
     constraint()
     splash()
@@ -106,6 +119,12 @@ dependencies {
     androidTestImplementation("androidx.compose.ui:ui-test-junit4")
     debugImplementation("androidx.compose.ui:ui-tooling")
     debugImplementation("androidx.compose.ui:ui-test-manifest")
+
+
+
+
+    implementation ("com.github.bumptech.glide:compose:1.0.0-beta01")
+//    implementation ("com.github.skydoves:landscapist-glide:2.3.3")
 }
 kapt {
     correctErrorTypes = true

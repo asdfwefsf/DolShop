@@ -31,6 +31,8 @@ import com.company.domain.repository.UpdateKakaoUserInfoRepository
 import com.company.domain.repository.UpdateProductSaleRepository
 import com.company.domain.repository.getProductRepository
 import com.company.domain.repository.getUserKakaoInfoRepository
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -68,6 +70,17 @@ object DataModule {
     fun provideGetAddressRepository(impl: GetAddressRepositoryImpl) : GetAddressRepository = impl
 
 
+    // 추후 수정
+    @Provides
+    fun provideFirebaseDatabase(): FirebaseDatabase {
+        return FirebaseDatabase.getInstance()
+    }
+
+    @Provides
+    fun provideDatabaseReference(firebaseDatabase: FirebaseDatabase): DatabaseReference {
+        return firebaseDatabase.reference  // 기본 DatabaseReference
+    }
+    // 추후 수정
 
     // datasource module
 

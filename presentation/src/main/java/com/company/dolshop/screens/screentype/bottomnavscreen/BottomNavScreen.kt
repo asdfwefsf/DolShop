@@ -36,6 +36,7 @@ import com.company.dolshop.screens.screentype.mypagescreen.InputAddressInfoScree
 import com.company.dolshop.screens.screentype.mypagescreen.LogoutScreen
 import com.company.dolshop.screens.screentype.mypagescreen.MyPageScreen
 import com.company.dolshop.screens.screentype.productscreen.ProductScreen
+import com.company.dolshop.screens.screentype.rockscreen.AddRockScreen
 import com.company.dolshop.screens.screentype.rockscreen.RocksScreen
 import com.company.dolshop.screens.screentype.subscreen.LoginScreen
 import com.company.dolshop.viewmodel.KakaoAuthiViewModel
@@ -168,7 +169,11 @@ fun BottomNav() {
 
             composable(route = ScreenList.RocksScreen.route) {
                 val viewmodel = hiltViewModel<KakaoAuthiViewModel>()
-                RocksScreen(viewmodel)
+                RocksScreen(innerPadding , viewmodel , navController)
+            }
+
+            composable(route = ScreenList.AddRockScreen.route) {
+                AddRockScreen(navController)
             }
 
             composable(route = ScreenList.AnnouncementScreen.route) {
