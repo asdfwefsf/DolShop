@@ -57,10 +57,14 @@
 2. Address logic (완료)
 
 2024-05-03
-1. Dol's Logic ()
-2. 커뮤 Logic ()
-3. FirebaseStorage setting(완료)
-4. FirebaseStorage Logic OK (완료)
+1. Dol's FireStoreDatabase -> FirebaseDatabase 이미지 저장(완료)
+2. Dol's 갤러리 선택 && 이미지 최적화(완료)
+3. AddRockScreen (완료)
+4. FirebaseStorage setting(완료)
+5. FirebaseStorage Logic OK (완료)
+
+2024-05-04
+1. 커뮤로직 작성
 
 
 # 적용된 안드로이드 개념
@@ -77,12 +81,14 @@
 11. Flow
 12. BottomNavigation
 13. 웹뷰
+14. Pagging
 # 적용된 안드로이드 개념 이론 정리
 
 
 # Network
 1. Firebase Realtime DataBase
-2. JSONBin.io
+2. Firebase Firestore Database
+3. JSONBin.io
 
 # TODO
 1. Navigation Setting(-ing)
