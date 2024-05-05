@@ -152,8 +152,6 @@ fun ImageAndDiaryScreen(
                 }
             )
         }
-
-
     }
 }
 
