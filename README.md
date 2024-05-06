@@ -77,7 +77,7 @@
 7. 아키텍처 최적화 (완료)
 
 2024-05-07
-1.Communitiy Screen 로직 작성
+1. Communitiy Screen 로직 작성
 2. Communitiy Screen 기획
 3. Announcement Screen 기획
 
