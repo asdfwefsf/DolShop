@@ -74,12 +74,13 @@
 2. RockScreen DiaryItem sort Logic (완료)
 3. DiaryNumber FirebaseRealtimeDB ADD (완료)
 4. DiaryNumber Room(완료)
-5. Communitiy Screen 기획
 7. 아키텍처 최적화 (완료)
-8. Announcement Screen 기획
 
 2024-05-07
 1.Communitiy Screen 로직 작성
+2. Communitiy Screen 기획
+3. Announcement Screen 기획
+
 
 # 적용된 안드로이드 개념
 1. Presentation -> Domain <- Data : 공식문서에서 지향하는 클린 아키텍처와 다른 안드로이드 클린아키텍처
