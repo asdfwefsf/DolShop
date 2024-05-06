@@ -19,6 +19,7 @@ import com.company.data.repositoryimpl.address.GetAddressRepositoryImpl
 import com.company.data.repositoryimpl.address.SaveAddressRepositoryImpl
 import com.company.data.repositoryimpl.getProductRepositoryImpl
 import com.company.data.repositoryimpl.getUserKakaoInfoRepositoryImpl
+import com.company.data.worker.GetDiaryWorkerFunction
 import com.company.datasource_local_address.AddressDao
 import com.company.datasource_local_address.AddressDataBase
 import com.company.datasource_local_productsale.productsale.ProductSaleDao
@@ -33,6 +34,7 @@ import com.company.domain.repository.SaveAddressRepository
 import com.company.domain.repository.UpdateBaseProductRepository
 import com.company.domain.repository.UpdateKakaoUserInfoRepository
 import com.company.domain.repository.UpdateProductSaleRepository
+import com.company.domain.repository.getDiaryWorkerFunctionRepository
 import com.company.domain.repository.getProductRepository
 import com.company.domain.repository.getUserKakaoInfoRepository
 import com.google.firebase.database.DatabaseReference
@@ -74,6 +76,8 @@ object DataModule {
     fun provideGetAddressRepository(impl: GetAddressRepositoryImpl) : GetAddressRepository = impl
     @Provides
     fun provideDiaryNumberRepository(impl: DiaryNumberRoomRepositoryImpl) : DiaryNumberRoomRepository = impl
+    @Provides
+    fun provideGetDiaryWorkerFunctionRepository(impl: GetDiaryWorkerFunction) : getDiaryWorkerFunctionRepository = impl
 
 
     // 추후 수정

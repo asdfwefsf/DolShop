@@ -84,7 +84,6 @@ fun firstUI(myName: String, navController: NavController) {
     }
 }
 
-@OptIn(ExperimentalGlideComposeApi::class)
 @Composable
 fun ImageTest(innerPadding: PaddingValues) {
     val viewModel: DolsViewModel = hiltViewModel()

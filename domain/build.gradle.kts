@@ -43,6 +43,10 @@ dependencies {
     kapt ("androidx.hilt:hilt-compiler:1.2.0")
     kapt("com.google.dagger:hilt-android-compiler:2.49")
 
+
+    implementation ("androidx.paging:paging-runtime-ktx:3.1.1")
+    implementation ("androidx.paging:paging-compose:1.0.0-alpha18")
+    implementation ("androidx.room:room-paging:2.4.3")
 //    implementation ("androidx.compose.runtime:runtime:1.6.5")
 
     implementation("androidx.core:core-ktx:1.12.0")
