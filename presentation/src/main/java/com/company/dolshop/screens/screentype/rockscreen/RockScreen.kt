@@ -40,11 +40,11 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.request.target.CustomTarget
 import com.bumptech.glide.request.transition.Transition
-import com.company.data.worker.test.Diary
 import com.company.designsystem.designsystem.Paddings
 import com.company.dolshop.screens.ScreenList
 import com.company.dolshop.viewmodel.DolsViewModel
 import com.company.dolshop.viewmodel.KakaoAuthiViewModel
+import com.company.domain.entity.Diary
 import com.company.presentation.R
 
 @Composable

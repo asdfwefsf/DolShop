@@ -1,22 +1,18 @@
 package com.company.data.worker
 
-import androidx.compose.runtime.collectAsState
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
-import androidx.room.Dao
 import com.company.data.datasource.userinfo.UserInfoDao
-import com.company.data.worker.test.Diary
 import com.company.data.worker.test.ImagePagingSource
+import com.company.domain.entity.Diary
 import com.google.firebase.database.DatabaseReference
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.emitAll
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.Locale
 import javax.inject.Inject

@@ -2,6 +2,7 @@ package com.company.data.worker.test
 
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
+import com.company.domain.entity.Diary
 import com.google.firebase.database.Query
 import kotlinx.coroutines.tasks.await
 
@@ -50,9 +51,9 @@ class ImagePagingSource(
     }
 }
 
-data class Diary(
-    val diary: String,
-    val image: String,
-    val day : String,
-    val diaryNumber : String
-)
+//data class Diary(
+//    val diary: String,
+//    val image: String,
+//    val day : String,
+//    val diaryNumber : String
+//)

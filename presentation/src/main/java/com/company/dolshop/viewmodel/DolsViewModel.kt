@@ -6,6 +6,7 @@ import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import com.company.data.worker.GetBaseProductWorkerFunction2
 import com.company.data.worker.test.Diary
+import com.company.domain.entity.Diary
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import dagger.hilt.android.lifecycle.HiltViewModel

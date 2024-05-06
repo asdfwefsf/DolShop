@@ -87,7 +87,6 @@ dependencies {
     implementation ("androidx.paging:paging-runtime-ktx:3.1.1")
     implementation ("androidx.paging:paging-compose:1.0.0-alpha18")
     implementation ("androidx.room:room-paging:2.4.3")
-    implementation(project(":data"))
 
     //test
 
