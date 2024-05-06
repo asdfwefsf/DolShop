@@ -2,12 +2,15 @@ package com.company.dolshop.screens.screentype.rockscreen
 
 import android.graphics.Bitmap
 import android.graphics.drawable.Drawable
+import android.util.Log
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -17,18 +20,30 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
+import androidx.compose.material3.pulltorefresh.PullToRefreshContainer
+import androidx.compose.material3.pulltorefresh.PullToRefreshDefaults
+import androidx.compose.material3.pulltorefresh.PullToRefreshState
+import androidx.compose.material3.pulltorefresh.rememberPullToRefreshState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Shape
 import androidx.compose.ui.graphics.asImageBitmap
+import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -37,7 +52,6 @@ import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import androidx.paging.compose.items
 import com.bumptech.glide.Glide
-import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.request.target.CustomTarget
 import com.bumptech.glide.request.transition.Transition
 import com.company.designsystem.designsystem.Paddings
@@ -46,22 +60,55 @@ import com.company.dolshop.viewmodel.DolsViewModel
 import com.company.dolshop.viewmodel.KakaoAuthiViewModel
 import com.company.domain.entity.Diary
 import com.company.presentation.R
+import com.google.accompanist.swiperefresh.SwipeRefreshIndicator
+import kotlinx.coroutines.delay
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun RocksScreen(
     innerPadding: PaddingValues,
     viewmodel: KakaoAuthiViewModel,
-    navController: NavController
+    navController: NavController,
+
 ) {
-    val userInfolist = viewmodel.userInfoList
-    Column(
-        modifier = Modifier.fillMaxWidth()
-    ) {
-        firstUI(userInfolist.value.authNicName, navController)
-        ImageTest(innerPadding)
+    val dolsViewModel : DolsViewModel = hiltViewModel()
+    val pullRefreshState = rememberPullToRefreshState()
+
+    //
+    //
+    if(pullRefreshState.isRefreshing) {
+        LaunchedEffect(true) {
+            delay(1500)
+            dolsViewModel.callDiaryWorkerFunction()
+            Log.d("refresh" , "refresh")
+            pullRefreshState.endRefresh()
+        }
     }
 
+    val userInfolist = viewmodel.userInfoList
+
+    //
+    Box(
+        modifier = Modifier.fillMaxSize().nestedScroll(pullRefreshState.nestedScrollConnection)
+    ) {
+        Column(
+            modifier = Modifier.fillMaxSize().nestedScroll(pullRefreshState.nestedScrollConnection)
+        ) {
+            firstUI(userInfolist.value.authNicName, navController)
+            ImageTest(innerPadding , dolsViewModel)
+        }
+        PullToRefreshContainer(
+            modifier = Modifier.align(Alignment.TopCenter),
+            state = pullRefreshState,
+        )
+    }
+
+    //
+
+
 }
+
+
 
 //Preview용 firstUI Composable Name
 //@Composable
@@ -85,8 +132,8 @@ fun firstUI(myName: String, navController: NavController) {
 }
 
 @Composable
-fun ImageTest(innerPadding: PaddingValues) {
-    val viewModel: DolsViewModel = hiltViewModel()
+fun ImageTest(innerPadding: PaddingValues , viewModel : DolsViewModel) {
+//    val viewModel: DolsViewModel = hiltViewModel()
     val diaries: LazyPagingItems<Diary> = viewModel.diaryda.collectAsLazyPagingItems()
 
 
@@ -148,6 +195,7 @@ fun ImageTest(innerPadding: PaddingValues) {
                 }
             }
         }
+
     }
 }
 

@@ -46,7 +46,7 @@ class GetDiaryWorkerFunction @Inject constructor(
 
         emitAll(
             Pager(
-                config = PagingConfig(pageSize = 10, enablePlaceholders = false, maxSize = 50),
+                config = PagingConfig(pageSize = 20, prefetchDistance = 20 , enablePlaceholders = false, maxSize = 60),
                 pagingSourceFactory = { ImagePagingSource(query) }
             ).flow
         )

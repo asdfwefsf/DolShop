@@ -28,12 +28,18 @@ class DolsViewModel @Inject constructor(
 
 //    val diaryda: Flow<PagingData<Diary>> = getDiaryWorkerFunction.callDiaryWorkerFunction().cachedIn(viewModelScope)
 
-
-    init {
+    suspend fun callDiaryWorkerFunction() {
         viewModelScope.launch {
             getDiaryWorkerFunction.callDiaryWorkerFunction().collect {
                 _diaryda.value = it
             }
+        }
+
+    }
+
+    init {
+        viewModelScope.launch {
+            callDiaryWorkerFunction()
         }
     }
 }
