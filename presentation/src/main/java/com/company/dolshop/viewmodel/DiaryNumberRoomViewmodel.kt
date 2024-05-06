@@ -2,7 +2,7 @@ package com.company.dolshop.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.company.domain.usecase.DiaryNumberUseCase
+import com.company.domain.usecase.DiaryNumberRoomUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -12,8 +12,8 @@ import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @HiltViewModel
-class DiaryNumberViewmodel @Inject constructor(
-    private val diaryNumberUseCase: DiaryNumberUseCase
+class DiaryNumberRoomViewmodel @Inject constructor(
+    private val diaryNumberUseCase: DiaryNumberRoomUseCase
 ) : ViewModel() {
 
     private val _diaryNumber = MutableStateFlow<Int?>(null)

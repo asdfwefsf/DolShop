@@ -21,7 +21,6 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -32,24 +31,20 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import com.bumptech.glide.Glide
-import com.company.data.datasource.diarynumber.DiaryNumberDao
 import com.company.dolshop.screens.ScreenList
-import com.company.dolshop.ui.theme.DolShopTheme
-import com.company.dolshop.viewmodel.DiaryNumberViewmodel
+import com.company.dolshop.viewmodel.DiaryNumberRoomViewmodel
 import com.company.dolshop.viewmodel.KakaoAuthiViewModel
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.io.ByteArrayOutputStream
@@ -99,7 +94,7 @@ fun ImageAndDiaryScreen(
     val authNumber = kakaoAuthiViewModel.userInfoList.value.authNumber
     val scope = rememberCoroutineScope()
 
-    val diaryNumberViewmodel : DiaryNumberViewmodel = hiltViewModel()
+    val diaryNumberViewmodel : DiaryNumberRoomViewmodel = hiltViewModel()
 
     Scaffold(
         modifier = Modifier.fillMaxHeight()

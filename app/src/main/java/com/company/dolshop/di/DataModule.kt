@@ -10,7 +10,7 @@ import com.company.data.datasource.userinfo.UserInfoDao
 import com.company.data.datasource.userinfo.UserInfoDatabase
 import com.company.data.repositoryimpl.AnnouncementRepositoryImpl
 import com.company.data.repositoryimpl.CoroutineWorkerRepositoryImpl
-import com.company.data.repositoryimpl.DiaryNumberRepositoryImpl
+import com.company.data.repositoryimpl.DiaryNumberRoomRepositoryImpl
 import com.company.data.repositoryimpl.KakaoLoginRepositoryImpl
 import com.company.data.repositoryimpl.KakaoLogoutRepositoryImpl
 import com.company.data.repositoryimpl.UpdateBaseProductRepositoryImpl
@@ -25,7 +25,7 @@ import com.company.datasource_local_productsale.productsale.ProductSaleDao
 import com.company.datasource_local_productsale.productsale.ProductSaleDataBase
 import com.company.domain.repository.AnnouncementRepository
 import com.company.domain.repository.CoroutineWorkerRepository
-import com.company.domain.repository.DiaryNumberRepository
+import com.company.domain.repository.DiaryNumberRoomRepository
 import com.company.domain.repository.GetAddressRepository
 import com.company.domain.repository.KakaoLoginRepository
 import com.company.domain.repository.KakaoLogoutRepository
@@ -73,7 +73,7 @@ object DataModule {
     @Provides
     fun provideGetAddressRepository(impl: GetAddressRepositoryImpl) : GetAddressRepository = impl
     @Provides
-    fun provideDiaryNumberRepository(impl: DiaryNumberRepositoryImpl) : DiaryNumberRepository = impl
+    fun provideDiaryNumberRepository(impl: DiaryNumberRoomRepositoryImpl) : DiaryNumberRoomRepository = impl
 
 
     // 추후 수정

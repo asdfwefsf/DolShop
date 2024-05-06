@@ -1,10 +1,10 @@
 package com.company.domain.usecase
 
-import com.company.domain.repository.DiaryNumberRepository
+import com.company.domain.repository.DiaryNumberRoomRepository
 import javax.inject.Inject
 
-class DiaryNumberUseCase @Inject constructor(
-    private val diaryNumberRepository: DiaryNumberRepository
+class DiaryNumberRoomUseCase @Inject constructor(
+    private val diaryNumberRepository: DiaryNumberRoomRepository
 ) {
     suspend operator fun invoke() : Int? {
         return diaryNumberRepository.getDiaryNumber()

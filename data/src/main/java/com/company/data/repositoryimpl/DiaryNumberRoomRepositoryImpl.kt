@@ -2,12 +2,12 @@ package com.company.data.repositoryimpl
 
 import com.company.data.datasource.diarynumber.DiaryNumberDao
 import com.company.data.datasource.diarynumber.DiaryNumberInfo
-import com.company.domain.repository.DiaryNumberRepository
+import com.company.domain.repository.DiaryNumberRoomRepository
 import javax.inject.Inject
 
-class DiaryNumberRepositoryImpl @Inject constructor(
+class DiaryNumberRoomRepositoryImpl @Inject constructor(
     private val dao : DiaryNumberDao
-) : DiaryNumberRepository {
+) : DiaryNumberRoomRepository {
     override suspend fun getDiaryNumber() : Int {
         return dao.getDiaryNumber()?.diaryNumber ?: 0
     }
