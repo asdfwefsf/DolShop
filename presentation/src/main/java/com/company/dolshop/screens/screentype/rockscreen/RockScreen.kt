@@ -5,10 +5,12 @@ import android.graphics.Bitmap
 import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.util.Log
+import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.activity.compose.rememberLauncherForActivityResult
 import androidx.activity.result.contract.ActivityResultContracts
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -52,7 +54,10 @@ import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButtonDefaults
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.ui.graphics.asImageBitmap
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
@@ -61,12 +66,15 @@ import androidx.navigation.NavController
 import com.bumptech.glide.Glide
 import com.bumptech.glide.GlideBuilder
 import com.bumptech.glide.annotation.GlideModule
+import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
+import com.bumptech.glide.integration.compose.GlideImage
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.load.engine.cache.InternalCacheDiskCacheFactory
 import com.bumptech.glide.load.engine.cache.LruResourceCache
 import com.bumptech.glide.module.AppGlideModule
 import com.bumptech.glide.request.target.CustomTarget
 import com.bumptech.glide.request.transition.Transition
+import com.company.data.worker.test.Diary
 import com.company.dolshop.screens.ScreenList
 import com.company.dolshop.ui.theme.DolShopTheme
 import kotlinx.coroutines.CoroutineScope
@@ -83,8 +91,10 @@ fun RocksScreen(
 ) {
     val userInfolist = viewmodel.userInfoList
 //    Text("RockScreen")
-    Column {
-        firstUI(userInfolist.value.authNicName , navController)
+    Column(
+        modifier = Modifier.fillMaxWidth()
+    ) {
+        firstUI(userInfolist.value.authNicName, navController)
 //        selectImage(userInfolist.value.authNumber)
         ImageTest(innerPadding)
     }
@@ -95,7 +105,7 @@ fun RocksScreen(
 //@Composable
 //fun firstUI(myName : String) {
 @Composable
-fun firstUI(myName : String , navController : NavController) {
+fun firstUI(myName: String, navController: NavController) {
     Row {
         Text("${myName}님의 하루 일기 ")
         Spacer(modifier = Modifier.fillMaxWidth(0.9f))
@@ -106,7 +116,7 @@ fun firstUI(myName : String , navController : NavController) {
                 navController.navigate(ScreenList.AddRockScreen.route)
             }
         )
-        
+
     }
 }
 
@@ -204,72 +214,124 @@ fun firstUI(myName : String , navController : NavController) {
 //    tagImageRef.setValue(imageUrl)
 //}
 
+@OptIn(ExperimentalGlideComposeApi::class)
 @Composable
 fun ImageTest(innerPadding: PaddingValues) {
     val viewModel: DolsViewModel = hiltViewModel()
-    val images: LazyPagingItems<String> = viewModel.images.collectAsLazyPagingItems()
+    val diaries: LazyPagingItems<Diary> = viewModel.diaryda.collectAsLazyPagingItems()
 
-    LazyColumn(modifier = Modifier.padding(innerPadding)) {
-        items(images) { imageUrl ->
-            imageUrl?.let {
-                GlideImage(
-                    imageUrl = it,
-                    modifier = Modifier
-                        .width(200.dp)
-                        .height(200.dp), // 이미지 높이 고정
-                    // TODO 로딩 할 때 이미지 -> 빈 값 이미지로 수정 예정
-                    placeholder = R.drawable.ic_launcher_background,
-                    // TODO 네트워크 오류 이미지 -> 빈 값 이미지로 수정 예정
-                    error = R.drawable.ic_launcher_foreground
-                )
+
+    val bitmap: MutableState<Bitmap?> = remember { mutableStateOf(null) }
+
+    LazyColumn(
+        modifier = Modifier
+            .padding(innerPadding)
+            .fillMaxWidth()
+    ) {
+        items(diaries) { diaries ->
+            diaries?.let {
+//                GlideImage(
+//                    imageUrl = it,
+//                    modifier = Modifier
+//                        .padding(innerPadding)
+//                        .fillMaxWidth()
+//                        .height(200.dp), // 이미지 높이 고정
+//                    // TODO 로딩 할 때 이미지 -> 빈 값 이미지로 수정 예정
+//                    placeholder = R.drawable.ic_launcher_background,
+//                    // TODO 네트워크 오류 이미지 -> 빈 값 이미지로 수정 예정
+//                    error = R.drawable.ic_launcher_foreground
+//                )
+                Glide.with(LocalContext.current)
+                    .asBitmap()
+                    .load(it.image)
+                    .into(object : CustomTarget<Bitmap>() {
+                        override fun onResourceReady(
+                            resource: Bitmap,
+                            transition: Transition<in Bitmap>?
+                        ) {
+                            bitmap.value = resource
+                        }
+
+                        override fun onLoadCleared(placeholder: Drawable?) {}
+                    })
+
+                Column(
+                    modifier = Modifier.padding(vertical = 8.dp)
+                ) {
+                    bitmap.value?.asImageBitmap()?.let { fetchedBitmap ->
+                        Image(
+                            bitmap = fetchedBitmap,
+                            contentDescription = null,
+                            contentScale = ContentScale.Fit,
+                            modifier = Modifier
+                                .padding(innerPadding)
+                                .fillMaxWidth()
+                                .height(200.dp), // 이미지 높이 고정
+                        )
+                    } ?: Image(
+                        painter = painterResource(id = R.drawable.ic_launcher_background),
+                        contentDescription = null,
+                        contentScale = ContentScale.Fit,
+                    )
+                    Text(
+                        text = diaries.diary,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(8.dp)
+                    )
+                }
             }
         }
     }
 }
 
 
-@Composable
-fun GlideImage(
-    imageUrl: String,
-    modifier: Modifier = Modifier,
-    placeholder: Int,
-    error: Int
-) {
-    val startTime = remember { System.currentTimeMillis() }
-
-    AndroidView(
-        factory = { context ->
-            ImageView(context).apply {
-                scaleType = ImageView.ScaleType.CENTER_CROP
-            }
-        },
-        modifier = modifier,
-        update = { imageView ->
-            Glide.with(imageView.context)
-                .load(imageUrl)
-                .diskCacheStrategy(DiskCacheStrategy.ALL)
-                .placeholder(placeholder)
-                .error(error)
-                .into(object : CustomTarget<Drawable>() {
-                    override fun onResourceReady(
-                        resource: Drawable,
-                        transition: Transition<in Drawable>?
-                    ) {
-                        val endTime = System.currentTimeMillis()
-                        // 이미지 로딩 시간 체크
-                        Log.d("GlideTiming", "이미지 다운로드: $imageUrl")
-                        Log.d("GlideTiming", "이미지 다운로드 시간: ${endTime - startTime} ms")
-                        // 이미지 뷰에 Glide에서 받아온거 넣어주기
-                        imageView.setImageDrawable(resource)
-                    }
-
-                    override fun onLoadCleared(placeholder: Drawable?) {
-                        // TODO 로드 완료 되었을 때 동작
-                    }
-                })
-        }
-    )
-}
+//@Composable
+//fun GlideImage(
+//    imageUrl: String,
+//    modifier: Modifier = Modifier,
+//    placeholder: Int,
+//    error: Int
+//) {
+//    val startTime = remember { System.currentTimeMillis() }
+//
+//    AndroidView(
+//        factory = { context ->
+//            ImageView(context).apply {
+//                scaleType = ImageView.ScaleType.CENTER_CROP
+//                layoutParams = ViewGroup.LayoutParams(
+//                    ViewGroup.LayoutParams.MATCH_PARENT,
+//                    ViewGroup.LayoutParams.MATCH_PARENT
+//                )
+//            }
+//        },
+//        modifier = modifier,
+//        update = { imageView ->
+//            Glide.with(imageView.context)
+//                .load(imageUrl)
+//                .diskCacheStrategy(DiskCacheStrategy.ALL)
+//                .placeholder(placeholder)
+//                .error(error)
+//                .into(object : CustomTarget<Drawable>() {
+//                    override fun onResourceReady(
+//                        resource: Drawable,
+//                        transition: Transition<in Drawable>?
+//                    ) {
+//                        val endTime = System.currentTimeMillis()
+//                        // 이미지 로딩 시간 체크
+//                        Log.d("GlideTiming", "이미지 다운로드: $imageUrl")
+//                        Log.d("GlideTiming", "이미지 다운로드 시간: ${endTime - startTime} ms")
+//                        // 이미지 뷰에 Glide에서 받아온거 넣어주기
+//                        imageView.setImageDrawable(resource)
+//                    }
+//
+//                    override fun onLoadCleared(placeholder: Drawable?) {
+//                        // TODO 로드 완료 되었을 때 동작
+//                    }
+//                })
+//        }
+//    )
+//}
 
 //@Preview
 //@Composable

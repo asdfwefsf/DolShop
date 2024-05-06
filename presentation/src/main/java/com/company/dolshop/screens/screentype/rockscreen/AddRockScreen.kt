@@ -49,10 +49,11 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.io.ByteArrayOutputStream
+import java.text.SimpleDateFormat
+import java.util.Locale
 
 @Composable
 fun AddRockScreen(navController: NavController) {
-    var selectedImage by remember { mutableStateOf<Uri?>(null) }
 
     Column {
         Text("AddRockScreen")
@@ -86,7 +87,6 @@ fun ImageAndDiaryScreen(
     selectedImage: Uri? = null,
     diaryText: String,
     navController: NavController,
-
     onImageClick: () -> Unit,
     onTextChange: (String) -> Unit,
 ) {
@@ -144,7 +144,8 @@ fun ImageAndDiaryScreen(
                         imageUri =  selectedImage!!,
                         context = context,
                         authNumber =  authNumber,
-                        scope =  scope
+                        scope =  scope,
+                        text = diaryText
                     )
                     navController.navigate(ScreenList.RocksScreen.route) {
                         navController.popBackStack()
@@ -178,7 +179,8 @@ fun uploadImageToFirebaseStorage(
     imageUri: Uri,
     context: Context,
     authNumber: String,
-    scope: CoroutineScope
+    scope: CoroutineScope,
+    text : String
 ) {
     scope.launch {
         val imageData = withContext(Dispatchers.IO) {
@@ -187,7 +189,7 @@ fun uploadImageToFirebaseStorage(
                 .asBitmap()
                 .load(imageUri)
                 // TODO 이미지 사이즈 정리 : 왜 안 되는거지
-                .submit(400, 400)
+                .submit(800, 400)
                 .get()
 
             // 바이트 배열 저장소
@@ -205,7 +207,7 @@ fun uploadImageToFirebaseStorage(
         uploadTask.addOnSuccessListener {
             storageRef.downloadUrl.addOnSuccessListener { uri ->
                 val imageUrl = uri.toString()
-                saveImageUrlToRealtimeDatabase(imageUrl, authNumber)
+                saveImageUrlToRealtimeDatabase(imageUrl, authNumber ,  text)
             }
         }.addOnFailureListener { exception ->
             Toast.makeText(context, "업로드에 실패하였습니다.", Toast.LENGTH_SHORT).show()
@@ -214,14 +216,34 @@ fun uploadImageToFirebaseStorage(
 }
 
 // RealTime DataBase에 이미지 URL 저장
-fun saveImageUrlToRealtimeDatabase(imageUrl: String, authNumber: String) {
+fun saveImageUrlToRealtimeDatabase(imageUrl: String, authNumber: String , diaryText : String) {
     val databaseRef = Firebase.database.reference
-    databaseRef.child("users/$authNumber/images").push().setValue(imageUrl).addOnSuccessListener {
-    }.addOnFailureListener {
-    }
+    val diaryDate = getCurrentDateString()
+
+    val diary = mapOf(
+        "image" to imageUrl,
+        "diary" to diaryText
+    )
+    databaseRef.child("users/$authNumber/diary/$diaryDate").push().setValue(diary)
+
+
     val tagImageRef = databaseRef.child("images/tagNumber").push()
     tagImageRef.setValue(imageUrl)
 }
+
+fun getCurrentDateString(): String {
+    val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+    return dateFormat.format(System.currentTimeMillis())
+}
+
+//val userData = mapOf(
+//    "addressName" to addressName,
+//    "addressNumber" to addressNumber,
+//    "address" to address,
+//    "detailedAddress" to detailedAddress,
+//    "phoneNumber" to phoneNumber
+//)
+//userRef.setValue(userData)
 
 //@Preview
 //@Composable
