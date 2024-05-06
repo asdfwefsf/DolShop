@@ -22,7 +22,7 @@ class ImagePagingSource(
                 val diaryNumber = dataSnapshot.child("diaryNumber").getValue(String::class.java)
                 if (diary != null && image != null && day != null && diaryNumber != null) Diary(diary, image , day , diaryNumber) else null
 
-            }
+            }.reversed()
 
 
             val lastItemKey = dataSnapshot.children.lastOrNull()?.key
