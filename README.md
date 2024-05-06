@@ -1,4 +1,4 @@
-# DolShop 개발 일지
+# DolShop 개발 일지 2024-04-11 ~ 
 2024-04-11
 1. 클린 아키텍처 구조 구성 완료 && 프로젝트 구조 모듈화 완료 (세부 모듈 미완료 : 개발 진행에 맞게 세부 모듈 세팅 예정)
 
@@ -64,17 +64,18 @@
 5. FirebaseStorage Logic OK (완료)
 
 2024-05-04
-1. FirebaseRealtimeDatabase -> RockScreen 백그라운드(완료(
+1. FirebaseRealtimeDatabase -> RockScreen 백그라운드(완료)
 
 2024-05-05
 1. AddRockScreen -> FireStoreDatabase -> FirebaseRealtimeDatabase -> RockScreen (완료)
 
 2024-05-06
-1. RockScreen UI 수정
-2. Communitiy Screen 기획
-3. Communitiy Screen 로직 작성
-4. 아키텍처 최적화
-5. Announcement Screen 기획
+1. RockScreen UI 수정 (완료)
+2. RockScreen DiaryItem sort Logic
+3. Communitiy Screen 기획
+4. Communitiy Screen 로직 작성
+5. 아키텍처 최적화
+6. Announcement Screen 기획
 
 # 적용된 안드로이드 개념
 1. Presentation -> Domain <- Data : 공식문서에서 지향하는 클린 아키텍처와 다른 안드로이드 클린아키텍처
