@@ -222,7 +222,8 @@ fun saveImageUrlToRealtimeDatabase(imageUrl: String, authNumber: String , diaryT
 
     val diary = mapOf(
         "image" to imageUrl,
-        "diary" to diaryText
+        "diary" to diaryText,
+        "day" to diaryDate
     )
     databaseRef.child("users/$authNumber/diary/$diaryDate").push().setValue(diary)
 

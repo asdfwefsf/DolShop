@@ -21,6 +21,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -52,14 +53,18 @@ import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.ButtonDefaults
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButtonDefaults
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
@@ -75,6 +80,7 @@ import com.bumptech.glide.module.AppGlideModule
 import com.bumptech.glide.request.target.CustomTarget
 import com.bumptech.glide.request.transition.Transition
 import com.company.data.worker.test.Diary
+import com.company.designsystem.designsystem.Paddings
 import com.company.dolshop.screens.ScreenList
 import com.company.dolshop.ui.theme.DolShopTheme
 import kotlinx.coroutines.CoroutineScope
@@ -90,12 +96,10 @@ fun RocksScreen(
     navController: NavController
 ) {
     val userInfolist = viewmodel.userInfoList
-//    Text("RockScreen")
     Column(
         modifier = Modifier.fillMaxWidth()
     ) {
         firstUI(userInfolist.value.authNicName, navController)
-//        selectImage(userInfolist.value.authNumber)
         ImageTest(innerPadding)
     }
 
@@ -106,113 +110,19 @@ fun RocksScreen(
 //fun firstUI(myName : String) {
 @Composable
 fun firstUI(myName: String, navController: NavController) {
-    Row {
-        Text("${myName}님의 하루 일기 ")
+    Row(modifier = Modifier.padding(Paddings.small)) {
+        Text("${myName}님의 하루 일기" , fontSize = 15.sp , color = Color.Black)
         Spacer(modifier = Modifier.fillMaxWidth(0.9f))
         Icon(
             imageVector = Icons.Default.Add,
             contentDescription = "일기장 추가",
-            modifier = Modifier.clickable {
+            modifier = Modifier.size(13.dp).clickable {
                 navController.navigate(ScreenList.AddRockScreen.route)
             }
         )
 
     }
 }
-
-
-//@Composable
-//fun selectImage(authNumber: String) {
-//    val scope = rememberCoroutineScope()
-//    var selectedImage by remember { mutableStateOf<Uri?>(null) }
-//    val context = LocalContext.current
-//    val launcher = rememberLauncherForActivityResult(
-//        contract = ActivityResultContracts.GetContent()
-//    ) { uri: Uri? ->
-//        selectedImage = uri
-//        uri?.let { uploadImageToFirebaseStorage(it, context, authNumber, scope) }
-//    }
-//    ImageSee(selectedImage) {
-//        launcher.launch("image/*")
-//    }
-//}
-//
-//@OptIn(ExperimentalMaterial3Api::class)
-//@Composable
-//private fun ImageSee(
-//    selectedImage: Uri? = null,
-//    onImageClick: () -> Unit
-//) {
-//    Scaffold() {
-//        Column(
-//            Modifier
-//                .fillMaxSize()
-//                .padding(it),
-//            horizontalAlignment = Alignment.CenterHorizontally,
-//            verticalArrangement = Arrangement.Center
-//        ) {
-//            if (selectedImage != null) {
-//                AsyncImage(model = selectedImage, contentDescription = "")
-//            } else {
-//
-//            }
-//            OutlinedButton(onClick = onImageClick) {
-//                Text(text = "Choose Image")
-//            }
-//        }
-//    }
-//}
-
-//// TODO 이미지 최적화해서 Firestore Database에 이미지 저장하기
-//// Firestore Database에 이미지 저장
-//fun uploadImageToFirebaseStorage(
-//    imageUri: Uri,
-//    context: Context,
-//    authNumber: String,
-//    scope: CoroutineScope
-//) {
-//    scope.launch {
-//        val imageData = withContext(Dispatchers.IO) {
-//            // Glide로 이미지 불러와서 비트맵으로 변환 후 저장
-//            val bitmapData = Glide.with(context)
-//                .asBitmap()
-//                .load(imageUri)
-//                // TODO 이미지 사이즈 정리 : 왜 안 되는거지
-//                .submit(400, 400)
-//                .get()
-//
-//            // 바이트 배열 저장소
-//            val baos = ByteArrayOutputStream()
-//            // 비트맵 압축 -> 바이트 변환 : 바이트 배열 저장소에 데이터 저장
-//            bitmapData.compress(Bitmap.CompressFormat.JPEG, 20, baos)
-//            // 바이트 배열 복사본 반환 ㅈ같네
-//            baos.toByteArray()
-//        }
-//
-//
-//        val storageRef = FirebaseStorage.getInstance().getReference("images/${imageUri.lastPathSegment}")
-//        val uploadTask = storageRef.putBytes(imageData)
-//
-//        uploadTask.addOnSuccessListener {
-//            storageRef.downloadUrl.addOnSuccessListener { uri ->
-//                val imageUrl = uri.toString()
-//                saveImageUrlToRealtimeDatabase(imageUrl, authNumber)
-//            }
-//        }.addOnFailureListener { exception ->
-//            Toast.makeText(context, "업로드에 실패하였습니다.", Toast.LENGTH_SHORT).show()
-//        }
-//    }
-//}
-//
-//// RealTime DataBase에 이미지 URL 저장
-//fun saveImageUrlToRealtimeDatabase(imageUrl: String, authNumber: String) {
-//    val databaseRef = Firebase.database.reference
-//    databaseRef.child("users/$authNumber/images").push().setValue(imageUrl).addOnSuccessListener {
-//    }.addOnFailureListener {
-//    }
-//    val tagImageRef = databaseRef.child("images/tagNumber").push()
-//    tagImageRef.setValue(imageUrl)
-//}
 
 @OptIn(ExperimentalGlideComposeApi::class)
 @Composable
@@ -230,113 +140,51 @@ fun ImageTest(innerPadding: PaddingValues) {
     ) {
         items(diaries) { diaries ->
             diaries?.let {
-//                GlideImage(
-//                    imageUrl = it,
-//                    modifier = Modifier
-//                        .padding(innerPadding)
-//                        .fillMaxWidth()
-//                        .height(200.dp), // 이미지 높이 고정
-//                    // TODO 로딩 할 때 이미지 -> 빈 값 이미지로 수정 예정
-//                    placeholder = R.drawable.ic_launcher_background,
-//                    // TODO 네트워크 오류 이미지 -> 빈 값 이미지로 수정 예정
-//                    error = R.drawable.ic_launcher_foreground
-//                )
-                Glide.with(LocalContext.current)
-                    .asBitmap()
-                    .load(it.image)
-                    .into(object : CustomTarget<Bitmap>() {
-                        override fun onResourceReady(
-                            resource: Bitmap,
-                            transition: Transition<in Bitmap>?
-                        ) {
-                            bitmap.value = resource
-                        }
-
-                        override fun onLoadCleared(placeholder: Drawable?) {}
-                    })
-
-                Column(
-                    modifier = Modifier.padding(vertical = 8.dp)
+                Card(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(8.dp),
+                    elevation = CardDefaults.cardElevation(4.dp)
                 ) {
-                    bitmap.value?.asImageBitmap()?.let { fetchedBitmap ->
-                        Image(
-                            bitmap = fetchedBitmap,
-                            contentDescription = null,
+                    Column(modifier = Modifier.padding(8.dp)) {
+                        Text(diaries.day , fontSize = 15.sp , color = Color.Black)
+                        Glide.with(LocalContext.current)
+                            .asBitmap()
+                            .load(diaries.image)
+                            .into(object : CustomTarget<Bitmap>() {
+                                override fun onResourceReady(resource: Bitmap, transition: Transition<in Bitmap>?) {
+                                    bitmap.value = resource
+                                }
+
+                                override fun onLoadCleared(placeholder: Drawable?) {}
+                            })
+
+                        bitmap.value?.asImageBitmap()?.let { fetchedBitmap ->
+                            Image(
+                                bitmap = fetchedBitmap,
+                                contentDescription = "Diary Image",
+                                contentScale = ContentScale.Crop,
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                            )
+                        } ?: Image(
+                            painter = painterResource(id = R.drawable.ic_launcher_background),
+                            contentDescription = "Default Image",
                             contentScale = ContentScale.Fit,
                             modifier = Modifier
-                                .padding(innerPadding)
                                 .fillMaxWidth()
-                                .height(200.dp), // 이미지 높이 고정
+                                .height(200.dp)
                         )
-                    } ?: Image(
-                        painter = painterResource(id = R.drawable.ic_launcher_background),
-                        contentDescription = null,
-                        contentScale = ContentScale.Fit,
-                    )
-                    Text(
-                        text = diaries.diary,
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(8.dp)
-                    )
+
+                        Text(
+                            text = diaries.diary,
+                            color = Color.Black,
+                            modifier = Modifier.padding(top = 8.dp)
+                        )
+                    }
                 }
             }
         }
     }
 }
 
-
-//@Composable
-//fun GlideImage(
-//    imageUrl: String,
-//    modifier: Modifier = Modifier,
-//    placeholder: Int,
-//    error: Int
-//) {
-//    val startTime = remember { System.currentTimeMillis() }
-//
-//    AndroidView(
-//        factory = { context ->
-//            ImageView(context).apply {
-//                scaleType = ImageView.ScaleType.CENTER_CROP
-//                layoutParams = ViewGroup.LayoutParams(
-//                    ViewGroup.LayoutParams.MATCH_PARENT,
-//                    ViewGroup.LayoutParams.MATCH_PARENT
-//                )
-//            }
-//        },
-//        modifier = modifier,
-//        update = { imageView ->
-//            Glide.with(imageView.context)
-//                .load(imageUrl)
-//                .diskCacheStrategy(DiskCacheStrategy.ALL)
-//                .placeholder(placeholder)
-//                .error(error)
-//                .into(object : CustomTarget<Drawable>() {
-//                    override fun onResourceReady(
-//                        resource: Drawable,
-//                        transition: Transition<in Drawable>?
-//                    ) {
-//                        val endTime = System.currentTimeMillis()
-//                        // 이미지 로딩 시간 체크
-//                        Log.d("GlideTiming", "이미지 다운로드: $imageUrl")
-//                        Log.d("GlideTiming", "이미지 다운로드 시간: ${endTime - startTime} ms")
-//                        // 이미지 뷰에 Glide에서 받아온거 넣어주기
-//                        imageView.setImageDrawable(resource)
-//                    }
-//
-//                    override fun onLoadCleared(placeholder: Drawable?) {
-//                        // TODO 로드 완료 되었을 때 동작
-//                    }
-//                })
-//        }
-//    )
-//}
-
-//@Preview
-//@Composable
-//fun firstUIPreview() {
-//    DolShopTheme {
-//        firstUI(myName = "황건희")
-//    }
-//}

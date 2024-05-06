@@ -30,8 +30,8 @@ class GetBaseProductWorkerFunction2 @Inject constructor(
 
 
 
-    fun getImagesFlow(): Flow<PagingData<Diary>> = flow {
-        val authNumber = getAuthNumber(dao)  // authNumber를 불러옵니다.
+    fun getDiarisFlow(): Flow<PagingData<Diary>> = flow {
+        val authNumber = getAuthNumber(dao)
         val diaryDate = getCurrentDateString()
 
         val query = databaseReference.child("users").child(authNumber).child("diary").child(diaryDate)

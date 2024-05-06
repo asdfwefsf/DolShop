@@ -21,7 +21,7 @@ class DolsViewModel @Inject constructor(
 
 
     private val query = Firebase.database.reference.child("images").child("tagNumber")
-    val diaryda: Flow<PagingData<Diary>> = getBaseProductWorkerFunction2.getImagesFlow().cachedIn(viewModelScope)
+    val diaryda: Flow<PagingData<Diary>> = getBaseProductWorkerFunction2.getDiarisFlow().cachedIn(viewModelScope)
 
 
 }
