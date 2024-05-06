@@ -18,7 +18,8 @@ class ImagePagingSource(
                 val diary = dataSnapshot.child("diary").getValue(String::class.java)
                 val image  = dataSnapshot.child("image").getValue(String::class.java)
                 val day = dataSnapshot.child("day").getValue(String::class.java)
-                if (diary != null && image != null && day != null) Diary(diary, image , day) else null
+                val diaryNumber = dataSnapshot.child("diaryNumber").getValue(String::class.java)
+                if (diary != null && image != null && day != null && diaryNumber != null) Diary(diary, image , day , diaryNumber) else null
 
             }
 
@@ -52,5 +53,6 @@ class ImagePagingSource(
 data class Diary(
     val diary: String,
     val image: String,
-    val day : String
+    val day : String,
+    val diaryNumber : String
 )

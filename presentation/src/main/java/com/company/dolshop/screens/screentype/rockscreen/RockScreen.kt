@@ -111,14 +111,16 @@ fun RocksScreen(
 @Composable
 fun firstUI(myName: String, navController: NavController) {
     Row(modifier = Modifier.padding(Paddings.small)) {
-        Text("${myName}님의 하루 일기" , fontSize = 15.sp , color = Color.Black)
+        Text("${myName}님의 하루 일기", fontSize = 15.sp, color = Color.Black)
         Spacer(modifier = Modifier.fillMaxWidth(0.9f))
         Icon(
             imageVector = Icons.Default.Add,
             contentDescription = "일기장 추가",
-            modifier = Modifier.size(13.dp).clickable {
-                navController.navigate(ScreenList.AddRockScreen.route)
-            }
+            modifier = Modifier
+                .size(13.dp)
+                .clickable {
+                    navController.navigate(ScreenList.AddRockScreen.route)
+                }
         )
 
     }
@@ -147,16 +149,20 @@ fun ImageTest(innerPadding: PaddingValues) {
                     elevation = CardDefaults.cardElevation(4.dp)
                 ) {
                     Column(modifier = Modifier.padding(8.dp)) {
-                        Text(diaries.day , fontSize = 15.sp , color = Color.Black)
+                        Text("${diaries.day} ${diaries.diaryNumber}", fontSize = 15.sp, color = Color.Black)
                         Glide.with(LocalContext.current)
                             .asBitmap()
                             .load(diaries.image)
                             .into(object : CustomTarget<Bitmap>() {
-                                override fun onResourceReady(resource: Bitmap, transition: Transition<in Bitmap>?) {
+                                override fun onResourceReady(
+                                    resource: Bitmap,
+                                    transition: Transition<in Bitmap>?
+                                ) {
                                     bitmap.value = resource
                                 }
+                                override fun onLoadCleared(placeholder: Drawable?) {
 
-                                override fun onLoadCleared(placeholder: Drawable?) {}
+                                }
                             })
 
                         bitmap.value?.asImageBitmap()?.let { fetchedBitmap ->

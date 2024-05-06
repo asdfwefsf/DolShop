@@ -21,6 +21,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -38,14 +39,17 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import com.bumptech.glide.Glide
+import com.company.data.datasource.diarynumber.DiaryNumberDao
 import com.company.dolshop.screens.ScreenList
 import com.company.dolshop.ui.theme.DolShopTheme
+import com.company.dolshop.viewmodel.DiaryNumberViewmodel
 import com.company.dolshop.viewmodel.KakaoAuthiViewModel
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import java.io.ByteArrayOutputStream
@@ -94,6 +98,8 @@ fun ImageAndDiaryScreen(
     val context = LocalContext.current
     val authNumber = kakaoAuthiViewModel.userInfoList.value.authNumber
     val scope = rememberCoroutineScope()
+
+    val diaryNumberViewmodel : DiaryNumberViewmodel = hiltViewModel()
 
     Scaffold(
         modifier = Modifier.fillMaxHeight()
@@ -145,9 +151,14 @@ fun ImageAndDiaryScreen(
                         context = context,
                         authNumber =  authNumber,
                         scope =  scope,
-                        text = diaryText
+                        text = diaryText,
+                        diaryNumber = diaryNumberViewmodel.diaryNumber.value.toString()
                     )
                     navController.navigate(ScreenList.RocksScreen.route) {
+                        if(diaryNumberViewmodel.diaryNumber.value == 0) {
+                            diaryNumberViewmodel.insertDiaryNumber()
+                        }
+                        diaryNumberViewmodel.addDiaryNumber()
                         navController.popBackStack()
                     }
                 }
@@ -156,21 +167,6 @@ fun ImageAndDiaryScreen(
     }
 }
 
-//@Composable
-//fun selectImage(authNumber: String) {
-//    val scope = rememberCoroutineScope()
-//    var selectedImage by remember { mutableStateOf<Uri?>(null) }
-//    val context = LocalContext.current
-//    val launcher = rememberLauncherForActivityResult(
-//        contract = ActivityResultContracts.GetContent()
-//    ) { uri: Uri? ->
-//        selectedImage = uri
-//        uri?.let { uploadImageToFirebaseStorage(it, context, authNumber, scope) }
-//    }
-//    ImageSee(selectedImage) {
-//        launcher.launch("image/*")
-//    }
-//}
 
 
 // TODO 이미지 최적화해서 Firestore Database에 이미지 저장하기
@@ -180,7 +176,8 @@ fun uploadImageToFirebaseStorage(
     context: Context,
     authNumber: String,
     scope: CoroutineScope,
-    text : String
+    text : String,
+    diaryNumber : String
 ) {
     scope.launch {
         val imageData = withContext(Dispatchers.IO) {
@@ -207,7 +204,7 @@ fun uploadImageToFirebaseStorage(
         uploadTask.addOnSuccessListener {
             storageRef.downloadUrl.addOnSuccessListener { uri ->
                 val imageUrl = uri.toString()
-                saveImageUrlToRealtimeDatabase(imageUrl, authNumber ,  text)
+                saveImageUrlToRealtimeDatabase(imageUrl, authNumber ,  text , diaryNumber)
             }
         }.addOnFailureListener { exception ->
             Toast.makeText(context, "업로드에 실패하였습니다.", Toast.LENGTH_SHORT).show()
@@ -216,14 +213,15 @@ fun uploadImageToFirebaseStorage(
 }
 
 // RealTime DataBase에 이미지 URL 저장
-fun saveImageUrlToRealtimeDatabase(imageUrl: String, authNumber: String , diaryText : String) {
+fun saveImageUrlToRealtimeDatabase(imageUrl: String, authNumber: String , diaryText : String , diaryNumber : String) {
     val databaseRef = Firebase.database.reference
     val diaryDate = getCurrentDateString()
 
     val diary = mapOf(
         "image" to imageUrl,
         "diary" to diaryText,
-        "day" to diaryDate
+        "day" to diaryDate,
+        "diaryNumber" to diaryNumber
     )
     databaseRef.child("users/$authNumber/diary/$diaryDate").push().setValue(diary)
 

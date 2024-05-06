@@ -4,10 +4,13 @@ import android.content.Context
 import androidx.room.Room
 import com.company.data.datasource.baseproductinfo1.BaseProductDao
 import com.company.data.datasource.baseproductinfo1.BaseProductInfoDataBase
+import com.company.data.datasource.diarynumber.DiaryNumberDao
+import com.company.data.datasource.diarynumber.DiaryNumberDatabase
 import com.company.data.datasource.userinfo.UserInfoDao
 import com.company.data.datasource.userinfo.UserInfoDatabase
 import com.company.data.repositoryimpl.AnnouncementRepositoryImpl
 import com.company.data.repositoryimpl.CoroutineWorkerRepositoryImpl
+import com.company.data.repositoryimpl.DiaryNumberRepositoryImpl
 import com.company.data.repositoryimpl.KakaoLoginRepositoryImpl
 import com.company.data.repositoryimpl.KakaoLogoutRepositoryImpl
 import com.company.data.repositoryimpl.UpdateBaseProductRepositoryImpl
@@ -22,6 +25,7 @@ import com.company.datasource_local_productsale.productsale.ProductSaleDao
 import com.company.datasource_local_productsale.productsale.ProductSaleDataBase
 import com.company.domain.repository.AnnouncementRepository
 import com.company.domain.repository.CoroutineWorkerRepository
+import com.company.domain.repository.DiaryNumberRepository
 import com.company.domain.repository.GetAddressRepository
 import com.company.domain.repository.KakaoLoginRepository
 import com.company.domain.repository.KakaoLogoutRepository
@@ -68,6 +72,8 @@ object DataModule {
     fun provideSaveAddressRepository(impl: SaveAddressRepositoryImpl) : SaveAddressRepository = impl
     @Provides
     fun provideGetAddressRepository(impl: GetAddressRepositoryImpl) : GetAddressRepository = impl
+    @Provides
+    fun provideDiaryNumberRepository(impl: DiaryNumberRepositoryImpl) : DiaryNumberRepository = impl
 
 
     // 추후 수정
@@ -152,6 +158,20 @@ object DataModule {
         return database.dao
     }
 
+    // DiaryNumber
 
+    @Provides
+    @Singleton
+    fun provideDiaryNumberDatabase(@ApplicationContext appContext: Context): DiaryNumberDatabase {
+        return Room.databaseBuilder(
+            appContext,
+            DiaryNumberDatabase::class.java,
+            "diaryNumber_database"
+        ).build()
+    }
 
+    @Provides
+    fun provideDiaryNumberDao(database: DiaryNumberDatabase) : DiaryNumberDao {
+        return database.dao
+    }
 }

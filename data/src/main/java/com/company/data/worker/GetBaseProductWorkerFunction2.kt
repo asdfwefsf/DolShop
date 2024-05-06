@@ -27,9 +27,6 @@ class GetBaseProductWorkerFunction2 @Inject constructor(
 ) {
     val scope = CoroutineScope(Dispatchers.IO)
 
-
-
-
     fun getDiarisFlow(): Flow<PagingData<Diary>> = flow {
         val authNumber = getAuthNumber(dao)
         val diaryDate = getCurrentDateString()
