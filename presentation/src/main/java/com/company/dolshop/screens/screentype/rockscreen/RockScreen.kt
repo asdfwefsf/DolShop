@@ -1,5 +1,7 @@
 package com.company.dolshop.screens.screentype.rockscreen
 
+import android.app.DatePickerDialog
+import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.drawable.Drawable
 import android.util.Log
@@ -18,18 +20,23 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Text
 import androidx.compose.material3.pulltorefresh.PullToRefreshContainer
 import androidx.compose.material3.pulltorefresh.rememberPullToRefreshState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -55,6 +62,8 @@ import com.company.dolshop.viewmodel.KakaoAuthiViewModel
 import com.company.domain.entity.Diary
 import com.company.presentation.R
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
+import java.util.Calendar
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -67,8 +76,6 @@ fun RocksScreen(
     val dolsViewModel : DolsViewModel = hiltViewModel()
     val pullRefreshState = rememberPullToRefreshState()
 
-    //
-    //
     if(pullRefreshState.isRefreshing) {
         LaunchedEffect(true) {
             delay(1500)
@@ -82,11 +89,19 @@ fun RocksScreen(
 
     //
     Box(
-        modifier = Modifier.fillMaxSize().nestedScroll(pullRefreshState.nestedScrollConnection)
+        modifier = Modifier
+            .fillMaxSize()
+            .nestedScroll(pullRefreshState.nestedScrollConnection)
     ) {
         Column(
-            modifier = Modifier.fillMaxSize().nestedScroll(pullRefreshState.nestedScrollConnection)
+            modifier = Modifier
+                .fillMaxSize()
+                .nestedScroll(pullRefreshState.nestedScrollConnection)
         ) {
+            if(dolsViewModel.sort.collectAsState().value == "특정날") {
+                callDatePickerDialog(dolsViewModel)
+            }
+            DaySortSelector(dolsViewModel)
             firstUI(userInfolist.value.authNicName, navController)
             ImageTest(innerPadding , dolsViewModel)
         }
@@ -101,6 +116,36 @@ fun RocksScreen(
 
 }
 
+@Composable
+fun DaySortSelector(viewModel: DolsViewModel) {
+    val sortOptions = listOf("모두", "오늘", "특정날")
+    val (selectedOption, onOptionSelected) = remember { mutableStateOf(sortOptions[0]) }
+
+    Row {
+        sortOptions.forEach { option ->
+            Row(verticalAlignment = Alignment.CenterVertically,
+                modifier = Modifier
+                    .padding(8.dp)
+                    .clickable(onClick = {
+                        onOptionSelected(option)
+                        viewModel.updateSort(option)
+                    })
+            ) {
+                RadioButton(
+                    selected = option == selectedOption,
+                    onClick = {
+                        onOptionSelected(option)
+                        viewModel.updateSort(option)
+                    }
+                )
+                Text(
+                    text = option,
+                    modifier = Modifier.padding(start = 8.dp)
+                )
+            }
+        }
+    }
+}
 
 //Preview용 firstUI Composable Name
 //@Composable
@@ -191,3 +236,49 @@ fun ImageTest(innerPadding: PaddingValues , viewModel : DolsViewModel) {
     }
 }
 
+@Composable
+fun callDatePickerDialog(viewModel: DolsViewModel, context: Context = LocalContext.current) {
+    val showDialog = remember { mutableStateOf(false) }
+
+    Button(onClick = { showDialog.value = true }) {
+        Text("날짜 선택")
+    }
+
+    val scope = rememberCoroutineScope()
+    if (showDialog.value) {
+        val calendar = Calendar.getInstance()
+        DatePickerDialog(
+            context,
+            { _, year, month, dayOfMonth ->
+                val selectedDate = "$year-0${month + 1}-0${dayOfMonth}"
+                viewModel.updateSpecificDate(selectedDate)
+                Log.d("Thibal" , selectedDate)
+//                scope.launch {
+//                    viewModel.callDiaryWorkerFunction()
+//
+//                }
+                showDialog.value = false
+            },
+            calendar.get(Calendar.YEAR),
+            calendar.get(Calendar.MONTH),
+            calendar.get(Calendar.DAY_OF_MONTH)
+        ).show()
+    }
+}
+
+//
+//@Composable
+//fun realCallCalander(context = LocalContext.current , viewModel: DolsViewModel) {
+//    val calendar = Calendar.getInstance()
+//    DatePickerDialog(
+//        context,
+//        { _, year, month, dayOfMonth ->
+//            val selectedDate = "$year-${month + 1}-${dayOfMonth}"
+//            viewModel.updateSpecificDate(selectedDate)
+//            showDialog.value = false
+//        },
+//        calendar.get(Calendar.YEAR),
+//        calendar.get(Calendar.MONTH),
+//        calendar.get(Calendar.DAY_OF_MONTH)
+//    ).show()
+//}

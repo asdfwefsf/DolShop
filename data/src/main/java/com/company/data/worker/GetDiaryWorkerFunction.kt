@@ -5,6 +5,7 @@ import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import com.company.data.datasource.userinfo.UserInfoDao
 import com.company.data.worker.test.ImagePagingSource
+import com.company.data.worker.test.ImagePagingSource2
 import com.company.domain.entity.Diary
 import com.company.domain.repository.getDiaryWorkerFunctionRepository
 import com.google.firebase.database.DataSnapshot
@@ -23,14 +24,52 @@ import javax.inject.Inject
 
 class GetDiaryWorkerFunction @Inject constructor(
     private val databaseReference: DatabaseReference,
-    private val dao: UserInfoDao
+    private val dao: UserInfoDao,
 ) : getDiaryWorkerFunctionRepository {
 
-    override suspend fun callDiaryWorkerFunction(): Flow<PagingData<Diary>> = flow {
+    override suspend fun callDiaryWorkerFunction(sort : String): Flow<PagingData<Diary>> = flow {
         val authNumber = getAuthNumber(dao)
-        val diaryDate = getCurrentDateString()
+//        val diaryDate = getCurrentDateString()
 
-        val query = databaseReference.child("users").child(authNumber).child("diary")
+        val query = when (sort) {
+            "오늘" -> {
+                val diaryDate = getCurrentDateString()
+                databaseReference.child("users").child(authNumber).child("diary").child(diaryDate)
+            }
+            "모두" -> {
+                databaseReference.child("users").child(authNumber).child("diary")
+            }
+            "특정날" -> {
+                if (sort != null) {
+                    databaseReference.child("users").child(authNumber).child("diary").child(sort)
+                } else {
+                    databaseReference.child("users").child(authNumber).child("diary")
+                }
+            }
+            else -> {
+                databaseReference.child("users").child(authNumber).child("diary").child("$sort")
+            }
+        }
+
+        val pagingSourceFactory = when (sort) {
+            "오늘" -> {
+                val diaryDate = getCurrentDateString();
+
+                { ImagePagingSource(query) }
+            }
+            "특정날" -> {
+                { ImagePagingSource(query) }
+            }
+            "모두" -> {
+                { ImagePagingSource2(query) }
+            }
+            else -> {
+                { ImagePagingSource(query) }
+            }
+        }
+
+
+
 
         emitAll(
             Pager(
@@ -40,7 +79,7 @@ class GetDiaryWorkerFunction @Inject constructor(
                     enablePlaceholders = false,
                     maxSize = 60
                 ),
-                pagingSourceFactory = { ImagePagingSource(query) }
+                pagingSourceFactory = { pagingSourceFactory() }
             ).flow
         )
     }

@@ -7,6 +7,7 @@ import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import com.company.domain.entity.Diary
 import com.company.domain.repository.getDiaryWorkerFunctionRepository
+import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -23,23 +24,62 @@ class DolsViewModel @Inject constructor(
 
 ) : ViewModel() {
 
+    // 다이어리
     private val _diaryda = MutableStateFlow<PagingData<Diary>>(PagingData.empty())
     val diaryda : MutableStateFlow<PagingData<Diary>> = _diaryda
+    // 다이어리
 
+    // 다이어리 에서 선택할 날짜
+    private val _sort = MutableStateFlow<String>("모두")
+    val sort: StateFlow<String> = _sort
+    fun updateSort(newSort: String) {
+        if (_sort.value != newSort) {
+            _sort.value = newSort
+            viewModelScope.launch {
+                getDiaryWorkerFunction.callDiaryWorkerFunction(sort.value).collect {
+                    _diaryda.value = it
+                    Log.d("DolsViewModel", sort.value)
 
-//    val diaryda: Flow<PagingData<Diary>> = getDiaryWorkerFunction.callDiaryWorkerFunction().cachedIn(viewModelScope)
+                }
+            }
 
+        }
+    }
     suspend fun callDiaryWorkerFunction() {
         viewModelScope.launch {
-            getDiaryWorkerFunction.callDiaryWorkerFunction().collect {
+            getDiaryWorkerFunction.callDiaryWorkerFunction(sort.value).collect {
                 _diaryda.value = it
-                Log.d("DolsViewModel", "Data loaded: ${it}")  // 데이터 로드 상태 로깅
+                Log.d("DolsViewModel", sort.value)
 
             }
         }
 
     }
+    // 다이어리 에서 선택할 날짜
 
+
+    // 특정 날짜 업데이트
+    private val _specificDate = MutableStateFlow<String?>(null)
+    val specificDate: StateFlow<String?> = _specificDate
+    fun updateSpecificDate(date: String) {
+        _specificDate.value = date
+        if (_sort.value == "특정날") {
+            viewModelScope.launch {
+                getDiaryWorkerFunction.callDiaryWorkerFunction(date).collect{
+                    _diaryda.value = it
+                }
+            }
+        }
+    }
+//    private fun callDiaryWorkerFunction(sortOrDate: String) {
+//        viewModelScope.launch {
+//            getDiaryWorkerFunction.callDiaryWorkerFunction(sortOrDate).collect {
+//                _diaryData.value = it
+//            }
+//        }
+//    }
+
+    // 특정 날짜 업데이트
     init {
         viewModelScope.launch {
             callDiaryWorkerFunction()

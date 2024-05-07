@@ -25,7 +25,7 @@ class GetApiInfoCoroutineWorker @AssistedInject constructor(
         try {
             getBaseProductWorkerFunction1.getBaseProductList1()
             getProductSaleWorkerFunction.getProductSaleInfo()
-            getBaseProductWorkerFunction2.callDiaryWorkerFunction()
+//            getBaseProductWorkerFunction2.callDiaryWorkerFunction()
             Log.d("karina", "karinaT")
         } catch (e: Exception) {
             Result.failure()
