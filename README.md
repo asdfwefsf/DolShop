@@ -77,10 +77,14 @@
 7. 아키텍처 최적화 (완료)
 
 2024-05-07
-1. Communitiy Screen 기획
-2. Announcement Screen 기획
+1. Communitiy Screen 기획(완료)
+2. Announcement Screen 기획(완료)
 3. RockScreen 오늘 날짜만 받아오기 -> 모든 날짜 받아오기 (완료)
 4. RockScreen[ Today Diary , Spefic Day Diary , All Day Diary] : ImagePagingSource seperate ImagePagingSource1 , ImagePagingSource2 + Add CalanderDialog(완료)
+
+2024-05-08
+1. Community Screen : 좋아요 , 댓글 , 알림 : private diary -> public diary
+2. Announcement Screen : 광고 , 공지
 
 # 적용된 안드로이드 개념
 1. Presentation -> Domain <- Data : 공식문서에서 지향하는 클린 아키텍처와 다른 안드로이드 클린아키텍처
