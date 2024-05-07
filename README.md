@@ -64,7 +64,7 @@
 5. FirebaseStorage Logic OK (완료)
 
 2024-05-04
-1. FirebaseRealtimeDatabase -> RockScreen 백그라운드(완료)
+1. FirebaseRealtimeDatabase -> RockScreen 백그라운드(완료) -> 삭제 할 수 도 ... ?<2024-05-07>
 
 2024-05-05
 1. AddRockScreen -> FireStoreDatabase -> FirebaseRealtimeDatabase -> RockScreen (완료)
@@ -80,7 +80,7 @@
 1. Communitiy Screen 기획
 2. Announcement Screen 기획
 3. RockScreen 오늘 날짜만 받아오기 -> 모든 날짜 받아오기 (완료)
-
+4. RockScreen[ Today Diary , Spefic Day Diary , All Day Diary] : ImagePagingSource seperate ImagePagingSource1 , ImagePagingSource2 + Add CalanderDialog(완료)
 
 # 적용된 안드로이드 개념
 1. Presentation -> Domain <- Data : 공식문서에서 지향하는 클린 아키텍처와 다른 안드로이드 클린아키텍처
