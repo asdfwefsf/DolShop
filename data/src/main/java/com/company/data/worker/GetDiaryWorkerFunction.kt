@@ -49,8 +49,7 @@ class GetDiaryWorkerFunction @Inject constructor(
             else -> {
                 databaseReference.child("users").child(authNumber).child("diary").child("$sort")
             }
-        }
-
+        }g
 
         val pagingSourceFactory = when (sort) {
             "오늘" -> {
