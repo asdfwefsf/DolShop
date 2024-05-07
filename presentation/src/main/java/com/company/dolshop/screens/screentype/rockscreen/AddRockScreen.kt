@@ -220,7 +220,7 @@ fun saveImageUrlToRealtimeDatabase(imageUrl: String, authNumber: String , diaryT
     )
     databaseRef.child("users/$authNumber/diary/$diaryDate").push().setValue(diary)
 
-
+    // TODO : Community Screen에서 사용 할 수 있게 수정 : 좋아요 , 댓글 , 알림 기능이 들어갈 것 참고하기
     val tagImageRef = databaseRef.child("images/tagNumber").push()
     tagImageRef.setValue(imageUrl)
 }
