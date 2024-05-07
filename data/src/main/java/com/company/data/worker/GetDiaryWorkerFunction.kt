@@ -7,7 +7,10 @@ import com.company.data.datasource.userinfo.UserInfoDao
 import com.company.data.worker.test.ImagePagingSource
 import com.company.domain.entity.Diary
 import com.company.domain.repository.getDiaryWorkerFunctionRepository
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.ValueEventListener
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
@@ -20,33 +23,23 @@ import javax.inject.Inject
 
 class GetDiaryWorkerFunction @Inject constructor(
     private val databaseReference: DatabaseReference,
-    private val dao : UserInfoDao
+    private val dao: UserInfoDao
 ) : getDiaryWorkerFunctionRepository {
-    val scope = CoroutineScope(Dispatchers.IO)
 
-//    fun getDiarisFlow(): Flow<PagingData<Diary>> = flow {
-//        val authNumber = getAuthNumber(dao)
-//        val diaryDate = getCurrentDateString()
-//
-//        val query = databaseReference.child("users").child(authNumber).child("diary").child(diaryDate)
-//
-//        emitAll(
-//            Pager(
-//                config = PagingConfig(pageSize = 10, enablePlaceholders = false, maxSize = 50),
-//                pagingSourceFactory = { ImagePagingSource(query) }
-//            ).flow
-//        )
-//    }
-
-    override suspend fun callDiaryWorkerFunction() : Flow<PagingData<Diary>> = flow  {
+    override suspend fun callDiaryWorkerFunction(): Flow<PagingData<Diary>> = flow {
         val authNumber = getAuthNumber(dao)
         val diaryDate = getCurrentDateString()
 
-        val query = databaseReference.child("users").child(authNumber).child("diary").child(diaryDate)
+        val query = databaseReference.child("users").child(authNumber).child("diary")
 
         emitAll(
             Pager(
-                config = PagingConfig(pageSize = 20, prefetchDistance = 20 , enablePlaceholders = false, maxSize = 60),
+                config = PagingConfig(
+                    pageSize = 20,
+                    prefetchDistance = 20,
+                    enablePlaceholders = false,
+                    maxSize = 60
+                ),
                 pagingSourceFactory = { ImagePagingSource(query) }
             ).flow
         )

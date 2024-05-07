@@ -1,5 +1,6 @@
 package com.company.dolshop.viewmodel
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
@@ -32,6 +33,8 @@ class DolsViewModel @Inject constructor(
         viewModelScope.launch {
             getDiaryWorkerFunction.callDiaryWorkerFunction().collect {
                 _diaryda.value = it
+                Log.d("DolsViewModel", "Data loaded: ${it}")  // 데이터 로드 상태 로깅
+
             }
         }
 

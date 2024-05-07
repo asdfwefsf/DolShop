@@ -8,45 +8,33 @@ import kotlinx.coroutines.tasks.await
 
 class ImagePagingSource(
     private val query: Query
-) : PagingSource<Query, Diary>() {
+) : PagingSource<String, Diary>() {
 
-    override suspend fun load(params: LoadParams<Query>): LoadResult<Query, Diary> {
-        return try {
+    override suspend fun load(params: LoadParams<String>): LoadResult<String, Diary> {
+        val dataSnapshot = (params.key?.let { query.startAfter(it).limitToFirst(params.loadSize) } ?: query.limitToFirst(params.loadSize)).get().await()
+        val diaries = mutableListOf<Diary>()
 
-            val dataSnapshot = params.key?.get()?.await() ?: query.limitToFirst(params.loadSize).get().await()
-
-            val diarys = dataSnapshot.children.mapNotNull { dataSnapshot ->
-                val diary = dataSnapshot.child("diary").getValue(String::class.java)
-                val image  = dataSnapshot.child("image").getValue(String::class.java)
-                val day = dataSnapshot.child("day").getValue(String::class.java)
-                val diaryNumber = dataSnapshot.child("diaryNumber").getValue(String::class.java)
-                if (diary != null && image != null && day != null && diaryNumber != null) Diary(diary, image , day , diaryNumber) else null
-
-            }.reversed()
-
-
-            val lastItemKey = dataSnapshot.children.lastOrNull()?.key
-            val nextQuery = if (diarys.size == params.loadSize && lastItemKey != null) {
-                query.startAfter(lastItemKey).limitToFirst(params.loadSize)
-            } else null
-
-            LoadResult.Page(
-                data = diarys,
-                prevKey = null, // 스크롤 업 시 필요한 경우 이전 키 설정
-                nextKey = nextQuery
-            )
-        } catch (e: Exception) {
-            LoadResult.Error(e)
+        dataSnapshot.children.forEach { dateSnapshot ->
+            dateSnapshot.children.forEach { diarySnapshot ->
+                diarySnapshot.getValue(Diary::class.java)?.let {
+                    diaries.add(it)
+                }
+            }
         }
+
+        val lastItemKey = dataSnapshot.children.lastOrNull()?.key
+
+        return LoadResult.Page(
+            data = diaries.reversed(),
+            prevKey = null,
+            nextKey = lastItemKey
+        )
     }
 
-    override fun getRefreshKey(state: PagingState<Query, Diary>): Query? {
-        return state.anchorPosition?.let { position ->
-            state.closestItemToPosition(position)?.let { item ->
-                query.startAt(item.diary).limitToFirst(state.config.pageSize)
-                query.startAt(item.image).limitToFirst(state.config.pageSize)
-                query.startAt(item.day).limitToFirst(state.config.pageSize)
-            }
+
+    override fun getRefreshKey(state: PagingState<String, Diary>): String? {
+        return state.anchorPosition?.let { anchorPosition ->
+            state.closestPageToPosition(anchorPosition)?.prevKey
         }
     }
 }
