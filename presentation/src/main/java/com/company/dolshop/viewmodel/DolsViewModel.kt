@@ -77,22 +77,20 @@ class DolsViewModel @Inject constructor(
     private val _publicDiaryda = MutableStateFlow<PagingData<Diary>>(PagingData.empty())
     val publicDiaryda : MutableStateFlow<PagingData<Diary>> = _publicDiaryda
     suspend fun callPublicDiaryWorkerFunction() {
-        viewModelScope.launch {
+//        viewModelScope.launch {
             getPublicDiaryWorkerFunction.callPublicDiaryWorkerFunction().collect {
                 _publicDiaryda.value = it
-                Log.d("DolsViewModel", "publicDiaryda")
-
             }
-        }
-
+//        }
     }
     // public Diary Get Function Logic
 
     // 특정 날짜 업데이트
     init {
         viewModelScope.launch {
-            callDiaryWorkerFunction()
             callPublicDiaryWorkerFunction()
+
+            callDiaryWorkerFunction()
         }
     }
 }

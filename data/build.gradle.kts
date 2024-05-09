@@ -59,6 +59,7 @@ android {
 
 dependencies {
     implementation(project(":domain"))
+
     implementation(project(":core:network:product"))
     implementation(project(":core:network:announcement"))
     implementation(project(":datasource-local-productsale"))
@@ -80,6 +81,7 @@ dependencies {
 
 
     implementation("com.google.dagger:hilt-android:2.49")
+    implementation(project(":presentation"))
     kapt ("androidx.hilt:hilt-compiler:1.2.0")
     kapt("com.google.dagger:hilt-android-compiler:2.49")
 
