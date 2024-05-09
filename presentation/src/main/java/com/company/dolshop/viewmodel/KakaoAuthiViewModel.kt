@@ -49,7 +49,7 @@ class KakaoAuthiViewModel @Inject constructor(
     private val _userInfoList = MutableStateFlow<DomainUserInfoModel>(
         DomainUserInfoModel("s", "s", "s", "s")
     )
-    val userInfoList = _userInfoList
+    val userInfoList : MutableStateFlow<DomainUserInfoModel> = _userInfoList
 
     private suspend fun getUserKakaoInfo() {
         getUserKakaoInfoUseCase()

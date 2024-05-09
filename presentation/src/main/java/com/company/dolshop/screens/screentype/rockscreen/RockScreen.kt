@@ -85,8 +85,8 @@ fun RocksScreen(
         }
     }
 
-    val userInfolist = viewmodel.userInfoList
-
+    val userInfolist = viewmodel.userInfoList.collectAsState()
+    val authNickName = userInfolist.value.authNicName
     //
     Box(
         modifier = Modifier
@@ -102,7 +102,7 @@ fun RocksScreen(
                 callDatePickerDialog(dolsViewModel)
             }
             DaySortSelector(dolsViewModel)
-            firstUI(userInfolist.value.authNicName, navController)
+            firstUI(authNickName, navController)
             ImageTest(innerPadding , dolsViewModel)
         }
         PullToRefreshContainer(
