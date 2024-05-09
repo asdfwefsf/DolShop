@@ -109,14 +109,6 @@ fun BottomNav() {
                     items.forEachIndexed { index, bottomNavItem ->
                         NavigationBarItem(
                             selected = selectedItemIndex == index,
-//                            onClick = {
-//                                // Show splash screen only when navigating to the ProductScreen
-//                                selectedItemIndex = index
-//                                showSplashScreen = currentRoute != ScreenList.ProductScreen.route
-//                                navController.navigate(bottomNavItem.title) {
-//                                    launchSingleTop = true
-//                                }
-//                            },
                             onClick = {
                                 selectedItemIndex = index
                                 // 내가 클릭한 바텀네비게이션의 아이콘의 title에 해당하는 경로로 이동한다.
@@ -157,7 +149,7 @@ fun BottomNav() {
         }
         NavHost(navController = navController, startDestination = route) {
             composable(route = ScreenList.CommunityScreen.route) {
-                CommunityScreen()
+                CommunityScreen(innerPadding)
             }
 
 

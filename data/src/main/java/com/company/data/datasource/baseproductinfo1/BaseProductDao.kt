@@ -25,5 +25,4 @@ interface BaseProductDao {
     @Query("SELECT EXISTS(SELECT 1 FROM baseproductinfo WHERE id = :id)")
     fun prodideProductExists(id: Int): Boolean
 
-
 }

@@ -20,6 +20,7 @@ import com.company.data.repositoryimpl.address.SaveAddressRepositoryImpl
 import com.company.data.repositoryimpl.getProductRepositoryImpl
 import com.company.data.repositoryimpl.getUserKakaoInfoRepositoryImpl
 import com.company.data.worker.GetDiaryWorkerFunction
+import com.company.data.worker.GetPublicDiaryWorkerFunction
 import com.company.datasource_local_address.AddressDao
 import com.company.datasource_local_address.AddressDataBase
 import com.company.datasource_local_productsale.productsale.ProductSaleDao
@@ -28,6 +29,7 @@ import com.company.domain.repository.AnnouncementRepository
 import com.company.domain.repository.CoroutineWorkerRepository
 import com.company.domain.repository.DiaryNumberRoomRepository
 import com.company.domain.repository.GetAddressRepository
+import com.company.domain.repository.GetPublicDiaryWorkerFunctionRepository
 import com.company.domain.repository.KakaoLoginRepository
 import com.company.domain.repository.KakaoLogoutRepository
 import com.company.domain.repository.SaveAddressRepository
@@ -78,6 +80,8 @@ object DataModule {
     fun provideDiaryNumberRepository(impl: DiaryNumberRoomRepositoryImpl) : DiaryNumberRoomRepository = impl
     @Provides
     fun provideGetDiaryWorkerFunctionRepository(impl: GetDiaryWorkerFunction) : getDiaryWorkerFunctionRepository = impl
+    @Provides
+    fun provideGetPublicDiaryWorkerFunction(impl: GetPublicDiaryWorkerFunction) : GetPublicDiaryWorkerFunctionRepository = impl
 
 
     // 추후 수정

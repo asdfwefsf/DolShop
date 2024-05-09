@@ -6,6 +6,7 @@ import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import com.company.domain.entity.Diary
+import com.company.domain.repository.GetPublicDiaryWorkerFunctionRepository
 import com.company.domain.repository.getDiaryWorkerFunctionRepository
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.ktx.database
@@ -20,8 +21,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class DolsViewModel @Inject constructor(
-    private val getDiaryWorkerFunction: getDiaryWorkerFunctionRepository
-
+    private val getDiaryWorkerFunction: getDiaryWorkerFunctionRepository,
+    private val getPublicDiaryWorkerFunction : GetPublicDiaryWorkerFunctionRepository
 ) : ViewModel() {
 
     // 다이어리
@@ -71,18 +72,27 @@ class DolsViewModel @Inject constructor(
             }
         }
     }
-//    private fun callDiaryWorkerFunction(sortOrDate: String) {
-//        viewModelScope.launch {
-//            getDiaryWorkerFunction.callDiaryWorkerFunction(sortOrDate).collect {
-//                _diaryData.value = it
-//            }
-//        }
-//    }
+
+    // public Diary Get Function Logic
+    private val _publicDiaryda = MutableStateFlow<PagingData<Diary>>(PagingData.empty())
+    val publicDiaryda : MutableStateFlow<PagingData<Diary>> = _publicDiaryda
+    suspend fun callPublicDiaryWorkerFunction() {
+        viewModelScope.launch {
+            getPublicDiaryWorkerFunction.callPublicDiaryWorkerFunction().collect {
+                _publicDiaryda.value = it
+                Log.d("DolsViewModel", "publicDiaryda")
+
+            }
+        }
+
+    }
+    // public Diary Get Function Logic
 
     // 특정 날짜 업데이트
     init {
         viewModelScope.launch {
             callDiaryWorkerFunction()
+            callPublicDiaryWorkerFunction()
         }
     }
 }
