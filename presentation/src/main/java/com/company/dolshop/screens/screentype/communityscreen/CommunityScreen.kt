@@ -96,6 +96,8 @@ fun PublicDiaryLogicTestUI(innerPadding: PaddingValues, viewModel: DolsViewModel
             .fillMaxWidth()
     ) {
         items(diaries) { diaries ->
+//            var like by remember { mutableStateOf(diaries.isLiked) } // isLiked는 각 Diary 객체의 초기 좋아요 상태를 나타냅니다.
+
             diaries?.let {
                 Card(
                     modifier = Modifier
@@ -106,45 +108,11 @@ fun PublicDiaryLogicTestUI(innerPadding: PaddingValues, viewModel: DolsViewModel
                 ) {
                     Column(modifier = Modifier.padding(8.dp)) {
                         Text(
-                            "${diaries.day} ${diaries.diaryNumber}",
+                            "${diaries.day} ${diaries.diaryNumber} ${diaries.writer}",
                             fontSize = 15.sp,
                             color = Color.Black
                         )
                         LoadImageWithCoil(diaries.image, context)
-
-//                        Glide.with(LocalContext.current)
-//                            .asBitmap()
-//                            .load(diaries.image)
-//                            .into(object : CustomTarget<Bitmap>() {
-//                                override fun onResourceReady(
-//                                    resource: Bitmap,
-//                                    transition: Transition<in Bitmap>?
-//                                ) {
-//                                    bitmap.value = resource
-//                                }
-//
-//                                override fun onLoadCleared(placeholder: Drawable?) {
-//
-//                                }
-//                            })
-//
-//                        bitmap.value?.asImageBitmap()?.let { fetchedBitmap ->
-//                            Image(
-//                                bitmap = fetchedBitmap,
-//                                contentDescription = "Diary Image",
-//                                contentScale = ContentScale.Crop,
-//                                modifier = Modifier
-//                                    .fillMaxWidth()
-//                            )
-//                        } ?: Image(
-//                            painter = painterResource(id = R.drawable.ic_launcher_background),
-//                            contentDescription = "Default Image",
-//                            contentScale = ContentScale.Fit,
-//                            modifier = Modifier
-//                                .fillMaxWidth()
-//                                .height(200.dp)
-//                        )
-
 
                         Text(
                             text = diaries.diary,
@@ -162,7 +130,6 @@ fun PublicDiaryLogicTestUI(innerPadding: PaddingValues, viewModel: DolsViewModel
                                 }
                             )
                         }
-
 
                     }
                 }

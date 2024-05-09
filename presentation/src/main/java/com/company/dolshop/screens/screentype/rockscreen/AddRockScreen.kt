@@ -21,6 +21,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -91,7 +92,8 @@ fun ImageAndDiaryScreen(
 ) {
     val kakaoAuthiViewModel : KakaoAuthiViewModel = hiltViewModel()
     val context = LocalContext.current
-    val authNumber = kakaoAuthiViewModel.userInfoList.value.authNumber
+    val authNumber = kakaoAuthiViewModel.userInfoList.collectAsState().value.authNumber
+    val authNickName = kakaoAuthiViewModel.userInfoList.collectAsState().value.authNicName
     val scope = rememberCoroutineScope()
 
     val diaryNumberViewmodel : DiaryNumberRoomViewmodel = hiltViewModel()
@@ -147,7 +149,8 @@ fun ImageAndDiaryScreen(
                         authNumber =  authNumber,
                         scope =  scope,
                         text = diaryText,
-                        diaryNumber = diaryNumberViewmodel.diaryNumber.value.toString()
+                        diaryNumber = diaryNumberViewmodel.diaryNumber.value.toString(),
+                        authNickName = authNickName
                     )
                     navController.navigate(ScreenList.RocksScreen.route) {
                         if(diaryNumberViewmodel.diaryNumber.value == 0) {
@@ -172,7 +175,8 @@ fun uploadImageToFirebaseStorage(
     authNumber: String,
     scope: CoroutineScope,
     text : String,
-    diaryNumber : String
+    diaryNumber : String,
+    authNickName: String
 ) {
     scope.launch {
         val imageData = withContext(Dispatchers.IO) {
@@ -199,7 +203,7 @@ fun uploadImageToFirebaseStorage(
         uploadTask.addOnSuccessListener {
             storageRef.downloadUrl.addOnSuccessListener { uri ->
                 val imageUrl = uri.toString()
-                saveImageUrlToRealtimeDatabase(imageUrl, authNumber ,  text , diaryNumber)
+                saveImageUrlToRealtimeDatabase(imageUrl, authNumber ,  text , diaryNumber , authNickName)
             }
         }.addOnFailureListener { exception ->
             Toast.makeText(context, "업로드에 실패하였습니다.", Toast.LENGTH_SHORT).show()
@@ -208,7 +212,7 @@ fun uploadImageToFirebaseStorage(
 }
 
 // RealTime DataBase에 이미지 URL 저장
-fun saveImageUrlToRealtimeDatabase(imageUrl: String, authNumber: String , diaryText : String , diaryNumber : String) {
+fun saveImageUrlToRealtimeDatabase(imageUrl: String, authNumber: String , diaryText : String , diaryNumber : String , authNickName : String) {
     val databaseRef = Firebase.database.reference
     val diaryDate = getCurrentDateString()
     val love : Int = 0
@@ -225,7 +229,8 @@ fun saveImageUrlToRealtimeDatabase(imageUrl: String, authNumber: String , diaryT
         "image" to imageUrl,
         "diary" to diaryText,
         "day" to diaryDate,
-        "love" to love
+        "love" to love,
+        "writer" to authNickName
     )
     databaseRef.child("images/$authNumber").push().setValue(publicDiary)
 }
