@@ -83,8 +83,17 @@
 4. RockScreen[ Today Diary , Spefic Day Diary , All Day Diary] : ImagePagingSource seperate ImagePagingSource1 , ImagePagingSource2 + Add CalanderDialog(완료)
 
 2024-05-08
-1. Community Screen : 좋아요 , 댓글 , 알림 : private diary -> public diary
-2. Announcement Screen : 광고 , 공지
+1. Community Screen : 좋아요 , 댓글 , 알림 : private diary -> public diary (완료))
+2. Announcement Screen : 광고 , 공지 (완료)
+
+2024-05-09
+1. 멀티모듈 구조 수정(완료)
+
+2024-05-10
+1. 디자인 시스템 추가 (완료)
+
+2024-05-11
+
 
 # 적용된 안드로이드 개념
 1. Presentation -> Domain <- Data : 공식문서에서 지향하는 클린 아키텍처와 다른 안드로이드 클린아키텍처
