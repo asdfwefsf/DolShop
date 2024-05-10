@@ -1,46 +1,30 @@
 package com.company.dolshop.screens.screentype.communityscreen
 
 import android.content.Context
-import android.graphics.Bitmap
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
-import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Favorite
-import androidx.compose.material.icons.filled.FavoriteBorder
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
-import androidx.compose.material3.Text
 import androidx.compose.material3.pulltorefresh.PullToRefreshContainer
 import androidx.compose.material3.pulltorefresh.rememberPullToRefreshState
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
-import androidx.paging.compose.items
-import com.company.designsystem.designsystem.component.Coil.LoadImageWithCoil
-import com.company.designsystem.designsystem.component.card.cardtest
+import com.company.designsystem.designsystem.component.card.DetailDialog
+import com.company.designsystem.designsystem.component.card.SomenailCard
 import com.company.dolshop.viewmodel.DolsViewModel
 import com.company.domain.entity.Diary
 
@@ -60,7 +44,6 @@ fun CommunityScreen(innerPadding: PaddingValues) {
                 .fillMaxSize()
                 .nestedScroll(pullRefreshState.nestedScrollConnection)
         ) {
-            Text("CommunityScreen")
             PublicDiaryLogicTestUI(innerPadding, dolsViewModel)
         }
         PullToRefreshContainer(
@@ -72,60 +55,36 @@ fun CommunityScreen(innerPadding: PaddingValues) {
 }
 
 @Composable
-fun PublicDiaryLogicTestUI(innerPadding: PaddingValues, viewModel: DolsViewModel) {
+fun PublicDiaryLogicTestUI(
+    innerPadding: PaddingValues,
+    viewModel: DolsViewModel,
+) {
     val diaries: LazyPagingItems<Diary> = viewModel.publicDiaryda.collectAsLazyPagingItems()
-    val bitmap: MutableState<Bitmap?> = remember { mutableStateOf(null) }
+    val context: Context = LocalContext.current
 
-    val context : Context = LocalContext.current
-    LazyColumn(
-        modifier = Modifier
-            .padding(innerPadding)
-            .fillMaxWidth()
+    //
+    var selectedDiary by remember { mutableStateOf<Diary?>(null) }
+    //
+
+
+    LazyVerticalGrid(
+        columns = GridCells.Fixed(3),
+        contentPadding = innerPadding,
+        modifier = Modifier.fillMaxWidth()
     ) {
-        items(diaries) { diaries ->
-//            var like by remember { mutableStateOf(diaries.isLiked) }
-
-            diaries?.let {
-
-                cardtest(diaries.day , diaries.diaryNumber , diaries.writer , diaries.image , diaries.diary , context)
-
-
-//                Card(
-//                    modifier = Modifier
-//                        .fillMaxWidth(0.5f)
-//                        .height(200.dp)
-//                        .padding(8.dp),
-//                    elevation = CardDefaults.cardElevation(4.dp),
-//                    colors = CardDefaults.cardColors(Color.White)
-//                ) {
-//                    Column(modifier = Modifier.padding(8.dp)) {
-//                        Text(
-//                            "${diaries.day} ${diaries.diaryNumber} ${diaries.writer}",
-//                            fontSize = 15.sp,
-//                            color = Color.Black
-//                        )
-//                        LoadImageWithCoil(diaries.image, context)
-//
-//                        Text(
-//                            text = diaries.diary,
-//                            color = Color.Black,
-//                            modifier = Modifier.padding(top = 8.dp)
-//                        )
-//                        Row {
-//                            var like by remember { mutableStateOf(false) }
-//                            Icon(
-//                                imageVector = if (like) Icons.Filled.Favorite else Icons.Default.FavoriteBorder,
-//                                contentDescription = "Favorite",
-//                                tint = if (like) Color.Red else Color.Gray,
-//                                modifier = Modifier.clickable {
-//                                    like = !like
-//                                }
-//                            )
-//                        }
-//
-//                    }
-//                }
+        items(diaries.itemCount) { index ->
+            diaries[index]?.let { diary ->
+                SomenailCard(
+                    image = diary.image,
+                    context = context,
+                    onClick = { selectedDiary = diary }
+                )
             }
         }
     }
+
+    selectedDiary?.let {
+        DetailDialog(diary = it, onDismissRequest = { selectedDiary = null })
+    }
 }
+

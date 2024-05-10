@@ -6,6 +6,7 @@ import com.company.domain.entity.Diary
 import com.google.firebase.database.Query
 import kotlinx.coroutines.tasks.await
 
+// 오늘
 class ImagePagingSource(
     private val query: Query
 ) : PagingSource<Query, Diary>() {
@@ -16,12 +17,12 @@ class ImagePagingSource(
             val dataSnapshot = params.key?.get()?.await() ?: query.limitToFirst(params.loadSize).get().await()
 
             val diarys = dataSnapshot.children.mapNotNull { dataSnapshot ->
-
-                val diary = dataSnapshot.child("diary").getValue(String::class.java)
-                val image  = dataSnapshot.child("image").getValue(String::class.java)
                 val day = dataSnapshot.child("day").getValue(String::class.java)
                 val diaryNumber = dataSnapshot.child("diaryNumber").getValue(String::class.java)
-                if (diary != null && image != null && day != null && diaryNumber != null) Diary(diary, image , day , diaryNumber) else null
+                val image  = dataSnapshot.child("image").getValue(String::class.java)
+                val diary = dataSnapshot.child("diary").getValue(String::class.java)
+
+                if (diary != null && image != null && day != null && diaryNumber != null) Diary(day, diary , image , diaryNumber) else null
 
             }.reversed()
 
@@ -33,8 +34,8 @@ class ImagePagingSource(
             } else null
 
             LoadResult.Page(
-                data = diarys,
-                prevKey = null, // 스크롤 업 시 필요한 경우 이전 키 설정
+                data = diarys.reversed(),
+                prevKey = null,
                 nextKey = nextQuery
             )
         } catch (e: Exception) {
@@ -45,9 +46,10 @@ class ImagePagingSource(
     override fun getRefreshKey(state: PagingState<Query, Diary>): Query? {
         return state.anchorPosition?.let { position ->
             state.closestItemToPosition(position)?.let { item ->
-                query.startAt(item.diary).limitToFirst(state.config.pageSize)
-                query.startAt(item.image).limitToFirst(state.config.pageSize)
                 query.startAt(item.day).limitToFirst(state.config.pageSize)
+                query.startAt(item.diary).limitToFirst(state.config.pageSize)
+                query.startAt(item.diaryNumber).limitToFirst(state.config.pageSize)
+                query.startAt(item.image).limitToFirst(state.config.pageSize)
             }
         }
     }

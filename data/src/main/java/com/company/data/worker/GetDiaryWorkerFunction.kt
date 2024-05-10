@@ -6,6 +6,7 @@ import androidx.paging.PagingData
 import com.company.data.datasource.userinfo.UserInfoDao
 import com.company.data.worker.test.ImagePagingSource
 import com.company.data.worker.test.ImagePagingSource2
+import com.company.data.worker.test.ImagePagingSource3
 import com.company.domain.entity.Diary
 import com.company.domain.repository.getDiaryWorkerFunctionRepository
 import com.google.firebase.database.DataSnapshot
@@ -53,8 +54,6 @@ class GetDiaryWorkerFunction @Inject constructor(
 
         val pagingSourceFactory = when (sort) {
             "오늘" -> {
-                val diaryDate = getCurrentDateString();
-
                 { ImagePagingSource(query) }
             }
             "특정날" -> {
@@ -68,14 +67,11 @@ class GetDiaryWorkerFunction @Inject constructor(
             }
         }
 
-
-
-
         emitAll(
             Pager(
                 config = PagingConfig(
-                    pageSize = 20,
-                    prefetchDistance = 20,
+                    pageSize = 10,
+                    prefetchDistance = 10,
                     enablePlaceholders = false,
                     maxSize = 60
                 ),

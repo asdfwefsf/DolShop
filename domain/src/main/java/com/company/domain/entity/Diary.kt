@@ -9,3 +9,5 @@ data class Diary(
     val writer : String = "",
 
 )
+
+//Diary(day, diary , image , diaryNumber)

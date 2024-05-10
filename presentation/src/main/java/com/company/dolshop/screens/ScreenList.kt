@@ -3,7 +3,10 @@ package com.company.dolshop.screens
 sealed class ScreenList(val route : String) {
     object LoginScreen : ScreenList("로그인")
 
+    // 커뮤니티
     object CommunityScreen : ScreenList("커뮤")
+    object DetailCommunityScreen : ScreenList("커뮤 상세")
+
     object ProductScreen : ScreenList("상품")
 
     // Dol's

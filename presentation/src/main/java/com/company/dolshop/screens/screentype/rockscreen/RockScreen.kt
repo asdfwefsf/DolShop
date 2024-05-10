@@ -3,9 +3,7 @@ package com.company.dolshop.screens.screentype.rockscreen
 import android.app.DatePickerDialog
 import android.content.Context
 import android.graphics.Bitmap
-import android.graphics.drawable.Drawable
 import android.util.Log
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -14,15 +12,12 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material3.Button
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.RadioButton
@@ -39,11 +34,8 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.input.nestedscroll.nestedScroll
-import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -51,17 +43,15 @@ import androidx.navigation.NavController
 import androidx.paging.compose.LazyPagingItems
 import androidx.paging.compose.collectAsLazyPagingItems
 import androidx.paging.compose.items
-import com.bumptech.glide.Glide
-import com.bumptech.glide.request.target.CustomTarget
-import com.bumptech.glide.request.transition.Transition
 import com.company.designsystem.designsystem.Paddings
+import com.company.designsystem.designsystem.component.card.DetailCardsss
 import com.company.dolshop.screens.ScreenList
 import com.company.dolshop.viewmodel.DolsViewModel
 import com.company.dolshop.viewmodel.KakaoAuthiViewModel
 import com.company.domain.entity.Diary
-import com.company.presentation.R
 import kotlinx.coroutines.delay
 import java.util.Calendar
+import java.util.Locale
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -180,58 +170,68 @@ fun ImageTest(innerPadding: PaddingValues , viewModel : DolsViewModel) {
     ) {
         items(diaries) { diaries ->
             diaries?.let {
-                Card(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(8.dp),
-                    elevation = CardDefaults.cardElevation(4.dp)
-                ) {
-                    Column(modifier = Modifier.padding(8.dp)) {
-                        Text("${diaries.day} ${diaries.diaryNumber}", fontSize = 15.sp, color = Color.Black)
-                        Glide.with(LocalContext.current)
-                            .asBitmap()
-                            .load(diaries.image)
-                            .into(object : CustomTarget<Bitmap>() {
-                                override fun onResourceReady(
-                                    resource: Bitmap,
-                                    transition: Transition<in Bitmap>?
-                                ) {
-                                    bitmap.value = resource
-                                }
-                                override fun onLoadCleared(placeholder: Drawable?) {
+//                Card(
+//                    modifier = Modifier
+//                        .fillMaxWidth()
+//                        .padding(8.dp),
+//                    elevation = CardDefaults.cardElevation(4.dp)
+//                ) {
+//                    Column(modifier = Modifier.padding(8.dp)) {
+//                        Text("${diaries.day} ${diaries.diaryNumber}", fontSize = 15.sp, color = Color.Black)
 
-                                }
-                            })
-
-                        bitmap.value?.asImageBitmap()?.let { fetchedBitmap ->
-                            Image(
-                                bitmap = fetchedBitmap,
-                                contentDescription = "Diary Image",
-                                contentScale = ContentScale.Crop,
-                                modifier = Modifier
-                                    .fillMaxWidth()
-                            )
-                        } ?: Image(
-                            painter = painterResource(id = R.drawable.ic_launcher_background),
-                            contentDescription = "Default Image",
-                            contentScale = ContentScale.Fit,
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .height(200.dp)
+                        DetailCardsss(
+                            day= diaries.day,
+                            diaryNumber = diaries.diaryNumber,
+                            writer = diaries.writer,
+                            image = diaries.image,
+                            diary = diaries.diary,
                         )
 
-                        Text(
-                            text = diaries.diary,
-                            color = Color.Black,
-                            modifier = Modifier.padding(top = 8.dp)
-                        )
+
+//                        Glide.with(LocalContext.current)
+//                            .asBitmap()
+//                            .load(diaries.image)
+//                            .into(object : CustomTarget<Bitmap>() {
+//                                override fun onResourceReady(
+//                                    resource: Bitmap,
+//                                    transition: Transition<in Bitmap>?
+//                                ) {
+//                                    bitmap.value = resource
+//                                }
+//                                override fun onLoadCleared(placeholder: Drawable?) {
+//
+//                                }
+//                            })
+//
+//                        bitmap.value?.asImageBitmap()?.let { fetchedBitmap ->
+//                            Image(
+//                                bitmap = fetchedBitmap,
+//                                contentDescription = "Diary Image",
+//                                contentScale = ContentScale.Crop,
+//                                modifier = Modifier
+//                                    .fillMaxWidth()
+//                            )
+//                        } ?: Image(
+//                            painter = painterResource(id = R.drawable.ic_launcher_background),
+//                            contentDescription = "Default Image",
+//                            contentScale = ContentScale.Fit,
+//                            modifier = Modifier
+//                                .fillMaxWidth()
+//                                .height(200.dp)
+//                        )
+//
+//                        Text(
+//                            text = diaries.diary,
+//                            color = Color.Black,
+//                            modifier = Modifier.padding(top = 8.dp)
+//                        )
                     }
                 }
             }
         }
 
-    }
-}
+//    }
+//}
 
 @Composable
 fun callDatePickerDialog(viewModel: DolsViewModel, context: Context = LocalContext.current) {
@@ -247,13 +247,14 @@ fun callDatePickerDialog(viewModel: DolsViewModel, context: Context = LocalConte
         DatePickerDialog(
             context,
             { _, year, month, dayOfMonth ->
-                val selectedDate = "$year-0${month + 1}-0${dayOfMonth}"
+                val formattedMonth = String.format(Locale.KOREAN ,"%02d", month + 1)
+                val formattedDay = String.format(Locale.KOREAN , "%02d", dayOfMonth)
+
+                val selectedDate = "$year-$formattedMonth-$formattedDay"
+
                 viewModel.updateSpecificDate(selectedDate)
                 Log.d("Thibal" , selectedDate)
-//                scope.launch {
-//                    viewModel.callDiaryWorkerFunction()
-//
-//                }
+
                 showDialog.value = false
             },
             calendar.get(Calendar.YEAR),

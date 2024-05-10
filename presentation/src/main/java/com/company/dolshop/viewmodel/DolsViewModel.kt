@@ -1,6 +1,7 @@
 package com.company.dolshop.viewmodel
 
 import android.util.Log
+import androidx.annotation.WorkerThread
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
@@ -76,6 +77,8 @@ class DolsViewModel @Inject constructor(
     // public Diary Get Function Logic
     private val _publicDiaryda = MutableStateFlow<PagingData<Diary>>(PagingData.empty())
     val publicDiaryda : MutableStateFlow<PagingData<Diary>> = _publicDiaryda
+
+//    @WorkerThread
     suspend fun callPublicDiaryWorkerFunction() {
 //        viewModelScope.launch {
             getPublicDiaryWorkerFunction.callPublicDiaryWorkerFunction().collect {
