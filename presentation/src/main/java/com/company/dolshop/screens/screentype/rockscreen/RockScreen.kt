@@ -25,7 +25,6 @@ import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Text
 import androidx.compose.material3.pulltorefresh.PullToRefreshContainer
@@ -62,7 +61,6 @@ import com.company.dolshop.viewmodel.KakaoAuthiViewModel
 import com.company.domain.entity.Diary
 import com.company.presentation.R
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
 import java.util.Calendar
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -71,7 +69,6 @@ fun RocksScreen(
     innerPadding: PaddingValues,
     viewmodel: KakaoAuthiViewModel,
     navController: NavController,
-
 ) {
     val dolsViewModel : DolsViewModel = hiltViewModel()
     val pullRefreshState = rememberPullToRefreshState()
