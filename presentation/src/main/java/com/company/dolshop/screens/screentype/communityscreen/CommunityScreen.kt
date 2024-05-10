@@ -135,7 +135,6 @@ fun PublicDiaryLogicTestUI(innerPadding: PaddingValues, viewModel: DolsViewModel
                 }
             }
         }
-
     }
 }
 
