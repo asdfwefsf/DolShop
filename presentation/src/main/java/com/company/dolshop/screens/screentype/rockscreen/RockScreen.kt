@@ -74,7 +74,6 @@ fun RocksScreen(
 
     val userInfolist = viewmodel.userInfoList.collectAsState()
     val authNickName = userInfolist.value.authNicName
-    //
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -97,10 +96,6 @@ fun RocksScreen(
             state = pullRefreshState,
         )
     }
-
-    //
-
-
 }
 
 @Composable
@@ -134,9 +129,6 @@ fun DaySortSelector(viewModel: DolsViewModel) {
     }
 }
 
-//Preview용 firstUI Composable Name
-//@Composable
-//fun firstUI(myName : String) {
 @Composable
 fun firstUI(myName: String, navController: NavController) {
     Row(modifier = Modifier.padding(Paddings.small)) {
@@ -157,11 +149,7 @@ fun firstUI(myName: String, navController: NavController) {
 
 @Composable
 fun ImageTest(innerPadding: PaddingValues , viewModel : DolsViewModel) {
-//    val viewModel: DolsViewModel = hiltViewModel()
     val diaries: LazyPagingItems<Diary> = viewModel.diaryda.collectAsLazyPagingItems()
-
-
-    val bitmap: MutableState<Bitmap?> = remember { mutableStateOf(null) }
 
     LazyColumn(
         modifier = Modifier
@@ -170,15 +158,6 @@ fun ImageTest(innerPadding: PaddingValues , viewModel : DolsViewModel) {
     ) {
         items(diaries) { diaries ->
             diaries?.let {
-//                Card(
-//                    modifier = Modifier
-//                        .fillMaxWidth()
-//                        .padding(8.dp),
-//                    elevation = CardDefaults.cardElevation(4.dp)
-//                ) {
-//                    Column(modifier = Modifier.padding(8.dp)) {
-//                        Text("${diaries.day} ${diaries.diaryNumber}", fontSize = 15.sp, color = Color.Black)
-
                         DetailCardsss(
                             day= diaries.day,
                             diaryNumber = diaries.diaryNumber,
@@ -186,52 +165,10 @@ fun ImageTest(innerPadding: PaddingValues , viewModel : DolsViewModel) {
                             image = diaries.image,
                             diary = diaries.diary,
                         )
-
-
-//                        Glide.with(LocalContext.current)
-//                            .asBitmap()
-//                            .load(diaries.image)
-//                            .into(object : CustomTarget<Bitmap>() {
-//                                override fun onResourceReady(
-//                                    resource: Bitmap,
-//                                    transition: Transition<in Bitmap>?
-//                                ) {
-//                                    bitmap.value = resource
-//                                }
-//                                override fun onLoadCleared(placeholder: Drawable?) {
-//
-//                                }
-//                            })
-//
-//                        bitmap.value?.asImageBitmap()?.let { fetchedBitmap ->
-//                            Image(
-//                                bitmap = fetchedBitmap,
-//                                contentDescription = "Diary Image",
-//                                contentScale = ContentScale.Crop,
-//                                modifier = Modifier
-//                                    .fillMaxWidth()
-//                            )
-//                        } ?: Image(
-//                            painter = painterResource(id = R.drawable.ic_launcher_background),
-//                            contentDescription = "Default Image",
-//                            contentScale = ContentScale.Fit,
-//                            modifier = Modifier
-//                                .fillMaxWidth()
-//                                .height(200.dp)
-//                        )
-//
-//                        Text(
-//                            text = diaries.diary,
-//                            color = Color.Black,
-//                            modifier = Modifier.padding(top = 8.dp)
-//                        )
                     }
                 }
             }
         }
-
-//    }
-//}
 
 @Composable
 fun callDatePickerDialog(viewModel: DolsViewModel, context: Context = LocalContext.current) {
@@ -264,20 +201,3 @@ fun callDatePickerDialog(viewModel: DolsViewModel, context: Context = LocalConte
     }
 }
 
-
-//
-//@Composable
-//fun realCallCalander(context = LocalContext.current , viewModel: DolsViewModel) {
-//    val calendar = Calendar.getInstance()
-//    DatePickerDialog(
-//        context,
-//        { _, year, month, dayOfMonth ->
-//            val selectedDate = "$year-${month + 1}-${dayOfMonth}"
-//            viewModel.updateSpecificDate(selectedDate)
-//            showDialog.value = false
-//        },
-//        calendar.get(Calendar.YEAR),
-//        calendar.get(Calendar.MONTH),
-//        calendar.get(Calendar.DAY_OF_MONTH)
-//    ).show()
-//}
