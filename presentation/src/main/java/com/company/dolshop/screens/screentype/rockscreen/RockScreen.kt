@@ -25,6 +25,7 @@ import androidx.compose.material3.pulltorefresh.PullToRefreshContainer
 import androidx.compose.material3.pulltorefresh.rememberPullToRefreshState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -63,10 +64,14 @@ fun RocksScreen(
     if (pullRefreshState.isRefreshing) {
         LaunchedEffect(true) {
             delay(1500)
-            dolsViewModel.callDiaryWorkerFunction()
+            dolsViewModel.callDiaryWorkerFunction(dolsViewModel.sort.value)
             Log.d("refresh", "refresh")
             pullRefreshState.endRefresh()
         }
+    }
+    LaunchedEffect(true) {
+        dolsViewModel.callDiaryWorkerFunction(dolsViewModel.sort.value)
+        Log.d("refresh", "refresh")
     }
 
     val userInfolist = viewmodel.userInfoList.collectAsState()
@@ -81,9 +86,9 @@ fun RocksScreen(
                 .fillMaxSize()
                 .nestedScroll(pullRefreshState.nestedScrollConnection)
         ) {
-            if (dolsViewModel.sort.collectAsState().value == "특정날") {
-                CallDatePickerDialog(dolsViewModel)
-            }
+//            if (dolsViewModel.sort.collectAsState().value == "특정날") {
+//                CallDatePickerDialog(dolsViewModel)
+//            }
             DaySortSelector(dolsViewModel)
             FirstUI(authNickName, navController)
             RockImage(innerPadding, dolsViewModel)
@@ -95,37 +100,37 @@ fun RocksScreen(
     }
 }
 
-@Composable
-fun DaySortSelector(viewModel: DolsViewModel) {
-    val sortOptions = listOf("모두", "오늘", "특정날")
-    val (selectedOption, onOptionSelected) = remember { mutableStateOf(sortOptions[0]) }
-
-    Row {
-        sortOptions.forEach { option ->
-            Row(
-                verticalAlignment = Alignment.CenterVertically,
-                modifier = Modifier
-                    .padding(8.dp)
-                    .clickable(onClick = {
-                        onOptionSelected(option)
-                        viewModel.updateSort(option)
-                    })
-            ) {
-                RadioButton(
-                    selected = option == selectedOption,
-                    onClick = {
-                        onOptionSelected(option)
-                        viewModel.updateSort(option)
-                    }
-                )
-                Text(
-                    text = option,
-                    modifier = Modifier.padding(start = 8.dp)
-                )
-            }
-        }
-    }
-}
+//@Composable
+//fun DaySortSelector(viewModel: DolsViewModel) {
+//    val sortOptions = listOf("모두", "오늘", "특정날")
+//    val (selectedOption, onOptionSelected) = remember { mutableStateOf(sortOptions[0]) }
+//
+//    Row {
+//        sortOptions.forEach { option ->
+//            Row(
+//                verticalAlignment = Alignment.CenterVertically,
+//                modifier = Modifier
+//                    .padding(8.dp)
+//                    .clickable(onClick = {
+//                        onOptionSelected(option)
+//                        viewModel.updateSort(option)
+//                    })
+//            ) {
+//                RadioButton(
+//                    selected = option == selectedOption,
+//                    onClick = {
+//                        onOptionSelected(option)
+//                        viewModel.updateSort(option)
+//                    }
+//                )
+//                Text(
+//                    text = option,
+//                    modifier = Modifier.padding(start = 8.dp)
+//                )
+//            }
+//        }
+//    }
+//}
 
 @Composable
 fun FirstUI(myName: String, navController: NavController) {
@@ -168,33 +173,81 @@ fun RockImage(innerPadding: PaddingValues, viewModel: DolsViewModel) {
     }
 }
 
-@Composable
-fun CallDatePickerDialog(viewModel: DolsViewModel, context: Context = LocalContext.current) {
-    val showDialog = remember { mutableStateOf(false) }
 
-    Button(onClick = { showDialog.value = true }) {
-        Text("날짜 선택")
-    }
+@Composable
+fun DaySortSelector(viewModel: DolsViewModel) {
+    val sortOptions = listOf("모두", "오늘", "특정날")
+    val (selectedOption, onOptionSelected) = remember { mutableStateOf(sortOptions[0]) }
+    val showDialog = remember { mutableStateOf(false) }
+    val context = LocalContext.current
 
     if (showDialog.value) {
-        val calendar = Calendar.getInstance()
-        DatePickerDialog(
-            context,
-            { _, year, month, dayOfMonth ->
-                val formattedMonth = String.format(Locale.KOREAN, "%02d", month + 1)
-                val formattedDay = String.format(Locale.KOREAN, "%02d", dayOfMonth)
-
-                val selectedDate = "$year-$formattedMonth-$formattedDay"
-
-                viewModel.updateSpecificDate(selectedDate)
-                Log.d("Thibal", selectedDate)
-
-                showDialog.value = false
-            },
-            calendar.get(Calendar.YEAR),
-            calendar.get(Calendar.MONTH),
-            calendar.get(Calendar.DAY_OF_MONTH)
-        ).show()
+        CallDatePickerDialog(viewModel, context, showDialog)
     }
+    Row {
+        sortOptions.forEach { option ->
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                modifier = Modifier
+//                    .padding(8.dp)
+//                    .clickable(onClick = {
+//                        onOptionSelected(option)
+//                        viewModel.updateSort(option)
+//                        if (option == "특정날") {
+//                            showDialog.value = true
+////                            CallDatePickerDialog(viewModel, context, showDialog)
+//
+//                        }
+//                    })
+            ) {
+                RadioButton(
+                    selected = option == selectedOption,
+                    onClick = {
+                        onOptionSelected(option)
+                        viewModel.updateSort(option)
+                        if (option == "특정날") {
+                            showDialog.value = true
+//                            CallDatePickerDialog(viewModel, context, showDialog)
+
+                        }
+                    }
+                )
+                Text(
+                    text = option,
+                    modifier = Modifier.padding(start = 1.dp)
+                )
+            }
+        }
+    }
+}
+
+@Composable
+fun CallDatePickerDialog(
+    viewModel: DolsViewModel,
+    context: Context = LocalContext.current,
+    showDialog: MutableState<Boolean>
+) {
+//    if (showDialog.value) {
+    showDialog.value = false
+
+    val calendar = Calendar.getInstance()
+    DatePickerDialog(
+        context,
+        { _, year, month, dayOfMonth ->
+            val formattedMonth = String.format(Locale.KOREAN, "%02d", month + 1)
+            val formattedDay = String.format(Locale.KOREAN, "%02d", dayOfMonth)
+
+            val selectedDate = "$year-$formattedMonth-$formattedDay"
+
+            viewModel.updateSpecificDate(selectedDate)
+            Log.d("Thibal", selectedDate)
+
+            showDialog.value = false
+        },
+        calendar.get(Calendar.YEAR),
+        calendar.get(Calendar.MONTH),
+        calendar.get(Calendar.DAY_OF_MONTH)
+    ).show()
+//    }
 }
 

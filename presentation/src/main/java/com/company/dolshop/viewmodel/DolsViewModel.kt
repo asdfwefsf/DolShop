@@ -47,11 +47,11 @@ class DolsViewModel @Inject constructor(
 
         }
     }
-    suspend fun callDiaryWorkerFunction() {
+    suspend fun callDiaryWorkerFunction(sort: String) {
         viewModelScope.launch {
-            getDiaryWorkerFunction.callDiaryWorkerFunction(sort.value).collect {
+            getDiaryWorkerFunction.callDiaryWorkerFunction(sort).collect {
                 _diaryda.value = it
-                Log.d("DolsViewModel", sort.value)
+//                Log.d("DolsViewModel", sort.value)
 
             }
         }
@@ -78,7 +78,7 @@ class DolsViewModel @Inject constructor(
     private val _publicDiaryda = MutableStateFlow<PagingData<Diary>>(PagingData.empty())
     val publicDiaryda : MutableStateFlow<PagingData<Diary>> = _publicDiaryda
 
-//    @WorkerThread
+    @WorkerThread
     suspend fun callPublicDiaryWorkerFunction() {
 //        viewModelScope.launch {
             getPublicDiaryWorkerFunction.callPublicDiaryWorkerFunction().collect {
@@ -93,7 +93,7 @@ class DolsViewModel @Inject constructor(
         viewModelScope.launch {
             callPublicDiaryWorkerFunction()
 
-            callDiaryWorkerFunction()
+            callDiaryWorkerFunction(_sort.value)
         }
     }
 }
