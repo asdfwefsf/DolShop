@@ -2,10 +2,12 @@ package com.company.designsystem.designsystem.component.card
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite
@@ -41,6 +43,7 @@ fun DetailDialog(diary: PublicDiary, onDismissRequest: () -> Unit , joayo : () -
             writer = diary.writer,
             image = diary.image,
             diary = diary.diary,
+            loveNumber = diary.love,
             onClick = { joayo() }
         )
     }
@@ -53,6 +56,7 @@ fun DetailCard(
     writer: String,
     image: String,
     diary: String,
+    loveNumber : String,
     onClick : () -> Unit
 ) {
     Card(
@@ -95,6 +99,8 @@ fun DetailCard(
                             onClick()
                         }
                     )
+                    Spacer(Modifier.size(8.dp))
+                    Text(loveNumber)
                 }
             }
         }
