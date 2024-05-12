@@ -1,8 +1,8 @@
 package com.company.designsystem.designsystem.component.card
 
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -21,15 +21,18 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
-import coil.compose.AsyncImage
+import com.company.designsystem.designsystem.component.loadcoil.LoadImageWithCoil
 import com.company.domain.entity.Diary
 
 @Composable
 fun DetailDialog(diary: Diary, onDismissRequest: () -> Unit) {
-    Dialog(onDismissRequest = onDismissRequest) {
+    Dialog(
+        onDismissRequest = onDismissRequest,
+        ) {
         DetailCard(
             day = diary.day,
             diaryNumber = diary.diaryNumber,
@@ -50,24 +53,29 @@ fun DetailCard(
 ) {
     Card(
         modifier = Modifier
-            .padding(8.dp),
+            .padding(8.dp)
+            .fillMaxHeight(0.8f),
         elevation = CardDefaults.cardElevation(4.dp),
         colors = CardDefaults.cardColors(Color.White)
     ) {
-        LazyColumn(modifier = Modifier.padding(8.dp)) {
+
+        LazyColumn(
+            modifier = Modifier.padding(8.dp),
+        ) {
             items(1) {
                 Text(
                     "${day} ${diaryNumber} ${writer}",
                     fontSize = 15.sp,
                     color = Color.Black
                 )
-                AsyncImage(
-                    model = image,
-                    contentDescription = "",
-                    modifier = Modifier
-                        .height(500.dp)
-                        .fillMaxWidth()
-                )
+                LoadImageWithCoil(image , LocalContext.current)
+//                AsyncImage(
+//                    model = image,
+//                    contentDescription = "",
+//                    modifier = Modifier
+//                        .height(500.dp)
+//                        .fillMaxWidth()
+//                )
                 Text(
                     text = diary,
                     color = Color.Black,

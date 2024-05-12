@@ -1,4 +1,4 @@
-package com.company.designsystem.designsystem.component.coil
+package com.company.designsystem.designsystem.component.loadcoil
 
 import android.content.Context
 import androidx.compose.foundation.layout.Box
@@ -56,8 +56,8 @@ fun LoadImageWithCoil(
             modifier = Modifier.fillMaxSize(),
             contentAlignment = Alignment.Center,
             ) {
-            CircularProgressIndicator()
-        }
+                CircularProgressIndicator()
+            }
 
         "error" -> Box(contentAlignment = Alignment.Center, modifier = Modifier.fillMaxSize()) {
             Icon(Icons.Filled.Close, contentDescription = "Error", modifier = Modifier.size(24.dp))
