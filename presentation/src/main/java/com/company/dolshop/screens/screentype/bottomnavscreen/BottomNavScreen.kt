@@ -30,7 +30,6 @@ import androidx.navigation.compose.rememberNavController
 import com.company.dolshop.screens.ScreenList
 import com.company.dolshop.screens.screentype.announcementscreen.AnnouncementScreen
 import com.company.dolshop.screens.screentype.communityscreen.CommunityScreen
-import com.company.dolshop.screens.screentype.communityscreen.DetailCommunityScreen
 import com.company.dolshop.screens.screentype.mypagescreen.AddressScreen
 import com.company.dolshop.screens.screentype.mypagescreen.AuthInfoScreen
 import com.company.dolshop.screens.screentype.mypagescreen.InputAddressInfoScreen
@@ -154,9 +153,6 @@ fun BottomNav() {
                 CommunityScreen(innerPadding)
             }
 
-            composable(route = ScreenList.DetailCommunityScreen.route) {
-                DetailCommunityScreen()
-            }
             // 커뮤니티 스크린
 
             composable(route = ScreenList.ProductScreen.route) {

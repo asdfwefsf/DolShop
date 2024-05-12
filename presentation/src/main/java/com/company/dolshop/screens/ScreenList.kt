@@ -5,7 +5,6 @@ sealed class ScreenList(val route : String) {
 
     // 커뮤니티
     object CommunityScreen : ScreenList("커뮤")
-    object DetailCommunityScreen : ScreenList("커뮤 상세")
 
     object ProductScreen : ScreenList("상품")
 

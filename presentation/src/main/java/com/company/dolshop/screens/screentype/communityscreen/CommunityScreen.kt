@@ -44,7 +44,7 @@ fun CommunityScreen(innerPadding: PaddingValues) {
                 .fillMaxSize()
                 .nestedScroll(pullRefreshState.nestedScrollConnection)
         ) {
-            PublicDiaryLogicTestUI(innerPadding, dolsViewModel)
+            PublicDiarys(innerPadding, dolsViewModel)
         }
         PullToRefreshContainer(
             modifier = Modifier.align(Alignment.TopCenter),
@@ -55,17 +55,13 @@ fun CommunityScreen(innerPadding: PaddingValues) {
 }
 
 @Composable
-fun PublicDiaryLogicTestUI(
+fun PublicDiarys(
     innerPadding: PaddingValues,
     viewModel: DolsViewModel,
 ) {
     val diaries: LazyPagingItems<Diary> = viewModel.publicDiaryda.collectAsLazyPagingItems()
     val context: Context = LocalContext.current
-
-    //
     var selectedDiary by remember { mutableStateOf<Diary?>(null) }
-    //
-
 
     LazyVerticalGrid(
         columns = GridCells.Fixed(3),
