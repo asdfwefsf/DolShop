@@ -215,7 +215,7 @@ fun uploadImageToFirebaseStorage(
 fun saveImageUrlToRealtimeDatabase(imageUrl: String, authNumber: String , diaryText : String , diaryNumber : String , authNickName : String) {
     val databaseRef = Firebase.database.reference
     val diaryDate = getCurrentDateString()
-    val love : Int = 0
+    val love : String = "0"
     val diary = mapOf(
         "image" to imageUrl,
         "diary" to diaryText,
@@ -230,7 +230,9 @@ fun saveImageUrlToRealtimeDatabase(imageUrl: String, authNumber: String , diaryT
         "diary" to diaryText,
         "day" to diaryDate,
         "love" to love,
-        "writer" to authNickName
+        "writer" to authNickName,
+        "authNumber" to authNumber,
+        "diaryNumber" to diaryNumber
     )
     databaseRef.child("images/$authNumber").push().setValue(publicDiary)
 }

@@ -5,6 +5,7 @@ import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import com.company.data.worker.test.ImagePagingSource3
 import com.company.domain.entity.Diary
+import com.company.domain.entity.PublicDiary
 import com.company.domain.repository.GetPublicDiaryWorkerFunctionRepository
 import com.google.firebase.database.DatabaseReference
 import kotlinx.coroutines.flow.Flow
@@ -15,7 +16,7 @@ import javax.inject.Inject
 class GetPublicDiaryWorkerFunction @Inject constructor(
     private val databaseReference: DatabaseReference,
 ) : GetPublicDiaryWorkerFunctionRepository {
-    override suspend fun callPublicDiaryWorkerFunction(): Flow<PagingData<Diary>> = flow {
+    override suspend fun callPublicDiaryWorkerFunction(): Flow<PagingData<PublicDiary>> = flow {
         val query = databaseReference.child("images")
 
         val pagingSourceFactory = { ImagePagingSource3(query) }

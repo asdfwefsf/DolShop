@@ -7,6 +7,7 @@ data class Diary(
     val image: String = "",
     val diaryNumber : String = "",
     val writer : String = "",
+    val authNumber : String = ""
 
 )
 

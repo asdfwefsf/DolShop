@@ -6,15 +6,9 @@ import androidx.paging.PagingData
 import com.company.data.datasource.userinfo.UserInfoDao
 import com.company.data.worker.test.ImagePagingSource
 import com.company.data.worker.test.ImagePagingSource2
-import com.company.data.worker.test.ImagePagingSource3
 import com.company.domain.entity.Diary
 import com.company.domain.repository.getDiaryWorkerFunctionRepository
-import com.google.firebase.database.DataSnapshot
-import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.ValueEventListener
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emitAll
 import kotlinx.coroutines.flow.first

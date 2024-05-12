@@ -7,9 +7,13 @@ import androidx.lifecycle.viewModelScope
 import androidx.paging.PagingData
 import androidx.paging.cachedIn
 import com.company.domain.entity.Diary
+import com.company.domain.entity.PublicDiary
 import com.company.domain.repository.GetPublicDiaryWorkerFunctionRepository
 import com.company.domain.repository.getDiaryWorkerFunctionRepository
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -75,8 +79,8 @@ class DolsViewModel @Inject constructor(
     }
 
     // public Diary Get Function Logic
-    private val _publicDiaryda = MutableStateFlow<PagingData<Diary>>(PagingData.empty())
-    val publicDiaryda : MutableStateFlow<PagingData<Diary>> = _publicDiaryda
+    private val _publicDiaryda = MutableStateFlow<PagingData<PublicDiary>>(PagingData.empty())
+    val publicDiaryda : MutableStateFlow<PagingData<PublicDiary>> = _publicDiaryda
 
     @WorkerThread
     suspend fun callPublicDiaryWorkerFunction() {
@@ -87,6 +91,36 @@ class DolsViewModel @Inject constructor(
 //        }
     }
     // public Diary Get Function Logic
+
+    // 좋아요
+    fun toggleLike(imageId: String, userId: String, likeNumber: String) {
+        val db = Firebase.database.reference
+        val diaryRef = db.child("images").child(userId)
+
+//        addValueEventListener
+        diaryRef.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                snapshot.children.forEach { childSnapshot ->
+                    val diary = childSnapshot.getValue(PublicDiary::class.java)
+
+
+                    if (diary?.image == imageId) {
+                        Log.d("sibaas" , diary!!.image)
+
+                        val currentLove = diary.love
+                        val newLoveCount = if (likeNumber == currentLove) currentLove.toInt() + 1 else currentLove.toInt() - 1
+                        childSnapshot.ref.updateChildren(mapOf("love" to newLoveCount.toString()))
+
+                    }
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                TODO("Not yet implemented")
+            }
+        })
+    }
+    // 좋아요
 
     // 특정 날짜 업데이트
     init {

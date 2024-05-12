@@ -25,11 +25,13 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.company.designsystem.designsystem.component.loadcoil.LoadImageWithCoil
 import com.company.domain.entity.Diary
+import com.company.domain.entity.PublicDiary
 
 @Composable
-fun DetailDialog(diary: Diary, onDismissRequest: () -> Unit) {
+fun DetailDialog(diary: PublicDiary, onDismissRequest: () -> Unit , joayo : () -> Unit) {
     Dialog(
         onDismissRequest = onDismissRequest,
         ) {
@@ -39,6 +41,7 @@ fun DetailDialog(diary: Diary, onDismissRequest: () -> Unit) {
             writer = diary.writer,
             image = diary.image,
             diary = diary.diary,
+            onClick = { joayo() }
         )
     }
 }
@@ -49,7 +52,8 @@ fun DetailCard(
     diaryNumber: String,
     writer: String,
     image: String,
-    diary: String
+    diary: String,
+    onClick : () -> Unit
 ) {
     Card(
         modifier = Modifier
@@ -58,7 +62,6 @@ fun DetailCard(
         elevation = CardDefaults.cardElevation(4.dp),
         colors = CardDefaults.cardColors(Color.White)
     ) {
-
         LazyColumn(
             modifier = Modifier.padding(8.dp),
         ) {
@@ -89,6 +92,7 @@ fun DetailCard(
                         tint = if (like) Color.Red else Color.Gray,
                         modifier = Modifier.clickable {
                             like = !like
+                            onClick()
                         }
                     )
                 }
@@ -96,3 +100,24 @@ fun DetailCard(
         }
     }
 }
+
+//fun toggleLike(imageId: String, userId: String, likeNumber: String) {
+//    val db = Firebase.database.reference
+//    val diaryRef = db.child("images").child(userId)
+//    db.addValueEventListener(object : ValueEventListener {
+//        override fun onDataChange(snapshot: DataSnapshot) {
+//            snapshot.children.forEach { childSnapshot ->
+//                val diary = childSnapshot.getValue(PublicDiary::class.java)
+//                if (diary?.image == imageId) {
+//                    val currentLove = diary.love
+//                    val newLoveCount = if (likeNumber == currentLove) currentLove.toInt() + 1 else currentLove.toInt() - 1
+//                    childSnapshot.ref.updateChildren(mapOf("love" to newLoveCount.toString()))
+//                }
+//            }
+//        }
+//
+//        override fun onCancelled(error: DatabaseError) {
+//            TODO("Not yet implemented")
+//        }
+//    })
+//}
