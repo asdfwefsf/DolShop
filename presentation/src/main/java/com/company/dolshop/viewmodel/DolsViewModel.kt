@@ -22,6 +22,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
 
 @HiltViewModel
@@ -109,17 +110,28 @@ class DolsViewModel @Inject constructor(
                     userSnapShot.children.forEach { ImagesSnapShot ->
                         Log.d("hahaha", "3 : ${ImagesSnapShot}")
 
-
                         val diary = ImagesSnapShot.child("images").getValue(PublicDiary::class.java)
+                        val joayoRef = ImagesSnapShot.child("images").child("joayo").child(userId)
+
                         Log.d("hahaha", "4 : ${ImagesSnapShot}")
                         Log.d("hahaha", "5 : ${diary}")
 
                         if (diary?.image == imageId) {
                             Log.d("hahaha", "6 : ${imageId}")
 
-
                             val joayoRef = ImagesSnapShot.ref.child("joayo")
+                            val myid = joayoRef.child(userId)
+
+                            myid.get().addOnSuccessListener { dataSnapshot ->
+                                if (dataSnapshot.exists()) {
+                                    joayoRef.removeValue()
+                                } else {
+                                    joayoRef.child(userId).setValue(true)
+                                }
+                            }.addOnFailureListener {
+                            }
                             joayoRef.child(userId).setValue(true)
+
                         }
                     }
                 }
@@ -134,6 +146,35 @@ class DolsViewModel @Inject constructor(
 
     }
     // 좋아요
+
+    // 좋아요 체크
+    suspend fun checkJoyao(authNumber: String, imageNumber: String): MutableList<Pair<String, Boolean>> {
+        val db = Firebase.database.reference
+        val diaryRef = db.child("publicDiary")
+
+        val snapshot = diaryRef.get().await()
+        val joayoList = mutableListOf<Pair<String, Boolean>>()
+
+        snapshot.children.forEach { userSnapshot ->
+            userSnapshot.children.forEach { imagesSnapshot ->
+                val diary = imagesSnapshot.child("images").getValue(PublicDiary::class.java)
+                if (diary?.image == imageNumber) {
+                    val joayo = imagesSnapshot.ref.child("joayo")
+                    val joayoCount = joayo.get().await().childrenCount.toString()
+                    val result = joayo.child(authNumber).get().await()
+                    if (result.exists()) {
+                        joayoList.add(Pair(joayoCount, result.getValue(Boolean::class.java) ?: false))
+                    } else {
+                        joayoList.add(Pair("0", result.getValue(Boolean::class.java) ?: false))
+
+                    }
+                }
+            }
+        }
+        Log.d("sdfsdfsfds" , "${joayoList}")
+        return joayoList
+    }
+
 
     // 특정 날짜 업데이트
     init {

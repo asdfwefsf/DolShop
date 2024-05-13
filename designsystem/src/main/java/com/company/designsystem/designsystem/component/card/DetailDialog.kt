@@ -33,7 +33,14 @@ import com.company.domain.entity.Diary
 import com.company.domain.entity.PublicDiary
 
 @Composable
-fun DetailDialog(diary: PublicDiary, onDismissRequest: () -> Unit , joayo : () -> Unit) {
+fun DetailDialog(
+    diary: PublicDiary,
+    onDismissRequest: () -> Unit,
+    joayo : () -> Unit,
+    joayoNumber : Int,
+    joayoBoolean : Boolean
+
+    ) {
     Dialog(
         onDismissRequest = onDismissRequest,
         ) {
@@ -44,6 +51,8 @@ fun DetailDialog(diary: PublicDiary, onDismissRequest: () -> Unit , joayo : () -
             image = diary.image,
             diary = diary.diary,
             loveNumber = diary.love,
+            joayoNumber = joayoNumber,
+            joayoBoolean = joayoBoolean,
             onClick = { joayo() }
         )
     }
@@ -57,6 +66,8 @@ fun DetailCard(
     image: String,
     diary: String,
     loveNumber : String,
+    joayoNumber : Int,
+    joayoBoolean : Boolean,
     onClick : () -> Unit
 ) {
 
@@ -86,9 +97,9 @@ fun DetailCard(
                 Row {
                     var like by remember { mutableStateOf(false) }
                     Icon(
-                        imageVector = if (like) Icons.Filled.Favorite else Icons.Default.FavoriteBorder,
+                        imageVector = if (joayoBoolean) Icons.Filled.Favorite else Icons.Default.FavoriteBorder,
                         contentDescription = "Favorite",
-                        tint = if (like) Color.Red else Color.Gray,
+                        tint = if (joayoBoolean) Color.Red else Color.Gray,
                         modifier = Modifier.clickable {
                             like = !like
                             onClick()
@@ -96,7 +107,7 @@ fun DetailCard(
                     )
                     Spacer(Modifier.size(8.dp))
 
-                    Text(loveNumber)
+                    Text(joayoNumber.toString())
                 }
             }
         }
