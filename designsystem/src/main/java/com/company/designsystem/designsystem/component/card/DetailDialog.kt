@@ -59,6 +59,8 @@ fun DetailCard(
     loveNumber : String,
     onClick : () -> Unit
 ) {
+
+
     Card(
         modifier = Modifier
             .padding(8.dp)
@@ -76,13 +78,6 @@ fun DetailCard(
                     color = Color.Black
                 )
                 LoadImageWithCoil(image , LocalContext.current)
-//                AsyncImage(
-//                    model = image,
-//                    contentDescription = "",
-//                    modifier = Modifier
-//                        .height(500.dp)
-//                        .fillMaxWidth()
-//                )
                 Text(
                     text = diary,
                     color = Color.Black,
@@ -100,30 +95,10 @@ fun DetailCard(
                         }
                     )
                     Spacer(Modifier.size(8.dp))
+
                     Text(loveNumber)
                 }
             }
         }
     }
 }
-
-//fun toggleLike(imageId: String, userId: String, likeNumber: String) {
-//    val db = Firebase.database.reference
-//    val diaryRef = db.child("images").child(userId)
-//    db.addValueEventListener(object : ValueEventListener {
-//        override fun onDataChange(snapshot: DataSnapshot) {
-//            snapshot.children.forEach { childSnapshot ->
-//                val diary = childSnapshot.getValue(PublicDiary::class.java)
-//                if (diary?.image == imageId) {
-//                    val currentLove = diary.love
-//                    val newLoveCount = if (likeNumber == currentLove) currentLove.toInt() + 1 else currentLove.toInt() - 1
-//                    childSnapshot.ref.updateChildren(mapOf("love" to newLoveCount.toString()))
-//                }
-//            }
-//        }
-//
-//        override fun onCancelled(error: DatabaseError) {
-//            TODO("Not yet implemented")
-//        }
-//    })
-//}

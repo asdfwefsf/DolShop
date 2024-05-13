@@ -214,6 +214,15 @@ fun uploadImageToFirebaseStorage(
 // RealTime DataBase에 이미지 URL 저장
 fun saveImageUrlToRealtimeDatabase(imageUrl: String, authNumber: String , diaryText : String , diaryNumber : String , authNickName : String) {
     val databaseRef = Firebase.database.reference
+    val publicDiaryRef = databaseRef.child("publicDiary/$authNumber")
+
+    ////
+    // 새 데이터를 추가하며 고유 ID 생성
+    val newEntryRef = publicDiaryRef.push()
+    // 고유 ID 아래에 images와 joayo 노드 생성
+
+    ////
+
     val diaryDate = getCurrentDateString()
     val love : String = "0"
     val diary = mapOf(
@@ -225,7 +234,7 @@ fun saveImageUrlToRealtimeDatabase(imageUrl: String, authNumber: String , diaryT
     databaseRef.child("users/$authNumber/diary/$diaryDate").push().setValue(diary)
 
     // TODO : Community Screen에서 사용 할 수 있게 수정 : 좋아요 , 댓글 , 알림 기능이 들어갈 것 참고하기
-    val publicDiary = mapOf(
+    val publicDiaryImage = mapOf(
         "image" to imageUrl,
         "diary" to diaryText,
         "day" to diaryDate,
@@ -234,7 +243,11 @@ fun saveImageUrlToRealtimeDatabase(imageUrl: String, authNumber: String , diaryT
         "authNumber" to authNumber,
         "diaryNumber" to diaryNumber
     )
-    databaseRef.child("images/$authNumber").push().setValue(publicDiary)
+//    databaseRef.child("publicDiary/$authNumber/images").push().setValue(publicDiaryImage)
+//    databaseRef.child("publicDiary/$authNumber/joayo").push().setValue("")
+    newEntryRef.child("images").setValue(publicDiaryImage)
+    newEntryRef.child("joayo").setValue("")
+
 }
 
 fun getCurrentDateString(): String {

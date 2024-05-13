@@ -18,6 +18,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.pulltorefresh.PullToRefreshContainer
 import androidx.compose.material3.pulltorefresh.rememberPullToRefreshState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -33,6 +34,7 @@ import androidx.paging.compose.collectAsLazyPagingItems
 import com.company.designsystem.designsystem.component.card.DetailDialog
 import com.company.designsystem.designsystem.component.card.SomenailCard
 import com.company.dolshop.viewmodel.DolsViewModel
+import com.company.dolshop.viewmodel.KakaoAuthiViewModel
 import com.company.domain.entity.Diary
 import com.company.domain.entity.PublicDiary
 
@@ -41,7 +43,8 @@ import com.company.domain.entity.PublicDiary
 fun CommunityScreen(innerPadding: PaddingValues) {
     val dolsViewModel: DolsViewModel = hiltViewModel()
     val pullRefreshState = rememberPullToRefreshState()
-
+//    val userViewModel : KakaoAuthiViewModel = hiltViewModel()
+//    val me = userViewModel.userInfoList.collectAsState().value.authNumber
     Box(
         modifier = Modifier
             .fillMaxSize()

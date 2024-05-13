@@ -17,7 +17,7 @@ class GetPublicDiaryWorkerFunction @Inject constructor(
     private val databaseReference: DatabaseReference,
 ) : GetPublicDiaryWorkerFunctionRepository {
     override suspend fun callPublicDiaryWorkerFunction(): Flow<PagingData<PublicDiary>> = flow {
-        val query = databaseReference.child("images")
+        val query = databaseReference.child("publicDiary")
 
         val pagingSourceFactory = { ImagePagingSource3(query) }
 

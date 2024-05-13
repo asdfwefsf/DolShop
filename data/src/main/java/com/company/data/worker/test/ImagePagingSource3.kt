@@ -15,12 +15,23 @@ class ImagePagingSource3(
         val dataSnapshot = (params.key?.let { query.startAfter(it).limitToFirst(params.loadSize) } ?: query.limitToFirst(params.loadSize)).get().await()
         val diaries = mutableListOf<PublicDiary>()
 
-        dataSnapshot.children.forEach { dateSnapshot ->
-            dateSnapshot.children.forEach { diarySnapshot ->
-                diarySnapshot.getValue(PublicDiary::class.java)?.let {
+        dataSnapshot.children.forEach { usersSnapshot ->
+            usersSnapshot.children.forEach {detailUserSnapshot ->
+                detailUserSnapshot.child("images").getValue(PublicDiary::class.java)?.let{
                     diaries.add(it)
                 }
+
+//                detailUserSnapshot.child("images").children.forEach { imageSnapshot ->
+//                    imageSnapshot.children.forEach { detailImageSnapshot ->
+//                        detailImageSnapshot.getValue(PublicDiary::class.java)?.let {
+//                            diaries.add(it)
+//                        }
+//
+//                    }
+//                }
             }
+
+
         }
 //        val lastItemKey = dataSnapshot.children.lastOrNull()?.children?.lastOrNull()?.key
 

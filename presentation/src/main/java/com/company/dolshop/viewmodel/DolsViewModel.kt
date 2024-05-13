@@ -93,24 +93,23 @@ class DolsViewModel @Inject constructor(
     // public Diary Get Function Logic
 
     // 좋아요
-    fun toggleLike(imageId: String, userId: String, likeNumber: String) {
+    fun toggleLike(imageId: String, userId: String, likeNumber : String) {
         val db = Firebase.database.reference
-        val diaryRef = db.child("images").child(userId)
-
+        val diaryRef = db.child("publicDiary").child(userId)
 //        addValueEventListener
         diaryRef.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
-                snapshot.children.forEach { childSnapshot ->
-                    val diary = childSnapshot.getValue(PublicDiary::class.java)
-
-
+                snapshot.child("image").children.forEach { imageSnapShot ->
+                    val diary = imageSnapShot.getValue(PublicDiary::class.java)
                     if (diary?.image == imageId) {
-                        Log.d("sibaas" , diary!!.image)
+//                        Log.d("sibaas" , diary!!.image)
+//                        val currentLove = diary.love
+//                        val newLoveCount = if (likeNumber == currentLove) currentLove.toInt() + 1 else currentLove.toInt() - 1
+//                        childSnapshot.ref.updateChildren(mapOf("love" to newLoveCount.toString()))
 
-                        val currentLove = diary.love
-                        val newLoveCount = if (likeNumber == currentLove) currentLove.toInt() + 1 else currentLove.toInt() - 1
-                        childSnapshot.ref.updateChildren(mapOf("love" to newLoveCount.toString()))
-
+//                        childSnapshot.ref.child("love").setValue(newLoveCount.toString())
+                        val joayoRef = imageSnapShot.ref.child("joayo")
+                        joayoRef.child(userId).setValue(true)
                     }
                 }
             }
@@ -119,6 +118,7 @@ class DolsViewModel @Inject constructor(
                 TODO("Not yet implemented")
             }
         })
+
     }
     // 좋아요
 
