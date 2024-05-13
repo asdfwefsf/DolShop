@@ -27,12 +27,12 @@ import javax.inject.Inject
 @HiltViewModel
 class DolsViewModel @Inject constructor(
     private val getDiaryWorkerFunction: getDiaryWorkerFunctionRepository,
-    private val getPublicDiaryWorkerFunction : GetPublicDiaryWorkerFunctionRepository
+    private val getPublicDiaryWorkerFunction: GetPublicDiaryWorkerFunctionRepository
 ) : ViewModel() {
 
     // 다이어리
     private val _diaryda = MutableStateFlow<PagingData<Diary>>(PagingData.empty())
-    val diaryda : MutableStateFlow<PagingData<Diary>> = _diaryda
+    val diaryda: MutableStateFlow<PagingData<Diary>> = _diaryda
     // 다이어리
 
     // 다이어리 에서 선택할 날짜
@@ -51,6 +51,7 @@ class DolsViewModel @Inject constructor(
 
         }
     }
+
     suspend fun callDiaryWorkerFunction(sort: String) {
         viewModelScope.launch {
             getDiaryWorkerFunction.callDiaryWorkerFunction(sort).collect {
@@ -71,7 +72,7 @@ class DolsViewModel @Inject constructor(
         _specificDate.value = date
         if (_sort.value == "특정날") {
             viewModelScope.launch {
-                getDiaryWorkerFunction.callDiaryWorkerFunction(date).collect{
+                getDiaryWorkerFunction.callDiaryWorkerFunction(date).collect {
                     _diaryda.value = it
                 }
             }
@@ -80,38 +81,49 @@ class DolsViewModel @Inject constructor(
 
     // public Diary Get Function Logic
     private val _publicDiaryda = MutableStateFlow<PagingData<PublicDiary>>(PagingData.empty())
-    val publicDiaryda : MutableStateFlow<PagingData<PublicDiary>> = _publicDiaryda
+    val publicDiaryda: MutableStateFlow<PagingData<PublicDiary>> = _publicDiaryda
 
     @WorkerThread
     suspend fun callPublicDiaryWorkerFunction() {
 //        viewModelScope.launch {
-            getPublicDiaryWorkerFunction.callPublicDiaryWorkerFunction().collect {
-                _publicDiaryda.value = it
-            }
+        getPublicDiaryWorkerFunction.callPublicDiaryWorkerFunction().collect {
+            _publicDiaryda.value = it
+        }
 //        }
     }
     // public Diary Get Function Logic
 
     // 좋아요
-    fun toggleLike(imageId: String, userId: String, likeNumber : String) {
+    fun toggleLike(imageId: String, userId: String, likeNumber: String) {
         val db = Firebase.database.reference
-        val diaryRef = db.child("publicDiary").child(userId)
+        val diaryRef = db.child("publicDiary")
 //        addValueEventListener
         diaryRef.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
-                snapshot.child("image").children.forEach { imageSnapShot ->
-                    val diary = imageSnapShot.getValue(PublicDiary::class.java)
-                    if (diary?.image == imageId) {
-//                        Log.d("sibaas" , diary!!.image)
-//                        val currentLove = diary.love
-//                        val newLoveCount = if (likeNumber == currentLove) currentLove.toInt() + 1 else currentLove.toInt() - 1
-//                        childSnapshot.ref.updateChildren(mapOf("love" to newLoveCount.toString()))
+                Log.d("hahaha", "1 : ${imageId}")
+                Log.d("hahaha", "1 : ${snapshot}")
+                //
+                snapshot.children.forEach { userSnapShot ->
+                    Log.d("hahaha", "2 : ${userSnapShot}")
 
-//                        childSnapshot.ref.child("love").setValue(newLoveCount.toString())
-                        val joayoRef = imageSnapShot.ref.child("joayo")
-                        joayoRef.child(userId).setValue(true)
+                    userSnapShot.children.forEach { ImagesSnapShot ->
+                        Log.d("hahaha", "3 : ${ImagesSnapShot}")
+
+
+                        val diary = ImagesSnapShot.child("images").getValue(PublicDiary::class.java)
+                        Log.d("hahaha", "4 : ${ImagesSnapShot}")
+                        Log.d("hahaha", "5 : ${diary}")
+
+                        if (diary?.image == imageId) {
+                            Log.d("hahaha", "6 : ${imageId}")
+
+                            val joayoRef = ImagesSnapShot.ref.child("joayo")
+                            joayoRef.child(userId).setValue(true)
+                        }
                     }
                 }
+                //
+
             }
 
             override fun onCancelled(error: DatabaseError) {

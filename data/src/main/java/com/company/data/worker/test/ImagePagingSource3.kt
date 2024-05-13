@@ -14,7 +14,7 @@ class ImagePagingSource3(
     override suspend fun load(params: LoadParams<String>): LoadResult<String, PublicDiary> {
         val dataSnapshot = (params.key?.let { query.startAfter(it).limitToFirst(params.loadSize) } ?: query.limitToFirst(params.loadSize)).get().await()
         val diaries = mutableListOf<PublicDiary>()
-
+        // query = publicDiary부터 시작
         dataSnapshot.children.forEach { usersSnapshot ->
             usersSnapshot.children.forEach {detailUserSnapshot ->
                 detailUserSnapshot.child("images").getValue(PublicDiary::class.java)?.let{
