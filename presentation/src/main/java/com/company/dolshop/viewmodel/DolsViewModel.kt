@@ -117,6 +117,7 @@ class DolsViewModel @Inject constructor(
                         if (diary?.image == imageId) {
                             Log.d("hahaha", "6 : ${imageId}")
 
+
                             val joayoRef = ImagesSnapShot.ref.child("joayo")
                             joayoRef.child(userId).setValue(true)
                         }
