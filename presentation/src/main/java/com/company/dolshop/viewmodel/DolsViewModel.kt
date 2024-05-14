@@ -166,7 +166,6 @@ class DolsViewModel @Inject constructor(
                         joayoList.add(Pair(joayoCount, result.getValue(Boolean::class.java) ?: false))
                     } else {
                         joayoList.add(Pair("0", result.getValue(Boolean::class.java) ?: false))
-
                     }
                 }
             }
@@ -174,7 +173,6 @@ class DolsViewModel @Inject constructor(
         Log.d("sdfsdfsfds" , "${joayoList}")
         return joayoList
     }
-
 
     // 특정 날짜 업데이트
     init {
