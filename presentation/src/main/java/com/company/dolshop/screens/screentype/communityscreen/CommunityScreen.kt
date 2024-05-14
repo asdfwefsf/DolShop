@@ -99,17 +99,21 @@ fun PublicDiarys(
     }
 
     selectedDiary?.let { diary ->
-        LaunchedEffect(diary) {
+        LaunchedEffect(true) {
             val result = viewModel.checkJoyao(diary.authNumber, diary.image)
             joayoData.value = Pair(result[0].first.toInt(), result[0].second)
             showDialog.value = true
+//            selectedDiary = null
         }
 
         if (showDialog.value) {
             joayoData.value?.let { (joayoNumber, joayoBoolean) ->
                 DetailDialog(
                     diary = diary,
-                    onDismissRequest = { showDialog.value = false },
+                    onDismissRequest = {
+                        showDialog.value = false
+                        selectedDiary = null
+                    },
                     joayo = { viewModel.toggleLike(diary.image, diary.authNumber, diary.love) },
                     joayoNumber = joayoNumber,
                     joayoBoolean = joayoBoolean
