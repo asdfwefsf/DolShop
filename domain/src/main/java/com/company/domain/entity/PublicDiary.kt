@@ -6,7 +6,7 @@ data class PublicDiary(
     val diary: String = "",
     val diaryNumber: String = "",
     val image: String = "",
-    val love : String = "",
+    var love : String = "",
     val writer : String = ""
 )
 //val day: String = "",

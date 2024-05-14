@@ -30,9 +30,12 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.company.designsystem.designsystem.component.loadcoil.LoadImageWithCoil
 import com.company.domain.entity.PublicDiary
 
+// DetailDialog는 PublicDiarays에서 특정한 퍼블릭다이어리 하나를 클릭하면 해당하는 단 하나의 퍼블릭 다이어리에
+// 대한 정보를 보여주는 화면이다.
 @Composable
 fun DetailDialog(
     diary: PublicDiary,
@@ -40,7 +43,6 @@ fun DetailDialog(
     joayo: () -> Unit,
     joayoNumber: Int,
     joayoBoolean: Boolean
-
 ) {
     Dialog(
         onDismissRequest = onDismissRequest,
@@ -58,10 +60,10 @@ fun DetailDialog(
                 onClick = { joayo() }
             )
         }
-
     }
 }
 
+// DetailCar는 DeatilDialog에서만 보여진다.
 @Composable
 fun DetailCard(
     day: String,
@@ -74,6 +76,7 @@ fun DetailCard(
     joayoBoolean: Boolean,
     onClick: () -> Unit
 ) {
+
     Card(
         modifier = Modifier
             .padding(8.dp)
@@ -93,7 +96,6 @@ fun DetailCard(
                 Box(modifier = Modifier
                     .fillMaxSize()
                     .height(384.dp)
-//                    .align(Alignment.CenterHorizontally)
                 ) {
                     LoadImageWithCoil(image, LocalContext.current)
                 }
@@ -103,13 +105,13 @@ fun DetailCard(
                     modifier = Modifier.padding(top = 8.dp)
                 )
                 Row {
-                    var like by remember { mutableStateOf(false) }
+//                    var like by remember { mutableStateOf(false) }
                     Icon(
                         imageVector = if (joayoBoolean) Icons.Filled.Favorite else Icons.Default.FavoriteBorder,
                         contentDescription = "Favorite",
                         tint = if (joayoBoolean) Color.Red else Color.Gray,
                         modifier = Modifier.clickable {
-                            like = !like
+//                            like = !like
                             onClick()
                         }
                     )

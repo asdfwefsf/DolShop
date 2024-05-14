@@ -61,6 +61,7 @@ fun LoadImageWithCoil(
     Log.d("height" , heightDp.toString())
 
     when (loadState) {
+
         "loading" -> Box(
             modifier = Modifier.fillMaxSize(),
             contentAlignment = Alignment.Center,
@@ -74,5 +75,6 @@ fun LoadImageWithCoil(
 
         "success" -> {
         }
+
     }
 }
