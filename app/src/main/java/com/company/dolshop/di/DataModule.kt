@@ -21,6 +21,7 @@ import com.company.data.repositoryimpl.address.GetAddressRepositoryImpl
 import com.company.data.repositoryimpl.address.SaveAddressRepositoryImpl
 import com.company.data.repositoryimpl.getProductRepositoryImpl
 import com.company.data.repositoryimpl.getUserKakaoInfoRepositoryImpl
+import com.company.data.repositoryimpl.publicdiary.DeletePublicDiaryRepositoryImpl
 import com.company.data.repositoryimpl.publicdiary.GetPublicDiaryRepositoryImpl
 import com.company.data.repositoryimpl.publicdiary.SavePublicDiaryRepositoryImpl
 import com.company.data.worker.GetDiaryWorkerFunction
@@ -43,6 +44,7 @@ import com.company.domain.repository.UpdateProductSaleRepository
 import com.company.domain.repository.getDiaryWorkerFunctionRepository
 import com.company.domain.repository.getProductRepository
 import com.company.domain.repository.getUserKakaoInfoRepository
+import com.company.domain.repository.publicidary.DeletePublicDiaryRepository
 import com.company.domain.repository.publicidary.GetPublicDiaryRepository
 import com.company.domain.repository.publicidary.SavePublicDiaryRepository
 import com.google.firebase.database.DatabaseReference
@@ -92,6 +94,8 @@ object DataModule {
     fun provideSavePublicDiaryRepository(impl: SavePublicDiaryRepositoryImpl) : SavePublicDiaryRepository = impl
     @Provides
     fun provideGetPublicDiaryRepository(impl: GetPublicDiaryRepositoryImpl) : GetPublicDiaryRepository = impl
+    @Provides
+    fun provideDeletePublicDiaryRepository(impl: DeletePublicDiaryRepositoryImpl) : DeletePublicDiaryRepository = impl
 
 
     // 추후 수정

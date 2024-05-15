@@ -1,6 +1,7 @@
 package com.company.data.datasource.publicdiary
 
 import androidx.room.Dao
+import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
@@ -20,6 +21,9 @@ interface PublicDiaryDao {
 
     @Update
     fun updatePublicDiaryInfo(publicDiary: PublicDiaryInfo)
+
+    @Delete
+    fun deletePublicDiaryInfo(publicDiary: PublicDiaryInfo)
 
     @Query("SELECT EXISTS(SELECT 1 FROM PublicDiaryInfo WHERE image = :image)")
     fun PublicDiarySameThingBoolean(image: String): Boolean
