@@ -64,6 +64,9 @@ fun SettingItemsList(modifier: Modifier = Modifier , navController: NavControlle
         LeadSettingItem(icon = Icons.Default.Person, text = "보안")
         SettingItem(icon = Icons.Default.Person, text = "비밀번호 변경" , "" , navController)
         LastSettingItem(icon = Icons.Default.Person, text = "2단계 인증" , "" , navController)
+
+        LeadSettingItem(icon = Icons.Default.Person, text = "저장일기")
+        LastSettingItem(icon = Icons.Default.Person, text = "저장일기 보러가기" , "저장일기" , navController)
     }
 }
 

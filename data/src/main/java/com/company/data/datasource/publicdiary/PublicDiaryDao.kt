@@ -6,6 +6,8 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
 import androidx.room.Upsert
+import com.company.data.datasource.baseproductinfo1.BaseProductInfo
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface PublicDiaryDao {
@@ -21,5 +23,8 @@ interface PublicDiaryDao {
 
     @Query("SELECT EXISTS(SELECT 1 FROM PublicDiaryInfo WHERE image = :image)")
     fun PublicDiarySameThingBoolean(image: String): Boolean
+
+    @Query("SELECT * FROM PublicDiaryInfo ORDER BY id ASC")
+    fun getPublicDiary() : Flow<List<PublicDiaryInfo>>
 
 }

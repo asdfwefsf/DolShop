@@ -35,6 +35,7 @@ import com.company.dolshop.screens.screentype.mypagescreen.AuthInfoScreen
 import com.company.dolshop.screens.screentype.mypagescreen.InputAddressInfoScreen
 import com.company.dolshop.screens.screentype.mypagescreen.LogoutScreen
 import com.company.dolshop.screens.screentype.mypagescreen.MyPageScreen
+import com.company.dolshop.screens.screentype.mypagescreen.SavePublicDiaryScreen
 import com.company.dolshop.screens.screentype.productscreen.ProductScreen
 import com.company.dolshop.screens.screentype.rockscreen.AddRockScreen
 import com.company.dolshop.screens.screentype.rockscreen.RocksScreen
@@ -199,6 +200,10 @@ fun BottomNav() {
 
             composable(route = ScreenList.InputAddressInfoScreen.route) {
                 InputAddressInfoScreen(navController)
+            }
+
+            composable(route = ScreenList.SavePublicDiaryScreen.route) {
+                SavePublicDiaryScreen(navController)
             }
         }
     }
