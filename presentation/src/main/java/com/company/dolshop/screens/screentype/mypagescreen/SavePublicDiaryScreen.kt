@@ -10,6 +10,9 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Delete
+import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -24,6 +27,7 @@ import com.company.designsystem.designsystem.component.card.SomenailCard
 import com.company.designsystem.designsystem.component.loadcoil.LoadImageWithCoil
 import com.company.dolshop.viewmodel.publicdiary.PublicDiaryViewModel
 import com.company.domain.entity.PublicDiary
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 @Composable
@@ -67,12 +71,17 @@ fun PublicDiaryItem(publicDiary: PublicDiary) {
             modifier = Modifier
                 .fillMaxWidth()
                 .height(200.dp)
-                .clickable {
-                    scope.launch {
-                        publicDiaryviewModelssss.deletePublicDiary(publicDiary)
-                        Log.d("PublicDiaryItem", "Clicked to delete: ${publicDiary}")
-                    }
+
+        )
+        Icon(
+            imageVector = Icons.Filled.Delete,
+            contentDescription = "",
+            modifier = Modifier.clickable {
+                scope.launch(Dispatchers.IO) {
+                    publicDiaryviewModelssss.deletePublicDiary(publicDiary)
+                    Log.d("PublicDiaryItem", "Clicked to delete: ${publicDiary}")
                 }
+            }
         )
     }
 }

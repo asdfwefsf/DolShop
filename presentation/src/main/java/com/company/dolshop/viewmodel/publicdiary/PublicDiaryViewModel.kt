@@ -1,5 +1,6 @@
 package com.company.dolshop.viewmodel.publicdiary
 
+import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.company.domain.entity.PublicDiary
@@ -23,6 +24,7 @@ class PublicDiaryViewModel @Inject constructor(
     fun savePublicDiary(publicDiary: PublicDiary) {
         viewModelScope.launch {
             savePublicDiaryUseCase(publicDiary)
+            getPublicDiart()
         }
     }
 
@@ -45,6 +47,9 @@ class PublicDiaryViewModel @Inject constructor(
     fun deletePublicDiary(publicDiary : PublicDiary) {
         viewModelScope.launch(Dispatchers.IO) {
             deletePublicDiaryUseCase(publicDiary)
+            Log.d("DeletePublicDiaryssssssssssssss", "Deleting: $publicDiary")
+
+            getPublicDiart()
         }
     }
 

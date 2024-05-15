@@ -1,6 +1,7 @@
 package com.company.domain.entity
 
 data class PublicDiary(
+    val id : Int = 0,
     val authNumber: String = "",
     val day: String = "",
     val diary: String = "",

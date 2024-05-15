@@ -23,7 +23,7 @@ interface PublicDiaryDao {
     fun updatePublicDiaryInfo(publicDiary: PublicDiaryInfo)
 
     @Delete
-    fun deletePublicDiaryInfo(publicDiary: PublicDiaryInfo)
+    suspend fun deletePublicDiaryInfo(publicDiary: PublicDiaryInfo)
 
     @Query("SELECT EXISTS(SELECT 1 FROM PublicDiaryInfo WHERE image = :image)")
     fun PublicDiarySameThingBoolean(image: String): Boolean
