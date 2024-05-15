@@ -41,6 +41,7 @@ fun DetailDialog(
     diary: PublicDiary,
     onDismissRequest: () -> Unit,
     joayoSet : () -> Unit,
+    savePublicDiary : () -> Unit,
     joayoNumber: Int,
     joayoBoolean: Boolean
 ) {
@@ -57,6 +58,9 @@ fun DetailDialog(
                 loveNumber = diary.love,
                 joayoNumber = joayoNumber,
                 joayoBoolean = joayoBoolean,
+                savePublicDiary = {
+                    savePublicDiary()
+                },
                 joayoGet = {
                     joayoSet()
                 },
@@ -76,8 +80,11 @@ fun DetailCard(
     loveNumber: String,
     joayoNumber: Int,
     joayoBoolean: Boolean,
+    savePublicDiary : () -> Unit,
     joayoGet : () -> Unit,
 ) {
+
+    var savePublicDiaryBoolean by remember { mutableStateOf(false) }
 
     Card(
         modifier = Modifier
@@ -118,8 +125,17 @@ fun DetailCard(
                         }
                     )
                     Spacer(Modifier.size(8.dp))
-
                     Text(joayoNumber.toString())
+                    Icon(
+                        imageVector = if (savePublicDiaryBoolean) Icons.Filled.Favorite else Icons.Default.FavoriteBorder,
+                        contentDescription = "Favorite",
+                        tint = if (savePublicDiaryBoolean) Color.Red else Color.Gray,
+                        modifier = Modifier.clickable {
+                            savePublicDiaryBoolean = !savePublicDiaryBoolean
+                            savePublicDiary()
+                        }
+                    )
+
                 }
             }
         }

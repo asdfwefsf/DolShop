@@ -6,6 +6,8 @@ import com.company.data.datasource.baseproductinfo1.BaseProductDao
 import com.company.data.datasource.baseproductinfo1.BaseProductInfoDataBase
 import com.company.data.datasource.diarynumber.DiaryNumberDao
 import com.company.data.datasource.diarynumber.DiaryNumberDatabase
+import com.company.data.datasource.publicdiary.PublicDiaryDao
+import com.company.data.datasource.publicdiary.PublicDiaryInfoDatabase
 import com.company.data.datasource.userinfo.UserInfoDao
 import com.company.data.datasource.userinfo.UserInfoDatabase
 import com.company.data.repositoryimpl.AnnouncementRepositoryImpl
@@ -19,6 +21,7 @@ import com.company.data.repositoryimpl.address.GetAddressRepositoryImpl
 import com.company.data.repositoryimpl.address.SaveAddressRepositoryImpl
 import com.company.data.repositoryimpl.getProductRepositoryImpl
 import com.company.data.repositoryimpl.getUserKakaoInfoRepositoryImpl
+import com.company.data.repositoryimpl.publicdiary.SavePublicDiaryRepositoryImpl
 import com.company.data.worker.GetDiaryWorkerFunction
 import com.company.data.worker.GetPublicDiaryWorkerFunction
 import com.company.datasource_local_address.AddressDao
@@ -39,6 +42,7 @@ import com.company.domain.repository.UpdateProductSaleRepository
 import com.company.domain.repository.getDiaryWorkerFunctionRepository
 import com.company.domain.repository.getProductRepository
 import com.company.domain.repository.getUserKakaoInfoRepository
+import com.company.domain.repository.publicidary.SavePublicDiaryRepository
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import dagger.Module
@@ -82,6 +86,8 @@ object DataModule {
     fun provideGetDiaryWorkerFunctionRepository(impl: GetDiaryWorkerFunction) : getDiaryWorkerFunctionRepository = impl
     @Provides
     fun provideGetPublicDiaryWorkerFunction(impl: GetPublicDiaryWorkerFunction) : GetPublicDiaryWorkerFunctionRepository = impl
+    @Provides
+    fun provideSavePublicDiaryRepository(impl: SavePublicDiaryRepositoryImpl) : SavePublicDiaryRepository = impl
 
 
     // 추후 수정
@@ -180,6 +186,22 @@ object DataModule {
 
     @Provides
     fun provideDiaryNumberDao(database: DiaryNumberDatabase) : DiaryNumberDao {
+        return database.dao
+    }
+
+    // SavePublicDiary
+    @Provides
+    @Singleton
+    fun providePublicDiaryInfoDatabase(@ApplicationContext appContext: Context): PublicDiaryInfoDatabase {
+        return Room.databaseBuilder(
+            appContext,
+            PublicDiaryInfoDatabase::class.java,
+            "publicdiary_database"
+        ).build()
+    }
+
+    @Provides
+    fun providePublicDiaryDao(database: PublicDiaryInfoDatabase) : PublicDiaryDao {
         return database.dao
     }
 }

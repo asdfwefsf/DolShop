@@ -29,6 +29,7 @@ import androidx.paging.compose.collectAsLazyPagingItems
 import com.company.designsystem.designsystem.component.card.DetailDialog
 import com.company.designsystem.designsystem.component.card.SomenailCard
 import com.company.dolshop.viewmodel.DolsViewModel
+import com.company.dolshop.viewmodel.publicdiary.PublicDiaryViewModel
 import com.company.domain.entity.PublicDiary
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -67,7 +68,7 @@ fun PublicDiarys(
     val context: Context = LocalContext.current
     var selectedDiary by remember { mutableStateOf<PublicDiary?>(null) }
 
-
+    val publicDiaryViewModel : PublicDiaryViewModel = hiltViewModel()
 //    var joayoData = remember { mutableStateOf<Pair<Int, Boolean>?>(null) }
     val showDialog = remember { mutableStateOf(false) }
 
@@ -134,6 +135,9 @@ fun PublicDiarys(
 //                        }
 //                    },
                     // gonee4
+                    savePublicDiary = {
+                        publicDiaryViewModel.savePublicDiary(diary)
+                    },
                     joayoNumber = joayoData?.first ?: 0,
                     joayoBoolean = joayoData?.second ?: false
                 )
