@@ -40,7 +40,7 @@ import com.company.domain.entity.PublicDiary
 fun DetailDialog(
     diary: PublicDiary,
     onDismissRequest: () -> Unit,
-    joayo: () -> Unit,
+    joayoSet : () -> Unit,
     joayoNumber: Int,
     joayoBoolean: Boolean
 ) {
@@ -57,7 +57,9 @@ fun DetailDialog(
                 loveNumber = diary.love,
                 joayoNumber = joayoNumber,
                 joayoBoolean = joayoBoolean,
-                onClick = { joayo() }
+                joayoGet = {
+                    joayoSet()
+                },
             )
         }
     }
@@ -74,7 +76,7 @@ fun DetailCard(
     loveNumber: String,
     joayoNumber: Int,
     joayoBoolean: Boolean,
-    onClick: () -> Unit
+    joayoGet : () -> Unit,
 ) {
 
     Card(
@@ -112,7 +114,7 @@ fun DetailCard(
                         tint = if (joayoBoolean) Color.Red else Color.Gray,
                         modifier = Modifier.clickable {
 //                            like = !like
-                            onClick()
+                            joayoGet()
                         }
                     )
                     Spacer(Modifier.size(8.dp))

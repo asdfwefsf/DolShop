@@ -135,10 +135,12 @@ class DolsViewModel @Inject constructor(
                             myid.get().addOnSuccessListener { dataSnapshot ->
                                 if (dataSnapshot.exists()) {
                                     joayoRef.removeValue()
-                                    positiveJoayoUiChange(publicDiary)
+                                    negativeJoayoUiChange()
+//                                    positiveJoayoUiChange(publicDiary)
                                 } else {
                                     joayoRef.child(userId).setValue(true)
-                                    negativeJoayoUiChange(publicDiary)
+                                    positiveJoayoUiChange()
+//                                    negativeJoayoUiChange(publicDiary)
                                 }
                             }.addOnFailureListener {
                             }
@@ -162,7 +164,8 @@ class DolsViewModel @Inject constructor(
     // 호출 시점 : "Community Screen" -> "PublicDiarys"에서 특정한 퍼블리 다이어리 클릭하면 호출
     // 함수 기능 : 파이어베이스에서 해당하는 퍼블릭 다이어리의 좋아요 갯수와 , 사용자가 해당 퍼블릭 다이어리에 좋아요 눌렀는지 여부를
     //           가져와서 반환한다.
-    suspend fun getJoyaoFromFirebase(authNumber: String, imageNumber: String): MutableList<Pair<String, Boolean>> {
+//    suspend fun getJoyaoFromFirebase(authNumber: String, imageNumber: String): MutableList<Pair<String, Boolean>> {
+    suspend fun getJoyaoFromFirebase(authNumber: String, imageNumber: String) {
         val db = Firebase.database.reference
         val diaryRef = db.child("publicDiary")
 
@@ -178,31 +181,41 @@ class DolsViewModel @Inject constructor(
                     val result = joayo.child(authNumber).get().await()
                     if (result.exists()) {
                         joayoList.add(Pair(joayoCount, result.getValue(Boolean::class.java) ?: false))
+//                        positiveJoayoUiChange()
+                        _joayoData.value = Pair(joayoCount.toInt(), result.getValue(Boolean::class.java) ?: false)
+
                     } else {
                         joayoList.add(Pair("0", result.getValue(Boolean::class.java) ?: false))
+//                        negativeJoayoUiChange()
+                        _joayoData.value = Pair(joayoCount.toInt(), result.getValue(Boolean::class.java) ?: false)
+
                     }
                 }
             }
         }
+
         Log.d("sdfsdfsfds" , "${joayoList}")
-        return joayoList
     }
     // 좋아요 체크
 
     // 좋아요 누르면 UI 변경 ( 하트 색깔 회색<->빨강 , 좋아요 숫자 업데이트 )
 
+    private var _joayoData = MutableStateFlow<Pair<Int, Boolean>?>(null)
+    var joayoData : MutableStateFlow<Pair<Int, Boolean>?> = _joayoData
+
     // 호출 위치 :
-    fun positiveJoayoUiChange(publicDiary: PublicDiary) {
-        var s = publicDiary.love.toInt()
-        s += 1
-        publicDiary.love = s.toString()
+    // 함수 기능 :
+    fun positiveJoayoUiChange() {
+        _joayoData.value = _joayoData.value?.let { (count , joayo) ->
+            Pair(count + 1, !joayo)
+        }
 
     }
 
-    fun negativeJoayoUiChange(publicDiary: PublicDiary) {
-        var s = publicDiary.love.toInt()
-        s -= 1
-        publicDiary.love = s.toString()
+    fun negativeJoayoUiChange() {
+        _joayoData.value = _joayoData.value?.let { (count , joayo) ->
+            Pair(count - 1, !joayo)
+        }
     }
 
 

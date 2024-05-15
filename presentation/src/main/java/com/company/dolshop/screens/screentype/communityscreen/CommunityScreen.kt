@@ -14,6 +14,7 @@ import androidx.compose.material3.pulltorefresh.PullToRefreshContainer
 import androidx.compose.material3.pulltorefresh.rememberPullToRefreshState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -67,8 +68,11 @@ fun PublicDiarys(
     var selectedDiary by remember { mutableStateOf<PublicDiary?>(null) }
 
 
-    var joayoData = remember { mutableStateOf<Pair<Int, Boolean>?>(null) }
+//    var joayoData = remember { mutableStateOf<Pair<Int, Boolean>?>(null) }
     val showDialog = remember { mutableStateOf(false) }
+
+    // gonee1
+    val joayoData by viewModel.joayoData.collectAsState()
 
     LazyVerticalGrid(
         columns = GridCells.Fixed(3),
@@ -93,13 +97,19 @@ fun PublicDiarys(
             // 현재 해당 퍼블릭다이어리의 좋아요 관련 정보 가져오기
             var result = viewModel.getJoyaoFromFirebase(diary.authNumber, diary.image)
             // 다이어리들에서 클릭된 다이어리 가져온게 diary , null이 아니라서 let에서 diary-> 로 받아온거야
-            joayoData.value = Pair(result[0].first.toInt(), result[0].second)
+
+
+            // gonee
+//            joayoData.value = Pair(result[0].first.toInt(), result[0].second)
             //
             showDialog.value = true
         }
 
         if (showDialog.value) {
-            joayoData.value?.let { (joayoNumber, joayoBoolean) ->
+            // gonee2
+            joayoData?.let { (joayoNumber, joayoBoolean) ->
+                // gonee3
+//                (joayoNumber, joayoBoolean) ->
                 DetailDialog(
                     // DetailDialog에 들어갈 퍼블릭 다이어리 객체가 diary인데 이게 들어가는거야
                     diary = diary,
@@ -108,21 +118,24 @@ fun PublicDiarys(
                         // 퍼블릭다이어리들중에서 다른 다이어리 들어갈 수 있게 selectedDiary 값 초기화
                         selectedDiary = null
                     },
-                    joayo = {
+                    joayoSet = {
                         //
                         viewModel.setJoyaoToFirebase(diary.image, diary.authNumber , diary)
-                        if(joayoBoolean) {
-                            viewModel.negativeJoayoUiChange(diary)
-                            Log.d("joayo" , "positive : ${joayoBoolean.toString()}")
-                            Log.d("joayo" , "positive : ${diary.love}")
-                        } else {
-                            viewModel.positiveJoayoUiChange(diary)
-                            Log.d("joayo" , "negative : ${joayoBoolean.toString()}")
-                            Log.d("joayo" , "negative : ${diary.love}")
-                        }
                     },
-                    joayoNumber = joayoNumber,
-                    joayoBoolean = joayoBoolean
+//                    joayoUpdate = {
+//                        if(joayoBoolean) {
+//                            viewModel.negativeJoayoUiChange()
+//                            Log.d("joayo" , "positive : ${joayoBoolean.toString()}")
+//                            Log.d("joayo" , "positive : ${diary.love}")
+//                        } else {
+//                            viewModel.positiveJoayoUiChange()
+//                            Log.d("joayo" , "negative : ${joayoBoolean.toString()}")
+//                            Log.d("joayo" , "negative : ${diary.love}")
+//                        }
+//                    },
+                    // gonee4
+                    joayoNumber = joayoData?.first ?: 0,
+                    joayoBoolean = joayoData?.second ?: false
                 )
             }
         }
