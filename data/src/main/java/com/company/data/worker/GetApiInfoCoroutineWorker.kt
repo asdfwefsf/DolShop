@@ -20,11 +20,13 @@ class GetApiInfoCoroutineWorker @AssistedInject constructor(
     private val getBaseProductWorkerFunction1: GetBaseProductWorkerFunction1,
     private val getPublicDiaryWorkerFunction: GetPublicDiaryWorkerFunction,
     private val getProductSaleWorkerFunction : GetProductSaleWorkerFunction,
+    private val getAdvertisementWorkerFunction : GetAdvertisementWorkerFunction
 ) : CoroutineWorker(context, workerParams) {
     override suspend fun doWork(): Result = coroutineScope{
         try {
             getBaseProductWorkerFunction1.getBaseProductList1()
             getProductSaleWorkerFunction.getProductSaleInfo()
+            getAdvertisementWorkerFunction.getAdvertisementInfo()
 //            getPublicDiaryWorkerFunction.callPublicDiaryWorkerFunction()
             Log.d("karina", "karinaT")
         } catch (e: Exception) {

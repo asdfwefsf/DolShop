@@ -2,6 +2,8 @@ package com.company.dolshop.di
 
 import android.content.Context
 import androidx.room.Room
+import com.company.data.datasource.advertisement.AdvertisementDao
+import com.company.data.datasource.advertisement.AdvertisementInfoDatabase
 import com.company.data.datasource.baseproductinfo1.BaseProductDao
 import com.company.data.datasource.baseproductinfo1.BaseProductInfoDataBase
 import com.company.data.datasource.diarynumber.DiaryNumberDao
@@ -210,6 +212,22 @@ object DataModule {
 
     @Provides
     fun providePublicDiaryDao(database: PublicDiaryInfoDatabase) : PublicDiaryDao {
+        return database.dao
+    }
+
+    // SavePublicDiary
+    @Provides
+    @Singleton
+    fun provideAdvertisementInfoDatabase(@ApplicationContext appContext: Context): AdvertisementInfoDatabase {
+        return Room.databaseBuilder(
+            appContext,
+            AdvertisementInfoDatabase::class.java,
+            "advertisement_database"
+        ).build()
+    }
+
+    @Provides
+    fun provideAdvertisementDao(database: AdvertisementInfoDatabase) : AdvertisementDao {
         return database.dao
     }
 }

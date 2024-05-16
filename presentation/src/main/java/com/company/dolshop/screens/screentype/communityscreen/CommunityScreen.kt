@@ -72,7 +72,7 @@ fun PublicDiarys(
 //    var joayoData = remember { mutableStateOf<Pair<Int, Boolean>?>(null) }
     val showDialog = remember { mutableStateOf(false) }
 
-    // gonee1
+    // gonee1o
     val joayoData by viewModel.joayoData.collectAsState()
 
     LazyVerticalGrid(

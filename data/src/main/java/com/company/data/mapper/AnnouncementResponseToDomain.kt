@@ -5,9 +5,10 @@ import com.company.domain.model.DomainAnnouncementModel
 
 fun AnnouncementResponse.toDomainAnnouncementModel(): DomainAnnouncementModel {
     return DomainAnnouncementModel(
-        image = this.image,
-        name = this.name
+        AdvertisementMunGu = this.AdvertisementMunGu,
+        AdvertisementImage = this.AdvertisementImage
     )
+
 }
 
 
