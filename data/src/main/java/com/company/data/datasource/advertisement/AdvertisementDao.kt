@@ -26,4 +26,7 @@ interface AdvertisementDao {
     @Query("SELECT EXISTS(SELECT 1 FROM advertisementInfo WHERE id = :id)")
     fun provideAdvertisementInfoExists(id: Int): Boolean
 
+    @Query("DELETE FROM advertisementInfo")
+    fun deleteAllAdvertisementInfo()
+
 }

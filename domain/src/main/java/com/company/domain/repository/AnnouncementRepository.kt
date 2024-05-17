@@ -1,8 +1,8 @@
 package com.company.domain.repository
 
-import com.company.domain.model.DomainAnnouncementModel
+import com.company.domain.entity.Advertisement
 import kotlinx.coroutines.flow.Flow
 
 interface AnnouncementRepository {
-    fun getAnnouncement() : Flow<List<DomainAnnouncementModel>>
+    suspend fun getAnnouncement() : Flow<List<Advertisement>>
 }

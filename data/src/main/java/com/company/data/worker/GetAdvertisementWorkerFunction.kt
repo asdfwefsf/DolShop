@@ -21,19 +21,25 @@ class GetAdvertisementWorkerFunction @Inject constructor(
                     if (!dao.provideAdvertisementInfoExists(responseBody.size)) {
                         dao.insertAdvertisementInfo(
                             AdvertisementInfo(
+                                id = it.id,
                                 AdvertisementMunGu = it.AdvertisementMunGu,
                                 AdvertisementImage = it.AdvertisementImage
                             )
                         )
-                        Log.d("daoTest", "AdvertisementInfoInsert")
+//                        dao.deleteAllAdvertisementInfo()
+
+                        Log.d("daoTest", "AdvertisementInfoInsert: ${it.id}")
                     } else {
+
+//                        dao.deleteAllAdvertisementInfo()
                         dao.updateAdvertisementInfo(
                             AdvertisementInfo(
+                                id = it.id,
                                 AdvertisementMunGu = it.AdvertisementMunGu,
                                 AdvertisementImage = it.AdvertisementImage
                             )
                         )
-                        Log.d("daoTest", "AdvertisementInfoUpdate")
+                        Log.d("daoTest", "AdvertisementInfoUpdate : ${it.id}")
 
                     }
 

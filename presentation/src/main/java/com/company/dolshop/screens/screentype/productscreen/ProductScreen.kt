@@ -419,14 +419,14 @@ fun productItemScreen(
                     start.linkTo(parent.start)
                     top.linkTo(parent.top)
                 }
-                .clickable { onClick(productState.name) } // Handle click event
+                .clickable { onClick(productState.name) }
         )
         Text(
             text = productState.name,
             modifier = Modifier.constrainAs(text) {
                 start.linkTo(image.start)
                 top.linkTo(image.bottom)
-                width = Dimension.fillToConstraints // Fill width within constraints
+                width = Dimension.fillToConstraints
             }
         )
     }
