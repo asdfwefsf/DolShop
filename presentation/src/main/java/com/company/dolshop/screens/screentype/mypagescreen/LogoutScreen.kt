@@ -57,6 +57,7 @@ fun LogoutScreen() {
         )
     }
 
+
     Column {
         Button(onClick = { showDialog = true }) {
             Text("로그아웃")
