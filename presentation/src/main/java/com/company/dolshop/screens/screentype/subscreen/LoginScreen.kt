@@ -1,24 +1,37 @@
 package com.company.dolshop.screens.screentype.subscreen
 
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
-import com.company.designsystem.designsystem.Paddings
+import com.airbnb.lottie.compose.LottieAnimation
+import com.airbnb.lottie.compose.LottieCompositionSpec
+import com.airbnb.lottie.compose.LottieConstants
+import com.airbnb.lottie.compose.animateLottieCompositionAsState
+import com.airbnb.lottie.compose.rememberLottieComposition
 import com.company.dolshop.screens.ScreenList
 import com.company.dolshop.viewmodel.KakaoAuthiViewModel
+import com.company.presentation.R
 import com.company.utility.DataStoreUtility
 import com.company.utility.DataStoreUtility.Companion.setLoginState
 import com.google.firebase.database.ktx.database
@@ -34,9 +47,22 @@ fun LoginScreen(navController: NavController, viewModel: KakaoAuthiViewModel) {
     val context = LocalContext.current
     val dataStoreUtility = DataStoreUtility.getInstance()
 
-    var text by remember { mutableStateOf("") }
+    val lottie by rememberLottieComposition(
+        spec = LottieCompositionSpec.RawRes(R.raw.jjinreal)
+    )
 
-    Column {
+
+    Column(
+        modifier = Modifier.fillMaxSize(),
+        verticalArrangement = Arrangement.Center,
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        LottieAnimation(
+            composition = lottie,
+            iterations = LottieConstants.IterateForever
+
+        )
+        Spacer(modifier = Modifier.size(16.dp))
         Button(onClick = {
             scope.launch {
                 viewModel.kakaoLogin()
@@ -67,26 +93,16 @@ fun LoginScreen(navController: NavController, viewModel: KakaoAuthiViewModel) {
             }
 
         }) {
-            Text(
-                "로그인",
+            Image(
+                painter = painterResource(id = R.drawable.kakao_login_large_wide),
+                contentDescription = "Login Icon"
             )
-            Spacer(modifier = Modifier.padding(Paddings.extra))
+            Spacer(modifier = Modifier.width(8.dp))
+            Text("로그인")
         }
-        Spacer(modifier = Modifier.padding(Paddings.extra))
-        TextField(
-            value = text,
-            onValueChange = { newText ->
-                text = newText
-            }
-        )
-//        Spacer(modifier = Modifier.padding(Paddings.extra))
-//        Button(
-//            onClick = { myRef.setValue(text) }
-//        ) {
-//            Text(text = "Test")
-//        }
     }
-
-
 }
+
+
+
 
