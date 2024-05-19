@@ -14,6 +14,8 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.company.dolshop.viewmodel.KakaoAuthiViewModel
+import com.company.utility.DataStoreUtility
+import com.company.utility.DataStoreUtility.Companion.setLoginState
 import kotlinx.coroutines.launch
 
 @Composable
@@ -22,6 +24,7 @@ fun LogoutScreen() {
     val viewmodel : KakaoAuthiViewModel = hiltViewModel()
     var showDialog by remember { mutableStateOf(false) } // State to control the dialog visibility
     val context = LocalContext.current
+    val dataStoreUtility = DataStoreUtility.getInstance()
 
     if (showDialog) {
         AlertDialog(
@@ -31,6 +34,9 @@ fun LogoutScreen() {
                     onClick = {
                         scope.launch {
                             viewmodel.kakaoLogout()
+                            dataStoreUtility.apply {
+                                context.setLoginState(false)
+                            }
                             (context as? Activity)?.finish()
                         }
                         showDialog = false

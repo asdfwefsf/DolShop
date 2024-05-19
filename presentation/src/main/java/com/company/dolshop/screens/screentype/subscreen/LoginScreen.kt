@@ -14,10 +14,13 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.NavController
 import com.company.designsystem.designsystem.Paddings
 import com.company.dolshop.screens.ScreenList
 import com.company.dolshop.viewmodel.KakaoAuthiViewModel
+import com.company.utility.DataStoreUtility
+import com.company.utility.DataStoreUtility.Companion.setLoginState
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.launch
@@ -25,11 +28,14 @@ import kotlinx.coroutines.launch
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun LoginScreen(navController: NavController, viewModel: KakaoAuthiViewModel) {
+
     val scope = rememberCoroutineScope()
     val realtimeDB = Firebase.database
-    val myRef = realtimeDB.getReference("message")
-    myRef.setValue("Hello , World!")
+    val context = LocalContext.current
+    val dataStoreUtility = DataStoreUtility.getInstance()
+
     var text by remember { mutableStateOf("") }
+
     Column {
         Button(onClick = {
             scope.launch {
@@ -37,16 +43,20 @@ fun LoginScreen(navController: NavController, viewModel: KakaoAuthiViewModel) {
                 val userInfolist = viewModel.userInfoList
                 if (viewModel.loginValue.value) {
 
-                    val userRef = realtimeDB.getReference("users/${userInfolist.value.authNumber}/kakaoAuth")
+                    val userRef =
+                        realtimeDB.getReference("users/${userInfolist.value.authNumber}/kakaoAuth")
                     val userData = mapOf(
                         "authNumber" to userInfolist.value.authNumber,
                         "authEmail" to userInfolist.value.authEmail,
                         "authNickName" to userInfolist.value.authNicName,
                         "authProfileImage" to userInfolist.value.authProfileImage,
-                        "address" to ""  // 주소는 빈값으로 저장
+                        "address" to ""
                     )
                     userRef.setValue(userData)
 
+                    dataStoreUtility.apply {
+                        context.setLoginState(true)
+                    }
 
                     navController.navigate(ScreenList.MyPageScreen.route) {
                         popUpTo(ScreenList.MyPageScreen.route) {
@@ -69,12 +79,12 @@ fun LoginScreen(navController: NavController, viewModel: KakaoAuthiViewModel) {
                 text = newText
             }
         )
-        Spacer(modifier = Modifier.padding(Paddings.extra))
-        Button(
-            onClick = { myRef.setValue(text) }
-        ) {
-            Text(text = "Test")
-        }
+//        Spacer(modifier = Modifier.padding(Paddings.extra))
+//        Button(
+//            onClick = { myRef.setValue(text) }
+//        ) {
+//            Text(text = "Test")
+//        }
     }
 
 

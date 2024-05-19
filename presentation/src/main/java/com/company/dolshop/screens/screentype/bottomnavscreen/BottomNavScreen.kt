@@ -14,11 +14,13 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -43,6 +45,8 @@ import com.company.dolshop.screens.screentype.subscreen.LoginScreen
 import com.company.dolshop.viewmodel.KakaoAuthiViewModel
 import com.company.dolshop.viewmodel.UpdateBaseProductViewModel
 import com.company.presentation.R
+import com.company.utility.DataStoreUtility
+import com.company.utility.DataStoreUtility.Companion.isLoggedInFlow
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -52,6 +56,15 @@ fun BottomNav() {
 
     // navController(실제 화면 이동 담당)의 현재 상태를 구독해서 최상위의 경로가 변경될 때마다 경로를 얻어낸다.
     val currentRoute = navController.currentBackStackEntryAsState().value?.destination?.route
+
+    val context = LocalContext.current
+
+    val dataStoreUtility = DataStoreUtility.getInstance()
+
+    // 로그인 정보 저장된거
+    val isLoggedIn by dataStoreUtility.run { context.isLoggedInFlow.collectAsStateWithLifecycle(initialValue = false) }
+
+
 
     // BottomBar에서 이동 할 수 있는 화면의 경로들을 정의해 놓은 리스트
     val bottomNavVisibleRoutes =
@@ -143,10 +156,10 @@ fun BottomNav() {
         }
     ) {
         innerPadding ->
-        if (false) {
-            route = ScreenList.LoginScreen.route
+        route = if (isLoggedIn) {
+            ScreenList.RocksScreen.route
         } else {
-            route = ScreenList.ProductScreen.route
+            ScreenList.LoginScreen.route
         }
         NavHost(navController = navController, startDestination = route) {
             // 커뮤니티 스크린

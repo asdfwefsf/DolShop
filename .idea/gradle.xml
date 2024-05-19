@@ -42,6 +42,7 @@
             <option value="$PROJECT_DIR$/domain" />
             <option value="$PROJECT_DIR$/macrobenchmark" />
             <option value="$PROJECT_DIR$/presentation" />
+            <option value="$PROJECT_DIR$/utility" />
           </set>
         </option>
         <option name="resolveExternalAnnotations" value="false" />
