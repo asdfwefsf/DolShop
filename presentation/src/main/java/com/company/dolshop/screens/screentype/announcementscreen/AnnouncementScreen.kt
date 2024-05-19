@@ -42,8 +42,6 @@ import com.company.presentation.R
 @Composable
 fun AnnouncementScreen() {
     val announcementViewModel: AnnouncementViewModel = hiltViewModel()
-    val announcementList = announcementViewModel.announcement.collectAsState()
-
     Column {
         Text("AnnouncementScreen")
         AdvertisementTestScreen(announcementViewModel, {})

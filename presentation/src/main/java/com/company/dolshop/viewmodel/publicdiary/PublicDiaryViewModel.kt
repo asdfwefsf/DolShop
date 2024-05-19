@@ -3,6 +3,7 @@ package com.company.dolshop.viewmodel.publicdiary
 import android.util.Log
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.company.domain.entity.Advertisement
 import com.company.domain.entity.PublicDiary
 import com.company.domain.usecase.publicidary.DeletePublicDiaryUseCase
 import com.company.domain.usecase.publicidary.GetPublicDiaryUseCase
@@ -29,9 +30,9 @@ class PublicDiaryViewModel @Inject constructor(
     }
 
     private val _publicDiary = MutableStateFlow<List<PublicDiary>>(emptyList())
-    val publicDiary = _publicDiary
+    val publicDiary : MutableStateFlow<List<PublicDiary>> = _publicDiary
 
-    fun getPublicDiart() {
+    suspend fun getPublicDiart() {
         viewModelScope.launch {
             getPublicDiaryUseCase().collect {
                 _publicDiary.value = it
@@ -41,7 +42,9 @@ class PublicDiaryViewModel @Inject constructor(
     }
 
     init {
-        getPublicDiart()
+        viewModelScope.launch {
+            getPublicDiart()
+        }
     }
 
     fun deletePublicDiary(publicDiary : PublicDiary) {
