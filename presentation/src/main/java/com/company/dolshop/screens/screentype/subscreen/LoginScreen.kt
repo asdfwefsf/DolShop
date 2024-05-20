@@ -1,6 +1,7 @@
 package com.company.dolshop.screens.screentype.subscreen
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -57,49 +58,83 @@ fun LoginScreen(navController: NavController, viewModel: KakaoAuthiViewModel) {
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
+        Text("Dol And Shop")
         LottieAnimation(
             composition = lottie,
             iterations = LottieConstants.IterateForever
 
         )
-        Spacer(modifier = Modifier.size(16.dp))
-        Button(onClick = {
-            scope.launch {
-                viewModel.kakaoLogin()
-                val userInfolist = viewModel.userInfoList
-                if (viewModel.loginValue.value) {
+        Image(
+            painter = painterResource(id = R.drawable.kakao_login_large_wide),
+            contentDescription = "Login Icon",
+            modifier = Modifier.clickable {
+                scope.launch {
+                    viewModel.kakaoLogin()
+                    val userInfolist = viewModel.userInfoList
+                    if (viewModel.loginValue.value) {
 
-                    val userRef =
-                        realtimeDB.getReference("users/${userInfolist.value.authNumber}/kakaoAuth")
-                    val userData = mapOf(
-                        "authNumber" to userInfolist.value.authNumber,
-                        "authEmail" to userInfolist.value.authEmail,
-                        "authNickName" to userInfolist.value.authNicName,
-                        "authProfileImage" to userInfolist.value.authProfileImage,
-                        "address" to ""
-                    )
-                    userRef.setValue(userData)
+                        val userRef =
+                            realtimeDB.getReference("users/${userInfolist.value.authNumber}/kakaoAuth")
+                        val userData = mapOf(
+                            "authNumber" to userInfolist.value.authNumber,
+                            "authEmail" to userInfolist.value.authEmail,
+                            "authNickName" to userInfolist.value.authNicName,
+                            "authProfileImage" to userInfolist.value.authProfileImage,
+                            "address" to ""
+                        )
+                        userRef.setValue(userData)
 
-                    dataStoreUtility.apply {
-                        context.setLoginState(true)
-                    }
+                        dataStoreUtility.apply {
+                            context.setLoginState(true)
+                        }
 
-                    navController.navigate(ScreenList.MyPageScreen.route) {
-                        popUpTo(ScreenList.MyPageScreen.route) {
-                            inclusive = true
+                        navController.navigate(ScreenList.MyPageScreen.route) {
+                            popUpTo(ScreenList.MyPageScreen.route) {
+                                inclusive = true
+                            }
                         }
                     }
                 }
             }
-
-        }) {
-            Image(
-                painter = painterResource(id = R.drawable.kakao_login_large_wide),
-                contentDescription = "Login Icon"
-            )
-            Spacer(modifier = Modifier.width(8.dp))
-            Text("로그인")
-        }
+        )
+//        Spacer(modifier = Modifier.size(16.dp))
+//        Button(onClick = {
+//            scope.launch {
+//                viewModel.kakaoLogin()
+//                val userInfolist = viewModel.userInfoList
+//                if (viewModel.loginValue.value) {
+//
+//                    val userRef =
+//                        realtimeDB.getReference("users/${userInfolist.value.authNumber}/kakaoAuth")
+//                    val userData = mapOf(
+//                        "authNumber" to userInfolist.value.authNumber,
+//                        "authEmail" to userInfolist.value.authEmail,
+//                        "authNickName" to userInfolist.value.authNicName,
+//                        "authProfileImage" to userInfolist.value.authProfileImage,
+//                        "address" to ""
+//                    )
+//                    userRef.setValue(userData)
+//
+//                    dataStoreUtility.apply {
+//                        context.setLoginState(true)
+//                    }
+//
+//                    navController.navigate(ScreenList.MyPageScreen.route) {
+//                        popUpTo(ScreenList.MyPageScreen.route) {
+//                            inclusive = true
+//                        }
+//                    }
+//                }
+//            }
+//
+//        }) {
+//            Image(
+//                painter = painterResource(id = R.drawable.kakao_login_large_wide),
+//                contentDescription = "Login Icon"
+//            )
+////            Spacer(modifier = Modifier.width(8.dp))
+////            Text("로그인")
+//        }
     }
 }
 

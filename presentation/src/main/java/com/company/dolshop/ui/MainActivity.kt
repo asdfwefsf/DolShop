@@ -87,7 +87,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             CoroutineWorkerViewModel.test(this)
 
-            com.company.designsystem.designsystem.DolShopTheme {
+            DolShopTheme {
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background

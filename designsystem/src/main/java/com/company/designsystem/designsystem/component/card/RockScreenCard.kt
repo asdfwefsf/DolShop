@@ -3,12 +3,14 @@ package com.company.designsystem.designsystem.component.card
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.FavoriteBorder
+import androidx.compose.material.icons.filled.Share
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
@@ -40,11 +42,29 @@ fun RockScreenCard(
         colors = CardDefaults.cardColors(Color.White)
     ) {
         Column(modifier = Modifier.padding(8.dp)) {
-            Text(
-                "${day} ${diaryNumber} ${writer}",
-                fontSize = 15.sp,
-                color = Color.Black
-            )
+            Row (
+                modifier = Modifier.padding(top = 4.dp)
+            ) {
+                Text(
+                    "${day} ${diaryNumber} ${writer}",
+                    fontSize = 15.sp,
+                    color = Color.Black,
+                    modifier = Modifier.padding(top = 8.dp)
+                )
+                Spacer(modifier = Modifier.padding(4.dp))
+                Text(
+                    text = "커뮤니티에 자랑하기",
+                    fontSize = 15.sp,
+                    color = Color.Black,
+                    modifier = Modifier.padding(top = 8.dp)
+                )
+                Spacer(modifier = Modifier.padding(4.dp))
+                Icon(
+                    imageVector = Icons.Default.Share,
+                    contentDescription = ""
+                )
+            }
+
             AsyncImage(
                 model = image,
                 contentDescription = "",
@@ -57,17 +77,18 @@ fun RockScreenCard(
                 color = Color.Black,
                 modifier = Modifier.padding(top = 8.dp)
             )
-            Row {
-                var like by remember { mutableStateOf(false) }
-                Icon(
-                    imageVector = if (like) Icons.Filled.Favorite else Icons.Default.FavoriteBorder,
-                    contentDescription = "Favorite",
-                    tint = if (like) Color.Red else Color.Gray,
-                    modifier = Modifier.clickable {
-                        like = !like
-                    }
-                )
-            }
+
+//            Row {
+//                var like by remember { mutableStateOf(false) }
+//                Icon(
+//                    imageVector = if (like) Icons.Filled.Favorite else Icons.Default.FavoriteBorder,
+//                    contentDescription = "Favorite",
+//                    tint = if (like) Color.Red else Color.Gray,
+//                    modifier = Modifier.clickable {
+//                        like = !like
+//                    }
+//                )
+//            }
         }
     }
 }

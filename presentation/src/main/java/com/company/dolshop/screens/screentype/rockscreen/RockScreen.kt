@@ -86,9 +86,6 @@ fun RocksScreen(
                 .fillMaxSize()
                 .nestedScroll(pullRefreshState.nestedScrollConnection)
         ) {
-//            if (dolsViewModel.sort.collectAsState().value == "특정날") {
-//                CallDatePickerDialog(dolsViewModel)
-//            }
             DaySortSelector(dolsViewModel)
             FirstUI(authNickName, navController)
             RockImage(innerPadding, dolsViewModel)
