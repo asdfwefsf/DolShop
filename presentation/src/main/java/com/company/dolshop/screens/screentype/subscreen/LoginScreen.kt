@@ -72,18 +72,6 @@ fun LoginScreen(navController: NavController, viewModel: KakaoAuthiViewModel) {
                     viewModel.kakaoLogin()
                     val userInfolist = viewModel.userInfoList
                     if (viewModel.loginValue.value) {
-
-                        val userRef =
-                            realtimeDB.getReference("users/${userInfolist.value.authNumber}/kakaoAuth")
-                        val userData = mapOf(
-                            "authNumber" to userInfolist.value.authNumber,
-                            "authEmail" to userInfolist.value.authEmail,
-                            "authNickName" to userInfolist.value.authNicName,
-                            "authProfileImage" to userInfolist.value.authProfileImage,
-                            "address" to ""
-                        )
-                        userRef.setValue(userData)
-
                         dataStoreUtility.apply {
                             context.setLoginState(true)
                         }
@@ -94,6 +82,22 @@ fun LoginScreen(navController: NavController, viewModel: KakaoAuthiViewModel) {
                             }
                         }
                     }
+
+                    userInfolist.collect { userInfo ->
+                        if (userInfo.authNumber != "s") {
+                            val userRef =
+                                realtimeDB.getReference("users/${userInfolist.value.authNumber}/kakaoAuth")
+                            val userData = mapOf(
+                                "authNumber" to userInfolist.value.authNumber,
+                                "authEmail" to userInfolist.value.authEmail,
+                                "authNickName" to userInfolist.value.authNicName,
+                                "authProfileImage" to userInfolist.value.authProfileImage,
+                                "address" to ""
+                            )
+                            userRef.setValue(userData)
+                        }
+                    }
+
                 }
             }
         )

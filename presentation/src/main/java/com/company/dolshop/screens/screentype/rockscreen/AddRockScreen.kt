@@ -211,15 +211,17 @@ fun uploadImageToFirebaseStorage(
     }
 }
 
-// RealTime DataBase에 이미지 URL 저장
+// user db에 이미지 URL 저장
 fun saveImageUrlToRealtimeDatabase(imageUrl: String, authNumber: String , diaryText : String , diaryNumber : String , authNickName : String) {
     val databaseRef = Firebase.database.reference
-    val publicDiaryRef = databaseRef.child("publicDiary/$authNumber")
 
-    ////
+
+    // 퍼블릭 다이어리에 내 다이어리 저장
+//    val publicDiaryRef = databaseRef.child("publicDiary/$authNumber")
     // 새 데이터를 추가하며 고유 ID 생성
-    val newEntryRef = publicDiaryRef.push()
+//    val newEntryRef = publicDiaryRef.push()
     // 고유 ID 아래에 images와 joayo 노드 생성
+
 
     ////
 
@@ -231,6 +233,8 @@ fun saveImageUrlToRealtimeDatabase(imageUrl: String, authNumber: String , diaryT
         "day" to diaryDate,
         "diaryNumber" to diaryNumber
     )
+
+    // 유저 DB에 다이어리 저장
     databaseRef.child("users/$authNumber/diary/$diaryDate").push().setValue(diary)
 
     // TODO : Community Screen에서 사용 할 수 있게 수정 : 좋아요 , 댓글 , 알림 기능이 들어갈 것 참고하기
@@ -243,32 +247,21 @@ fun saveImageUrlToRealtimeDatabase(imageUrl: String, authNumber: String , diaryT
         "authNumber" to authNumber,
         "diaryNumber" to diaryNumber
     )
-//    databaseRef.child("publicDiary/$authNumber/images").push().setValue(publicDiaryImage)
-//    databaseRef.child("publicDiary/$authNumber/joayo").push().setValue("")
-    newEntryRef.child("images").setValue(publicDiaryImage)
-    newEntryRef.child("joayo").setValue("")
+//    newEntryRef.child("images").setValue(publicDiaryImage)
+//    newEntryRef.child("joayo").setValue("")
 
 }
+
+
+
+
+
+
+
+
 
 fun getCurrentDateString(): String {
     val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
     return dateFormat.format(System.currentTimeMillis())
 }
-
-//val userData = mapOf(
-//    "addressName" to addressName,
-//    "addressNumber" to addressNumber,
-//    "address" to address,
-//    "detailedAddress" to detailedAddress,
-//    "phoneNumber" to phoneNumber
-//)
-//userRef.setValue(userData)
-
-//@Preview
-//@Composable
-//fun selectImageAndDiaryPreview() {
-//    DolShopTheme {
-//        selectImageAndDiary()
-//    }
-//}
 

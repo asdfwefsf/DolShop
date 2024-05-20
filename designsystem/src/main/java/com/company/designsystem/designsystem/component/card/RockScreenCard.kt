@@ -1,5 +1,6 @@
 package com.company.designsystem.designsystem.component.card
 
+import android.net.Uri
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -25,6 +26,11 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.AsyncImage
+import com.google.firebase.database.ktx.database
+import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.FirebaseStorage
+import java.text.SimpleDateFormat
+import java.util.Locale
 
 
 @Composable
@@ -61,7 +67,8 @@ fun RockScreenCard(
                 Spacer(modifier = Modifier.padding(4.dp))
                 Icon(
                     imageVector = Icons.Default.Share,
-                    contentDescription = ""
+                    contentDescription = "",
+                    modifier = Modifier.padding(top = 4.dp)
                 )
             }
 
@@ -92,3 +99,54 @@ fun RockScreenCard(
         }
     }
 }
+
+fun fromFireStoreToPublicDiary(
+    imageUri: Uri
+) {
+    val storageRef = FirebaseStorage.getInstance().getReference("images/${imageUri.lastPathSegment}")
+
+
+//    saveImageUrlToRealtimeDatabase(imageUri.toString() , authNumber , diaryText , diaryNumber , authNickName)
+}
+
+fun saveImageUrlToRealtimeDatabase(imageUrl: String, authNumber: String , diaryText : String , diaryNumber : String , authNickName : String) {
+    val databaseRef = Firebase.database.reference
+
+
+    // 퍼블릭 다이어리에 내 다이어리 저장
+    val publicDiaryRef = databaseRef.child("publicDiary/$authNumber")
+    // 새 데이터를 추가하며 고유 ID 생성
+    val newEntryRef = publicDiaryRef.push()
+    // 고유 ID 아래에 images와 joayo 노드 생성
+
+
+    ////
+
+    val diaryDate = getCurrentDateString()
+    val love : String = "0"
+    val diary = mapOf(
+        "image" to imageUrl,
+        "diary" to diaryText,
+        "day" to diaryDate,
+        "diaryNumber" to diaryNumber
+    )
+
+    val publicDiaryImage = mapOf(
+        "image" to imageUrl,
+        "diary" to diaryText,
+        "day" to diaryDate,
+        "love" to love,
+        "writer" to authNickName,
+        "authNumber" to authNumber,
+        "diaryNumber" to diaryNumber
+    )
+    newEntryRef.child("images").setValue(publicDiaryImage)
+    newEntryRef.child("joayo").setValue("")
+
+}
+
+fun getCurrentDateString(): String {
+    val dateFormat = SimpleDateFormat("yyyy-MM-dd", Locale.getDefault())
+    return dateFormat.format(System.currentTimeMillis())
+}
+

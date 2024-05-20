@@ -124,6 +124,14 @@ fun DetailCard(
                             joayoGet()
                         }
                     )
+
+
+
+
+
+
+
+
                     Spacer(Modifier.size(8.dp))
                     Text(joayoNumber.toString())
                     Icon(

@@ -138,7 +138,7 @@ fun FirstUI(myName: String, navController: NavController) {
             imageVector = Icons.Default.Add,
             contentDescription = "일기장 추가",
             modifier = Modifier
-                .size(13.dp)
+                .size(15.dp)
                 .clickable {
                     navController.navigate(ScreenList.AddRockScreen.route)
                 }

@@ -51,6 +51,11 @@ dependencies {
     implementation("com.github.skydoves:landscapist-coil3:2.3.3")
     navigation()
 
+    implementation(platform("com.google.firebase:firebase-bom:32.8.1"))
+    implementation("com.google.firebase:firebase-database-ktx")
+    implementation("com.google.firebase:firebase-storage-ktx:20.3.0")
+
+
     coil()
     implementation("androidx.compose.ui:ui")
     implementation("androidx.compose.ui:ui-graphics")

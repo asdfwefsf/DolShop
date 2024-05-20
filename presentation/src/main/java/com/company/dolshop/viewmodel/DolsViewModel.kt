@@ -134,7 +134,7 @@ class DolsViewModel @Inject constructor(
 
                             myid.get().addOnSuccessListener { dataSnapshot ->
                                 if (dataSnapshot.exists()) {
-                                    joayoRef.removeValue()
+                                    myid.removeValue()
                                     negativeJoayoUiChange()
 //                                    positiveJoayoUiChange(publicDiary)
                                 } else {
@@ -165,7 +165,7 @@ class DolsViewModel @Inject constructor(
     // 함수 기능 : 파이어베이스에서 해당하는 퍼블릭 다이어리의 좋아요 갯수와 , 사용자가 해당 퍼블릭 다이어리에 좋아요 눌렀는지 여부를
     //           가져와서 반환한다.
 //    suspend fun getJoyaoFromFirebase(authNumber: String, imageNumber: String): MutableList<Pair<String, Boolean>> {
-    suspend fun getJoyaoFromFirebase(authNumber: String, imageNumber: String) {
+    suspend fun getJoyaoFromFirebase(myAuthNumber: String, imageNumber: String) {
         val db = Firebase.database.reference
         val diaryRef = db.child("publicDiary")
 
@@ -178,7 +178,7 @@ class DolsViewModel @Inject constructor(
                 if (diary?.image == imageNumber) {
                     val joayo = imagesSnapshot.ref.child("joayo")
                     val joayoCount = joayo.get().await().childrenCount.toString()
-                    val result = joayo.child(authNumber).get().await()
+                    val result = joayo.child(myAuthNumber).get().await()
                     if (result.exists()) {
                         joayoList.add(Pair(joayoCount, result.getValue(Boolean::class.java) ?: false))
 //                        positiveJoayoUiChange()

@@ -29,6 +29,7 @@ import androidx.paging.compose.collectAsLazyPagingItems
 import com.company.designsystem.designsystem.component.card.DetailDialog
 import com.company.designsystem.designsystem.component.card.SomenailCard
 import com.company.dolshop.viewmodel.DolsViewModel
+import com.company.dolshop.viewmodel.KakaoAuthiViewModel
 import com.company.dolshop.viewmodel.publicdiary.PublicDiaryViewModel
 import com.company.domain.entity.PublicDiary
 
@@ -49,6 +50,7 @@ fun CommunityScreen(innerPadding: PaddingValues) {
                 .fillMaxSize()
                 .nestedScroll(pullRefreshState.nestedScrollConnection)
         ) {
+
             PublicDiarys(innerPadding, dolsViewModel)
         }
         PullToRefreshContainer(
@@ -69,6 +71,9 @@ fun PublicDiarys(
     var selectedDiary by remember { mutableStateOf<PublicDiary?>(null) }
 
     val publicDiaryViewModel : PublicDiaryViewModel = hiltViewModel()
+    val kakaoAuthiViewModel : KakaoAuthiViewModel = hiltViewModel()
+    val myAuthNumber = kakaoAuthiViewModel.userInfoList.collectAsState().value.authNumber
+
 //    var joayoData = remember { mutableStateOf<Pair<Int, Boolean>?>(null) }
     val showDialog = remember { mutableStateOf(false) }
 
@@ -96,7 +101,8 @@ fun PublicDiarys(
     selectedDiary?.let { diary ->
         LaunchedEffect(true) {
             // 현재 해당 퍼블릭다이어리의 좋아요 관련 정보 가져오기
-            var result = viewModel.getJoyaoFromFirebase(diary.authNumber, diary.image)
+            // 여기의 authNumber는 사용자 authNumber가 들어가야 된다.
+            viewModel.getJoyaoFromFirebase(myAuthNumber, diary.image)
             // 다이어리들에서 클릭된 다이어리 가져온게 diary , null이 아니라서 let에서 diary-> 로 받아온거야
 
 
@@ -121,7 +127,7 @@ fun PublicDiarys(
                     },
                     joayoSet = {
                         //
-                        viewModel.setJoyaoToFirebase(diary.image, diary.authNumber , diary)
+                        viewModel.setJoyaoToFirebase(diary.image, myAuthNumber , diary)
                     },
 //                    joayoUpdate = {
 //                        if(joayoBoolean) {
