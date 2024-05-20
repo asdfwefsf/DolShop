@@ -76,6 +76,8 @@ fun RocksScreen(
 
     val userInfolist = viewmodel.userInfoList.collectAsState()
     val authNickName = userInfolist.value.authNicName
+    val myAuthNumber = userInfolist.value.authNumber
+    val myAuthNickName = userInfolist.value.authNicName
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -88,7 +90,7 @@ fun RocksScreen(
         ) {
             DaySortSelector(dolsViewModel)
             FirstUI(authNickName, navController)
-            RockImage(innerPadding, dolsViewModel)
+            RockImage(innerPadding, dolsViewModel , myAuthNumber , myAuthNickName)
         }
         PullToRefreshContainer(
             modifier = Modifier.align(Alignment.TopCenter),
@@ -148,7 +150,7 @@ fun FirstUI(myName: String, navController: NavController) {
 }
 
 @Composable
-fun RockImage(innerPadding: PaddingValues, viewModel: DolsViewModel) {
+fun RockImage(innerPadding: PaddingValues, viewModel: DolsViewModel , myAuthNumber : String , myAuthNickName : String) {
     val diaries: LazyPagingItems<Diary> = viewModel.diaryda.collectAsLazyPagingItems()
 
     LazyColumn(
@@ -161,9 +163,10 @@ fun RockImage(innerPadding: PaddingValues, viewModel: DolsViewModel) {
                 RockScreenCard(
                     day = diaries.day,
                     diaryNumber = diaries.diaryNumber,
-                    writer = diaries.writer,
+                    writer = myAuthNickName,
                     image = diaries.image,
                     diary = diaries.diary,
+                    myAuthNumber = myAuthNumber
                 )
             }
         }

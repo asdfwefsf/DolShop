@@ -231,7 +231,9 @@ fun saveImageUrlToRealtimeDatabase(imageUrl: String, authNumber: String , diaryT
         "image" to imageUrl,
         "diary" to diaryText,
         "day" to diaryDate,
-        "diaryNumber" to diaryNumber
+        "diaryNumber" to diaryNumber,
+        "authNicName" to authNickName
+
     )
 
     // 유저 DB에 다이어리 저장

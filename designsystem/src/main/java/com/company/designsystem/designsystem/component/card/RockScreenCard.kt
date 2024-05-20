@@ -25,10 +25,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.core.net.toUri
 import coil.compose.AsyncImage
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.Locale
 
@@ -39,8 +43,10 @@ fun RockScreenCard(
     diaryNumber: String,
     writer: String,
     image: String,
-    diary: String
+    diary: String,
+    myAuthNumber : String
 ) {
+    val scope = CoroutineScope(Dispatchers.IO)
     Card(
         modifier = Modifier
             .padding(8.dp),
@@ -52,7 +58,7 @@ fun RockScreenCard(
                 modifier = Modifier.padding(top = 4.dp)
             ) {
                 Text(
-                    "${day} ${diaryNumber} ${writer}",
+                    "${day} ${diaryNumber}",
                     fontSize = 15.sp,
                     color = Color.Black,
                     modifier = Modifier.padding(top = 8.dp)
@@ -62,7 +68,12 @@ fun RockScreenCard(
                     text = "커뮤니티에 자랑하기",
                     fontSize = 15.sp,
                     color = Color.Black,
-                    modifier = Modifier.padding(top = 8.dp)
+                    modifier = Modifier.padding(top = 8.dp).clickable {
+                        scope.launch {
+                            fromFireStoreToPublicDiary(image.toUri() , myAuthNumber , diary , diaryNumber , writer)
+
+                        }
+                    }
                 )
                 Spacer(modifier = Modifier.padding(4.dp))
                 Icon(
@@ -101,12 +112,16 @@ fun RockScreenCard(
 }
 
 fun fromFireStoreToPublicDiary(
-    imageUri: Uri
+    imageUri: Uri,
+    authNumber: String,
+    diaryText: String,
+    diaryNumber: String,
+    authNickName: String
 ) {
     val storageRef = FirebaseStorage.getInstance().getReference("images/${imageUri.lastPathSegment}")
 
 
-//    saveImageUrlToRealtimeDatabase(imageUri.toString() , authNumber , diaryText , diaryNumber , authNickName)
+    saveImageUrlToRealtimeDatabase(imageUri.toString() , authNumber , diaryText , diaryNumber , authNickName)
 }
 
 fun saveImageUrlToRealtimeDatabase(imageUrl: String, authNumber: String , diaryText : String , diaryNumber : String , authNickName : String) {
