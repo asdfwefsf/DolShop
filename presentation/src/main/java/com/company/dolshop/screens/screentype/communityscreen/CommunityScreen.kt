@@ -40,6 +40,7 @@ fun CommunityScreen(innerPadding: PaddingValues) {
     val pullRefreshState = rememberPullToRefreshState()
 //    val userViewModel : KakaoAuthiViewModel = hiltViewModel()
 //    val me = userViewModel.userInfoList.collectAsState().value.authNumber
+
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -144,6 +145,10 @@ fun PublicDiarys(
                     // gonee4
                     deletePublicDiary = {
                         viewModel.deletePublicDiary(diary.authNumber , diary.image)
+                        showDialog.value = false
+                        selectedDiary = null
+                        diaries.refresh()
+
                         Log.d("sfeb" , diary.image)
 
                     },

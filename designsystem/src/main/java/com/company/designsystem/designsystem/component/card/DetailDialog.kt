@@ -119,6 +119,7 @@ fun DetailCard(
                             contentDescription = "",
                             modifier = Modifier.clickable {
                                 deletePublicDiary()
+
                             }
                         )
                     }
