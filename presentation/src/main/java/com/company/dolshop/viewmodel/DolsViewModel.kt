@@ -105,7 +105,7 @@ class DolsViewModel @Inject constructor(
     // 함수 기능 : 파이어베이스에 저장된 해당 퍼블릭 다이어리에 대한 나의 좋아요 여부에 따른 좋아요 정보 수정
     //            케이스1 : 내가 좋아요 누른 상태에서 좋아요 버튼 누르면 해당 퍼블릭 다이어리 내부에서 내 좋아요 삭제
     //            케이스2 : 내가 좋아요 누르지 않은 상태에서 좋아요 버튼 누르면 해당 퍼블릭 다이어리 내부애서 내 좋아요 추가
-    fun setJoyaoToFirebase(imageId: String, userId: String , publicDiary: PublicDiary) {
+    fun setJoyaoToFirebase(imageId: String, userId: String, publicDiary: PublicDiary) {
         val db = Firebase.database.reference
         val diaryRef = db.child("publicDiary")
 //        addValueEventListener
@@ -180,40 +180,47 @@ class DolsViewModel @Inject constructor(
                     val joayoCount = joayo.get().await().childrenCount.toString()
                     val result = joayo.child(myAuthNumber).get().await()
                     if (result.exists()) {
-                        joayoList.add(Pair(joayoCount, result.getValue(Boolean::class.java) ?: false))
+                        joayoList.add(
+                            Pair(
+                                joayoCount,
+                                result.getValue(Boolean::class.java) ?: false
+                            )
+                        )
 //                        positiveJoayoUiChange()
-                        _joayoData.value = Pair(joayoCount.toInt(), result.getValue(Boolean::class.java) ?: false)
+                        _joayoData.value =
+                            Pair(joayoCount.toInt(), result.getValue(Boolean::class.java) ?: false)
 
                     } else {
                         joayoList.add(Pair("0", result.getValue(Boolean::class.java) ?: false))
 //                        negativeJoayoUiChange()
-                        _joayoData.value = Pair(joayoCount.toInt(), result.getValue(Boolean::class.java) ?: false)
+                        _joayoData.value =
+                            Pair(joayoCount.toInt(), result.getValue(Boolean::class.java) ?: false)
 
                     }
                 }
             }
         }
 
-        Log.d("sdfsdfsfds" , "${joayoList}")
+        Log.d("sdfsdfsfds", "${joayoList}")
     }
     // 좋아요 체크
 
     // 좋아요 누르면 UI 변경 ( 하트 색깔 회색<->빨강 , 좋아요 숫자 업데이트 )
 
     private var _joayoData = MutableStateFlow<Pair<Int, Boolean>?>(null)
-    var joayoData : MutableStateFlow<Pair<Int, Boolean>?> = _joayoData
+    var joayoData: MutableStateFlow<Pair<Int, Boolean>?> = _joayoData
 
     // 호출 위치 :
     // 함수 기능 :
     fun positiveJoayoUiChange() {
-        _joayoData.value = _joayoData.value?.let { (count , joayo) ->
+        _joayoData.value = _joayoData.value?.let { (count, joayo) ->
             Pair(count + 1, !joayo)
         }
 
     }
 
     fun negativeJoayoUiChange() {
-        _joayoData.value = _joayoData.value?.let { (count , joayo) ->
+        _joayoData.value = _joayoData.value?.let { (count, joayo) ->
             Pair(count - 1, !joayo)
         }
     }
@@ -229,6 +236,58 @@ class DolsViewModel @Inject constructor(
             callDiaryWorkerFunction(_sort.value)
         }
     }
+
+    // 특정 퍼블릭 다이어리 삭제 함수
+    fun deletePublicDiary(diaryOwnerAuthNumber: String, imageNumber: String) {
+        getDiaryNodeKey(diaryOwnerAuthNumber, imageNumber) { diaryId ->
+            if (diaryId != null) {
+                val db = Firebase.database.reference
+                val diaryRef = db.child("publicDiary").child(diaryOwnerAuthNumber).child(diaryId)
+
+                diaryRef.removeValue().addOnSuccessListener {
+                    Log.d("fsefsf", "seonggong")
+                }
+                    .addOnFailureListener {
+                        Log.d("fsefsf", "silpae")
+
+                    }
+            }
+        }
+    }
+
+    // 특정 퍼블릭 다이어리 노드 키값 가져오는 함수
+    fun getDiaryNodeKey(
+        diaryOwnerAuthNumber: String,
+        imageNumber: String,
+        callback: (String?) -> Unit
+    ) {
+        val db = Firebase.database.reference
+        val diaryRef = db.child("publicDiary").child(diaryOwnerAuthNumber)
+
+        diaryRef.orderByChild("images/image").equalTo(imageNumber)
+            .addListenerForSingleValueEvent(object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    for (diarySnapshot in snapshot.children) {
+                        val key = diarySnapshot.key
+                        if (key != null) {
+                            Log.d("sfeb", key)
+
+                            callback(key)
+                            return
+                        }
+                    }
+                    Log.d("sfeb", "Error")
+
+                    callback(null)
+                }
+
+                override fun onCancelled(error: DatabaseError) {
+                    callback(null)
+                }
+            })
+    }
+}
+
 
     // 테스트
 
@@ -250,4 +309,3 @@ class DolsViewModel @Inject constructor(
 //            _selectedDiary.value = diary.copy(love = diary.love - 1)
 //        }
 //    }
-}

@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.material3.Card
@@ -39,8 +40,10 @@ import com.company.domain.entity.PublicDiary
 @Composable
 fun DetailDialog(
     diary: PublicDiary,
+    currentAppUserName : String,
     onDismissRequest: () -> Unit,
     joayoSet : () -> Unit,
+    deletePublicDiary : () -> Unit,
     savePublicDiary : () -> Unit,
     joayoNumber: Int,
     joayoBoolean: Boolean
@@ -53,11 +56,15 @@ fun DetailDialog(
                 day = diary.day,
                 diaryNumber = diary.diaryNumber,
                 writer = diary.writer,
+                currentAppUserName = currentAppUserName,
                 image = diary.image,
                 diary = diary.diary,
                 loveNumber = diary.love,
                 joayoNumber = joayoNumber,
                 joayoBoolean = joayoBoolean,
+                deletePublicDiary = {
+                    deletePublicDiary()
+                },
                 savePublicDiary = {
                     savePublicDiary()
                 },
@@ -75,17 +82,19 @@ fun DetailCard(
     day: String,
     diaryNumber: String,
     writer: String,
+    currentAppUserName : String,
     image: String,
     diary: String,
     loveNumber: String,
     joayoNumber: Int,
     joayoBoolean: Boolean,
+    deletePublicDiary : () -> Unit,
     savePublicDiary : () -> Unit,
     joayoGet : () -> Unit,
 ) {
 
     var savePublicDiaryBoolean by remember { mutableStateOf(false) }
-
+    var myDiaryBoolean = writer == currentAppUserName
     Card(
         modifier = Modifier
             .padding(8.dp)
@@ -97,11 +106,25 @@ fun DetailCard(
             modifier = Modifier.padding(8.dp),
         ) {
             items(1) {
-                Text(
-                    "${day} ${diaryNumber} ${writer}",
-                    fontSize = 15.sp,
-                    color = Color.Black
-                )
+                Row {
+                    Text(
+                        "${day} ${diaryNumber} ${writer}",
+                        fontSize = 15.sp,
+                        color = Color.Black
+                    )
+
+                    if (myDiaryBoolean) {
+                        Icon(
+                            imageVector = Icons.Filled.Delete,
+                            contentDescription = "",
+                            modifier = Modifier.clickable {
+                                deletePublicDiary()
+                            }
+                        )
+                    }
+
+                }
+
                 Box(modifier = Modifier
                     .fillMaxSize()
                     .height(384.dp)
@@ -124,14 +147,6 @@ fun DetailCard(
                             joayoGet()
                         }
                     )
-
-
-
-
-
-
-
-
                     Spacer(Modifier.size(8.dp))
                     Text(joayoNumber.toString())
                     Icon(

@@ -73,7 +73,7 @@ fun PublicDiarys(
     val publicDiaryViewModel : PublicDiaryViewModel = hiltViewModel()
     val kakaoAuthiViewModel : KakaoAuthiViewModel = hiltViewModel()
     val myAuthNumber = kakaoAuthiViewModel.userInfoList.collectAsState().value.authNumber
-
+    val myName = kakaoAuthiViewModel.userInfoList.collectAsState().value.authNicName
 //    var joayoData = remember { mutableStateOf<Pair<Int, Boolean>?>(null) }
     val showDialog = remember { mutableStateOf(false) }
 
@@ -120,6 +120,7 @@ fun PublicDiarys(
                 DetailDialog(
                     // DetailDialog에 들어갈 퍼블릭 다이어리 객체가 diary인데 이게 들어가는거야
                     diary = diary,
+                    currentAppUserName = myName,
                     onDismissRequest = {
                         showDialog.value = false
                         // 퍼블릭다이어리들중에서 다른 다이어리 들어갈 수 있게 selectedDiary 값 초기화
@@ -141,6 +142,11 @@ fun PublicDiarys(
 //                        }
 //                    },
                     // gonee4
+                    deletePublicDiary = {
+                        viewModel.deletePublicDiary(diary.authNumber , diary.image)
+                        Log.d("sfeb" , diary.image)
+
+                    },
                     savePublicDiary = {
                         publicDiaryViewModel.savePublicDiary(diary)
                     },
