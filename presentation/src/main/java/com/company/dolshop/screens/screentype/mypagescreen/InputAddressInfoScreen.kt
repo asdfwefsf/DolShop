@@ -44,7 +44,7 @@ fun InputAddressInfoScreen(navController: NavController) {
 
     val scope = rememberCoroutineScope()
     val realtimeDB = Firebase.database
-    val authNumber = kakaoAuthiViewModel.userInfoList.value.authNumber
+    val authNumber = kakaoAuthiViewModel.userInfoList.collectAsState().value.authNumber
 
     val savedStateHandle = navController.currentBackStackEntry?.savedStateHandle
     val addressViewModel: AddressViewModel = hiltViewModel()
@@ -152,6 +152,9 @@ fun InputAddressInfoScreen(navController: NavController) {
                 )
                 navController.navigate(ScreenList.AuthInfoScreen.route) {
                     launchSingleTop = true
+                    popUpTo(ScreenList.AuthInfoScreen.route) {
+                        inclusive = true
+                    }
 
                 }
 

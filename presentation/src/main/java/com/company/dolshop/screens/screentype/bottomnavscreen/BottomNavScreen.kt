@@ -36,6 +36,7 @@ import com.company.dolshop.screens.screentype.mypagescreen.AddressScreen
 import com.company.dolshop.screens.screentype.mypagescreen.AuthInfoScreen
 import com.company.dolshop.screens.screentype.mypagescreen.InputAddressInfoScreen
 import com.company.dolshop.screens.screentype.mypagescreen.LogoutScreen
+import com.company.dolshop.screens.screentype.mypagescreen.MyCouponScreen
 import com.company.dolshop.screens.screentype.mypagescreen.MyPageScreen
 import com.company.dolshop.screens.screentype.mypagescreen.SavePublicDiaryScreen
 import com.company.dolshop.screens.screentype.productscreen.ProductScreen
@@ -217,6 +218,10 @@ fun BottomNav() {
 
             composable(route = ScreenList.SavePublicDiaryScreen.route) {
                 SavePublicDiaryScreen()
+            }
+
+            composable(route = ScreenList.MyCouponScreen.route) {
+                MyCouponScreen()
             }
         }
     }

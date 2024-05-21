@@ -253,14 +253,14 @@ fun thirdBaseScreen() {
 @Composable
 fun circleBaseItem1() {
     val iconList = listOf(
-        "테스트1",
-        "테스트2",
-        "테스트3",
-        "테스트4",
-        "테스트5",
-        "테스트6",
-        "테스트7",
-        "테스트8",
+        "회사1",
+        "회사2",
+        "회사3",
+        "회사4",
+        "회사5",
+        "회사6",
+        "회사7",
+        "회사8",
     )
     Column(
         verticalArrangement = Arrangement.spacedBy(0.dp)
@@ -295,14 +295,14 @@ fun circleBaseItem1() {
 @Composable
 fun circleBaseItem2() {
     val iconList = listOf(
-        "테스트9",
-        "테스트10",
-        "테스트11",
-        "테스트12",
-        "테스트13",
-        "테스트14",
-        "테스트15",
-        "테스트16",
+        "회사9",
+        "회사10",
+        "회사11",
+        "회사12",
+        "회사13",
+        "회사14",
+        "회사15",
+        "회사16",
     )
     Column(
         verticalArrangement = Arrangement.spacedBy(0.dp)
