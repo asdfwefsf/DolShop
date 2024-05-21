@@ -14,7 +14,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
@@ -80,28 +79,28 @@ fun BottomNav() {
     val items = listOf(
         BottomNavItem(
             title = "커뮤",
-            selectedIcon = R.drawable.ic_launcher_background,
-            unselectedIcon = R.drawable.ic_launcher_background,
+            selectedIcon = R.drawable.community,
+            unselectedIcon = R.drawable.community,
         ),
         BottomNavItem(
             title = "상품",
-            selectedIcon = R.drawable.ic_launcher_background,
-            unselectedIcon = R.drawable.ic_launcher_background,
+            selectedIcon = R.drawable.product,
+            unselectedIcon = R.drawable.product,
         ),
         BottomNavItem(
             title = "돌's",
-            selectedIcon = R.drawable.ic_launcher_background,
-            unselectedIcon = R.drawable.ic_launcher_background,
+            selectedIcon = R.drawable.dols,
+            unselectedIcon = R.drawable.dols,
         ),
         BottomNavItem(
             title = "공지",
-            selectedIcon = R.drawable.ic_launcher_background,
-            unselectedIcon = R.drawable.ic_launcher_background,
+            selectedIcon = R.drawable.announcement,
+            unselectedIcon = R.drawable.announcement,
         ),
         BottomNavItem(
             title = "마이",
-            selectedIcon = R.drawable.ic_launcher_background,
-            unselectedIcon = R.drawable.ic_launcher_background,
+            selectedIcon = R.drawable.mypagi,
+            unselectedIcon = R.drawable.mypagi,
         ),
 
         )
