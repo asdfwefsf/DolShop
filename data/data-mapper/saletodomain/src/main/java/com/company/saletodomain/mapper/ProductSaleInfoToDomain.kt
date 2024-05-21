@@ -5,6 +5,7 @@ import com.company.domain.model.DomainProductSaleModel
 
 fun com.company.datasource_local_productsale.productsale.ProductSaleInfo.toDomainProductSaleModel(): DomainProductSaleModel {
     return DomainProductSaleModel(
-        saleMunGu = this.saleMunGu
+        saleMunGu = this.saleMunGu,
+        couponNumber = this.couponNumber
     )
 }

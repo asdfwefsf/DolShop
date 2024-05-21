@@ -21,14 +21,16 @@ class GetProductSaleWorkerFunction @Inject constructor(
                     if (!dao.prodideProductSaleInfoExists(responseBody.size)) {
                         dao.insertProductSaleInfo(
                             ProductSaleInfo(
-                                saleMunGu = it.saleMunGu
+                                saleMunGu = it.saleMunGu,
+                                couponNumber = it.couponNumber
                             )
                         )
                         Log.d("daoTest", "productSaleInsert")
                     } else {
                         dao.updateProductSaleInfo(
                             ProductSaleInfo(
-                                saleMunGu = it.saleMunGu
+                                saleMunGu = it.saleMunGu,
+                                couponNumber = it.couponNumber
                             )
                         )
                         Log.d("daoTest", "productSaleUpdate")

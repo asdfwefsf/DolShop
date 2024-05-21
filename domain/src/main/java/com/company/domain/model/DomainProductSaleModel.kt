@@ -1,4 +1,5 @@
 package com.company.domain.model
 data class DomainProductSaleModel(
-    val saleMunGu : String
+    val saleMunGu : String,
+    val couponNumber : String
 )

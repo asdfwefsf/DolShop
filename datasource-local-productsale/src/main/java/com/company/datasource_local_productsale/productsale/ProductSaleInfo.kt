@@ -7,5 +7,6 @@ import androidx.room.PrimaryKey
 data class ProductSaleInfo (
     @PrimaryKey(autoGenerate = true)
     val id : Int = 0,
-    val saleMunGu : String
+    val saleMunGu : String,
+    val couponNumber : String
 )
