@@ -22,7 +22,7 @@ import kotlinx.coroutines.launch
 fun LogoutScreen() {
     val scope = rememberCoroutineScope()
     val viewmodel : KakaoAuthiViewModel = hiltViewModel()
-    var showDialog by remember { mutableStateOf(false) } // State to control the dialog visibility
+    var showDialog by remember { mutableStateOf(false) }
     val context = LocalContext.current
     val dataStoreUtility = DataStoreUtility.getInstance()
 

@@ -11,6 +11,8 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -25,18 +27,23 @@ import androidx.compose.foundation.pager.PagerState
 import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.KeyboardArrowDown
 import androidx.compose.material.icons.filled.Person
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.ShoppingCart
+import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.State
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -56,20 +63,29 @@ import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
+import com.company.dolshop.screens.ScreenList
 import com.company.dolshop.viewmodel.UpdateBaseProductViewModel
 import com.company.dolshop.viewmodel.UpdateProductSaleViewModel
 import com.company.dolshop.viewmodel.getProductViewModel
 import com.company.domain.model.DomainProductModel
 import com.company.presentation.R
+import com.company.utility.DataStoreUtility
+import com.company.utility.DataStoreUtility.Companion.isCoupon1Flow
+import com.company.utility.DataStoreUtility.Companion.isCoupon2Flow
+import com.company.utility.DataStoreUtility.Companion.setCoupon1State
+import com.company.utility.DataStoreUtility.Companion.setCoupon2State
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.isActive
+import kotlinx.coroutines.launch
 import kotlin.math.absoluteValue
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun ProductScreen(innerPadding: PaddingValues, count: Int) {
+fun ProductScreen(innerPadding: PaddingValues, count: Int , navController: NavController) {
     val getProductViewModel: getProductViewModel = hiltViewModel()
     val changPproductList = getProductViewModel.product.collectAsState()
 
@@ -105,7 +121,7 @@ fun ProductScreen(innerPadding: PaddingValues, count: Int) {
             secondBaseScreen(horizontalPagerState, updateBaseProductViewModel)
         }
         item {
-            fourthBaseScreen(productSaleViewModel)
+            fourthBaseScreen(productSaleViewModel , navController)
         }
 
         item {
@@ -155,11 +171,9 @@ fun firstBaseScreen() {
                 .constrainAs(search) {
                     end.linkTo(shoppingCart.start)
                     bottom.linkTo(person.bottom)
-
                 }
                 .padding(end = 24.dp)
                 .size(30.dp)
-
         )
         Icon(
             imageVector = Icons.Default.ShoppingCart,
@@ -168,11 +182,9 @@ fun firstBaseScreen() {
                 .constrainAs(shoppingCart) {
                     end.linkTo(parent.end)
                     bottom.linkTo(person.bottom)
-
                 }
                 .size(35.dp)
                 .padding(end = 16.dp)
-
         )
     }
 }
@@ -335,8 +347,11 @@ fun circleBaseItem2() {
 }
 
 @Composable
-fun fourthBaseScreen(viewModel: UpdateProductSaleViewModel) {
+fun fourthBaseScreen(viewModel: UpdateProductSaleViewModel , navController: NavController) {
     val munguState = viewModel.mungu.collectAsState()
+
+    var showCoupon1Dialog = remember { mutableStateOf(false) }
+    var showCoupon2Dialog = remember { mutableStateOf(false) }
 
     Box(
         modifier = Modifier
@@ -346,21 +361,165 @@ fun fourthBaseScreen(viewModel: UpdateProductSaleViewModel) {
         ) {
         Column {
             if (munguState.value.size > 0) {
-                Text(
-                    munguState.value[0].saleMunGu,
-                    color = Color.White
-                )
-                Text(
+                Row {
+                    Text(
+                        munguState.value[0].saleMunGu,
+                        color = Color.White,
+                        modifier = Modifier.clickable {
+//                            showCouponDialog.value = true
+                        }
+                    )
+                    Spacer(modifier = Modifier.weight(1f))
+                    Icon(
+                        imageVector = Icons.Filled.KeyboardArrowDown,
+                        contentDescription = "",
+                        modifier = Modifier.clickable {
+                            showCoupon1Dialog.value = true
+                        }
+                    )
+                }
 
-                    munguState.value[1].saleMunGu,
-                    color = Color.White
-                )
+                Row {
+                    Text(
+                        munguState.value[1].saleMunGu,
+                        color = Color.White,
+                        modifier = Modifier.clickable {
+//                            showCouponDialog.value = true
+                        }
+                    )
+                    Spacer(modifier = Modifier.weight(1f))
+                    Icon(
+                        imageVector = Icons.Filled.KeyboardArrowDown,
+                        contentDescription = "",
+                        modifier = Modifier.clickable {
+                            showCoupon2Dialog.value = true
+                        }
+                    )
+                }
+
             }
         }
 
     }
+    val dataStoreUtility = DataStoreUtility.getInstance()
+    val context = LocalContext.current
+
+    val coupon1Boolean by dataStoreUtility.run {
+        context.isCoupon1Flow.collectAsStateWithLifecycle(
+            initialValue = false
+        )
+    }
+
+    val coupon2Boolean by dataStoreUtility.run {
+        context.isCoupon2Flow.collectAsStateWithLifecycle(
+            initialValue = false
+        )
+    }
+
+    if (showCoupon1Dialog.value) {
+        Coupon1Dialog(showCoupon1Dialog, coupon1Boolean , navController)
+//        showCoupon1Dialog.value = false
+    }
+
+    if (showCoupon2Dialog.value) {
+        Coupon2Dialog(showCoupon2Dialog, coupon2Boolean , navController)
+//        showCoupon2Dialog.value = false
+
+    }
 
 }
+
+@Composable
+fun Coupon1Dialog(dialogBoolean: MutableState<Boolean>, coupon1Boolean: Boolean , navController: NavController) {
+    val dataStoreUtility = DataStoreUtility.getInstance()
+    val context = LocalContext.current
+    val scope = rememberCoroutineScope()
+
+    if (coupon1Boolean) {
+        AlertDialog(
+            onDismissRequest = { dialogBoolean.value = false },
+            title = { Text("이미 쿠폰1이 있습니다. 쿠폰함으로 가시겠습니까?") },
+            confirmButton = {
+                Button(
+                    onClick = {
+                        dialogBoolean.value = false
+                        navController.navigate(ScreenList.MyCouponScreen.route)
+                    }
+                ) {
+                    Text("확인")
+                }
+            }
+        )
+    } else {
+        AlertDialog(
+            onDismissRequest = { dialogBoolean.value = false },
+            title = { Text("쿠폰1을 저장하시겠습니까 ?") },
+            confirmButton = {
+                Button(
+                    onClick = {
+                        scope.launch {
+                            dataStoreUtility.apply {
+                                context.setCoupon1State(true)
+                            }
+                            dialogBoolean.value = false
+                        }
+                    }
+                ) {
+                    Text("확인")
+                }
+            }
+        )
+    }
+
+}
+
+
+@Composable
+fun Coupon2Dialog(dialogBoolean: MutableState<Boolean>, coupon2Boolean: Boolean , navController : NavController) {
+    val dataStoreUtility = DataStoreUtility.getInstance()
+    val context = LocalContext.current
+    val scope = rememberCoroutineScope()
+
+    if (coupon2Boolean) {
+        AlertDialog(
+            onDismissRequest = { dialogBoolean.value = false },
+            title = { Text("이미 쿠폰2이 있습니다. 쿠폰함으로 가시겠습니까?") },
+            confirmButton = {
+                Button(
+                    onClick = {
+                        dialogBoolean.value = false
+                        navController.navigate(ScreenList.MyCouponScreen.route)
+
+                    }
+                ) {
+                    Text("확인")
+                }
+            }
+        )
+    } else {
+        AlertDialog(
+            onDismissRequest = { dialogBoolean.value = false },
+            title = { Text("쿠폰2을 저장하시겠습니까 ?") },
+            confirmButton = {
+                Button(
+                    onClick = {
+                        scope.launch {
+                            dataStoreUtility.apply {
+                                context.setCoupon2State(true)
+                            }
+                            dialogBoolean.value = false
+                        }
+                    }
+                ) {
+                    Text("확인")
+                }
+            }
+        )
+    }
+
+
+}
+
 
 @Composable
 fun firstChangeScreen(

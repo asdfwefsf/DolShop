@@ -172,7 +172,7 @@ fun BottomNav() {
             composable(route = ScreenList.ProductScreen.route) {
                 val viewmodel = hiltViewModel<UpdateBaseProductViewModel>()
                 val count by viewmodel.page.collectAsStateWithLifecycle()
-                ProductScreen(innerPadding , count)
+                ProductScreen(innerPadding , count , navController)
             }
 
             composable(route = ScreenList.RocksScreen.route) {

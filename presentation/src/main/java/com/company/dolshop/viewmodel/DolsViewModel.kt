@@ -286,6 +286,9 @@ class DolsViewModel @Inject constructor(
                 }
             })
     }
+
+    // 쿠폰 정보 저장 변수
+
 }
 
 
