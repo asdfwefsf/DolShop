@@ -11,4 +11,12 @@ class UpdateProductSaleUseCase @Inject constructor(
     suspend operator fun invoke() : Flow<List<DomainProductSaleModel>> {
         return productSaleRepository.updateSaleMunGu()
     }
+
+    suspend fun getCoupon1() : Flow<List<DomainProductSaleModel>> {
+        return productSaleRepository.getCoupon1()
+    }
+
+    suspend fun getCoupon2() : Flow<List<DomainProductSaleModel>> {
+        return productSaleRepository.getCoupon2()
+    }
 }

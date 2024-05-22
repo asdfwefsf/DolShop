@@ -435,6 +435,8 @@ fun Coupon1Dialog(dialogBoolean: MutableState<Boolean>, coupon1Boolean: Boolean 
     val context = LocalContext.current
     val scope = rememberCoroutineScope()
 
+    val viewmodel : UpdateProductSaleViewModel = hiltViewModel()
+
     if (coupon1Boolean) {
         AlertDialog(
             onDismissRequest = { dialogBoolean.value = false },
@@ -443,6 +445,7 @@ fun Coupon1Dialog(dialogBoolean: MutableState<Boolean>, coupon1Boolean: Boolean 
                 Button(
                     onClick = {
                         dialogBoolean.value = false
+//                        viewmodel.setSavedSaleCoupon1Boolean(true)
                         navController.navigate(ScreenList.MyCouponScreen.route)
                     }
                 ) {
@@ -480,6 +483,8 @@ fun Coupon2Dialog(dialogBoolean: MutableState<Boolean>, coupon2Boolean: Boolean 
     val context = LocalContext.current
     val scope = rememberCoroutineScope()
 
+    val viewmodel : UpdateProductSaleViewModel = hiltViewModel()
+
     if (coupon2Boolean) {
         AlertDialog(
             onDismissRequest = { dialogBoolean.value = false },
@@ -488,6 +493,8 @@ fun Coupon2Dialog(dialogBoolean: MutableState<Boolean>, coupon2Boolean: Boolean 
                 Button(
                     onClick = {
                         dialogBoolean.value = false
+//                        viewmodel.setSavedSaleCoupon2Boolean(true)
+
                         navController.navigate(ScreenList.MyCouponScreen.route)
 
                     }

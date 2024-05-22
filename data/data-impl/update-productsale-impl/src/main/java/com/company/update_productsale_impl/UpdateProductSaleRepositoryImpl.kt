@@ -22,4 +22,20 @@ class UpdateProductSaleRepositoryImpl @Inject constructor(
         }
     }
 
+    override suspend fun getCoupon1(): Flow<List<DomainProductSaleModel>> {
+        return dao.getCoupon1().map {
+            it.map {
+                it.toDomainProductSaleModel()
+            }
+        }
+    }
+
+    override suspend fun getCoupon2(): Flow<List<DomainProductSaleModel>> {
+        return dao.getCoupon2().map {
+            it.map {
+                it.toDomainProductSaleModel()
+            }
+        }
+    }
+
 }
