@@ -17,4 +17,5 @@ fun DetailProductScreen(dolURL : String) {
         LoadImageWithCoil(imageUrl = decodedDolUrl, context = LocalContext.current)
     }
 
+
 }
