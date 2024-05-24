@@ -78,6 +78,7 @@ import com.company.utility.DataStoreUtility.Companion.isCoupon1Flow
 import com.company.utility.DataStoreUtility.Companion.isCoupon2Flow
 import com.company.utility.DataStoreUtility.Companion.setCoupon1State
 import com.company.utility.DataStoreUtility.Companion.setCoupon2State
+import com.company.utility.encodeUrl
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
@@ -85,7 +86,7 @@ import kotlin.math.absoluteValue
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
-fun ProductScreen(innerPadding: PaddingValues, count: Int , navController: NavController) {
+fun ProductScreen(innerPadding: PaddingValues, count: Int, navController: NavController) {
     val getProductViewModel: getProductViewModel = hiltViewModel()
     val changPproductList = getProductViewModel.product.collectAsState()
 
@@ -121,14 +122,14 @@ fun ProductScreen(innerPadding: PaddingValues, count: Int , navController: NavCo
             secondBaseScreen(horizontalPagerState, updateBaseProductViewModel)
         }
         item {
-            fourthBaseScreen(productSaleViewModel , navController)
+            fourthBaseScreen(productSaleViewModel, navController)
         }
 
         item {
             thirdBaseScreen()
         }
         item {
-            firstChangeScreen(changPproductList, listState, getProductViewModel , navController)
+            firstChangeScreen(changPproductList, listState, getProductViewModel, navController)
         }
 
     }
@@ -349,7 +350,7 @@ fun circleBaseItem2() {
 }
 
 @Composable
-fun fourthBaseScreen(viewModel: UpdateProductSaleViewModel , navController: NavController) {
+fun fourthBaseScreen(viewModel: UpdateProductSaleViewModel, navController: NavController) {
     val munguState = viewModel.mungu.collectAsState()
 
     var showCoupon1Dialog = remember { mutableStateOf(false) }
@@ -419,12 +420,12 @@ fun fourthBaseScreen(viewModel: UpdateProductSaleViewModel , navController: NavC
     }
 
     if (showCoupon1Dialog.value) {
-        Coupon1Dialog(showCoupon1Dialog, coupon1Boolean , navController)
+        Coupon1Dialog(showCoupon1Dialog, coupon1Boolean, navController)
 //        showCoupon1Dialog.value = false
     }
 
     if (showCoupon2Dialog.value) {
-        Coupon2Dialog(showCoupon2Dialog, coupon2Boolean , navController)
+        Coupon2Dialog(showCoupon2Dialog, coupon2Boolean, navController)
 //        showCoupon2Dialog.value = false
 
     }
@@ -432,12 +433,16 @@ fun fourthBaseScreen(viewModel: UpdateProductSaleViewModel , navController: NavC
 }
 
 @Composable
-fun Coupon1Dialog(dialogBoolean: MutableState<Boolean>, coupon1Boolean: Boolean , navController: NavController) {
+fun Coupon1Dialog(
+    dialogBoolean: MutableState<Boolean>,
+    coupon1Boolean: Boolean,
+    navController: NavController
+) {
     val dataStoreUtility = DataStoreUtility.getInstance()
     val context = LocalContext.current
     val scope = rememberCoroutineScope()
 
-    val viewmodel : UpdateProductSaleViewModel = hiltViewModel()
+    val viewmodel: UpdateProductSaleViewModel = hiltViewModel()
 
     if (coupon1Boolean) {
         AlertDialog(
@@ -480,12 +485,16 @@ fun Coupon1Dialog(dialogBoolean: MutableState<Boolean>, coupon1Boolean: Boolean 
 
 
 @Composable
-fun Coupon2Dialog(dialogBoolean: MutableState<Boolean>, coupon2Boolean: Boolean , navController : NavController) {
+fun Coupon2Dialog(
+    dialogBoolean: MutableState<Boolean>,
+    coupon2Boolean: Boolean,
+    navController: NavController
+) {
     val dataStoreUtility = DataStoreUtility.getInstance()
     val context = LocalContext.current
     val scope = rememberCoroutineScope()
 
-    val viewmodel : UpdateProductSaleViewModel = hiltViewModel()
+    val viewmodel: UpdateProductSaleViewModel = hiltViewModel()
 
     if (coupon2Boolean) {
         AlertDialog(
@@ -535,7 +544,7 @@ fun firstChangeScreen(
     changPproductList: State<List<DomainProductModel>>,
     lazyListState: LazyListState,
     viewmodel: getProductViewModel,
-    navController : NavController
+    navController: NavController
 ) {
     var test by remember { mutableStateOf(lazyListState.canScrollForward) }
     LaunchedEffect(key1 = test) {
@@ -556,7 +565,14 @@ fun firstChangeScreen(
             val product = changPproductList.value[it - 1]
             productItemScreen(
                 product,
-                onClick = {navController.navigate(ScreenList.DetailProductScreen.route)},
+                onClick = { dolURL ->
+                    Log.d("sisflsfjlsjf" , dolURL)
+//                    navController.navigate("${ScreenList.DetailProductScreen.route}/$dolURL")
+//                    navController.navigate(ScreenList.DetailProductScreen.route + dolURL)
+                    navController.navigate("${ScreenList.DetailProductScreen.route}/${dolURL}")
+
+
+                },
             )
         }
     }
@@ -569,7 +585,7 @@ fun firstChangeScreen(
 @Composable
 fun productItemScreen(
     productState: DomainProductModel,
-    onClick: (category: String) -> Unit
+    onClick: (dolUrl: String) -> Unit
 ) {
     ConstraintLayout(
         modifier = Modifier
@@ -589,7 +605,7 @@ fun productItemScreen(
                     top.linkTo(parent.top)
                 }
                 .clickable {
-                    onClick(productState.name)
+                    onClick(encodeUrl(productState.image))
                 }
         )
         Text(

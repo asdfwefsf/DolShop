@@ -24,10 +24,12 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.navArgument
 import com.company.dolshop.screens.ScreenList
 import com.company.dolshop.screens.screentype.announcementscreen.AnnouncementScreen
 import com.company.dolshop.screens.screentype.communityscreen.CommunityScreen
@@ -178,8 +180,14 @@ fun BottomNav() {
                 ProductScreen(innerPadding , count , navController)
             }
 
-            composable(route = ScreenList.DetailProductScreen.route) {
-                DetailProductScreen()
+            composable(
+                route = "${ScreenList.DetailProductScreen.route}/{dolURL}",
+                arguments = listOf(navArgument("dolURL") { type = NavType.StringType })
+            ) { backStackEntry ->
+
+                val dolURL = backStackEntry.arguments?.getString("dolURL") ?: ""
+                DetailProductScreen(dolURL)
+//
             }
             // 상품 스크린
 
