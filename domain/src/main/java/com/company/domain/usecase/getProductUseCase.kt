@@ -1,5 +1,6 @@
 package com.company.domain.usecase
 
+import com.company.domain.model.DomainBaseProductModel
 import com.company.domain.model.DomainProductModel
 import com.company.domain.repository.getProductRepository
 import kotlinx.coroutines.flow.Flow

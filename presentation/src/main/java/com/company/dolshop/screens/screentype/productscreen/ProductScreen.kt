@@ -28,8 +28,6 @@ import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.KeyboardArrowDown
-import androidx.compose.material.icons.filled.Person
-import androidx.compose.material.icons.filled.Search
 import androidx.compose.material.icons.filled.ShoppingCart
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
@@ -71,6 +69,7 @@ import com.company.dolshop.screens.ScreenList
 import com.company.dolshop.viewmodel.UpdateBaseProductViewModel
 import com.company.dolshop.viewmodel.UpdateProductSaleViewModel
 import com.company.dolshop.viewmodel.getProductViewModel
+import com.company.domain.model.DomainBaseProductModel
 import com.company.domain.model.DomainProductModel
 import com.company.presentation.R
 import com.company.utility.DataStoreUtility
@@ -595,7 +594,7 @@ fun productItemScreen(
         val (image, text) = createRefs()
         AsyncImage(
             model = ImageRequest.Builder(LocalContext.current)
-                .data(productState.image)
+                .data(productState.image1)
                 .placeholder(R.drawable.ic_launcher_background)
                 .build(),
             contentDescription = null,
@@ -605,11 +604,11 @@ fun productItemScreen(
                     top.linkTo(parent.top)
                 }
                 .clickable {
-                    onClick(encodeUrl(productState.image))
+                    onClick(encodeUrl(productState.image1))
                 }
         )
         Text(
-            text = productState.name,
+            text = productState.text1,
             modifier = Modifier.constrainAs(text) {
                 start.linkTo(image.start)
                 top.linkTo(image.bottom)
