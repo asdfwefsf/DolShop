@@ -128,7 +128,7 @@ fun ProductScreen(innerPadding: PaddingValues, count: Int , navController: NavCo
             thirdBaseScreen()
         }
         item {
-            firstChangeScreen(changPproductList, listState, getProductViewModel)
+            firstChangeScreen(changPproductList, listState, getProductViewModel , navController)
         }
 
     }
@@ -142,16 +142,17 @@ fun firstBaseScreen() {
             .background(Color.White)
     ) {
         val (person, text, search, shoppingCart) = createRefs()
-        Icon(
-            imageVector = Icons.Default.Person,
-            contentDescription = null,
-            modifier = Modifier
-                .constrainAs(person) {
-                    start.linkTo(parent.start)
-                }
-                .size(40.dp)
-                .padding(start = 16.dp)
-        )
+        // 나중에 사용
+//        Icon(
+//            imageVector = Icons.Default.Person,
+//            contentDescription = null,
+//            modifier = Modifier
+//                .constrainAs(person) {
+//                    start.linkTo(parent.start)
+//                }
+//                .size(40.dp)
+//                .padding(start = 16.dp)
+//        )
         Text(
             text = "내 친구 돌돌이",
             modifier = Modifier
@@ -164,17 +165,18 @@ fun firstBaseScreen() {
             textAlign = TextAlign.Center,
             fontSize = 24.sp
         )
-        Icon(
-            imageVector = Icons.Default.Search,
-            contentDescription = null,
-            modifier = Modifier
-                .constrainAs(search) {
-                    end.linkTo(shoppingCart.start)
-                    bottom.linkTo(person.bottom)
-                }
-                .padding(end = 24.dp)
-                .size(30.dp)
-        )
+        // 나중에 사용
+//        Icon(
+//            imageVector = Icons.Default.Search,
+//            contentDescription = null,
+//            modifier = Modifier
+//                .constrainAs(search) {
+//                    end.linkTo(shoppingCart.start)
+//                    bottom.linkTo(person.bottom)
+//                }
+//                .padding(end = 24.dp)
+//                .size(30.dp)
+//        )
         Icon(
             imageVector = Icons.Default.ShoppingCart,
             contentDescription = null,
@@ -533,6 +535,7 @@ fun firstChangeScreen(
     changPproductList: State<List<DomainProductModel>>,
     lazyListState: LazyListState,
     viewmodel: getProductViewModel,
+    navController : NavController
 ) {
     var test by remember { mutableStateOf(lazyListState.canScrollForward) }
     LaunchedEffect(key1 = test) {
@@ -553,7 +556,7 @@ fun firstChangeScreen(
             val product = changPproductList.value[it - 1]
             productItemScreen(
                 product,
-                onClick = {},
+                onClick = {navController.navigate(ScreenList.DetailProductScreen.route)},
             )
         }
     }
@@ -585,7 +588,9 @@ fun productItemScreen(
                     start.linkTo(parent.start)
                     top.linkTo(parent.top)
                 }
-                .clickable { onClick(productState.name) }
+                .clickable {
+                    onClick(productState.name)
+                }
         )
         Text(
             text = productState.name,

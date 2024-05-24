@@ -38,6 +38,7 @@ import com.company.dolshop.screens.screentype.mypagescreen.LogoutScreen
 import com.company.dolshop.screens.screentype.mypagescreen.MyCouponScreen
 import com.company.dolshop.screens.screentype.mypagescreen.MyPageScreen
 import com.company.dolshop.screens.screentype.mypagescreen.SavePublicDiaryScreen
+import com.company.dolshop.screens.screentype.productscreen.DetailProductScreen
 import com.company.dolshop.screens.screentype.productscreen.ProductScreen
 import com.company.dolshop.screens.screentype.rockscreen.AddRockScreen
 import com.company.dolshop.screens.screentype.rockscreen.RocksScreen
@@ -169,11 +170,20 @@ fun BottomNav() {
 
             // 커뮤니티 스크린
 
+
+            // 상품 스크린
             composable(route = ScreenList.ProductScreen.route) {
                 val viewmodel = hiltViewModel<UpdateBaseProductViewModel>()
                 val count by viewmodel.page.collectAsStateWithLifecycle()
                 ProductScreen(innerPadding , count , navController)
             }
+
+            composable(route = ScreenList.DetailProductScreen.route) {
+                DetailProductScreen()
+            }
+            // 상품 스크린
+
+
 
             composable(route = ScreenList.RocksScreen.route) {
                 val viewmodel = hiltViewModel<KakaoAuthiViewModel>()
