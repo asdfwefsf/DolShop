@@ -29,7 +29,7 @@ import coil.request.ImageRequest
 fun LoadDetailProductScreen(
     imageUrl: String,
     context: Context,
-    modifier: Modifier = Modifier
+    modifier: Modifier
 ) {
     val localDensity = LocalDensity.current
     var heightDp by remember { mutableStateOf(0.dp) }
@@ -46,12 +46,7 @@ fun LoadDetailProductScreen(
     AsyncImage(
         model = imageRequest,
         contentDescription = "",
-        modifier = Modifier
-            .fillMaxWidth()
-            .onGloballyPositioned { coordinates ->
-                heightDp = with(localDensity) { coordinates.size.height.toDp() }
-            }
-        ,
+        modifier = modifier,
         contentScale = ContentScale.Crop,
         onLoading = { loadState = "loading" },
         onError = { loadState = "error" },

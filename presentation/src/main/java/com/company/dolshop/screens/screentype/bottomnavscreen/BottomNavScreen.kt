@@ -41,6 +41,7 @@ import com.company.dolshop.screens.screentype.mypagescreen.MyCouponScreen
 import com.company.dolshop.screens.screentype.mypagescreen.MyPageScreen
 import com.company.dolshop.screens.screentype.mypagescreen.SavePublicDiaryScreen
 import com.company.dolshop.screens.screentype.productscreen.DetailProductScreen
+import com.company.dolshop.screens.screentype.productscreen.GuMaeScreen
 import com.company.dolshop.screens.screentype.productscreen.ProductScreen
 import com.company.dolshop.screens.screentype.rockscreen.AddRockScreen
 import com.company.dolshop.screens.screentype.rockscreen.RocksScreen
@@ -48,6 +49,7 @@ import com.company.dolshop.screens.screentype.subscreen.LoginScreen
 import com.company.dolshop.viewmodel.KakaoAuthiViewModel
 import com.company.dolshop.viewmodel.UpdateBaseProductViewModel
 import com.company.domain.model.DomainProductModel
+import com.company.domain.model.GumaeProductModel
 import com.company.presentation.R
 import com.company.utility.DataStoreUtility
 import com.company.utility.DataStoreUtility.Companion.isLoggedInFlow
@@ -67,8 +69,11 @@ fun BottomNav() {
     val dataStoreUtility = DataStoreUtility.getInstance()
 
     // 로그인 정보 저장된거
-    val isLoggedIn by dataStoreUtility.run { context.isLoggedInFlow.collectAsStateWithLifecycle(initialValue = false) }
-
+    val isLoggedIn by dataStoreUtility.run {
+        context.isLoggedInFlow.collectAsStateWithLifecycle(
+            initialValue = false
+        )
+    }
 
 
     // BottomBar에서 이동 할 수 있는 화면의 경로들을 정의해 놓은 리스트
@@ -159,8 +164,7 @@ fun BottomNav() {
             }
 
         }
-    ) {
-        innerPadding ->
+    ) { innerPadding ->
         route = if (isLoggedIn) {
             ScreenList.RocksScreen.route
         } else {
@@ -179,7 +183,7 @@ fun BottomNav() {
             composable(route = ScreenList.ProductScreen.route) {
                 val viewmodel = hiltViewModel<UpdateBaseProductViewModel>()
                 val count by viewmodel.page.collectAsStateWithLifecycle()
-                ProductScreen(innerPadding , count , navController)
+                ProductScreen(innerPadding, count, navController)
             }
 
             composable(
@@ -189,18 +193,27 @@ fun BottomNav() {
 
                 val dolURL = backStackEntry.arguments?.getString("dolURL") ?: ""
 
-                val dolJson = Gson().fromJson(dolURL , DomainProductModel::class.java)
+                val dolJson = Gson().fromJson(dolURL, DomainProductModel::class.java)
 
-                DetailProductScreen(dolJson)
+                DetailProductScreen(dolJson, navController)
 //
+            }
+
+            composable(
+                route = "${ScreenList.GuMaeScreen.route}/{gumaeDolInfo}",
+                arguments = listOf(navArgument("gumaeDolInfo") { type = NavType.StringType })
+            ) { backStackEntry ->
+                val gumaeDolInfo = backStackEntry.arguments?.getString("gumaeDolInfo") ?: ""
+                val gumaeDolInfoName = gumaeDolInfo
+
+                GuMaeScreen(gumaeDolInfoName)
             }
             // 상품 스크린
 
 
-
             composable(route = ScreenList.RocksScreen.route) {
                 val viewmodel = hiltViewModel<KakaoAuthiViewModel>()
-                RocksScreen(innerPadding , viewmodel , navController)
+                RocksScreen(innerPadding, viewmodel, navController)
             }
 
             composable(route = ScreenList.AddRockScreen.route) {
@@ -231,7 +244,7 @@ fun BottomNav() {
             }
 
             composable(route = ScreenList.AddressScreen.route) {
-                AddressScreen(navController , coroutineScope)
+                AddressScreen(navController, coroutineScope)
             }
 
             composable(route = ScreenList.InputAddressInfoScreen.route) {

@@ -9,7 +9,7 @@ sealed class ScreenList(val route : String) {
     // 상품
     object ProductScreen : ScreenList("상품")
     object DetailProductScreen : ScreenList("특별한돌/{dolURL}")
-
+    object GuMaeScreen : ScreenList("구매화면/{gumaeDolInfo}")
     // Dol's
     object RocksScreen : ScreenList("돌's")
     object AddRockScreen : ScreenList("돌 더하기")
