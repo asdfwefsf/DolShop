@@ -35,6 +35,7 @@ fun DetailProductScreen(dolURL : DomainProductModel) {
         )
     }
 
+
 }
 
 //@Preview
