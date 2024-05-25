@@ -19,7 +19,9 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.layout.onGloballyPositioned
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
@@ -77,4 +79,14 @@ fun LoadImageWithCoil(
         }
 
     }
+}
+
+
+@Preview
+@Composable
+fun LoadImageWithCoilPreview() {
+    LoadImageWithCoil(
+        "https://m.segye.com/content/image/2021/11/16/20211116509557.jpg",
+        LocalContext.current
+    )
 }

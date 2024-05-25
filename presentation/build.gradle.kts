@@ -78,7 +78,7 @@ dependencies {
     api(platform("com.google.firebase:firebase-bom:32.8.1"))
     api("com.google.firebase:firebase-database-ktx")
     api("com.google.firebase:firebase-storage-ktx:20.3.0")
-
+    implementation ("com.google.code.gson:gson:2.11.0")
     //
 
     //test

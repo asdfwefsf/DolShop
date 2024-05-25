@@ -78,6 +78,7 @@ import com.company.utility.DataStoreUtility.Companion.isCoupon2Flow
 import com.company.utility.DataStoreUtility.Companion.setCoupon1State
 import com.company.utility.DataStoreUtility.Companion.setCoupon2State
 import com.company.utility.encodeUrl
+import com.google.gson.Gson
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.isActive
 import kotlinx.coroutines.launch
@@ -564,11 +565,12 @@ fun firstChangeScreen(
             val product = changPproductList.value[it - 1]
             productItemScreen(
                 product,
-                onClick = { dolURL ->
-                    Log.d("sisflsfjlsjf" , dolURL)
+                onClick = { dolData ->
+//                    Log.d("sisflsfjlsjf" , dolURL)
 //                    navController.navigate("${ScreenList.DetailProductScreen.route}/$dolURL")
 //                    navController.navigate(ScreenList.DetailProductScreen.route + dolURL)
-                    navController.navigate("${ScreenList.DetailProductScreen.route}/${dolURL}")
+                    val ss = encodeUrl(dolData.toString())
+                    navController.navigate("${ScreenList.DetailProductScreen.route}/${encodeUrl(Gson().toJson(dolData))}")
 
 
                 },
@@ -584,7 +586,8 @@ fun firstChangeScreen(
 @Composable
 fun productItemScreen(
     productState: DomainProductModel,
-    onClick: (dolUrl: String) -> Unit
+//    onClick: (dolUrl: String) -> Unit
+    onClick: (dolData : DomainProductModel) -> Unit
 ) {
     ConstraintLayout(
         modifier = Modifier
@@ -604,7 +607,7 @@ fun productItemScreen(
                     top.linkTo(parent.top)
                 }
                 .clickable {
-                    onClick(encodeUrl(productState.image1))
+                    onClick(productState)
                 }
         )
         Text(

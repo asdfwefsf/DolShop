@@ -47,9 +47,11 @@ import com.company.dolshop.screens.screentype.rockscreen.RocksScreen
 import com.company.dolshop.screens.screentype.subscreen.LoginScreen
 import com.company.dolshop.viewmodel.KakaoAuthiViewModel
 import com.company.dolshop.viewmodel.UpdateBaseProductViewModel
+import com.company.domain.model.DomainProductModel
 import com.company.presentation.R
 import com.company.utility.DataStoreUtility
 import com.company.utility.DataStoreUtility.Companion.isLoggedInFlow
+import com.google.gson.Gson
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -186,7 +188,10 @@ fun BottomNav() {
             ) { backStackEntry ->
 
                 val dolURL = backStackEntry.arguments?.getString("dolURL") ?: ""
-                DetailProductScreen(dolURL)
+
+                val dolJson = Gson().fromJson(dolURL , DomainProductModel::class.java)
+
+                DetailProductScreen(dolJson)
 //
             }
             // 상품 스크린
