@@ -49,7 +49,7 @@ fun AddressScreen(navController: NavController, coroutineScope: CoroutineScope) 
 class BridgeInterface(
     val navController: NavController,
     val coroutineScope: CoroutineScope,
-    val webView: WebView  // WebView 인스턴스 참조 추가
+    val webView: WebView
 
 ) {
     // JavaScript -> Android
@@ -71,7 +71,7 @@ class BridgeInterface(
             }
             withContext(Dispatchers.Main) {
                 navController.navigate(ScreenList.InputAddressInfoScreen.route) {
-                    navController.popBackStack() // 네비게이션 스택에서 제거
+                    navController.popBackStack()
 
                     launchSingleTop = true
                 }
@@ -79,8 +79,8 @@ class BridgeInterface(
                 webView.apply {
                     clearHistory()
                     clearCache(true)
-                    loadUrl("about:blank") // 빈 페이지를 로드하여 현재 표시된 내용 제거
-                    destroy() // WebView 자원 해제
+                    loadUrl("about:blank")
+                    destroy()
                 }
 
             }

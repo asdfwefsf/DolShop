@@ -206,7 +206,7 @@ fun BottomNav() {
                 val gumaeDolInfo = backStackEntry.arguments?.getString("gumaeDolInfo") ?: ""
                 val gumaeDolInfoName = gumaeDolInfo
 
-                GuMaeScreen(gumaeDolInfoName)
+                GuMaeScreen(gumaeDolInfoName , navController)
             }
             // 상품 스크린
 

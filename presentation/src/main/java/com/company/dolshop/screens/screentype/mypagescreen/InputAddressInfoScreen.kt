@@ -150,6 +150,7 @@ fun InputAddressInfoScreen(navController: NavController) {
                         phoneNumber = phoneNumber
                     )
                 )
+
                 navController.navigate(ScreenList.AuthInfoScreen.route) {
                     launchSingleTop = true
                     popUpTo(ScreenList.AuthInfoScreen.route) {
