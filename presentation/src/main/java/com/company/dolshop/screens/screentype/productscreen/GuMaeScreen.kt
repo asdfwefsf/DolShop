@@ -16,6 +16,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
@@ -44,8 +45,11 @@ import androidx.constraintlayout.compose.State
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.company.dolshop.viewmodel.AddressViewModel
+import com.company.dolshop.viewmodel.KakaoAuthiViewModel
 import com.company.domain.model.DomainBaesongInfo
 import com.company.presentation.R
+import com.google.firebase.database.ktx.database
+import com.google.firebase.ktx.Firebase
 
 @Composable
 fun GuMaeScreen(gumaeProductModel: String, navController: NavController) {
@@ -65,7 +69,7 @@ fun GuMaeScreen(gumaeProductModel: String, navController: NavController) {
         modifier = Modifier.fillMaxSize()
     ) {
         item {
-            BaesongzInputScreen(navController , baesongInfo)
+            BaesongzInputScreen(navController, baesongInfo)
         }
     }
 
@@ -73,11 +77,10 @@ fun GuMaeScreen(gumaeProductModel: String, navController: NavController) {
 }
 
 @Composable
-fun BaesongzInputScreen(navController: NavController , baesongInfo: DomainBaesongInfo) {
+fun BaesongzInputScreen(navController: NavController, baesongInfo: DomainBaesongInfo) {
     val addressViewModel: AddressViewModel = hiltViewModel()
     val addressInfo = addressViewModel.addressList.collectAsState().value
     val scope = rememberCoroutineScope()
-
 
 
     // 애니메이션 보이는거 불리안 값
@@ -119,7 +122,7 @@ fun BaesongzInputScreen(navController: NavController , baesongInfo: DomainBaeson
                                 baesongInfo.addressNumber = addressInfo[0].addressNumber
                                 baesongInfo.addressDetailName = addressInfo[0].addressDetailName
                                 baesongInfo.phoneNumber = addressInfo[0].phoneNumber
-                                Log.d("sfsfs" , baesongInfo.toString())
+                                Log.d("sfsfs", baesongInfo.toString())
                             },
                             modifier = Modifier.weight(1f)
                         ) {
@@ -254,8 +257,8 @@ fun test(baesongInfo: DomainBaesongInfo) {
         }) {
             Text("확인")
         }
-        if(dialogBoolean.value == true) {
-            baesongConfirmDialog(baesongInfo , dialogBoolean)
+        if (dialogBoolean.value == true) {
+            baesongConfirmDialog(baesongInfo, dialogBoolean)
         }
     }
 
@@ -278,14 +281,13 @@ fun BankNumberInfo(baesongInfo: DomainBaesongInfo) {
     })
 
 
-
 }
 
 @Composable
 fun AccountPeopleName(baesongInfo: DomainBaesongInfo) {
 
     var accountPeopleName by remember { mutableStateOf("") }
-    TextField(value = accountPeopleName , onValueChange = {
+    TextField(value = accountPeopleName, onValueChange = {
         accountPeopleName = it
 
         baesongInfo.accountOwnerName = accountPeopleName
@@ -296,36 +298,157 @@ fun AccountPeopleName(baesongInfo: DomainBaesongInfo) {
 }
 
 @Composable
-fun baesongConfirmDialog(baesongInfo: DomainBaesongInfo , dialogBoolean : MutableState<Boolean>) {
+fun baesongConfirmDialog(baesongInfo: DomainBaesongInfo, dialogBoolean: MutableState<Boolean>) {
+    val realtimeDB = Firebase.database
+    val userViewModel: KakaoAuthiViewModel = hiltViewModel()
+    val userInfoList = userViewModel.userInfoList.collectAsState().value
+    val authNumber = userInfoList.authNumber
+
+    val userRef = realtimeDB.getReference("users/$authNumber/baesongNaeYeock")
+
     Dialog(
         onDismissRequest = { dialogBoolean.value = false },
 
-    ) {
-       Card (
-           modifier = Modifier
-               .padding(8.dp)
-               .fillMaxWidth()
-               .fillMaxHeight(0.7f),
-           elevation = CardDefaults.cardElevation(4.dp),
-           colors = CardDefaults.cardColors(Color.White)
-       ) {
-           Column {
-               Text(baesongInfo.addressName)
-               Text(baesongInfo.addressNumber)
-               Text(baesongInfo.address)
-               Text(baesongInfo.addressDetailName)
-               Text(baesongInfo.phoneNumber)
-               Text(baesongInfo.bankName)
-               Text(baesongInfo.accountNumber)
-               Text(baesongInfo.accountOwnerName)
-           }
+        ) {
+        Card(
+            modifier = Modifier
+                .padding(8.dp)
+                .fillMaxWidth()
+                .fillMaxHeight(0.7f),
+            elevation = CardDefaults.cardElevation(4.dp),
+            colors = CardDefaults.cardColors(Color.White)
+        ) {
+            Column(
+                modifier = Modifier.padding(4.dp)
+            ) {
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 8.dp)
+                ) {
+                    Text("손님 주소 별명")
+                    Spacer(modifier = Modifier.weight(1f))
 
-       }
+                    Text(baesongInfo.addressName)
+                }
+                Spacer(modifier = Modifier.height(4.dp))
+
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 8.dp)
+                ) {
+                    Text("손님 우편번호")
+                    Spacer(modifier = Modifier.weight(1f))
+
+                    Text(baesongInfo.addressNumber)
+                }
+                Spacer(modifier = Modifier.height(4.dp))
+
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 8.dp)
+                ) {
+                    Text("손님 주소")
+                    Spacer(modifier = Modifier.weight(1f))
+
+                    Text(baesongInfo.address)
+
+                }
+                Spacer(modifier = Modifier.height(4.dp))
+
+
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 8.dp)
+                ) {
+                    Text("손님 상세 주소")
+                    Spacer(modifier = Modifier.weight(1f))
+
+                    Text(baesongInfo.addressDetailName)
+
+                }
+                Spacer(modifier = Modifier.height(4.dp))
+
+
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 8.dp)
+                ) {
+                    Text("손님 전화번호")
+                    Spacer(modifier = Modifier.weight(1f))
+
+                    Text(baesongInfo.phoneNumber)
+
+                }
+                Spacer(modifier = Modifier.height(4.dp))
+
+
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 8.dp)
+                ) {
+                    Text("은행이름")
+                    Spacer(modifier = Modifier.weight(1f))
+
+                    Text(baesongInfo.bankName)
+
+                }
+                Spacer(modifier = Modifier.height(4.dp))
+
+
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 8.dp)
+                ) {
+                    Text("손님 계좌번호")
+                    Spacer(modifier = Modifier.weight(1f))
+
+                    Text(baesongInfo.accountNumber)
+
+                }
+                Spacer(modifier = Modifier.height(4.dp))
+
+
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 8.dp)
+                ) {
+                    Text("손님 성함")
+                    Spacer(modifier = Modifier.weight(1f))
+
+                    Text(baesongInfo.accountOwnerName)
+
+                }
+                Spacer(modifier = Modifier.height(4.dp))
+
+                val baesongFirebase = mapOf(
+                    "addressName" to baesongInfo.addressName,
+                    "addressNumber" to baesongInfo.addressNumber,
+                    "address" to baesongInfo.address,
+                    "addressDetailName" to baesongInfo.addressDetailName,
+                    "phoneNumber" to baesongInfo.phoneNumber,
+                    "bankName" to baesongInfo.bankName,
+                    "accountNumber" to baesongInfo.accountNumber,
+                    "accountOwnerName" to baesongInfo.accountOwnerName
+                )
+                Button(
+                    onClick = {
+                        userRef.push().setValue(baesongFirebase)
+                        dialogBoolean.value = false
+                    }
+                ) {
+                    Text("주문 완료")
+
+                }
+            }
+
+        }
     }
 }
-//
-//@Preview
-//@Composable
-//fun TestPreview() {
-//    test()
-//}
