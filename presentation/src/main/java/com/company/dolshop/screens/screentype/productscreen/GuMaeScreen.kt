@@ -323,7 +323,6 @@ fun baesongConfirmDialog(baesongInfo: DomainBaesongInfo , dialogBoolean : Mutabl
        }
     }
 }
-
 //
 //@Preview
 //@Composable
