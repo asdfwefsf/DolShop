@@ -144,7 +144,6 @@ fun BaesongzInputScreen(navController: NavController) {
 
     }
 
-
 }
 
 @Composable
