@@ -1,74 +1,87 @@
 package com.company.dolshop.screens.screentype.productscreen
 
+import android.util.Log
 import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.core.tween
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
-import androidx.compose.animation.slideInHorizontally
 import androidx.compose.animation.slideInVertically
-import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.window.Dialog
+import androidx.constraintlayout.compose.State
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
-import com.company.dolshop.screens.ScreenList
 import com.company.dolshop.viewmodel.AddressViewModel
-import com.company.domain.model.DomainProductModel
-import com.company.domain.model.GumaeProductModel
+import com.company.domain.model.DomainBaesongInfo
 import com.company.presentation.R
-import kotlinx.coroutines.launch
 
 @Composable
 fun GuMaeScreen(gumaeProductModel: String, navController: NavController) {
+
+    var baesongInfo = DomainBaesongInfo(
+        addressName = "",
+        addressNumber = "",
+        address = "",
+        addressDetailName = "",
+        phoneNumber = "",
+        bankName = "",
+        accountNumber = "",
+        accountOwnerName = ""
+    )
+
     LazyColumn(
         modifier = Modifier.fillMaxSize()
     ) {
         item {
-            BaesongzInputScreen(navController)
+            BaesongzInputScreen(navController , baesongInfo)
         }
-        item {
-            test()
-        }
-
     }
+
 
 }
 
 @Composable
-fun BaesongzInputScreen(navController: NavController) {
+fun BaesongzInputScreen(navController: NavController , baesongInfo: DomainBaesongInfo) {
     val addressViewModel: AddressViewModel = hiltViewModel()
     val addressInfo = addressViewModel.addressList.collectAsState().value
     val scope = rememberCoroutineScope()
 
+
+
     // 애니메이션 보이는거 불리안 값
     var isAddressVisible by remember { mutableStateOf(false) }
-
 
     Column(
         modifier = Modifier.fillMaxWidth()
@@ -100,22 +113,23 @@ fun BaesongzInputScreen(navController: NavController) {
                     ) {
                         Button(
                             onClick = {
-
                                 message = "위의 주소로 배송될 예정입니다."
-
+                                baesongInfo.addressName = addressInfo[0].addressName
+                                baesongInfo.address = addressInfo[0].address
+                                baesongInfo.addressNumber = addressInfo[0].addressNumber
+                                baesongInfo.addressDetailName = addressInfo[0].addressDetailName
+                                baesongInfo.phoneNumber = addressInfo[0].phoneNumber
+                                Log.d("sfsfs" , baesongInfo.toString())
                             },
                             modifier = Modifier.weight(1f)
-
                         ) {
                             Text("네")
                         }
                         Button(
                             onClick = {
                                 message = "새로운 주소로 배송될 예정입니다."
-
                             },
                             modifier = Modifier.weight(1f)
-
                         ) {
                             Text("아니오")
                         }
@@ -126,31 +140,14 @@ fun BaesongzInputScreen(navController: NavController) {
 
         Spacer(modifier = Modifier.size(16.dp))
         Text(message)
-//        AnimatedVisibility(
-//            visible = isNoVisible,
-//            enter = fadeIn(animationSpec = animationSockDo),
-//            exit = fadeOut(animationSpec = animationSockDo)
-//        ) {
-//            Text("새로운 주소로 배송될 예정입니다.")
-//        }
-//        AnimatedVisibility(
-//            visible = isYesVisible,
-//            enter = fadeIn(animationSpec = animationSockDo),
-//            exit = fadeOut(animationSpec = animationSockDo)
-//        ) {
-//            Text("위의 주소로 배송될 예정입니다.")
-//        }
 
-
+        test(baesongInfo)
     }
-
 }
 
 @Composable
-fun test() {
+fun test(baesongInfo: DomainBaesongInfo) {
     var selectedImageName by remember { mutableStateOf("") }
-
-
 
     Column {
         Row(
@@ -161,7 +158,10 @@ fun test() {
                 contentDescription = "",
                 modifier = Modifier
                     .size(100.dp)
-                    .clickable { selectedImageName = "농협은행" }
+                    .clickable {
+                        selectedImageName = "농협은행"
+                        baesongInfo.bankName = "농협은행"
+                    }
             )
             Spacer(Modifier.size(10.dp))
             Image(
@@ -169,7 +169,11 @@ fun test() {
                 contentDescription = "",
                 modifier = Modifier
                     .size(100.dp)
-                    .clickable { selectedImageName = "기업은행" }
+                    .clickable {
+                        selectedImageName = "기업은행"
+                        baesongInfo.bankName = "기업은행"
+
+                    }
             )
             Spacer(Modifier.size(10.dp))
             Image(
@@ -177,7 +181,11 @@ fun test() {
                 contentDescription = "",
                 modifier = Modifier
                     .size(100.dp)
-                    .clickable { selectedImageName = "하나은행" }
+                    .clickable {
+                        selectedImageName = "하나은행"
+                        baesongInfo.bankName = "하나은행"
+
+                    }
             )
         }
         Spacer(Modifier.size(10.dp))
@@ -189,7 +197,11 @@ fun test() {
                 contentDescription = "",
                 modifier = Modifier
                     .size(100.dp)
-                    .clickable { selectedImageName = "국민은행" }
+                    .clickable {
+                        selectedImageName = "국민은행"
+                        baesongInfo.bankName = "국민은행"
+
+                    }
             )
             Spacer(Modifier.size(10.dp))
             Image(
@@ -197,7 +209,11 @@ fun test() {
                 contentDescription = "",
                 modifier = Modifier
                     .size(100.dp)
-                    .clickable { selectedImageName = "신한은행" }
+                    .clickable {
+                        selectedImageName = "신한은행"
+                        baesongInfo.bankName = "신한은행"
+
+                    }
             )
             Spacer(Modifier.size(10.dp))
             Image(
@@ -205,7 +221,11 @@ fun test() {
                 contentDescription = "",
                 modifier = Modifier
                     .size(100.dp)
-                    .clickable { selectedImageName = "우리은행" }
+                    .clickable {
+                        selectedImageName = "우리은행"
+                        baesongInfo.bankName = "우리은행"
+
+                    }
             )
             Spacer(Modifier.size(10.dp))
         }
@@ -219,60 +239,94 @@ fun test() {
         Row(modifier = Modifier.fillMaxSize()) {
             Text("계좌번호")
             Spacer(Modifier.size(50.dp))
-            BankNumberInfo()
+            BankNumberInfo(baesongInfo)
         }
 
         Row(modifier = Modifier.fillMaxSize()) {
             Text("입금자명")
             Spacer(Modifier.size(50.dp))
-            AccountPeopleName()
+            AccountPeopleName(baesongInfo)
         }
 
+        var dialogBoolean = remember { mutableStateOf(false) }
+        Button(onClick = {
+            dialogBoolean.value = true
+        }) {
+            Text("확인")
+        }
+        if(dialogBoolean.value == true) {
+            baesongConfirmDialog(baesongInfo , dialogBoolean)
+        }
     }
-
 
 
 }
 
 @Composable
-fun BankInfo(selectedImageName : String) {
+fun BankInfo(selectedImageName: String) {
     Text(selectedImageName)
 }
 
 @Composable
-fun BankNumberInfo() {
+fun BankNumberInfo(baesongInfo: DomainBaesongInfo) {
 
     var bankNumber by remember { mutableStateOf("") }
-    TextField(value = bankNumber, onValueChange = {bankNumber = it})
+    TextField(value = bankNumber, onValueChange = {
+        bankNumber = it
+
+        baesongInfo.accountNumber = bankNumber
+    })
+
+
 
 }
 
 @Composable
-fun AccountPeopleName() {
+fun AccountPeopleName(baesongInfo: DomainBaesongInfo) {
 
     var accountPeopleName by remember { mutableStateOf("") }
-    TextField(value = accountPeopleName, onValueChange = {accountPeopleName = it})
+    TextField(value = accountPeopleName , onValueChange = {
+        accountPeopleName = it
+
+        baesongInfo.accountOwnerName = accountPeopleName
+
+
+    })
 
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-@Preview
 @Composable
-fun TestPreview() {
-    test()
+fun baesongConfirmDialog(baesongInfo: DomainBaesongInfo , dialogBoolean : MutableState<Boolean>) {
+    Dialog(
+        onDismissRequest = { dialogBoolean.value = false },
+
+    ) {
+       Card (
+           modifier = Modifier
+               .padding(8.dp)
+               .fillMaxWidth()
+               .fillMaxHeight(0.7f),
+           elevation = CardDefaults.cardElevation(4.dp),
+           colors = CardDefaults.cardColors(Color.White)
+       ) {
+           Column {
+               Text(baesongInfo.addressName)
+               Text(baesongInfo.addressNumber)
+               Text(baesongInfo.address)
+               Text(baesongInfo.addressDetailName)
+               Text(baesongInfo.phoneNumber)
+               Text(baesongInfo.bankName)
+               Text(baesongInfo.accountNumber)
+               Text(baesongInfo.accountOwnerName)
+           }
+
+       }
+    }
 }
+
+//
+//@Preview
+//@Composable
+//fun TestPreview() {
+//    test()
+//}
