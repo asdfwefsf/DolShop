@@ -67,6 +67,9 @@ fun SettingItemsList(modifier: Modifier = Modifier , navController: NavControlle
 //
         LeadSettingItem(icon = Icons.Default.Person, text = "저장일기")
         LastSettingItem(icon = Icons.Default.Person, text = "저장일기 보러가기" , "저장일기" , navController)
+
+        LeadSettingItem(icon = Icons.Default.Person, text = "주문내역")
+        LastSettingItem(icon = Icons.Default.Person, text = "주문내역 보러가기" , "주문내역" , navController)
     }
 }
 

@@ -436,7 +436,8 @@ fun baesongConfirmDialog(baesongInfo: DomainBaesongInfo, dialogBoolean: MutableS
                     "phoneNumber" to baesongInfo.phoneNumber,
                     "bankName" to baesongInfo.bankName,
                     "accountNumber" to baesongInfo.accountNumber,
-                    "accountOwnerName" to baesongInfo.accountOwnerName
+                    "accountOwnerName" to baesongInfo.accountOwnerName,
+                    "baesongBoolean" to "false"
                 )
                 Button(
                     onClick = {

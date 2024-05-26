@@ -35,6 +35,7 @@ import com.company.dolshop.screens.screentype.announcementscreen.AnnouncementScr
 import com.company.dolshop.screens.screentype.communityscreen.CommunityScreen
 import com.company.dolshop.screens.screentype.mypagescreen.AddressScreen
 import com.company.dolshop.screens.screentype.mypagescreen.AuthInfoScreen
+import com.company.dolshop.screens.screentype.mypagescreen.GuMaeNaeYeokScreen
 import com.company.dolshop.screens.screentype.mypagescreen.InputAddressInfoScreen
 import com.company.dolshop.screens.screentype.mypagescreen.LogoutScreen
 import com.company.dolshop.screens.screentype.mypagescreen.MyCouponScreen
@@ -257,6 +258,10 @@ fun BottomNav() {
 
             composable(route = ScreenList.MyCouponScreen.route) {
                 MyCouponScreen()
+            }
+
+            composable(route = ScreenList.GuMaeNaeYeokScreen.route) {
+                GuMaeNaeYeokScreen()
             }
         }
     }
