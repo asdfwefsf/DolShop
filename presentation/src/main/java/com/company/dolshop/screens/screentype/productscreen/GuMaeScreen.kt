@@ -212,12 +212,12 @@ fun BaesongzInputScreen(navController: NavController, baesongInfo: DomainBaesong
         }
         Spacer(modifier = Modifier.size(16.dp))
         Text(message)
-        test(baesongInfo , selectedText , decodeUrl(gumaeProductModel.text1))
+        test(baesongInfo , selectedText , decodeUrl(gumaeProductModel.text1) , decodeUrl(gumaeProductModel.image1))
     }
 }
 
 @Composable
-fun test(baesongInfo: DomainBaesongInfo , selectedText : String , productName : String) {
+fun test(baesongInfo: DomainBaesongInfo , selectedText : String , productName : String , productLink : String) {
     var selectedImageName by remember { mutableStateOf("") }
 
     Column {
@@ -321,7 +321,7 @@ fun test(baesongInfo: DomainBaesongInfo , selectedText : String , productName : 
             Text("확인")
         }
         if (dialogBoolean.value == true) {
-            baesongConfirmDialog(baesongInfo, dialogBoolean , selectedText , productName)
+            baesongConfirmDialog(baesongInfo, dialogBoolean , selectedText , productName , productLink)
         }
     }
 
@@ -361,7 +361,8 @@ fun AccountPeopleName(baesongInfo: DomainBaesongInfo) {
 }
 
 @Composable
-fun baesongConfirmDialog(baesongInfo: DomainBaesongInfo, dialogBoolean: MutableState<Boolean> , selectedText : String , productName : String) {
+fun baesongConfirmDialog(baesongInfo: DomainBaesongInfo, dialogBoolean: MutableState<Boolean> , selectedText : String , productName : String
+, productLink : String) {
     val realtimeDB = Firebase.database
     val userViewModel: KakaoAuthiViewModel = hiltViewModel()
     val userInfoList = userViewModel.userInfoList.collectAsState().value
@@ -510,7 +511,8 @@ fun baesongConfirmDialog(baesongInfo: DomainBaesongInfo, dialogBoolean: MutableS
                     "accountOwnerName" to baesongInfo.accountOwnerName,
                     "baesongBoolean" to "false",
                     "productName" to productName,
-                    "productGaeSu" to selectedText
+                    "productGaeSu" to selectedText,
+                    "productURL" to productLink
                 )
                 Button(
                     onClick = {
