@@ -140,10 +140,8 @@ fun BaesongzInputScreen(navController: NavController, baesongInfo: DomainBaesong
                 }
             }
         }
-
         Spacer(modifier = Modifier.size(16.dp))
         Text(message)
-
         test(baesongInfo)
     }
 }
@@ -175,7 +173,6 @@ fun test(baesongInfo: DomainBaesongInfo) {
                     .clickable {
                         selectedImageName = "기업은행"
                         baesongInfo.bankName = "기업은행"
-
                     }
             )
             Spacer(Modifier.size(10.dp))
@@ -187,7 +184,6 @@ fun test(baesongInfo: DomainBaesongInfo) {
                     .clickable {
                         selectedImageName = "하나은행"
                         baesongInfo.bankName = "하나은행"
-
                     }
             )
         }
@@ -203,7 +199,6 @@ fun test(baesongInfo: DomainBaesongInfo) {
                     .clickable {
                         selectedImageName = "국민은행"
                         baesongInfo.bankName = "국민은행"
-
                     }
             )
             Spacer(Modifier.size(10.dp))
@@ -215,7 +210,6 @@ fun test(baesongInfo: DomainBaesongInfo) {
                     .clickable {
                         selectedImageName = "신한은행"
                         baesongInfo.bankName = "신한은행"
-
                     }
             )
             Spacer(Modifier.size(10.dp))
@@ -227,7 +221,6 @@ fun test(baesongInfo: DomainBaesongInfo) {
                     .clickable {
                         selectedImageName = "우리은행"
                         baesongInfo.bankName = "우리은행"
-
                     }
             )
             Spacer(Modifier.size(10.dp))
@@ -328,7 +321,6 @@ fun baesongConfirmDialog(baesongInfo: DomainBaesongInfo, dialogBoolean: MutableS
                 ) {
                     Text("손님 주소 별명")
                     Spacer(modifier = Modifier.weight(1f))
-
                     Text(baesongInfo.addressName)
                 }
                 Spacer(modifier = Modifier.height(4.dp))
@@ -340,7 +332,6 @@ fun baesongConfirmDialog(baesongInfo: DomainBaesongInfo, dialogBoolean: MutableS
                 ) {
                     Text("손님 우편번호")
                     Spacer(modifier = Modifier.weight(1f))
-
                     Text(baesongInfo.addressNumber)
                 }
                 Spacer(modifier = Modifier.height(4.dp))
@@ -352,12 +343,9 @@ fun baesongConfirmDialog(baesongInfo: DomainBaesongInfo, dialogBoolean: MutableS
                 ) {
                     Text("손님 주소")
                     Spacer(modifier = Modifier.weight(1f))
-
                     Text(baesongInfo.address)
-
                 }
                 Spacer(modifier = Modifier.height(4.dp))
-
 
                 Row(
                     modifier = Modifier
@@ -366,9 +354,7 @@ fun baesongConfirmDialog(baesongInfo: DomainBaesongInfo, dialogBoolean: MutableS
                 ) {
                     Text("손님 상세 주소")
                     Spacer(modifier = Modifier.weight(1f))
-
                     Text(baesongInfo.addressDetailName)
-
                 }
                 Spacer(modifier = Modifier.height(4.dp))
 
@@ -380,9 +366,7 @@ fun baesongConfirmDialog(baesongInfo: DomainBaesongInfo, dialogBoolean: MutableS
                 ) {
                     Text("손님 전화번호")
                     Spacer(modifier = Modifier.weight(1f))
-
                     Text(baesongInfo.phoneNumber)
-
                 }
                 Spacer(modifier = Modifier.height(4.dp))
 
@@ -394,9 +378,7 @@ fun baesongConfirmDialog(baesongInfo: DomainBaesongInfo, dialogBoolean: MutableS
                 ) {
                     Text("은행이름")
                     Spacer(modifier = Modifier.weight(1f))
-
                     Text(baesongInfo.bankName)
-
                 }
                 Spacer(modifier = Modifier.height(4.dp))
 
@@ -408,9 +390,7 @@ fun baesongConfirmDialog(baesongInfo: DomainBaesongInfo, dialogBoolean: MutableS
                 ) {
                     Text("손님 계좌번호")
                     Spacer(modifier = Modifier.weight(1f))
-
                     Text(baesongInfo.accountNumber)
-
                 }
                 Spacer(modifier = Modifier.height(4.dp))
 
@@ -422,9 +402,7 @@ fun baesongConfirmDialog(baesongInfo: DomainBaesongInfo, dialogBoolean: MutableS
                 ) {
                     Text("손님 성함")
                     Spacer(modifier = Modifier.weight(1f))
-
                     Text(baesongInfo.accountOwnerName)
-
                 }
                 Spacer(modifier = Modifier.height(4.dp))
 
@@ -446,7 +424,6 @@ fun baesongConfirmDialog(baesongInfo: DomainBaesongInfo, dialogBoolean: MutableS
                     }
                 ) {
                     Text("주문 완료")
-
                 }
             }
 
