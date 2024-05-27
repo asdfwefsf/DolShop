@@ -206,8 +206,8 @@ fun BottomNav() {
             ) { backStackEntry ->
                 val gumaeDolInfo = backStackEntry.arguments?.getString("gumaeDolInfo") ?: ""
                 val gumaeDolInfoName = gumaeDolInfo
-
-                GuMaeScreen(gumaeDolInfoName , navController)
+                val real = Gson().fromJson(gumaeDolInfoName, DomainProductModel::class.java)
+                GuMaeScreen(real , navController)
             }
             // 상품 스크린
 

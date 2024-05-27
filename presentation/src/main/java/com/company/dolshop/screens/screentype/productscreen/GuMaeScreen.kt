@@ -44,15 +44,18 @@ import androidx.compose.ui.window.Dialog
 import androidx.constraintlayout.compose.State
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
+import coil.compose.AsyncImage
 import com.company.dolshop.viewmodel.AddressViewModel
 import com.company.dolshop.viewmodel.KakaoAuthiViewModel
 import com.company.domain.model.DomainBaesongInfo
+import com.company.domain.model.DomainProductModel
 import com.company.presentation.R
+import com.company.utility.decodeUrl
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 
 @Composable
-fun GuMaeScreen(gumaeProductModel: String, navController: NavController) {
+fun GuMaeScreen(gumaeProductModel: DomainProductModel, navController: NavController) {
 
     var baesongInfo = DomainBaesongInfo(
         addressName = "",
@@ -69,7 +72,7 @@ fun GuMaeScreen(gumaeProductModel: String, navController: NavController) {
         modifier = Modifier.fillMaxSize()
     ) {
         item {
-            BaesongzInputScreen(navController, baesongInfo)
+            BaesongzInputScreen(navController, baesongInfo , gumaeProductModel)
         }
     }
 
@@ -77,7 +80,7 @@ fun GuMaeScreen(gumaeProductModel: String, navController: NavController) {
 }
 
 @Composable
-fun BaesongzInputScreen(navController: NavController, baesongInfo: DomainBaesongInfo) {
+fun BaesongzInputScreen(navController: NavController, baesongInfo: DomainBaesongInfo , gumaeProductModel: DomainProductModel) {
     val addressViewModel: AddressViewModel = hiltViewModel()
     val addressInfo = addressViewModel.addressList.collectAsState().value
     val scope = rememberCoroutineScope()
@@ -94,6 +97,8 @@ fun BaesongzInputScreen(navController: NavController, baesongInfo: DomainBaesong
             isAddressVisible = !isAddressVisible
         })
 
+        AsyncImage(model = gumaeProductModel.image1, contentDescription = "")
+        Text(gumaeProductModel.text1)
         var message by remember { mutableStateOf("") }
 
         AnimatedVisibility(

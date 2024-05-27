@@ -101,6 +101,6 @@ fun DolInfoScreen(
 fun GoToGuMaeScreen(dolURL: DomainProductModel , navController: NavController) {
     Text("구매하기" , modifier = Modifier.clickable {
         val GuMaeInfo = dolURL.text1
-        navController.navigate("${ScreenList.GuMaeScreen.route}/${GuMaeInfo}")
+        navController.navigate("${ScreenList.GuMaeScreen.route}/${encodeUrl(Gson().toJson(dolURL))}")
     })
 }
