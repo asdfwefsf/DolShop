@@ -498,6 +498,7 @@ fun baesongConfirmDialog(baesongInfo: DomainBaesongInfo, dialogBoolean: MutableS
                 }
                 Spacer(modifier = Modifier.height(4.dp))
 
+
                 val baesongFirebase = mapOf(
                     "addressName" to baesongInfo.addressName,
                     "addressNumber" to baesongInfo.addressNumber,
