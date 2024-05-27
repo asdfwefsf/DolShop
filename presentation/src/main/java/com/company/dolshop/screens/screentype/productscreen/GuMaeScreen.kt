@@ -7,6 +7,7 @@ import androidx.compose.animation.fadeOut
 import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -24,6 +25,10 @@ import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.ExposedDropdownMenuBox
+import androidx.compose.material3.ExposedDropdownMenuDefaults
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.Composable
@@ -79,12 +84,13 @@ fun GuMaeScreen(gumaeProductModel: DomainProductModel, navController: NavControl
 
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun BaesongzInputScreen(navController: NavController, baesongInfo: DomainBaesongInfo , gumaeProductModel: DomainProductModel) {
     val addressViewModel: AddressViewModel = hiltViewModel()
     val addressInfo = addressViewModel.addressList.collectAsState().value
     val scope = rememberCoroutineScope()
-
+    var selectedText by remember { mutableStateOf("0개") }
 
     // 애니메이션 보이는거 불리안 값
     var isAddressVisible by remember { mutableStateOf(false) }
@@ -97,10 +103,69 @@ fun BaesongzInputScreen(navController: NavController, baesongInfo: DomainBaesong
             isAddressVisible = !isAddressVisible
         })
 
-        AsyncImage(model = gumaeProductModel.image1, contentDescription = "")
-        Text(gumaeProductModel.text1)
-        var message by remember { mutableStateOf("") }
+        Row(
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            AsyncImage(model = gumaeProductModel.image1, contentDescription = "")
+            Spacer(Modifier.size(10.dp))
+            Column {
+                Row{
+                    Text("상품명 : ")
+                    Text(decodeUrl(gumaeProductModel.text1))
 
+                }
+                Spacer(Modifier.size(10.dp))
+                Row(
+                    modifier = Modifier.fillMaxWidth()
+                ) {
+                    var expanded by remember { mutableStateOf(false) }
+//                    var selectedText by remember { mutableStateOf("0개") }
+                    val items = listOf("1개", "2개", "3개", "4개", "5개" , "6개" , "7개" , "8개" , "9개" , "10개")
+                    Text("주문 갯수")
+                    ExposedDropdownMenuBox(
+                        expanded = expanded,
+                        onExpandedChange = { expanded = !expanded }
+                    ) {
+                        TextField(
+                            value = selectedText,
+                            onValueChange = {},
+                            readOnly = true,
+                            trailingIcon = {
+                                ExposedDropdownMenuDefaults.TrailingIcon(
+                                    expanded = expanded
+                                )
+                            },
+                            modifier = Modifier
+                                .menuAnchor()
+                                .fillMaxWidth()
+                        )
+                        ExposedDropdownMenu(
+                            expanded = expanded,
+                            onDismissRequest = { expanded = false },
+                            modifier = Modifier.background(Color.White)
+                        ) {
+                            items.forEach { selectionOption ->
+                                DropdownMenuItem(
+                                    text = { Text(selectionOption) },
+                                    onClick = {
+                                        selectedText = selectionOption
+                                        expanded = false
+                                    }
+                                )
+                            }
+                        }
+                    }
+                }
+
+            }
+
+        }
+
+
+
+
+
+        var message by remember { mutableStateOf("") }
         AnimatedVisibility(
             visible = isAddressVisible,
             enter = fadeIn() + slideInVertically(),
@@ -147,12 +212,12 @@ fun BaesongzInputScreen(navController: NavController, baesongInfo: DomainBaesong
         }
         Spacer(modifier = Modifier.size(16.dp))
         Text(message)
-        test(baesongInfo)
+        test(baesongInfo , selectedText , decodeUrl(gumaeProductModel.text1))
     }
 }
 
 @Composable
-fun test(baesongInfo: DomainBaesongInfo) {
+fun test(baesongInfo: DomainBaesongInfo , selectedText : String , productName : String) {
     var selectedImageName by remember { mutableStateOf("") }
 
     Column {
@@ -256,7 +321,7 @@ fun test(baesongInfo: DomainBaesongInfo) {
             Text("확인")
         }
         if (dialogBoolean.value == true) {
-            baesongConfirmDialog(baesongInfo, dialogBoolean)
+            baesongConfirmDialog(baesongInfo, dialogBoolean , selectedText , productName)
         }
     }
 
@@ -296,7 +361,7 @@ fun AccountPeopleName(baesongInfo: DomainBaesongInfo) {
 }
 
 @Composable
-fun baesongConfirmDialog(baesongInfo: DomainBaesongInfo, dialogBoolean: MutableState<Boolean>) {
+fun baesongConfirmDialog(baesongInfo: DomainBaesongInfo, dialogBoolean: MutableState<Boolean> , selectedText : String , productName : String) {
     val realtimeDB = Firebase.database
     val userViewModel: KakaoAuthiViewModel = hiltViewModel()
     val userInfoList = userViewModel.userInfoList.collectAsState().value
@@ -411,6 +476,28 @@ fun baesongConfirmDialog(baesongInfo: DomainBaesongInfo, dialogBoolean: MutableS
                 }
                 Spacer(modifier = Modifier.height(4.dp))
 
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 8.dp)
+                ) {
+                    Text("상품 이름")
+                    Spacer(modifier = Modifier.weight(1f))
+                    Text(productName)
+                }
+                Spacer(modifier = Modifier.height(4.dp))
+
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(horizontal = 8.dp)
+                ) {
+                    Text("상품 갯수")
+                    Spacer(modifier = Modifier.weight(1f))
+                    Text(selectedText)
+                }
+                Spacer(modifier = Modifier.height(4.dp))
+
                 val baesongFirebase = mapOf(
                     "addressName" to baesongInfo.addressName,
                     "addressNumber" to baesongInfo.addressNumber,
@@ -420,7 +507,9 @@ fun baesongConfirmDialog(baesongInfo: DomainBaesongInfo, dialogBoolean: MutableS
                     "bankName" to baesongInfo.bankName,
                     "accountNumber" to baesongInfo.accountNumber,
                     "accountOwnerName" to baesongInfo.accountOwnerName,
-                    "baesongBoolean" to "false"
+                    "baesongBoolean" to "false",
+                    "productName" to productName,
+                    "productGaeSu" to selectedText
                 )
                 Button(
                     onClick = {
