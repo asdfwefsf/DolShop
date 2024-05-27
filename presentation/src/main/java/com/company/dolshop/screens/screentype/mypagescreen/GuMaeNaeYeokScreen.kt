@@ -31,7 +31,6 @@ fun GuMaeNaeYeokScreen() {
                 val test = real.getValue(DomainBaesongInfo::class.java)
                 Log.d("sfsefis" , "${test}")
             }
-
         }
 
         override fun onCancelled(error: DatabaseError) {
