@@ -13,5 +13,6 @@ data class JuMunNaeYeockModel(
     var baesongBoolean : String = "",
     var productGaeSu : String = "",
     var productName : String = "",
-    var productURL : String = ""
+    var productURL : String = "",
+    var arrivedTime : String = "",
 )

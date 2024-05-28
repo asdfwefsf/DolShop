@@ -512,7 +512,8 @@ fun baesongConfirmDialog(baesongInfo: DomainBaesongInfo, dialogBoolean: MutableS
                     "baesongBoolean" to "false",
                     "productName" to productName,
                     "productGaeSu" to selectedText,
-                    "productURL" to productLink
+                    "productURL" to productLink,
+                    "arrivedTime" to ""
                 )
                 Button(
                     onClick = {
