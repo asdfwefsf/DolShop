@@ -1,6 +1,7 @@
 package com.company.dolshop.screens.screentype.productscreen
 
 import android.util.Log
+import android.widget.Toast
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.fadeIn
 import androidx.compose.animation.fadeOut
@@ -42,6 +43,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -363,7 +365,6 @@ fun AccountPeopleName(baesongInfo: DomainBaesongInfo) {
 
         baesongInfo.accountOwnerName = accountPeopleName
 
-
     })
 
 }
@@ -528,10 +529,19 @@ fun baesongConfirmDialog(
                     "productURL" to productLink,
                     "arrivedTime" to ""
                 )
+                val context = LocalContext.current
+
                 Button(
                     onClick = {
-                        userRef.push().setValue(baesongFirebase)
-                        dialogBoolean.value = false
+
+                        if(!checkAllJuMun(baesongFirebase)) {
+                            Log.d("sfwetlll" , "빈 값이 있습니다.")
+                            dialogBoolean.value = false
+                            Toast.makeText(context, "빈 값이 있습니다.", Toast.LENGTH_SHORT).show()
+                        } else {
+                            userRef.push().setValue(baesongFirebase)
+                            dialogBoolean.value = false
+                        }
                     }
                 ) {
                     Text("주문 완료")
@@ -542,3 +552,6 @@ fun baesongConfirmDialog(
     }
 }
 
+fun checkAllJuMun(map: Map<String, String>): Boolean {
+    return map.values.none { it.isEmpty() }
+}
