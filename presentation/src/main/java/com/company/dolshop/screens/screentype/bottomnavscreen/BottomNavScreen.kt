@@ -207,7 +207,7 @@ fun BottomNav() {
                 val gumaeDolInfo = backStackEntry.arguments?.getString("gumaeDolInfo") ?: ""
                 val gumaeDolInfoName = gumaeDolInfo
                 val real = Gson().fromJson(gumaeDolInfoName, DomainProductModel::class.java)
-                GuMaeScreen(real , navController)
+                GuMaeScreen(real, navController)
             }
             // 상품 스크린
 
@@ -248,8 +248,19 @@ fun BottomNav() {
                 AddressScreen(navController, coroutineScope)
             }
 
-            composable(route = ScreenList.InputAddressInfoScreen.route) {
-                InputAddressInfoScreen(navController)
+            composable(
+                route = "${ScreenList.InputAddressInfoScreen.route}/{gumaeDolInfo}",
+                arguments = listOf(navArgument("gumaeDolInfo") { type = NavType.StringType })
+            ) { backStackEntry ->
+
+                val gumaeDolInfo = backStackEntry.arguments?.getString("gumaeDolInfo")
+
+                //
+                val gumaeDolInfoName = gumaeDolInfo
+                val real = Gson().fromJson(gumaeDolInfoName, DomainProductModel::class.java)
+                //
+
+                InputAddressInfoScreen(navController , real)
             }
 
             composable(route = ScreenList.SavePublicDiaryScreen.route) {

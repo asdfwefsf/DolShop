@@ -50,14 +50,17 @@ import androidx.constraintlayout.compose.State
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
+import com.company.dolshop.screens.ScreenList
 import com.company.dolshop.viewmodel.AddressViewModel
 import com.company.dolshop.viewmodel.KakaoAuthiViewModel
 import com.company.domain.model.DomainBaesongInfo
 import com.company.domain.model.DomainProductModel
 import com.company.presentation.R
 import com.company.utility.decodeUrl
+import com.company.utility.encodeUrl
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
+import com.google.gson.Gson
 
 @Composable
 fun GuMaeScreen(gumaeProductModel: DomainProductModel, navController: NavController) {
@@ -160,11 +163,6 @@ fun BaesongzInputScreen(navController: NavController, baesongInfo: DomainBaesong
             }
 
         }
-
-
-
-
-
         var message by remember { mutableStateOf("") }
         AnimatedVisibility(
             visible = isAddressVisible,
@@ -211,6 +209,16 @@ fun BaesongzInputScreen(navController: NavController, baesongInfo: DomainBaesong
             }
         }
         Spacer(modifier = Modifier.size(16.dp))
+        if(message == "새로운 주소로 배송될 예정입니다.") {
+//            gumaeProductModel
+//            ${encodeUrl(Gson().toJson(dolURL))
+            Button(onClick = {
+                val realArgument = encodeUrl(Gson().toJson(gumaeProductModel))
+                navController.navigate("${ScreenList.InputAddressInfoScreen.route}/${realArgument}")
+            }) {
+                Text("새로운 주소 입력하러 가기")
+            }
+        }
         Text(message)
         test(baesongInfo , selectedText , decodeUrl(gumaeProductModel.text1) , decodeUrl(gumaeProductModel.image1))
     }
@@ -361,8 +369,13 @@ fun AccountPeopleName(baesongInfo: DomainBaesongInfo) {
 }
 
 @Composable
-fun baesongConfirmDialog(baesongInfo: DomainBaesongInfo, dialogBoolean: MutableState<Boolean> , selectedText : String , productName : String
-, productLink : String) {
+fun baesongConfirmDialog(
+    baesongInfo: DomainBaesongInfo,
+    dialogBoolean: MutableState<Boolean>,
+    selectedText : String,
+    productName : String,
+    productLink : String
+) {
     val realtimeDB = Firebase.database
     val userViewModel: KakaoAuthiViewModel = hiltViewModel()
     val userInfoList = userViewModel.userInfoList.collectAsState().value

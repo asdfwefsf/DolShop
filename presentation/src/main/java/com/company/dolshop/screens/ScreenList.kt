@@ -21,7 +21,7 @@ sealed class ScreenList(val route : String) {
     object MyPageScreen : ScreenList("마이")
     object AuthInfoScreen : ScreenList("개인정보")
     object LogoutScreen : ScreenList("로그아웃")
-    object InputAddressInfoScreen : ScreenList("배송지 정보 입력")
+    object InputAddressInfoScreen : ScreenList("배송지정보입력/{gumaeDolInfo}")
     object AddressScreen : ScreenList("주소")
     object SavePublicDiaryScreen : ScreenList("저장일기")
     object MyCouponScreen : ScreenList("마이쿠폰")

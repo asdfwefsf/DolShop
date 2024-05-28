@@ -34,6 +34,9 @@ import coil.compose.AsyncImage
 import com.company.dolshop.screens.ScreenList
 import com.company.dolshop.viewmodel.AddressViewModel
 import com.company.dolshop.viewmodel.KakaoAuthiViewModel
+import com.company.domain.model.DomainProductModel
+import com.company.utility.encodeUrl
+import com.google.gson.Gson
 
 @Composable
 fun AuthInfoScreen(navController: NavController) {
@@ -53,7 +56,7 @@ fun AuthInfoScreen(navController: NavController) {
                 TopInfoItems("이름", userInfoList.authNicName)
                 InfoItems("이메일 주소", userInfoList.authEmail)
                 InfoItems("아이디 번호", userInfoList.authNumber)
-                LeadingIconInfoItems(navController , "배송지 정보" , Icons.Default.KeyboardArrowRight, "입력하기" , ScreenList.InputAddressInfoScreen.route)
+                LeadingIconInfoItemsToInputAddressInfo(navController , "배송지 정보" , Icons.Default.KeyboardArrowRight, "입력하기" , ScreenList.InputAddressInfoScreen.route)
 
                 if(addressList.isNotEmpty()) {
                     InfoItems("전화번호", addressList[0].phoneNumber)
@@ -137,6 +140,34 @@ fun LeadingIconInfoItems(navController : NavController , defaultText: String , i
             .size(24.dp)
             .clickable {
                 navController.navigate(route) {
+                    launchSingleTop = true
+                }
+            })
+
+    }
+    Divider()
+
+}
+
+
+@Composable
+fun LeadingIconInfoItemsToInputAddressInfo(navController : NavController , defaultText: String , icon : ImageVector, address: String , route : String) {
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(16.dp)
+    ) {
+        Text(defaultText, fontWeight = FontWeight.Bold)
+        Spacer(modifier = Modifier.weight(1f))
+        Text(address, fontWeight = FontWeight.Bold)
+        Icon(icon, contentDescription = null, modifier = Modifier
+            .size(24.dp)
+            .clickable {
+                val realArgument = encodeUrl(Gson().toJson(DomainProductModel(
+                    "", "" , "" , "" , "" , "", "", "", "" , ""
+                )))
+
+                navController.navigate("${route}/${realArgument}") {
                     launchSingleTop = true
                 }
             })

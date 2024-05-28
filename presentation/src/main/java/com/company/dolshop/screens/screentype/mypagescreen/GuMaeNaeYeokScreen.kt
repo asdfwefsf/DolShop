@@ -84,7 +84,7 @@ fun DetailJuMunNaeYeok(domainBaesongInfo: JuMunNaeYeockModel) {
         Text("baesongBoolean: ${domainBaesongInfo.baesongBoolean}")
         Text("상품갯수: ${domainBaesongInfo.productGaeSu}")
         Text("상품명: ${domainBaesongInfo.productName}")
-
+        Text("도착 예정 날짜 : ${domainBaesongInfo.arrivedTime}")
         AsyncImage(model = domainBaesongInfo.productURL, contentDescription = "")
     }
 }

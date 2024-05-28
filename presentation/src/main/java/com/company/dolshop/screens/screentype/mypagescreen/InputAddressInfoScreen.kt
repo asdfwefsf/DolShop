@@ -34,12 +34,16 @@ import com.company.dolshop.ui.theme.DolShopTheme
 import com.company.dolshop.viewmodel.AddressViewModel
 import com.company.dolshop.viewmodel.KakaoAuthiViewModel
 import com.company.domain.model.DomainAddress
+import com.company.domain.model.DomainProductModel
+import com.company.utility.decodeUrl
+import com.company.utility.encodeUrl
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
+import com.google.gson.Gson
 
 @Composable
 @ExperimentalMaterial3Api
-fun InputAddressInfoScreen(navController: NavController) {
+fun InputAddressInfoScreen(navController: NavController, gumaeDolInfo: DomainProductModel) {
     val kakaoAuthiViewModel: KakaoAuthiViewModel = hiltViewModel()
 
     val scope = rememberCoroutineScope()
@@ -58,11 +62,19 @@ fun InputAddressInfoScreen(navController: NavController) {
     var detailedAddress = addressViewModel.detailedAddress.collectAsState().value
     var phoneNumber = addressViewModel.phoneNumber.collectAsState().value
 
+    val fsfsef = navController.previousBackStackEntry?.destination
+
+    Log.d("sfsesvinoesfnof", fsfsef?.route!!)
     LaunchedEffect(key1 = savedStateHandle) {
         addressNumber = savedStateHandle?.get<String>("addressNumber") ?: ""
         address = savedStateHandle?.get<String>("address") ?: ""
         Log.d("jisung", addressNumber + address)
     }
+
+    // 상품 정보
+//    val productInfo = gumaeDolInfo?.let { Gson().fromJson(it, DomainProductModel::class.java) }
+//    val productInfo = decodeUrl(gumaeDolInfo!!)
+    // 상품 정보
 
     Column(
         modifier = Modifier
@@ -149,13 +161,24 @@ fun InputAddressInfoScreen(navController: NavController) {
                     )
                 )
 
-                navController.navigate(ScreenList.AuthInfoScreen.route) {
-                    launchSingleTop = true
-                    popUpTo(ScreenList.AuthInfoScreen.route) {
-                        inclusive = true
-                    }
 
+                if (fsfsef?.route == "개인정보") {
+                    navController.navigate(ScreenList.AuthInfoScreen.route) {
+                        launchSingleTop = true
+                        popUpTo(ScreenList.AuthInfoScreen.route) {
+                            inclusive = true
+                        }
+                    }
+                } else {
+                    val encodedProductInfo = encodeUrl(Gson().toJson(gumaeDolInfo, DomainProductModel::class.java))
+                    navController.navigate("${ScreenList.GuMaeScreen.route}/${encodedProductInfo}") {
+                        launchSingleTop = true
+                        popUpTo(ScreenList.GuMaeScreen.route) {
+                            inclusive = true
+                        }
+                    }
                 }
+
 
                 val userRef = realtimeDB.getReference("users/$authNumber/address")
                 val userData = mapOf(
@@ -170,7 +193,11 @@ fun InputAddressInfoScreen(navController: NavController) {
             },
             modifier = Modifier.fillMaxWidth()
         ) {
-            Text("저장")
+            if (fsfsef?.route == "개인정보") {
+                Text("저장하기")
+            } else {
+                Text(text = "새로운 주소 저장하기")
+            }
         }
     }
 }
