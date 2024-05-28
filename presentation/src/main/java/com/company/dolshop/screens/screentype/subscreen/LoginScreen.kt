@@ -103,6 +103,7 @@ fun LoginScreen(navController: NavController, viewModel: KakaoAuthiViewModel) {
             }
         )
 
+
         Image(painter = painterResource(id = R.drawable.or), contentDescription = "")
         Row(
 
