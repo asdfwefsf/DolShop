@@ -65,7 +65,7 @@ fun LoginScreen(navController: NavController, viewModel: KakaoAuthiViewModel) {
 
         )
         Image(
-            painter = painterResource(id = R.drawable.kakao_login_large_wide),
+            painter = painterResource(id = R.drawable.kakao_start_real),
             contentDescription = "Login Icon",
             modifier = Modifier.clickable {
                 scope.launch {
