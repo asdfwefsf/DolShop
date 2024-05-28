@@ -4,6 +4,7 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.size
@@ -102,44 +103,19 @@ fun LoginScreen(navController: NavController, viewModel: KakaoAuthiViewModel) {
             }
         )
 
-//        Spacer(modifier = Modifier.size(16.dp))
-//        Button(onClick = {
-//            scope.launch {
-//                viewModel.kakaoLogin()
-//                val userInfolist = viewModel.userInfoList
-//                if (viewModel.loginValue.value) {
-//
-//                    val userRef =
-//                        realtimeDB.getReference("users/${userInfolist.value.authNumber}/kakaoAuth")
-//                    val userData = mapOf(
-//                        "authNumber" to userInfolist.value.authNumber,
-//                        "authEmail" to userInfolist.value.authEmail,
-//                        "authNickName" to userInfolist.value.authNicName,
-//                        "authProfileImage" to userInfolist.value.authProfileImage,
-//                        "address" to ""
-//                    )
-//                    userRef.setValue(userData)
-//
-//                    dataStoreUtility.apply {
-//                        context.setLoginState(true)
-//                    }
-//
-//                    navController.navigate(ScreenList.MyPageScreen.route) {
-//                        popUpTo(ScreenList.MyPageScreen.route) {
-//                            inclusive = true
-//                        }
-//                    }
-//                }
-//            }
-//
-//        }) {
-//            Image(
-//                painter = painterResource(id = R.drawable.kakao_login_large_wide),
-//                contentDescription = "Login Icon"
-//            )
-////            Spacer(modifier = Modifier.width(8.dp))
-////            Text("로그인")
-//        }
+        Image(painter = painterResource(id = R.drawable.or), contentDescription = "")
+        Row(
+
+        ) {
+            Spacer(Modifier.size(10.dp))
+            Image(painter = painterResource(id = R.drawable.signup), contentDescription = "")
+            Spacer(Modifier.size(30.dp))
+            Image(painter = painterResource(id = R.drawable.findauth), contentDescription = "")
+            Spacer(Modifier.size(30.dp))
+            Image(painter = painterResource(id = R.drawable.calltome), contentDescription = "")
+            Spacer(Modifier.size(10.dp))
+        }
+
     }
 }
 
