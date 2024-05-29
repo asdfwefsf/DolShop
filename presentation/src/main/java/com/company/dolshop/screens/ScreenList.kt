@@ -1,7 +1,14 @@
 package com.company.dolshop.screens
 
 sealed class ScreenList(val route : String) {
+
+    // 카카오 3초만에 시작하기
     object LoginScreen : ScreenList("로그인")
+
+    // 파이어베이스 회원가입 및 로그인
+    object SignUpScreen1 : ScreenList("파이어베이스회원가입1")
+    object SignUpScreen2 : ScreenList("파이어베이스회원가입2")
+    object SignUpScreen3 : ScreenList("파이어베이스회원가입3")
 
     // 커뮤니티
     object CommunityScreen : ScreenList("커뮤")
@@ -26,4 +33,6 @@ sealed class ScreenList(val route : String) {
     object SavePublicDiaryScreen : ScreenList("저장일기")
     object MyCouponScreen : ScreenList("마이쿠폰")
     object GuMaeNaeYeokScreen : ScreenList("주문내역")
+
+
 }

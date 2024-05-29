@@ -109,7 +109,11 @@ fun LoginScreen(navController: NavController, viewModel: KakaoAuthiViewModel) {
 
         ) {
             Spacer(Modifier.size(10.dp))
-            Image(painter = painterResource(id = R.drawable.signup), contentDescription = "")
+            Image(painter = painterResource(id = R.drawable.signup), contentDescription = "" ,
+                modifier = Modifier.clickable {
+                    navController.navigate(ScreenList.SignUpScreen1.route)
+                }
+            )
             Spacer(Modifier.size(30.dp))
             Image(painter = painterResource(id = R.drawable.findauth), contentDescription = "")
             Spacer(Modifier.size(30.dp))

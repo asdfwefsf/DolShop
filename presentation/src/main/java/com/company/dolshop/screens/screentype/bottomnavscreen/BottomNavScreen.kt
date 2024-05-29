@@ -47,10 +47,12 @@ import com.company.dolshop.screens.screentype.productscreen.ProductScreen
 import com.company.dolshop.screens.screentype.rockscreen.AddRockScreen
 import com.company.dolshop.screens.screentype.rockscreen.RocksScreen
 import com.company.dolshop.screens.screentype.subscreen.LoginScreen
+import com.company.dolshop.screens.screentype.subscreen.SignUpScreen1
+import com.company.dolshop.screens.screentype.subscreen.SingUpScreen2
+import com.company.dolshop.screens.screentype.subscreen.SingUpScreen3
 import com.company.dolshop.viewmodel.KakaoAuthiViewModel
 import com.company.dolshop.viewmodel.UpdateBaseProductViewModel
 import com.company.domain.model.DomainProductModel
-import com.company.domain.model.GumaeProductModel
 import com.company.presentation.R
 import com.company.utility.DataStoreUtility
 import com.company.utility.DataStoreUtility.Companion.isLoggedInFlow
@@ -176,8 +178,20 @@ fun BottomNav() {
             composable(route = ScreenList.CommunityScreen.route) {
                 CommunityScreen(innerPadding)
             }
-
             // 커뮤니티 스크린
+
+            // 파이어베이스 회원가입 및 로그인
+            composable(route = ScreenList.SignUpScreen1.route) {
+                SignUpScreen1(navController)
+            }
+            composable(route = ScreenList.SignUpScreen2.route) {
+                SingUpScreen2(navController)
+            }
+            composable(route = ScreenList.SignUpScreen3.route) {
+                SingUpScreen3(navController)
+            }
+            // 파이어베이스 회원가입 및 로그인
+
 
 
             // 상품 스크린
