@@ -10,6 +10,9 @@ sealed class ScreenList(val route : String) {
     object SignUpScreen2 : ScreenList("파이어베이스회원가입2")
     object SignUpScreen3 : ScreenList("파이어베이스회원가입3")
 
+    // 개인 정보 처리방침 웹뷰
+    object PersonInfoWebView : ScreenList("웹뷰")
+
     // 커뮤니티
     object CommunityScreen : ScreenList("커뮤")
 
