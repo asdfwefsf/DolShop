@@ -31,7 +31,6 @@ class FirebaseAuthViewModel @Inject constructor(
     private val _loginValue = MutableStateFlow<Boolean>(false)
     val loginValue = _loginValue
 
-
     fun signUpFirebaseAuth(kakaoEmail: String, password: String, name : String, phoneNumber : String , context: Context , domainUserInfoModel: DomainUserInfoModel) {
         Firebase.auth.createUserWithEmailAndPassword(kakaoEmail, password)
             .addOnCompleteListener { task ->
