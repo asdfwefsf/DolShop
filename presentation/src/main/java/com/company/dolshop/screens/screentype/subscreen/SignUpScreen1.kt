@@ -11,6 +11,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -146,7 +147,11 @@ fun SignUpScreen1(navController: NavController) {
                 sheetContentColor = Color.Black,
                 sheetContent = {
                     // 바텀 싯 내용
-                    Column {
+                    Column(
+                        modifier = Modifier
+                            .fillMaxHeight(0.3f)
+                            .padding(start = 20.dp, end = 20.dp)
+                    ) {
                         Row(modifier = Modifier.fillMaxWidth()) {
 
                             if (okBoolean == false) {
@@ -171,6 +176,7 @@ fun SignUpScreen1(navController: NavController) {
                             Text("전체 동의하기")
 
                         }
+                        Spacer(Modifier.size(10.dp))
                         Row(modifier = Modifier.fillMaxWidth()) {
                             Text("서비스 이용약관 (필수) ")
                             Spacer(modifier = Modifier.weight(1f))
@@ -181,6 +187,7 @@ fun SignUpScreen1(navController: NavController) {
                                 navController.navigate("${ScreenList.PersonInfoWebView.route}/$encodedUrl")
                             })
                         }
+                        Spacer(Modifier.size(10.dp))
                         Row(modifier = Modifier.fillMaxWidth()) {
                             Text("개인정보 처리방침 (필수) ")
                             Spacer(modifier = Modifier.weight(1f))
@@ -191,11 +198,10 @@ fun SignUpScreen1(navController: NavController) {
                                 navController.navigate("${ScreenList.PersonInfoWebView.route}/$encodedUrl")
                             })
                         }
-
-                        Text(
-                            text = "동의하고 시작하기",
-                            modifier = Modifier.clickable {
-
+                        Spacer(Modifier.size(10.dp))
+                        Button(
+                            modifier = Modifier.fillMaxWidth(),
+                            onClick = {
                                 if (okBoolean == true) {
                                     navController.navigate(ScreenList.SignUpScreen2.route) {
                                         popUpTo(ScreenList.SignUpScreen2.route) {
@@ -207,15 +213,20 @@ fun SignUpScreen1(navController: NavController) {
                                         .makeText(context, "약관에 동의해주세요", Toast.LENGTH_SHORT)
                                         .show()
                                 }
-
-
                             }
-                        )
+                        ) {
+                            Text(
+                                text = "동의하고 시작하기",
+                                modifier = Modifier.clickable {
+
+
+
+
+                                }
+                            )
+                        }
+
                     }
-                    Image(
-                        painter = painterResource(id = R.drawable.product),
-                        contentDescription = null
-                    )
                 },
                 sheetPeekHeight = 0.dp
             ) {
