@@ -6,12 +6,15 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -58,24 +61,52 @@ fun SingUpScreen3(navController: NavController) {
         ) {
             Box(
                 modifier = Modifier
-                    .fillMaxWidth(0.66f)
+                    .fillMaxWidth(1f)
                     .height(10.dp)
                     .background(Color(0xFFA8FF00))
             )
         }
 
-
-
         Text(
-            text = "SingUpScreen3",
-            modifier = Modifier.clickable {
+            "회원가입이",
+            fontSize = 30.sp,
+            color = Color.Black,
+            modifier = Modifier.padding(start = 20.dp, top = 5.dp)
+        )
+        Text(
+            "완료되었습니다.",
+            fontSize = 30.sp,
+            color = Color.Black,
+            modifier = Modifier.padding(start = 20.dp, top = 5.dp)
+        )
+        Spacer(Modifier.size(10.dp))
+        Text(
+            "시작화면에서 로그인해주세요",
+            fontSize = 15.sp,
+            color = Color.Black,
+            modifier = Modifier.padding(start = 20.dp, top = 5.dp)
+        )
+        Text(
+            "최최 로그인 이후 접속 시, 자동 로그인이 활성화됩니다.",
+            fontSize = 15.sp,
+            color = Color.Black,
+            modifier = Modifier.padding(start = 20.dp, top = 5.dp)
+        )
+        Spacer(modifier = Modifier.fillMaxHeight(0.85f))
+
+        Button(
+            modifier = Modifier.fillMaxWidth().padding(start = 20.dp, end = 20.dp),
+            onClick = {
                 navController.navigate(ScreenList.LoginScreen.route) {
                     popUpTo(ScreenList.LoginScreen.route) {
                         inclusive = true
                     }
                 }
             }
-        )
+        ) {
+            Text( text = "로그인하기" )
+        }
+
     }
 
 

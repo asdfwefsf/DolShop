@@ -1,9 +1,11 @@
 package com.company.dolshop.screens.screentype.subscreen
 
 import android.annotation.SuppressLint
+import android.util.Log
 import android.webkit.WebView
 import android.webkit.WebViewClient
 import android.widget.Toast
+import androidx.compose.foundation.Canvas
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -17,11 +19,13 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.BottomSheetScaffold
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -39,7 +43,12 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Paint
+import androidx.compose.ui.graphics.drawscope.drawIntoCanvas
+import androidx.compose.ui.layout.onGloballyPositioned
+import androidx.compose.ui.layout.positionInParent
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
@@ -56,6 +65,13 @@ import kotlinx.coroutines.launch
 fun SignUpScreen1(navController: NavController) {
     var okBoolean by remember { mutableStateOf(false) }
     val context = LocalContext.current
+
+
+    val scope = rememberCoroutineScope()
+
+    val scaffoldState = rememberBottomSheetScaffoldState()
+
+
     Column(
         modifier = Modifier
             .background(Color.White)
@@ -111,35 +127,36 @@ fun SignUpScreen1(navController: NavController) {
             color = Color.Black,
             modifier = Modifier.padding(start = 20.dp, top = 20.dp)
         )
-        Text(
-            "약관에 동의해주세요",
-            fontSize = 30.sp,
-            color = Color.Black,
-            modifier = Modifier.padding(start = 20.dp, top = 5.dp)
-        )
+        Row {
+            Text(
+                "약관에 동의해주세요",
+                fontSize = 30.sp,
+                color = Color.Black,
+                modifier = Modifier.padding(start = 20.dp, top = 5.dp)
+            )
+            Box(
+                modifier = Modifier.background(Color.White)
 
+            ) {
+                Button(
+                    modifier = Modifier.width(100.dp),
+                    colors = ButtonDefaults.buttonColors(Color.Green),
+                    onClick = {
+                        scope.launch {
+                            scaffoldState.bottomSheetState.expand()
+                        }
+                    }
+                ) {
+                    Text(text = "약관보기" , color = Color.Black)
+                }
+            }
 
-        val scope = rememberCoroutineScope()
-
-        val scaffoldState = rememberBottomSheetScaffoldState()
-
-//        LaunchedEffect(Unit) {
-//            scope.launch {
-//                scaffoldState.bottomSheetState.expand()
-//            }
-//        }
-
+        }
 
         Surface(
             modifier = Modifier.fillMaxSize(),
             color = Color.White
         ) {
-            val sheetState = rememberModalBottomSheetState()
-            var isSheetOpen by rememberSaveable {
-                mutableStateOf(false)
-            }
-
-//            var okBoolean by remember { mutableStateOf(false) }
 
             BottomSheetScaffold(
                 scaffoldState = scaffoldState,
@@ -149,7 +166,7 @@ fun SignUpScreen1(navController: NavController) {
                     // 바텀 싯 내용
                     Column(
                         modifier = Modifier
-                            .fillMaxHeight(0.3f)
+                            .height(150.dp)
                             .padding(start = 20.dp, end = 20.dp)
                     ) {
                         Row(modifier = Modifier.fillMaxWidth()) {
@@ -171,7 +188,6 @@ fun SignUpScreen1(navController: NavController) {
                                         okBoolean = false
                                     }
                                 )
-
                             }
                             Text("전체 동의하기")
 
@@ -216,13 +232,7 @@ fun SignUpScreen1(navController: NavController) {
                             }
                         ) {
                             Text(
-                                text = "동의하고 시작하기",
-                                modifier = Modifier.clickable {
-
-
-
-
-                                }
+                                text = "동의하고 시작하기"
                             )
                         }
 
@@ -230,23 +240,13 @@ fun SignUpScreen1(navController: NavController) {
                 },
                 sheetPeekHeight = 0.dp
             ) {
-                Box(
-                    contentAlignment = Alignment.Center
-                ) {
-                    Button(onClick = {
-                        scope.launch {
-                            scaffoldState.bottomSheetState.expand()
-                        }
-                    }) {
-                        Text(text = "약관보기")
-                    }
-                }
             }
 
 
         }
 
     }
+
 
 
 }
