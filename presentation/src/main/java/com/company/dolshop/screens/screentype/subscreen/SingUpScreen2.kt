@@ -34,12 +34,20 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.company.dolshop.screens.ScreenList
+import com.company.dolshop.viewmodel.FirebaseAuthViewModel
+import com.company.dolshop.viewmodel.publicdiary.PublicDiaryViewModel
+import com.company.domain.model.DomainUserInfoModel
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 import org.w3c.dom.Text
 
 @Composable
 fun SingUpScreen2(navController: NavController) {
+
+    val firebaseAuthViewModel : FirebaseAuthViewModel = hiltViewModel()
 
     var name by remember { mutableStateOf("") }
     var id by remember { mutableStateOf("") }
@@ -113,7 +121,7 @@ fun SingUpScreen2(navController: NavController) {
             Spacer(Modifier.size(5.dp))
             OutlinedTextField(value = password, onValueChange = { password = it } , modifier = Modifier.fillMaxWidth() , colors = TextFieldDefaults.colors(focusedContainerColor = Color.White , unfocusedContainerColor = Color.White, unfocusedIndicatorColor  = Color.Black , focusedIndicatorColor = Color.Green))
 
-            Text("이메일" , color = Color.Black)
+            Text("카카오 이메일" , color = Color.Black)
             Spacer(Modifier.size(5.dp))
             OutlinedTextField(value = kakaoEmail, onValueChange = { kakaoEmail = it } , modifier = Modifier.fillMaxWidth() , colors = TextFieldDefaults.colors(focusedContainerColor = Color.White , unfocusedContainerColor = Color.White, unfocusedIndicatorColor  = Color.Black , focusedIndicatorColor = Color.Green))
 
@@ -134,25 +142,26 @@ fun SingUpScreen2(navController: NavController) {
                                     inclusive = true
                                 }
                             }
+                            val currentUser = Firebase.auth.currentUser
+                            var domainUserInfoModel = DomainUserInfoModel("" , kakaoEmail , name , "")
+                            firebaseAuthViewModel.signUpFirebaseAuth(kakaoEmail , password , name , phoneNumber , context , domainUserInfoModel)
+
                         } else {
                             Toast.makeText(context, "빈칸을 모두 채워주세요", Toast.LENGTH_SHORT).show()
                         }
 
                     }
                 ) {
-                    Text( text = "시작하기" )
+                    Text( text = "시작하기")
                 }
 
         }
 
 
 
-//        Text(
-//            text = "SingUpScreen2",
-//            modifier = Modifier.clickable {
-//
-//            }
-//        )
+
+
+
     }
 }
 //

@@ -25,6 +25,7 @@ class getUserKakaoInfoRepositoryImpl @Inject constructor(
                 Log.e("auth", "사용자 정보 요청 실패", error)
 
             } else if (user != null) {
+
                 val userInfo = UserInfo(
                     0,
                     "${user.id}",

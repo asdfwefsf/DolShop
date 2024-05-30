@@ -7,11 +7,13 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -25,6 +27,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.airbnb.lottie.compose.LottieAnimation
 import com.airbnb.lottie.compose.LottieCompositionSpec
@@ -32,6 +35,7 @@ import com.airbnb.lottie.compose.LottieConstants
 import com.airbnb.lottie.compose.animateLottieCompositionAsState
 import com.airbnb.lottie.compose.rememberLottieComposition
 import com.company.dolshop.screens.ScreenList
+import com.company.dolshop.viewmodel.FirebaseAuthViewModel
 import com.company.dolshop.viewmodel.KakaoAuthiViewModel
 import com.company.presentation.R
 import com.company.utility.DataStoreUtility
@@ -49,10 +53,14 @@ fun LoginScreen(navController: NavController, viewModel: KakaoAuthiViewModel) {
     val context = LocalContext.current
     val dataStoreUtility = DataStoreUtility.getInstance()
 
+    val fireabaseAuthViewModel : FirebaseAuthViewModel = hiltViewModel()
+
     val lottie by rememberLottieComposition(
         spec = LottieCompositionSpec.RawRes(R.raw.jjinreal)
     )
 
+    var kakaoEmail by remember { mutableStateOf("") }
+    var password by remember { mutableStateOf("") }
 
     Column(
         modifier = Modifier.fillMaxSize(),
@@ -65,6 +73,60 @@ fun LoginScreen(navController: NavController, viewModel: KakaoAuthiViewModel) {
             iterations = LottieConstants.IterateForever
 
         )
+        Row(
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Text("카카오 이메일")
+            Spacer(Modifier.size(4.dp))
+            OutlinedTextField(value = kakaoEmail, onValueChange = { kakaoEmail = it })
+        }
+        Row(
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Text("비밀번호")
+            Spacer(Modifier.size(4.dp))
+            OutlinedTextField(value = password, onValueChange = { password = it })
+        }
+        Button(
+            onClick = {
+                scope.launch {
+                    fireabaseAuthViewModel.signInFirebaseAuth(kakaoEmail , password , context)
+
+                    val userInfolist = viewModel.userInfoList
+                    if (viewModel.loginValue.value) {
+                        dataStoreUtility.apply {
+                            context.setLoginState(true)
+                        }
+
+                        navController.navigate(ScreenList.MyPageScreen.route) {
+                            popUpTo(ScreenList.MyPageScreen.route) {
+                                inclusive = true
+                            }
+                        }
+                    }
+
+                    userInfolist.collect { userInfo ->
+                        if (userInfo.authNumber != "s") {
+                            val userRef =
+                                realtimeDB.getReference("users/${userInfolist.value.authNumber}/kakaoAuth")
+                            val userData = mapOf(
+                                "authNumber" to userInfolist.value.authNumber,
+                                "authEmail" to userInfolist.value.authEmail,
+                                "authNickName" to userInfolist.value.authNicName,
+                                "authProfileImage" to userInfolist.value.authProfileImage,
+                                "address" to ""
+                            )
+                            userRef.setValue(userData)
+                        }
+                    }
+
+                }
+            }
+
+        ) {
+            Text("로그인")
+        }
+
         Image(
             painter = painterResource(id = R.drawable.kakao_start_real),
             contentDescription = "Login Icon",
