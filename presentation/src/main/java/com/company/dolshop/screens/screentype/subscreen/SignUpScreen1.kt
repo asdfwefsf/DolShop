@@ -170,7 +170,6 @@ fun SignUpScreen1(navController: NavController) {
                             }
                             Text("전체 동의하기")
 
-
                         }
                         Row(modifier = Modifier.fillMaxWidth()) {
                             Text("서비스 이용약관 (필수) ")
