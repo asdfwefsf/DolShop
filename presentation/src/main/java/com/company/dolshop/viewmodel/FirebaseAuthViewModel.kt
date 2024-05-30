@@ -48,20 +48,21 @@ class FirebaseAuthViewModel @Inject constructor(
             }
     }
 
-    fun signInFirebaseAuth(kakaoEmail: String, password: String, context: Context) {
+    suspend fun signInFirebaseAuth(kakaoEmail: String, password: String, context: Context) {
         Firebase.auth.signInWithEmailAndPassword(kakaoEmail, password)
             .addOnCompleteListener() { task ->
                 val currentUser = Firebase.auth.currentUser
                 if (task.isSuccessful && currentUser != null) {
-                    val userId = Firebase.auth.currentUser!!.uid
-                    Log.d("test", userId)
-                    Toast.makeText(context, "로그인에 성공했습니다.", Toast.LENGTH_SHORT).show()
-
                     CoroutineScope(Dispatchers.IO).launch {
                         _loginValue.emit(true)
 
 
                     }
+                    val userId = Firebase.auth.currentUser!!.uid
+                    Log.d("test", userId)
+//                    Toast.makeText(context, "로그인에 성공했습니다.", Toast.LENGTH_SHORT).show()
+
+
 
 
 

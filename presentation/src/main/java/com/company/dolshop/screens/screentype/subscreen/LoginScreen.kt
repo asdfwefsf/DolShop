@@ -17,6 +17,7 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -62,6 +63,20 @@ fun LoginScreen(navController: NavController, viewModel: KakaoAuthiViewModel) {
     var kakaoEmail by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
 
+
+    val loginValue by fireabaseAuthViewModel.loginValue.collectAsState()
+
+    LaunchedEffect(loginValue) {
+        if (loginValue) {
+            context.setLoginState(true)
+            navController.navigate(ScreenList.MyPageScreen.route) {
+                popUpTo(ScreenList.MyPageScreen.route) {
+                    inclusive = true
+                }
+            }
+        }
+    }
+
     Column(
         modifier = Modifier.fillMaxSize(),
         verticalArrangement = Arrangement.Center,
@@ -92,18 +107,18 @@ fun LoginScreen(navController: NavController, viewModel: KakaoAuthiViewModel) {
                 scope.launch {
                     fireabaseAuthViewModel.signInFirebaseAuth(kakaoEmail , password , context)
 
-                    val userInfolist = viewModel.userInfoList
-                    if (viewModel.loginValue.value) {
-                        dataStoreUtility.apply {
-                            context.setLoginState(true)
-                        }
-
-                        navController.navigate(ScreenList.MyPageScreen.route) {
-                            popUpTo(ScreenList.MyPageScreen.route) {
-                                inclusive = true
-                            }
-                        }
-                    }
+                    val userInfolist = fireabaseAuthViewModel.userInfoList
+//                    if (fireabaseAuthViewModel.loginValue.value) {
+//                        dataStoreUtility.apply {
+//                            context.setLoginState(true)
+//                        }
+//
+//                        navController.navigate(ScreenList.MyPageScreen.route) {
+//                            popUpTo(ScreenList.MyPageScreen.route) {
+//                                inclusive = true
+//                            }
+//                        }
+//                    }
 
                     userInfolist.collect { userInfo ->
                         if (userInfo.authNumber != "s") {
