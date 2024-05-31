@@ -1,6 +1,9 @@
 package com.company.dolshop.screens.screentype.bottomnavscreen
 
 
+import android.net.Uri
+import android.util.Log
+import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
@@ -24,6 +27,8 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.navigation.NavController
+import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -57,12 +62,14 @@ import com.company.domain.model.DomainProductModel
 import com.company.presentation.R
 import com.company.utility.DataStoreUtility
 import com.company.utility.DataStoreUtility.Companion.isLoggedInFlow
+import com.google.firebase.dynamiclinks.ktx.dynamicLinks
+import com.google.firebase.ktx.Firebase
 import com.google.gson.Gson
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun BottomNav() {
-    val navController = rememberNavController()
+fun BottomNav(navController: NavHostController) {
+//    val navController = rememberNavController()
     val coroutineScope = rememberCoroutineScope()
 
     // navController(실제 화면 이동 담당)의 현재 상태를 구독해서 최상위의 경로가 변경될 때마다 경로를 얻어낸다.
@@ -174,6 +181,28 @@ fun BottomNav() {
         } else {
             ScreenList.LoginScreen.route
         }
+
+
+//        val dynamicLinkUri = Uri.parse("https://dolshop.page.link")
+//
+//        Firebase.dynamicLinks
+//            .getDynamicLink(dynamicLinkUri)
+//            .addOnSuccessListener() { pendingDynamicLinkData ->
+//                var deepLink: Uri? = null
+//                if (pendingDynamicLinkData != null) {
+//                    deepLink = pendingDynamicLinkData.link
+//                    Toast.makeText(context, deepLink.toString(), Toast.LENGTH_SHORT).show()
+//                    Log.d("deeplinkdatat" , deepLink.toString())
+//                    if(deepLink != null) {
+//                        navController.navigate(ScreenList.SignUpScreen2.route)
+//
+//                    }
+//
+//                }
+//            }
+//            .addOnFailureListener() { e -> Log.d("deeplink", "getDynamicLink:onFailure", e) }
+
+
         NavHost(navController = navController, startDestination = route) {
             // 커뮤니티 스크린
             composable(route = ScreenList.CommunityScreen.route) {

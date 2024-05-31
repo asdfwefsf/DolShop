@@ -8,6 +8,7 @@ import androidx.lifecycle.ViewModel
 import com.company.domain.model.DomainUserInfoModel
 import com.company.domain.repository.firebase.SaverFirebaseAuthRepository
 import com.company.domain.usecase.firebase.SaverFirebaseAuthUseCase
+import com.google.firebase.auth.ActionCodeSettings
 import com.google.firebase.auth.auth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.database.ktx.database
@@ -31,6 +32,7 @@ class FirebaseAuthViewModel @Inject constructor(
     private val _loginValue = MutableStateFlow<Boolean>(false)
     val loginValue = _loginValue
 
+    // 파이어베이스 회원가입
     fun signUpFirebaseAuth(kakaoEmail: String, password: String, name : String, phoneNumber : String , context: Context , domainUserInfoModel: DomainUserInfoModel) {
         Firebase.auth.createUserWithEmailAndPassword(kakaoEmail, password)
             .addOnCompleteListener { task ->
@@ -48,6 +50,7 @@ class FirebaseAuthViewModel @Inject constructor(
             }
     }
 
+    // 파이어베이스 로그인
     suspend fun signInFirebaseAuth(kakaoEmail: String, password: String, context: Context) {
         Firebase.auth.signInWithEmailAndPassword(kakaoEmail, password)
             .addOnCompleteListener() { task ->
@@ -55,24 +58,36 @@ class FirebaseAuthViewModel @Inject constructor(
                 if (task.isSuccessful && currentUser != null) {
                     CoroutineScope(Dispatchers.IO).launch {
                         _loginValue.emit(true)
-
-
                     }
                     val userId = Firebase.auth.currentUser!!.uid
                     Log.d("test", userId)
 //                    Toast.makeText(context, "로그인에 성공했습니다.", Toast.LENGTH_SHORT).show()
-
-
-
-
-
-
                 } else {
                     Toast.makeText(context, "로그인에 실패했습니다.", Toast.LENGTH_SHORT).show()
                 }
             }
             .addOnFailureListener {
                 Log.d("test", "에러났음")
+            }
+    }
+
+    fun emailConfirm(email : String) {
+        val actionCodeSettings = ActionCodeSettings.newBuilder()
+            .setUrl("https://dolshop.page.link")
+            .setHandleCodeInApp(true)
+            .setAndroidPackageName(
+                "com.company.dolshop",
+                true,
+                "1"  )
+            .build()
+
+        Firebase.auth.sendSignInLinkToEmail(email, actionCodeSettings)
+            .addOnCompleteListener { task ->
+                if(task.isSuccessful) {
+                    Log.d("emailConfirm" , "ok")
+                } else {
+                    Log.d("emailConfirm" , "no${task.exception?.message}")
+                }
             }
     }
 }

@@ -1,5 +1,7 @@
 package com.company.dolshop.screens.screentype.subscreen
 
+import android.net.Uri
+import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -41,6 +43,7 @@ import com.company.dolshop.viewmodel.FirebaseAuthViewModel
 import com.company.dolshop.viewmodel.publicdiary.PublicDiaryViewModel
 import com.company.domain.model.DomainUserInfoModel
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.dynamiclinks.ktx.dynamicLinks
 import com.google.firebase.ktx.Firebase
 import org.w3c.dom.Text
 
@@ -116,6 +119,9 @@ fun SingUpScreen2(navController: NavController) {
             Text("아이디" , color = Color.Black)
             Spacer(Modifier.size(5.dp))
             OutlinedTextField(value = id, onValueChange = { id = it } , modifier = Modifier.fillMaxWidth() , colors = TextFieldDefaults.colors(focusedContainerColor = Color.White , unfocusedContainerColor = Color.White, unfocusedIndicatorColor  = Color.Black , focusedIndicatorColor = Color.Green))
+            Button(onClick = { /*TODO*/ }) {
+                Text("인증하기")
+            }
 
             Text("비밀번호" , color = Color.Black)
             Spacer(Modifier.size(5.dp))
@@ -124,6 +130,10 @@ fun SingUpScreen2(navController: NavController) {
             Text("카카오 이메일" , color = Color.Black)
             Spacer(Modifier.size(5.dp))
             OutlinedTextField(value = kakaoEmail, onValueChange = { kakaoEmail = it } , modifier = Modifier.fillMaxWidth() , colors = TextFieldDefaults.colors(focusedContainerColor = Color.White , unfocusedContainerColor = Color.White, unfocusedIndicatorColor  = Color.Black , focusedIndicatorColor = Color.Green))
+            Button(onClick = { firebaseAuthViewModel.emailConfirm(kakaoEmail) }) {
+                Text("인증하기")
+
+            }
 
             Text("전화번호" , color = Color.Black)
             Spacer(Modifier.size(5.dp))

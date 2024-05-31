@@ -30,6 +30,19 @@
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
+            <!-- 파이어베이스 이메일 인증 딥링크에 사용되는 인텐트 필터 -->
+            <intent-filter android:autoVerify="true">
+                <action android:name="android.intent.action.VIEW"/>
+                <category android:name="android.intent.category.DEFAULT"/>
+                <category android:name="android.intent.category.BROWSABLE"/>
+                <data
+                    android:scheme="https"
+                    android:host="dolshop.page.link"
+                    />
+
+            </intent-filter>
+
         </activity>
 
         <activity
@@ -55,6 +68,8 @@
             android:authorities="${applicationId}.androidx-startup"
             tools:node="remove">
         </provider>
+
+
 
     </application>
 
