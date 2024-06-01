@@ -214,8 +214,12 @@ fun BottomNav(navController: NavHostController) {
             composable(route = ScreenList.SignUpScreen1.route) {
                 SignUpScreen1(navController)
             }
-            composable(route = ScreenList.SignUpScreen2.route) {
-                SingUpScreen2(navController)
+            composable(
+                route = "${ScreenList.SignUpScreen2.route}/{emailconfirm}",
+                arguments = listOf(navArgument("emailconfirm") { type = NavType.StringType })
+            ) { backStackEntry ->
+                val emailConfirm = backStackEntry.arguments?.getString("emailconfirm") ?: ""
+                SingUpScreen2(navController , emailConfirm)
             }
             composable(route = ScreenList.SignUpScreen3.route) {
                 SingUpScreen3(navController)
@@ -313,7 +317,7 @@ fun BottomNav(navController: NavHostController) {
                 val real = Gson().fromJson(gumaeDolInfoName, DomainProductModel::class.java)
                 //
 
-                InputAddressInfoScreen(navController , real)
+                InputAddressInfoScreen(navController, real)
             }
 
             composable(route = ScreenList.SavePublicDiaryScreen.route) {

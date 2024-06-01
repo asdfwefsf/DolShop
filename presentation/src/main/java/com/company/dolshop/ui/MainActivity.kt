@@ -109,7 +109,8 @@ class MainActivity : ComponentActivity() {
                         Toast.makeText(this, deepLink.toString(), Toast.LENGTH_SHORT).show()
                         Log.d("deeplinkdatat", deepLink.toString())
                         if (deepLink != null) {
-                            navController.navigate(ScreenList.SignUpScreen2.route)
+                            val truedat = true.toString()
+                            navController.navigate("${ScreenList.SignUpScreen2.route}/$truedat")
 //                            splashViewModel.setReadyState(false)
                         }
 

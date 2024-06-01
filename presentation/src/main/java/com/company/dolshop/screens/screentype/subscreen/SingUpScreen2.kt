@@ -48,9 +48,9 @@ import com.google.firebase.ktx.Firebase
 import org.w3c.dom.Text
 
 @Composable
-fun SingUpScreen2(navController: NavController) {
+fun SingUpScreen2(navController: NavController, emailConfirm: String) {
 
-    val firebaseAuthViewModel : FirebaseAuthViewModel = hiltViewModel()
+    val firebaseAuthViewModel: FirebaseAuthViewModel = hiltViewModel()
 
     var name by remember { mutableStateOf("") }
     var id by remember { mutableStateOf("") }
@@ -88,7 +88,7 @@ fun SingUpScreen2(navController: NavController) {
             Spacer(modifier = Modifier.weight(1f))
         }
 
-        Column (
+        Column(
             modifier = Modifier.padding(start = 20.dp, end = 20.dp)
         ) {
             Box(
@@ -112,64 +112,124 @@ fun SingUpScreen2(navController: NavController) {
                 modifier = Modifier.padding(top = 20.dp)
             )
 
-            Text("이름" , color = Color.Black)
+            Text("이름", color = Color.Black)
             Spacer(Modifier.size(5.dp))
-            OutlinedTextField(value = name, onValueChange = { name = it } , modifier = Modifier.fillMaxWidth() , colors = TextFieldDefaults.colors(focusedContainerColor = Color.White , unfocusedContainerColor = Color.White , unfocusedIndicatorColor  = Color.Black , focusedIndicatorColor = Color.Green))
+            OutlinedTextField(
+                value = name,
+                onValueChange = { name = it },
+                modifier = Modifier.fillMaxWidth(),
+                colors = TextFieldDefaults.colors(
+                    focusedContainerColor = Color.White,
+                    unfocusedContainerColor = Color.White,
+                    unfocusedIndicatorColor = Color.Black,
+                    focusedIndicatorColor = Color.Green
+                ))
 
-            Text("아이디" , color = Color.Black)
+            Text("아이디", color = Color.Black)
             Spacer(Modifier.size(5.dp))
-            OutlinedTextField(value = id, onValueChange = { id = it } , modifier = Modifier.fillMaxWidth() , colors = TextFieldDefaults.colors(focusedContainerColor = Color.White , unfocusedContainerColor = Color.White, unfocusedIndicatorColor  = Color.Black , focusedIndicatorColor = Color.Green))
+            OutlinedTextField(
+                value = id,
+                onValueChange = { id = it },
+                modifier = Modifier.fillMaxWidth(),
+                colors = TextFieldDefaults.colors(
+                    focusedContainerColor = Color.White,
+                    unfocusedContainerColor = Color.White,
+                    unfocusedIndicatorColor = Color.Black,
+                    focusedIndicatorColor = Color.Green
+                ))
             Button(onClick = { /*TODO*/ }) {
                 Text("인증하기")
             }
 
-            Text("비밀번호" , color = Color.Black)
+            Text("비밀번호", color = Color.Black)
             Spacer(Modifier.size(5.dp))
-            OutlinedTextField(value = password, onValueChange = { password = it } , modifier = Modifier.fillMaxWidth() , colors = TextFieldDefaults.colors(focusedContainerColor = Color.White , unfocusedContainerColor = Color.White, unfocusedIndicatorColor  = Color.Black , focusedIndicatorColor = Color.Green))
+            OutlinedTextField(
+                value = password,
+                onValueChange = { password = it },
+                modifier = Modifier.fillMaxWidth(),
+                colors = TextFieldDefaults.colors(
+                    focusedContainerColor = Color.White,
+                    unfocusedContainerColor = Color.White,
+                    unfocusedIndicatorColor = Color.Black,
+                    focusedIndicatorColor = Color.Green
+                ))
 
-            Text("카카오 이메일" , color = Color.Black)
+            Text("카카오 이메일", color = Color.Black)
             Spacer(Modifier.size(5.dp))
-            OutlinedTextField(value = kakaoEmail, onValueChange = { kakaoEmail = it } , modifier = Modifier.fillMaxWidth() , colors = TextFieldDefaults.colors(focusedContainerColor = Color.White , unfocusedContainerColor = Color.White, unfocusedIndicatorColor  = Color.Black , focusedIndicatorColor = Color.Green))
-            Button(onClick = { firebaseAuthViewModel.emailConfirm(kakaoEmail) }) {
-                Text("인증하기")
+            OutlinedTextField(
+                value = kakaoEmail,
+                onValueChange = { kakaoEmail = it },
+                modifier = Modifier.fillMaxWidth(),
+                colors = TextFieldDefaults.colors(
+                    focusedContainerColor = Color.White,
+                    unfocusedContainerColor = Color.White,
+                    unfocusedIndicatorColor = Color.Black,
+                    focusedIndicatorColor = Color.Green
+                ))
+            if (emailConfirm == "true") {
+                Button(
+                    onClick = {
+                        Toast.makeText(context, "인증완료", Toast.LENGTH_SHORT).show()
+                    }
+                ) {
+                    Text("인증완료")
+                }
+            } else {
+                Button(onClick = { firebaseAuthViewModel.emailConfirm(kakaoEmail) }) {
+                    Text("인증하기")
 
+                }
             }
 
-            Text("전화번호" , color = Color.Black)
+
+            Text("전화번호", color = Color.Black)
             Spacer(Modifier.size(5.dp))
-            OutlinedTextField(value = phoneNumber, onValueChange = { phoneNumber = it } , keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number) , modifier = Modifier.fillMaxWidth() , colors = TextFieldDefaults.colors(focusedContainerColor = Color.White , unfocusedContainerColor = Color.White, unfocusedIndicatorColor  = Color.Black , focusedIndicatorColor = Color.Green))
+            OutlinedTextField(
+                value = phoneNumber,
+                onValueChange = { phoneNumber = it },
+                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
+                modifier = Modifier.fillMaxWidth(),
+                colors = TextFieldDefaults.colors(
+                    focusedContainerColor = Color.White,
+                    unfocusedContainerColor = Color.White,
+                    unfocusedIndicatorColor = Color.Black,
+                    focusedIndicatorColor = Color.Green
+                ))
 
             Spacer(Modifier.size(250.dp))
 
-                Button(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(start = 20.dp, end = 20.dp),
-                    onClick = {
-                        if(id.isNotEmpty() && password.isNotEmpty() && name.isNotEmpty() && kakaoEmail.isNotEmpty()) {
-                            navController.navigate(ScreenList.SignUpScreen3.route) {
-                                popUpTo(ScreenList.SignUpScreen3.route) {
-                                    inclusive = true
-                                }
+            Button(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(start = 20.dp, end = 20.dp),
+                onClick = {
+                    if (id.isNotEmpty() && password.isNotEmpty() && name.isNotEmpty() && kakaoEmail.isNotEmpty()) {
+                        navController.navigate(ScreenList.SignUpScreen3.route) {
+                            popUpTo(ScreenList.SignUpScreen3.route) {
+                                inclusive = true
                             }
-                            val currentUser = Firebase.auth.currentUser
-                            var domainUserInfoModel = DomainUserInfoModel("" , kakaoEmail , name , "")
-                            firebaseAuthViewModel.signUpFirebaseAuth(kakaoEmail , password , name , phoneNumber , context , domainUserInfoModel)
-
-                        } else {
-                            Toast.makeText(context, "빈칸을 모두 채워주세요", Toast.LENGTH_SHORT).show()
                         }
+                        val currentUser = Firebase.auth.currentUser
+                        var domainUserInfoModel = DomainUserInfoModel("", kakaoEmail, name, "")
+                        firebaseAuthViewModel.signUpFirebaseAuth(
+                            kakaoEmail,
+                            password,
+                            name,
+                            phoneNumber,
+                            context,
+                            domainUserInfoModel
+                        )
 
+                    } else {
+                        Toast.makeText(context, "빈칸을 모두 채워주세요", Toast.LENGTH_SHORT).show()
                     }
-                ) {
-                    Text( text = "시작하기")
+
                 }
+            ) {
+                Text(text = "시작하기")
+            }
 
         }
-
-
-
-
 
 
     }

@@ -219,7 +219,8 @@ fun SignUpScreen1(navController: NavController) {
                             modifier = Modifier.fillMaxWidth(),
                             onClick = {
                                 if (okBoolean == true) {
-                                    navController.navigate(ScreenList.SignUpScreen2.route) {
+                                    val falsedat = false.toString()
+                                    navController.navigate("${ScreenList.SignUpScreen2.route}/$falsedat") {
                                         popUpTo(ScreenList.SignUpScreen2.route) {
                                             inclusive = true
                                         }
