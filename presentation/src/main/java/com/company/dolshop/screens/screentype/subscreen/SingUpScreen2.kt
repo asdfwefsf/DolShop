@@ -25,9 +25,11 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -40,6 +42,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.company.dolshop.screens.ScreenList
 import com.company.dolshop.viewmodel.FirebaseAuthViewModel
+import com.company.dolshop.viewmodel.SinnUpScreen2ViewModel
 import com.company.dolshop.viewmodel.publicdiary.PublicDiaryViewModel
 import com.company.domain.model.DomainUserInfoModel
 import com.google.firebase.auth.ktx.auth
@@ -51,12 +54,13 @@ import org.w3c.dom.Text
 fun SingUpScreen2(navController: NavController, emailConfirm: String) {
 
     val firebaseAuthViewModel: FirebaseAuthViewModel = hiltViewModel()
+    val signUpScreen2ViewModel: SinnUpScreen2ViewModel = hiltViewModel()
 
-    var name by remember { mutableStateOf("") }
+    val name by signUpScreen2ViewModel.name.collectAsState()
     var id by remember { mutableStateOf("") }
-    var password by remember { mutableStateOf("") }
-    var kakaoEmail by remember { mutableStateOf("") }
-    var phoneNumber by remember { mutableStateOf("") }
+    var password by rememberSaveable { mutableStateOf("") }
+    var kakaoEmail by rememberSaveable { mutableStateOf("") }
+    var phoneNumber by rememberSaveable { mutableStateOf("") }
 
     val context = LocalContext.current
 
@@ -116,14 +120,20 @@ fun SingUpScreen2(navController: NavController, emailConfirm: String) {
             Spacer(Modifier.size(5.dp))
             OutlinedTextField(
                 value = name,
-                onValueChange = { name = it },
+                onValueChange = {
+//                    name = it
+                    signUpScreen2ViewModel.setName(it)
+
+//                    signUpScreen2ViewModel.name = it
+                },
                 modifier = Modifier.fillMaxWidth(),
                 colors = TextFieldDefaults.colors(
                     focusedContainerColor = Color.White,
                     unfocusedContainerColor = Color.White,
                     unfocusedIndicatorColor = Color.Black,
                     focusedIndicatorColor = Color.Green
-                ))
+                )
+            )
 
             Text("아이디", color = Color.Black)
             Spacer(Modifier.size(5.dp))
@@ -136,7 +146,8 @@ fun SingUpScreen2(navController: NavController, emailConfirm: String) {
                     unfocusedContainerColor = Color.White,
                     unfocusedIndicatorColor = Color.Black,
                     focusedIndicatorColor = Color.Green
-                ))
+                )
+            )
             Button(onClick = { /*TODO*/ }) {
                 Text("인증하기")
             }
@@ -152,7 +163,8 @@ fun SingUpScreen2(navController: NavController, emailConfirm: String) {
                     unfocusedContainerColor = Color.White,
                     unfocusedIndicatorColor = Color.Black,
                     focusedIndicatorColor = Color.Green
-                ))
+                )
+            )
 
             Text("카카오 이메일", color = Color.Black)
             Spacer(Modifier.size(5.dp))
@@ -165,7 +177,8 @@ fun SingUpScreen2(navController: NavController, emailConfirm: String) {
                     unfocusedContainerColor = Color.White,
                     unfocusedIndicatorColor = Color.Black,
                     focusedIndicatorColor = Color.Green
-                ))
+                )
+            )
             if (emailConfirm == "true") {
                 Button(
                     onClick = {
@@ -194,7 +207,8 @@ fun SingUpScreen2(navController: NavController, emailConfirm: String) {
                     unfocusedContainerColor = Color.White,
                     unfocusedIndicatorColor = Color.Black,
                     focusedIndicatorColor = Color.Green
-                ))
+                )
+            )
 
             Spacer(Modifier.size(250.dp))
 
