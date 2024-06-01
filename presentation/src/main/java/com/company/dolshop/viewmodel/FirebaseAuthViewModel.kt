@@ -73,7 +73,7 @@ class FirebaseAuthViewModel @Inject constructor(
 
     fun emailConfirm(email : String) {
         val actionCodeSettings = ActionCodeSettings.newBuilder()
-            .setUrl("https://dolshop.page.link")
+            .setUrl("https://dolshop.page.link/eNh4")
             .setHandleCodeInApp(true)
             .setAndroidPackageName(
                 "com.company.dolshop",

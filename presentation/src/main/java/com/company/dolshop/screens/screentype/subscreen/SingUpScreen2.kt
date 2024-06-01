@@ -1,5 +1,7 @@
 package com.company.dolshop.screens.screentype.subscreen
 
+import android.app.Activity
+import android.content.Intent
 import android.net.Uri
 import android.util.Log
 import android.widget.Toast
@@ -53,6 +55,27 @@ import org.w3c.dom.Text
 @Composable
 fun SingUpScreen2(navController: NavController, emailConfirm: String) {
 
+    val context = LocalContext.current
+    val intent = (context as? Activity)?.intent
+//    val dynamicLinkUri = Uri.parse("https://dolshop.page.link/eNh4")
+//    intent?.data?.let { dynamicLinkUri ->
+//        Firebase.dynamicLinks
+//            .getDynamicLink(dynamicLinkUri)
+//            .addOnSuccessListener { pendingDynamicLinkData ->
+//                var deepLink: Uri? = null
+//                if (pendingDynamicLinkData != null) {
+//                    deepLink = pendingDynamicLinkData.link
+//                    Toast.makeText(context, deepLink.toString(), Toast.LENGTH_SHORT).show()
+//                    Log.d("deeplinkdatat", deepLink.toString())
+//                    if (deepLink != null) {
+//                        val truedat = "true"
+////                        navController.navigate("${ScreenList.SignUpScreen2.route}/$truedat")
+//                    }
+//                }
+//            }
+//            .addOnFailureListener { e -> Log.d("deeplink", "getDynamicLink:onFailure", e) }
+//    }
+
     val firebaseAuthViewModel: FirebaseAuthViewModel = hiltViewModel()
     val signUpScreen2ViewModel: SinnUpScreen2ViewModel = hiltViewModel()
 
@@ -62,7 +85,7 @@ fun SingUpScreen2(navController: NavController, emailConfirm: String) {
     var kakaoEmail by rememberSaveable { mutableStateOf("") }
     var phoneNumber by rememberSaveable { mutableStateOf("") }
 
-    val context = LocalContext.current
+//    val context = LocalContext.current
 
     Column(
         modifier = Modifier
@@ -148,9 +171,9 @@ fun SingUpScreen2(navController: NavController, emailConfirm: String) {
                     focusedIndicatorColor = Color.Green
                 )
             )
-            Button(onClick = { /*TODO*/ }) {
-                Text("인증하기")
-            }
+//            Button(onClick = { /*TODO*/ }) {
+//                Text("인증하기")
+//            }
 
             Text("비밀번호", color = Color.Black)
             Spacer(Modifier.size(5.dp))
@@ -180,6 +203,7 @@ fun SingUpScreen2(navController: NavController, emailConfirm: String) {
                 )
             )
             if (emailConfirm == "true") {
+                Log.d("dmailConfirm" , emailConfirm)
                 Button(
                     onClick = {
                         Toast.makeText(context, "인증완료", Toast.LENGTH_SHORT).show()
@@ -188,6 +212,8 @@ fun SingUpScreen2(navController: NavController, emailConfirm: String) {
                     Text("인증완료")
                 }
             } else {
+                Log.d("dmailConfirm" , emailConfirm)
+
                 Button(onClick = { firebaseAuthViewModel.emailConfirm(kakaoEmail) }) {
                     Text("인증하기")
 
@@ -210,7 +236,7 @@ fun SingUpScreen2(navController: NavController, emailConfirm: String) {
                 )
             )
 
-            Spacer(Modifier.size(250.dp))
+            Spacer(Modifier.size(50.dp))
 
             Button(
                 modifier = Modifier

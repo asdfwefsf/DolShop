@@ -1,6 +1,8 @@
 package com.company.dolshop.ui
 
 import android.animation.ObjectAnimator
+import android.app.Activity
+import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
 import android.util.Log
@@ -44,6 +46,7 @@ class splashScreenViewModel(
 ) : ViewModel() {
     private val _isReady = MutableStateFlow(false)
     val isReady = _isReady.asStateFlow()
+
     init {
         viewModelScope.launch {
             delay(10L)
@@ -93,31 +96,51 @@ class MainActivity : ComponentActivity() {
             }
         }
 
+//        val intent = (context as? Activity)?.intent
+//        val dynamicLinkUri = Uri.parse("https://dolshop.page.link/eNh4")
+        intent?.data?.let { dynamicLinkUri ->
+            Firebase.dynamicLinks
+                .getDynamicLink(dynamicLinkUri)
+                .addOnSuccessListener { pendingDynamicLinkData ->
+                    var deepLink: Uri? = null
+                    if (pendingDynamicLinkData != null) {
+                        deepLink = pendingDynamicLinkData.link
+
+                        if (deepLink != null) {
+                            val truedat = "true"
+                            navController.navigate("${ScreenList.SignUpScreen2.route}/$truedat")
+                        }
+                    }
+                }
+                .addOnFailureListener { e -> Log.d("deeplink", "getDynamicLink:onFailure", e) }
+        }
+
         setContent {
 
 
             CoroutineWorkerViewModel.test(this)
             navController = rememberNavController()
-            // 딥링크 씨발
-            val dynamicLinkUri = Uri.parse("https://dolshop.page.link")
-            Firebase.dynamicLinks
-                .getDynamicLink(dynamicLinkUri)
-                .addOnSuccessListener() { pendingDynamicLinkData ->
-                    var deepLink: Uri? = null
-                    if (pendingDynamicLinkData != null) {
-                        deepLink = pendingDynamicLinkData.link
-                        Toast.makeText(this, deepLink.toString(), Toast.LENGTH_SHORT).show()
-                        Log.d("deeplinkdatat", deepLink.toString())
-                        if (deepLink != null) {
-                            val truedat = true.toString()
-                            navController.navigate("${ScreenList.SignUpScreen2.route}/$truedat")
-//                            splashViewModel.setReadyState(false)
-                        }
 
-                    }
-                }
-                .addOnFailureListener() { e -> Log.d("deeplink", "getDynamicLink:onFailure", e) }
-            // 딥링크 씨발
+//            // 딥링크
+//            val dynamicLinkUri = Uri.parse("https://dolshop.page.link/eNh4")
+//            Firebase.dynamicLinks
+//                .getDynamicLink(dynamicLinkUri)
+//                .addOnSuccessListener() { pendingDynamicLinkData ->
+//                    var deepLink: Uri? = null
+//                    if (pendingDynamicLinkData != null) {
+//                        deepLink = pendingDynamicLinkData.link
+//                        Toast.makeText(this, deepLink.toString(), Toast.LENGTH_SHORT).show()
+//                        Log.d("deeplinkdatat", deepLink.toString())
+//                        if (deepLink != null) {
+//                            val truedat = "true"
+//                            navController.navigate("${ScreenList.SignUpScreen2.route}/$truedat")
+////                            splashViewModel.setReadyState(false)
+//                        }
+//
+//                    }
+//                }
+//                .addOnFailureListener() { e -> Log.d("deeplink", "getDynamicLink:onFailure", e) }
+//            // 딥링크
 
 
             DolShopTheme {
@@ -133,4 +156,32 @@ class MainActivity : ComponentActivity() {
     }
 
 
+//    override fun onNewIntent(intent: Intent?) {
+//        super.onNewIntent(intent)
+//        callDynamicLink(intent)
+//    }
+//
+//    private fun callDynamicLink(intent: Intent?) {
+//        intent?.let {
+//            Firebase.dynamicLinks
+//                .getDynamicLink(it)
+//                .addOnSuccessListener(this) { pendingDynamicLinkData ->
+//                    var deepLink: Uri? = null
+//                    if (pendingDynamicLinkData != null) {
+//                        deepLink = pendingDynamicLinkData.link
+//                        Toast.makeText(this, deepLink.toString(), Toast.LENGTH_SHORT).show()
+//                        Log.d("deeplinkdatat", deepLink.toString())
+//                        if (deepLink != null) {
+//                            val truedat = "true"
+//                            navController.navigate("${ScreenList.SignUpScreen2.route}/$truedat") {
+//                                popUpTo(ScreenList.SignUpScreen2.route) {
+//                                    inclusive = true
+//                                }
+//                            }
+//                        }
+//                    }
+//                }
+//                .addOnFailureListener(this) { e -> Log.d("deeplink Error : ",  e.toString()) }
+//        }
+//    }
 }
