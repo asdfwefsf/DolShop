@@ -98,5 +98,26 @@ class DataStoreUtility private constructor() {
                     preferences[IS_COUPON2] ?: false
                 }
 
+        // 앱이 실행되서 스플래시 스크린이 실행되었는지 여부 : Firebase Dynamic Lick
+        private val Context.dataStoreSplash by preferencesDataStore(name = "splash_Boolean")
+        private val IS_SPLASH = booleanPreferencesKey("is_splash")
+        suspend fun Context.setSplashState(isSplash: Boolean) {
+            dataStoreSplash.edit { preferences ->
+                preferences[IS_SPLASH] = isSplash
+            }
+        }
+        val Context.isSplashFlow : Flow<Boolean>
+            get() = dataStoreSplash.data
+                .catch { exception ->
+                    if (exception is IOException) {
+                        emit(emptyPreferences())
+                    } else {
+                        throw exception
+                    }
+                }
+                .map { preferences ->
+                    preferences[IS_SPLASH] ?: false
+                }
+
     }
 }
