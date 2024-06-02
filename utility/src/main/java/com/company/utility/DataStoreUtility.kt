@@ -99,15 +99,15 @@ class DataStoreUtility private constructor() {
                 }
 
         // 앱이 실행되서 스플래시 스크린이 실행되었는지 여부 : Firebase Dynamic Lick
-        private val Context.dataStoreSplash by preferencesDataStore(name = "splash_Boolean")
-        private val IS_SPLASH = booleanPreferencesKey("is_splash")
-        suspend fun Context.setSplashState(isSplash: Boolean) {
-            dataStoreSplash.edit { preferences ->
-                preferences[IS_SPLASH] = isSplash
+        private val Context.dataStoreDeepLink by preferencesDataStore(name = "deeplink_Boolean")
+        private val IS_DEEPLINK = booleanPreferencesKey("is_deeplink")
+        suspend fun Context.setDeepLinkState(isDeepLink: Boolean) {
+            dataStoreDeepLink.edit { preferences ->
+                preferences[IS_DEEPLINK] = isDeepLink
             }
         }
-        val Context.isSplashFlow : Flow<Boolean>
-            get() = dataStoreSplash.data
+        val Context.isDeepLinkFlow : Flow<Boolean>
+            get() = dataStoreDeepLink.data
                 .catch { exception ->
                     if (exception is IOException) {
                         emit(emptyPreferences())
@@ -116,7 +116,7 @@ class DataStoreUtility private constructor() {
                     }
                 }
                 .map { preferences ->
-                    preferences[IS_SPLASH] ?: false
+                    preferences[IS_DEEPLINK] ?: false
                 }
 
     }

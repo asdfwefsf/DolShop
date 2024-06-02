@@ -12,6 +12,14 @@ import javax.inject.Inject
 class SinnUpScreen2ViewModel @Inject constructor(
     private val savedStateHandle : SavedStateHandle
 ) : ViewModel() {
+
+    private val _deeplinkBoolean = MutableStateFlow(savedStateHandle["deeplinkBoolean"] ?: false)
+    val deeplinkBoolean = _deeplinkBoolean.asStateFlow()
+    fun setDeeplinkBoolean(deeplinkBoolean: Boolean) {
+        _deeplinkBoolean.value = deeplinkBoolean
+        savedStateHandle["deeplinkBoolean"] = deeplinkBoolean
+    }
+
     private val _name = MutableStateFlow(savedStateHandle["name"] ?: "")
     val name: StateFlow<String> = _name.asStateFlow()
 

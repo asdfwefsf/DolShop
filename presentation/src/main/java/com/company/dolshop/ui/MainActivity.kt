@@ -1,7 +1,6 @@
 package com.company.dolshop.ui
 
 import android.animation.ObjectAnimator
-import android.app.Activity
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
@@ -15,10 +14,7 @@ import androidx.activity.viewModels
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
-import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.core.animation.doOnEnd
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.lifecycle.ViewModel
@@ -27,15 +23,15 @@ import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import com.company.designsystem.designsystem.DolShopTheme
-import com.company.dolshop.screens.ScreenList
 import com.company.dolshop.screens.screentype.bottomnavscreen.BottomNav
 import com.company.dolshop.viewmodel.CoroutineWorkerViewModel
+import com.company.dolshop.viewmodel.SinnUpScreen2ViewModel
 import com.company.utility.DataStoreUtility
-import com.company.utility.DataStoreUtility.Companion.isSplashFlow
-import com.company.utility.DataStoreUtility.Companion.setSplashState
+import com.company.utility.DataStoreUtility.Companion.setDeepLinkState
 import com.google.firebase.dynamiclinks.ktx.dynamicLinks
 import com.google.firebase.ktx.Firebase
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -59,6 +55,8 @@ class splashScreenViewModel(
 class MainActivity : ComponentActivity() {
     private val splashViewModel by viewModels<splashScreenViewModel>()
     private val CoroutineWorkerViewModel by viewModels<CoroutineWorkerViewModel>()
+    private val SignUpScreen2ViewModel by viewModels<SinnUpScreen2ViewModel>()
+    private val datastoreUtility = DataStoreUtility.getInstance()
 
     private lateinit var navController: NavHostController
 
@@ -173,15 +171,26 @@ class MainActivity : ComponentActivity() {
                     var deepLink: Uri? = null
                     if (pendingDynamicLinkData != null) {
                         deepLink = pendingDynamicLinkData.link
-                        Toast.makeText(this, deepLink.toString(), Toast.LENGTH_SHORT).show()
+                        Toast.makeText(this, "인증 완료 되었습니다.", Toast.LENGTH_SHORT).show()
                         Log.d("deeplinkdatat", deepLink.toString())
+
+                        SignUpScreen2ViewModel.setDeeplinkBoolean(true)
+
+                        lifecycleScope.launch {
+                            datastoreUtility.apply {
+                                this@MainActivity.setDeepLinkState(true)
+                            }
+                        }
+
+
                         if (deepLink != null) {
                             val truedat = "true"
-                            navController.navigate("${ScreenList.SignUpScreen2.route}/$truedat") {
-                                popUpTo(ScreenList.SignUpScreen2.route) {
-                                    inclusive = true
-                                }
-                            }
+
+//                            navController.navigate("${ScreenList.SignUpScreen2.route}/$truedat") {
+//                                popUpTo(ScreenList.SignUpScreen2.route) {
+//                                    inclusive = true
+//                                }
+//                            }
                         }
                     }
                 }

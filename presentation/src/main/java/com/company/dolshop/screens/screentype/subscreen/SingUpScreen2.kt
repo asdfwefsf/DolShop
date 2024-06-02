@@ -32,6 +32,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
@@ -48,17 +49,20 @@ import com.company.dolshop.viewmodel.FirebaseAuthViewModel
 import com.company.dolshop.viewmodel.SinnUpScreen2ViewModel
 import com.company.dolshop.viewmodel.publicdiary.PublicDiaryViewModel
 import com.company.domain.model.DomainUserInfoModel
+import com.company.utility.DataStoreUtility
+import com.company.utility.DataStoreUtility.Companion.isDeepLinkFlow
+import com.company.utility.DataStoreUtility.Companion.setDeepLinkState
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.dynamiclinks.ktx.dynamicLinks
 import com.google.firebase.ktx.Firebase
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.launch
 import org.w3c.dom.Text
 
 @Composable
 fun SingUpScreen2(navController: NavController, emailConfirm: String) {
 
-//    LaunchedEffect(true) {
-//        emailConfirm = true
-//    }
+
     var emailConfirmation by rememberSaveable { mutableStateOf(emailConfirm) }
 
     LaunchedEffect(Unit) {
@@ -66,28 +70,12 @@ fun SingUpScreen2(navController: NavController, emailConfirm: String) {
         Log.d("UpdatedEmailConfirm", emailConfirmation)
     }
 
-    Log.d("UpdatedEmailConfirmRecomposition", emailConfirmation)
 
     val context = LocalContext.current
-    val intent = (context as? Activity)?.intent
-//    val dynamicLinkUri = Uri.parse("https://dolshop.page.link/eNh4")
-//    intent?.data?.let { dynamicLinkUri ->
-//        Firebase.dynamicLinks
-//            .getDynamicLink(dynamicLinkUri)
-//            .addOnSuccessListener { pendingDynamicLinkData ->
-//                var deepLink: Uri? = null
-//                if (pendingDynamicLinkData != null) {
-//                    deepLink = pendingDynamicLinkData.link
-//                    Toast.makeText(context, deepLink.toString(), Toast.LENGTH_SHORT).show()
-//                    Log.d("deeplinkdatat", deepLink.toString())
-//                    if (deepLink != null) {
-//                        val truedat = "true"
-////                        navController.navigate("${ScreenList.SignUpScreen2.route}/$truedat")
-//                    }
-//                }
-//            }
-//            .addOnFailureListener { e -> Log.d("deeplink", "getDynamicLink:onFailure", e) }
-//    }
+    val dataStoreUtility = DataStoreUtility.getInstance()
+    val deeplinkBoolean by dataStoreUtility.run {
+        context.isDeepLinkFlow.collectAsState(initial = false)
+    }
 
     val firebaseAuthViewModel: FirebaseAuthViewModel = hiltViewModel()
     val signUpScreen2ViewModel: SinnUpScreen2ViewModel = hiltViewModel()
@@ -98,7 +86,7 @@ fun SingUpScreen2(navController: NavController, emailConfirm: String) {
     var kakaoEmail by rememberSaveable { mutableStateOf("") }
     var phoneNumber by rememberSaveable { mutableStateOf("") }
 
-//    val context = LocalContext.current
+    val scope = rememberCoroutineScope()
 
     Column(
         modifier = Modifier
@@ -215,7 +203,7 @@ fun SingUpScreen2(navController: NavController, emailConfirm: String) {
                     focusedIndicatorColor = Color.Green
                 )
             )
-            if (emailConfirmation == "true") {
+            if (deeplinkBoolean) {
                 Log.d("dmailConfirm", emailConfirm)
                 Button(
                     onClick = {
@@ -272,6 +260,14 @@ fun SingUpScreen2(navController: NavController, emailConfirm: String) {
                             context,
                             domainUserInfoModel
                         )
+                        scope.launch {
+                            dataStoreUtility.apply {
+                                context.setDeepLinkState(false)
+                            }
+                        }
+
+
+
 
                     } else {
                         Toast.makeText(context, "빈칸을 모두 채워주세요", Toast.LENGTH_SHORT).show()
