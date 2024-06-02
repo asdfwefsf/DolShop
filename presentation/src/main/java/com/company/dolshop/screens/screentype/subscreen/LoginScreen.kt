@@ -1,6 +1,7 @@
 package com.company.dolshop.screens.screentype.subscreen
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -8,13 +9,14 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.offset
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.material3.Button
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -25,6 +27,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
@@ -33,7 +36,6 @@ import androidx.navigation.NavController
 import com.airbnb.lottie.compose.LottieAnimation
 import com.airbnb.lottie.compose.LottieCompositionSpec
 import com.airbnb.lottie.compose.LottieConstants
-import com.airbnb.lottie.compose.animateLottieCompositionAsState
 import com.airbnb.lottie.compose.rememberLottieComposition
 import com.company.dolshop.screens.ScreenList
 import com.company.dolshop.viewmodel.FirebaseAuthViewModel
@@ -45,7 +47,6 @@ import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.launch
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun LoginScreen(navController: NavController, viewModel: KakaoAuthiViewModel) {
 
@@ -54,7 +55,7 @@ fun LoginScreen(navController: NavController, viewModel: KakaoAuthiViewModel) {
     val context = LocalContext.current
     val dataStoreUtility = DataStoreUtility.getInstance()
 
-    val fireabaseAuthViewModel : FirebaseAuthViewModel = hiltViewModel()
+    val fireabaseAuthViewModel: FirebaseAuthViewModel = hiltViewModel()
 
     val lottie by rememberLottieComposition(
         spec = LottieCompositionSpec.RawRes(R.raw.jjinreal)
@@ -69,8 +70,8 @@ fun LoginScreen(navController: NavController, viewModel: KakaoAuthiViewModel) {
     LaunchedEffect(loginValue) {
         if (loginValue) {
             context.setLoginState(true)
-            navController.navigate(ScreenList.MyPageScreen.route) {
-                popUpTo(ScreenList.MyPageScreen.route) {
+            navController.navigate(ScreenList.RocksScreen.route) {
+                popUpTo(ScreenList.RocksScreen.route) {
                     inclusive = true
                 }
             }
@@ -78,115 +79,148 @@ fun LoginScreen(navController: NavController, viewModel: KakaoAuthiViewModel) {
     }
 
     Column(
-        modifier = Modifier.fillMaxSize(),
-        verticalArrangement = Arrangement.Center,
+        modifier = Modifier
+            .fillMaxSize()
+            .background(Color.White),
+        verticalArrangement = Arrangement.Top,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Text("Dol And Shop")
+
+        Text("Dol And Shop", color = Color.Black , modifier = Modifier.padding(top = 4.dp))
+
         LottieAnimation(
             composition = lottie,
-            iterations = LottieConstants.IterateForever
-
+            iterations = LottieConstants.IterateForever,
         )
-        Row(
-            modifier = Modifier.fillMaxWidth()
-        ) {
-            Text("카카오 이메일")
-            Spacer(Modifier.size(4.dp))
-            OutlinedTextField(value = kakaoEmail, onValueChange = { kakaoEmail = it })
-        }
-        Row(
-            modifier = Modifier.fillMaxWidth()
-        ) {
-            Text("비밀번호")
-            Spacer(Modifier.size(4.dp))
-            OutlinedTextField(value = password, onValueChange = { password = it })
-        }
-        Button(
-            onClick = {
-                scope.launch {
-                    fireabaseAuthViewModel.signInFirebaseAuth(kakaoEmail , password , context)
 
-                    val userInfolist = fireabaseAuthViewModel.userInfoList
-//                    if (fireabaseAuthViewModel.loginValue.value) {
-//                        dataStoreUtility.apply {
-//                            context.setLoginState(true)
-//                        }
+//        Row(
+//            modifier = Modifier
+//                .fillMaxWidth()
+//                .padding(start = 8.dp, end = 8.dp),
+//            verticalAlignment = Alignment.CenterVertically,
+//            horizontalArrangement = Arrangement.SpaceBetween
+//        ) {
+//            Text("이메일 ", color = Color.Black, modifier = Modifier.weight(1f))
+//            OutlinedTextField(
+//                value = kakaoEmail,
+//                onValueChange = { kakaoEmail = it },
+//                modifier = Modifier
+//                    .weight(5f)
+//                    .padding(start = 4.dp),
+//                colors = TextFieldDefaults.colors(
+//                    focusedContainerColor = Color.White,
+//                    unfocusedContainerColor = Color.White,
+//                    unfocusedIndicatorColor = Color.Black,
+//                    focusedIndicatorColor = Color.Green
+//                )
+//            )
+//        }
 //
-//                        navController.navigate(ScreenList.MyPageScreen.route) {
-//                            popUpTo(ScreenList.MyPageScreen.route) {
-//                                inclusive = true
+//        Row(
+//            modifier = Modifier
+//                .fillMaxWidth()
+//                .padding(start = 8.dp, end = 8.dp, top = 8.dp),
+//            verticalAlignment = Alignment.CenterVertically,
+//            horizontalArrangement = Arrangement.SpaceBetween
+//        ) {
+//            Text("비밀번호", color = Color.Black, modifier = Modifier.weight(1f))
+//            OutlinedTextField(
+//                value = password,
+//                onValueChange = { password = it },
+//                modifier = Modifier
+//                    .weight(5f)
+//                    .padding(start = 4.dp),
+//                colors = TextFieldDefaults.colors(
+//                    focusedContainerColor = Color.White,
+//                    unfocusedContainerColor = Color.White,
+//                    unfocusedIndicatorColor = Color.Black,
+//                    focusedIndicatorColor = Color.Green
+//                )
+//            )
+//        }
+
+        Image(
+            painter = painterResource(id = R.drawable.login),
+            contentDescription = "",
+            modifier = Modifier.clickable {
+                navController.navigate(ScreenList.LoginScreen2.route)
+            }
+//            modifier = Modifier
+//                .padding(top = 8.dp)
+//                .clickable {
+//                    scope.launch {
+//                        fireabaseAuthViewModel.signInFirebaseAuth(kakaoEmail, password, context)
+//                        val userInfolist = fireabaseAuthViewModel.userInfoList
+//                        userInfolist.collect { userInfo ->
+//                            if (userInfo.authNumber != "s") {
+//                                val userRef =
+//                                    realtimeDB.getReference("users/${userInfolist.value.authNumber}/kakaoAuth")
+//                                val userData = mapOf(
+//                                    "authNumber" to userInfolist.value.authNumber,
+//                                    "authEmail" to userInfolist.value.authEmail,
+//                                    "authNickName" to userInfolist.value.authNicName,
+//                                    "authProfileImage" to userInfolist.value.authProfileImage,
+//                                    "address" to ""
+//                                )
+//                                userRef.setValue(userData)
 //                            }
 //                        }
 //                    }
+//                }
+        )
 
-                    userInfolist.collect { userInfo ->
-                        if (userInfo.authNumber != "s") {
-                            val userRef =
-                                realtimeDB.getReference("users/${userInfolist.value.authNumber}/kakaoAuth")
-                            val userData = mapOf(
-                                "authNumber" to userInfolist.value.authNumber,
-                                "authEmail" to userInfolist.value.authEmail,
-                                "authNickName" to userInfolist.value.authNicName,
-                                "authProfileImage" to userInfolist.value.authProfileImage,
-                                "address" to ""
-                            )
-                            userRef.setValue(userData)
-                        }
-                    }
-
-                }
-            }
-
-        ) {
-            Text("로그인")
-        }
+//        Button(
+//            modifier = Modifier.width(400.dp),
+//            onClick = {
+//
+//            }
+//
+//        ) {
+//            Text("로그인", color = Color.Black)
+//        }
 
         Image(
             painter = painterResource(id = R.drawable.kakao_start_real),
             contentDescription = "Login Icon",
-            modifier = Modifier.clickable {
-                scope.launch {
-                    viewModel.kakaoLogin()
-                    val userInfolist = viewModel.userInfoList
-                    if (viewModel.loginValue.value) {
-                        dataStoreUtility.apply {
-                            context.setLoginState(true)
+            modifier = Modifier
+                .padding(top = 8.dp)
+                .clickable {
+                    scope.launch {
+                        viewModel.kakaoLogin()
+                        val userInfolist = viewModel.userInfoList
+                        if (viewModel.loginValue.value) {
+                            dataStoreUtility.apply {
+                                context.setLoginState(true)
+                            }
+                            navController.navigate(ScreenList.MyPageScreen.route) {
+                                popUpTo(ScreenList.MyPageScreen.route) {
+                                    inclusive = true
+                                }
+                            }
                         }
-
-                        navController.navigate(ScreenList.MyPageScreen.route) {
-                            popUpTo(ScreenList.MyPageScreen.route) {
-                                inclusive = true
+                        userInfolist.collect { userInfo ->
+                            if (userInfo.authNumber != "s") {
+                                val userRef =
+                                    realtimeDB.getReference("users/${userInfolist.value.authNumber}/kakaoAuth")
+                                val userData = mapOf(
+                                    "authNumber" to userInfolist.value.authNumber,
+                                    "authEmail" to userInfolist.value.authEmail,
+                                    "authNickName" to userInfolist.value.authNicName,
+                                    "authProfileImage" to userInfolist.value.authProfileImage,
+                                    "address" to ""
+                                )
+                                userRef.setValue(userData)
                             }
                         }
                     }
-
-                    userInfolist.collect { userInfo ->
-                        if (userInfo.authNumber != "s") {
-                            val userRef =
-                                realtimeDB.getReference("users/${userInfolist.value.authNumber}/kakaoAuth")
-                            val userData = mapOf(
-                                "authNumber" to userInfolist.value.authNumber,
-                                "authEmail" to userInfolist.value.authEmail,
-                                "authNickName" to userInfolist.value.authNicName,
-                                "authProfileImage" to userInfolist.value.authProfileImage,
-                                "address" to ""
-                            )
-                            userRef.setValue(userData)
-                        }
-                    }
-
                 }
-            }
         )
 
-
         Image(painter = painterResource(id = R.drawable.or), contentDescription = "")
-        Row(
 
-        ) {
+        Row {
             Spacer(Modifier.size(10.dp))
-            Image(painter = painterResource(id = R.drawable.signup), contentDescription = "" ,
+            Image(painter = painterResource(id = R.drawable.signup), contentDescription = "",
                 modifier = Modifier.clickable {
                     navController.navigate(ScreenList.SignUpScreen1.route)
                 }

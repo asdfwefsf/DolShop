@@ -52,6 +52,7 @@ import com.company.dolshop.screens.screentype.productscreen.ProductScreen
 import com.company.dolshop.screens.screentype.rockscreen.AddRockScreen
 import com.company.dolshop.screens.screentype.rockscreen.RocksScreen
 import com.company.dolshop.screens.screentype.subscreen.LoginScreen
+import com.company.dolshop.screens.screentype.subscreen.LoginScreen2
 import com.company.dolshop.screens.screentype.subscreen.PersonInfoWebView
 import com.company.dolshop.screens.screentype.subscreen.SignUpScreen1
 import com.company.dolshop.screens.screentype.subscreen.SingUpScreen2
@@ -224,6 +225,13 @@ fun BottomNav(navController: NavHostController) {
             composable(route = ScreenList.SignUpScreen3.route) {
                 SingUpScreen3(navController)
             }
+            composable(route = ScreenList.LoginScreen.route) {
+                val viewmodel: KakaoAuthiViewModel = hiltViewModel()
+                LoginScreen(navController, viewmodel)
+            }
+            composable(route = ScreenList.LoginScreen2.route) {
+                LoginScreen2(navController)
+            }
             // 파이어베이스 회원가입 및 로그인
 
             // 개인 정보 처리방침
@@ -292,10 +300,10 @@ fun BottomNav(navController: NavHostController) {
                 AuthInfoScreen(navController)
             }
 
-            composable(route = ScreenList.LoginScreen.route) {
-                val viewmodel: KakaoAuthiViewModel = hiltViewModel()
-                LoginScreen(navController, viewmodel)
-            }
+//            composable(route = ScreenList.LoginScreen.route) {
+//                val viewmodel: KakaoAuthiViewModel = hiltViewModel()
+//                LoginScreen(navController, viewmodel)
+//            }
 
             composable(route = ScreenList.LogoutScreen.route) {
                 LogoutScreen()

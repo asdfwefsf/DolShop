@@ -19,26 +19,26 @@ class SinnUpScreen2ViewModel @Inject constructor(
         _deeplinkBoolean.value = deeplinkBoolean
         savedStateHandle["deeplinkBoolean"] = deeplinkBoolean
     }
-
-    private val _name = MutableStateFlow(savedStateHandle["name"] ?: "")
-    val name: StateFlow<String> = _name.asStateFlow()
-
-    private val _id = MutableStateFlow(savedStateHandle["id"] ?: "")
-    val id = _id.asStateFlow()
-
-    private val _password = MutableStateFlow(savedStateHandle["password"] ?: "")
-    val password = _password.asStateFlow()
-
-    private val _kakaoEmail = MutableStateFlow(savedStateHandle["kakaoEmail"] ?: "")
-    val kakaoEmail = _kakaoEmail.asStateFlow()
-
-    private val _phoneNumber = MutableStateFlow(savedStateHandle["phoneNumber"] ?: "")
-    val phoneNumber = _phoneNumber.asStateFlow()
-
-    fun setName(name: String) {
-        _name.value = name
-        savedStateHandle["addressName"] = name
-    }
+//
+//    private val _name = MutableStateFlow(savedStateHandle["name"] ?: "")
+//    val name: StateFlow<String> = _name.asStateFlow()
+//
+//    private val _id = MutableStateFlow(savedStateHandle["id"] ?: "")
+//    val id = _id.asStateFlow()
+//
+//    private val _password = MutableStateFlow(savedStateHandle["password"] ?: "")
+//    val password = _password.asStateFlow()
+//
+//    private val _kakaoEmail = MutableStateFlow(savedStateHandle["kakaoEmail"] ?: "")
+//    val kakaoEmail = _kakaoEmail.asStateFlow()
+//
+//    private val _phoneNumber = MutableStateFlow(savedStateHandle["phoneNumber"] ?: "")
+//    val phoneNumber = _phoneNumber.asStateFlow()
+//
+//    fun setName(name: String) {
+//        _name.value = name
+//        savedStateHandle["addressName"] = name
+//    }
 
 //    fun setId(Number: String) {
 //        _addressNumber.value = Number

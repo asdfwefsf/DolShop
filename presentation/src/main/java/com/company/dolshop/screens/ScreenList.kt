@@ -4,6 +4,8 @@ sealed class ScreenList(val route : String) {
 
     // 카카오 3초만에 시작하기
     object LoginScreen : ScreenList("로그인")
+    object LoginScreen2 : ScreenList("로그인2")
+
 
     // 파이어베이스 회원가입 및 로그인
     object SignUpScreen1 : ScreenList("파이어베이스회원가입1")

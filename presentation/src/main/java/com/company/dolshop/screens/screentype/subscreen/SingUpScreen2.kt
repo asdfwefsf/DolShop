@@ -56,6 +56,7 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.dynamiclinks.ktx.dynamicLinks
 import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import org.w3c.dom.Text
 
@@ -80,7 +81,7 @@ fun SingUpScreen2(navController: NavController, emailConfirm: String) {
     val firebaseAuthViewModel: FirebaseAuthViewModel = hiltViewModel()
     val signUpScreen2ViewModel: SinnUpScreen2ViewModel = hiltViewModel()
 
-    val name by signUpScreen2ViewModel.name.collectAsState()
+    var name by remember { mutableStateOf("") }
     var id by remember { mutableStateOf("") }
     var password by rememberSaveable { mutableStateOf("") }
     var kakaoEmail by rememberSaveable { mutableStateOf("") }
@@ -145,8 +146,8 @@ fun SingUpScreen2(navController: NavController, emailConfirm: String) {
             OutlinedTextField(
                 value = name,
                 onValueChange = {
-//                    name = it
-                    signUpScreen2ViewModel.setName(it)
+                    name = it
+//                    signUpScreen2ViewModel.setName(it)
 
 //                    signUpScreen2ViewModel.name = it
                 },
@@ -260,7 +261,7 @@ fun SingUpScreen2(navController: NavController, emailConfirm: String) {
                             context,
                             domainUserInfoModel
                         )
-                        scope.launch {
+                        scope.launch(Dispatchers.IO) {
                             dataStoreUtility.apply {
                                 context.setDeepLinkState(false)
                             }
@@ -270,6 +271,11 @@ fun SingUpScreen2(navController: NavController, emailConfirm: String) {
 
 
                     } else {
+                        scope.launch(Dispatchers.IO) {
+                            dataStoreUtility.apply {
+                                context.setDeepLinkState(false)
+                            }
+                        }
                         Toast.makeText(context, "빈칸을 모두 채워주세요", Toast.LENGTH_SHORT).show()
                     }
 
