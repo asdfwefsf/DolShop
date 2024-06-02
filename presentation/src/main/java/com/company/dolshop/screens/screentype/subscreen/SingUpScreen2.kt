@@ -27,6 +27,7 @@ import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -54,6 +55,18 @@ import org.w3c.dom.Text
 
 @Composable
 fun SingUpScreen2(navController: NavController, emailConfirm: String) {
+
+//    LaunchedEffect(true) {
+//        emailConfirm = true
+//    }
+    var emailConfirmation by rememberSaveable { mutableStateOf(emailConfirm) }
+
+    LaunchedEffect(Unit) {
+        emailConfirmation = emailConfirm
+        Log.d("UpdatedEmailConfirm", emailConfirmation)
+    }
+
+    Log.d("UpdatedEmailConfirmRecomposition", emailConfirmation)
 
     val context = LocalContext.current
     val intent = (context as? Activity)?.intent
@@ -202,8 +215,8 @@ fun SingUpScreen2(navController: NavController, emailConfirm: String) {
                     focusedIndicatorColor = Color.Green
                 )
             )
-            if (emailConfirm == "true") {
-                Log.d("dmailConfirm" , emailConfirm)
+            if (emailConfirmation == "true") {
+                Log.d("dmailConfirm", emailConfirm)
                 Button(
                     onClick = {
                         Toast.makeText(context, "인증완료", Toast.LENGTH_SHORT).show()
@@ -212,7 +225,7 @@ fun SingUpScreen2(navController: NavController, emailConfirm: String) {
                     Text("인증완료")
                 }
             } else {
-                Log.d("dmailConfirm" , emailConfirm)
+                Log.d("dmailConfirm", emailConfirm)
 
                 Button(onClick = { firebaseAuthViewModel.emailConfirm(kakaoEmail) }) {
                     Text("인증하기")

@@ -96,24 +96,28 @@ class MainActivity : ComponentActivity() {
             }
         }
 
-//        val intent = (context as? Activity)?.intent
+////        val intent = (context as? Activity)?.intent
 //        val dynamicLinkUri = Uri.parse("https://dolshop.page.link/eNh4")
-        intent?.data?.let { dynamicLinkUri ->
-            Firebase.dynamicLinks
-                .getDynamicLink(dynamicLinkUri)
-                .addOnSuccessListener { pendingDynamicLinkData ->
-                    var deepLink: Uri? = null
-                    if (pendingDynamicLinkData != null) {
-                        deepLink = pendingDynamicLinkData.link
-
-                        if (deepLink != null) {
-                            val truedat = "true"
-                            navController.navigate("${ScreenList.SignUpScreen2.route}/$truedat")
-                        }
-                    }
-                }
-                .addOnFailureListener { e -> Log.d("deeplink", "getDynamicLink:onFailure", e) }
-        }
+//        intent?.data?.let { dynamicLinkUri ->
+//            Firebase.dynamicLinks
+//                .getDynamicLink(dynamicLinkUri)
+//                .addOnSuccessListener { pendingDynamicLinkData ->
+//                    var deepLink: Uri? = null
+//                    Log.d("fnweofwo" , dynamicLinkUri.toString())
+//                    if (pendingDynamicLinkData != null) {
+//                        deepLink = pendingDynamicLinkData.link
+//                        Log.d("ssfse" , deepLink.toString())
+////                        if (deepLink != null) {
+//                            val truedat = true.toString()
+//                            navController.navigate("${ScreenList.SignUpScreen2.route}/$truedat")
+//
+//
+//
+////                        }
+//                    }
+//                }
+//                .addOnFailureListener { e -> Log.d("deeplink", "getDynamicLink:onFailure", e) }
+//        }
 
         setContent {
 
@@ -156,32 +160,32 @@ class MainActivity : ComponentActivity() {
     }
 
 
-//    override fun onNewIntent(intent: Intent?) {
-//        super.onNewIntent(intent)
-//        callDynamicLink(intent)
-//    }
-//
-//    private fun callDynamicLink(intent: Intent?) {
-//        intent?.let {
-//            Firebase.dynamicLinks
-//                .getDynamicLink(it)
-//                .addOnSuccessListener(this) { pendingDynamicLinkData ->
-//                    var deepLink: Uri? = null
-//                    if (pendingDynamicLinkData != null) {
-//                        deepLink = pendingDynamicLinkData.link
-//                        Toast.makeText(this, deepLink.toString(), Toast.LENGTH_SHORT).show()
-//                        Log.d("deeplinkdatat", deepLink.toString())
-//                        if (deepLink != null) {
-//                            val truedat = "true"
-//                            navController.navigate("${ScreenList.SignUpScreen2.route}/$truedat") {
-//                                popUpTo(ScreenList.SignUpScreen2.route) {
-//                                    inclusive = true
-//                                }
-//                            }
-//                        }
-//                    }
-//                }
-//                .addOnFailureListener(this) { e -> Log.d("deeplink Error : ",  e.toString()) }
-//        }
-//    }
+    override fun onNewIntent(intent: Intent?) {
+        super.onNewIntent(intent)
+        callDynamicLink(intent)
+    }
+
+    private fun callDynamicLink(intent: Intent?) {
+        intent?.let {
+            Firebase.dynamicLinks
+                .getDynamicLink(it)
+                .addOnSuccessListener(this) { pendingDynamicLinkData ->
+                    var deepLink: Uri? = null
+                    if (pendingDynamicLinkData != null) {
+                        deepLink = pendingDynamicLinkData.link
+                        Toast.makeText(this, deepLink.toString(), Toast.LENGTH_SHORT).show()
+                        Log.d("deeplinkdatat", deepLink.toString())
+                        if (deepLink != null) {
+                            val truedat = "true"
+                            navController.navigate("${ScreenList.SignUpScreen2.route}/$truedat") {
+                                popUpTo(ScreenList.SignUpScreen2.route) {
+                                    inclusive = true
+                                }
+                            }
+                        }
+                    }
+                }
+                .addOnFailureListener(this) { e -> Log.d("deeplink Error : ",  e.toString()) }
+        }
+    }
 }
