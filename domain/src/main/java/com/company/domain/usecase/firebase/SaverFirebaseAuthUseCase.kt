@@ -7,11 +7,7 @@ import javax.inject.Inject
 class SaverFirebaseAuthUseCase @Inject constructor(
     private val repository : SaverFirebaseAuthRepository
 ){
-
-//    var domainUserInfoModel = DomainUserInfoModel(" " , " " , " " , " ")
-
     suspend operator fun invoke(domainUserInfoModel : DomainUserInfoModel , currentUser : String) {
         repository.saveFirebaseAuth(domainUserInfoModel , currentUser)
     }
-
 }

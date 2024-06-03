@@ -20,10 +20,8 @@ interface UserInfoDao {
     fun updateUserInfo(userInfo: UserInfo)
     @Delete
     suspend fun deleteUserInfo(userInfo: UserInfo)
-
     @Query("SELECT * FROM userinfo ORDER BY id DESC")
     fun getUserInfo() : Flow<UserInfo>
-
     @Query("SELECT EXISTS(SELECT 1 FROM userinfo WHERE id = :id)")
     fun prodideUserInfoExists(id: Int): Boolean
 }

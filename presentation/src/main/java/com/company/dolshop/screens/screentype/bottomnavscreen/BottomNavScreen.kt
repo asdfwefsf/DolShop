@@ -46,12 +46,12 @@ import com.company.dolshop.screens.screentype.productscreen.GuMaeScreen
 import com.company.dolshop.screens.screentype.productscreen.ProductScreen
 import com.company.dolshop.screens.screentype.rockscreen.AddRockScreen
 import com.company.dolshop.screens.screentype.rockscreen.RocksScreen
-import com.company.dolshop.screens.screentype.subscreen.LoginScreen
-import com.company.dolshop.screens.screentype.subscreen.LoginScreen2
-import com.company.dolshop.screens.screentype.subscreen.PersonInfoWebView
-import com.company.dolshop.screens.screentype.subscreen.SignUpScreen1
-import com.company.dolshop.screens.screentype.subscreen.SingUpScreen2
-import com.company.dolshop.screens.screentype.subscreen.SingUpScreen3
+import com.company.dolshop.screens.screentype.authscreen.signin.LoginScreen
+import com.company.dolshop.screens.screentype.authscreen.signin.LoginScreen2
+import com.company.dolshop.screens.screentype.authscreen.signup.SignUpScreen1
+import com.company.dolshop.screens.screentype.authscreen.signup.SingUpScreen2
+import com.company.dolshop.screens.screentype.authscreen.signup.SingUpScreen3
+import com.company.dolshop.screens.screentype.webview.AgreeWebView
 import com.company.dolshop.viewmodel.AuthiViewModel
 import com.company.dolshop.viewmodel.UpdateBaseProductViewModel
 import com.company.domain.model.DomainProductModel
@@ -234,7 +234,7 @@ fun BottomNav(navController: NavHostController) {
 
             ) { backStackEntry ->
                 val url = backStackEntry.arguments?.getString("url") ?: ""
-                PersonInfoWebView(url)
+                AgreeWebView(url)
             }
             // 개인 정보 처리방침
 

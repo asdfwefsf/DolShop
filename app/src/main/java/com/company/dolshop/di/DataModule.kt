@@ -15,10 +15,10 @@ import com.company.data.datasource.userinfo.UserInfoDatabase
 import com.company.data.repositoryimpl.AnnouncementRepositoryImpl
 import com.company.data.repositoryimpl.CoroutineWorkerRepositoryImpl
 import com.company.data.repositoryimpl.DiaryNumberRoomRepositoryImpl
+import com.company.data.repositoryimpl.GetUserInfoDbRepositoryImpl
 import com.company.data.repositoryimpl.KakaoLoginRepositoryImpl
 import com.company.data.repositoryimpl.KakaoLogoutRepositoryImpl
 import com.company.data.repositoryimpl.UpdateBaseProductRepositoryImpl
-import com.company.data.repositoryimpl.UpdateKakaoUserInfoRepositoryImpl
 import com.company.data.repositoryimpl.address.GetAddressRepositoryImpl
 import com.company.data.repositoryimpl.address.SaveAddressRepositoryImpl
 import com.company.data.repositoryimpl.firebase.SaverFirebaseAuthImpl
@@ -38,11 +38,11 @@ import com.company.domain.repository.CoroutineWorkerRepository
 import com.company.domain.repository.DiaryNumberRoomRepository
 import com.company.domain.repository.GetAddressRepository
 import com.company.domain.repository.GetPublicDiaryWorkerFunctionRepository
+import com.company.domain.repository.GetUserInfoDbRepository
 import com.company.domain.repository.KakaoLoginRepository
 import com.company.domain.repository.KakaoLogoutRepository
 import com.company.domain.repository.SaveAddressRepository
 import com.company.domain.repository.UpdateBaseProductRepository
-import com.company.domain.repository.UpdateKakaoUserInfoRepository
 import com.company.domain.repository.UpdateProductSaleRepository
 import com.company.domain.repository.firebase.SaverFirebaseAuthRepository
 import com.company.domain.repository.getDiaryWorkerFunctionRepository
@@ -73,7 +73,7 @@ object DataModule {
     @Provides
     fun providegetUserKakaoInfoRepository(impl: getUserKakaoInfoRepositoryImpl) : getUserKakaoInfoRepository = impl
     @Provides
-    fun provideUpdateKakaoUserInfoRepository(impl: UpdateKakaoUserInfoRepositoryImpl) : UpdateKakaoUserInfoRepository = impl
+    fun provideUpdateKakaoUserInfoRepository(impl: GetUserInfoDbRepositoryImpl) : GetUserInfoDbRepository = impl
     @Provides
     fun provideGetProductRepository(impl: getProductRepositoryImpl) : getProductRepository = impl
     @Provides

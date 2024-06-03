@@ -7,10 +7,10 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.company.domain.model.DomainUserInfoModel
 import com.company.domain.usecase.firebase.SaverFirebaseAuthUseCase
+import com.company.domain.usecase.kakao.GetUserInfoDbUseCase
+import com.company.domain.usecase.kakao.GetUserKakaoInfoUseCase
 import com.company.domain.usecase.kakao.KakaoLoginUseCase
 import com.company.domain.usecase.kakao.KakaoLogoutUseCase
-import com.company.domain.usecase.kakao.UpdateKakaoUserInfoUseCase
-import com.company.domain.usecase.kakao.getUserKakaoInfoUseCase
 import com.google.firebase.auth.ActionCodeSettings
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
@@ -28,11 +28,16 @@ import javax.inject.Inject
 class AuthiViewModel @Inject constructor(
     private val kakaoLoginUsecase: KakaoLoginUseCase,
     private val kakaoLogoutUsecase: KakaoLogoutUseCase,
-    private val getUserKakaoInfoUseCase: getUserKakaoInfoUseCase,
-    private val updateUserKakaoInfoUseCase: UpdateKakaoUserInfoUseCase,
-    private val SaverFirebaseAuthUseCase: SaverFirebaseAuthUseCase,
 
-    ) : ViewModel() {
+    // 카카오 api로부터 카카오 정보 가져와서 UserInfo에 넣어주는 역할
+    private val getUserKakaoInfoUseCase: GetUserKakaoInfoUseCase,
+
+    // 파이어베이스를 통해 회원가입 할 때 해당 유저 정보를 UserInfo에 저장하는 역할
+    private val saverFirebaseAuthUseCase: SaverFirebaseAuthUseCase,
+
+    // UserInfo에 저장된 유저정보 가져오는 역할
+    private val getUserInfoDBUseCase: GetUserInfoDbUseCase
+) : ViewModel() {
 
 
     // 로그인 여부 확인
@@ -48,6 +53,10 @@ class AuthiViewModel @Inject constructor(
             _loginValue.emit(true)
 
         }
+    }
+
+    private suspend fun getUserKakaoInfo() {
+        getUserKakaoInfoUseCase()
     }
 
     // 카카오 로그아웃 및 앱 종료 기능
@@ -78,6 +87,7 @@ class AuthiViewModel @Inject constructor(
                 Log.d("test", "에러났음")
             }
     }
+
     // 파이어베이스 회원가입
     // 여기서 유저 정보 Room DB에 저장
     fun signUpFirebaseAuth(
@@ -95,7 +105,7 @@ class AuthiViewModel @Inject constructor(
 
                     Toast.makeText(context, "회원가입에 성공했습니다. 로그인해주세요.", Toast.LENGTH_SHORT).show()
                     CoroutineScope(Dispatchers.IO).launch {
-                        SaverFirebaseAuthUseCase(domainUserInfoModel, currentUser.toString())
+                        saverFirebaseAuthUseCase(domainUserInfoModel, currentUser.toString())
 
                     }
                 } else {
@@ -128,28 +138,23 @@ class AuthiViewModel @Inject constructor(
 
 
     // 사용자 정보(파이어베이스 로그인 , 카카오 로그인)
-    // SaverFirebaseAuthImpl , getUserKakaoInfoRepositoryImpl => UserInfo에 사용자 정보 저장
+    // 파이어베이스 회원 가입 할 때 , 카카오 시작하기 할 때 => UserInfo에 사용자 정보 저장
     private val _userInfoList = MutableStateFlow<DomainUserInfoModel>(
         DomainUserInfoModel("s", "s", "s", "s")
     )
-    val userInfoList : MutableStateFlow<DomainUserInfoModel> = _userInfoList
+    val userInfoList: MutableStateFlow<DomainUserInfoModel> = _userInfoList
 
-    private suspend fun getUserKakaoInfo() {
-        getUserKakaoInfoUseCase()
-    }
-
-    init {
-        viewModelScope.launch {
-            kakaoInfoUpdate()
-        }
-    }
-
-    suspend fun kakaoInfoUpdate() {
-        updateUserKakaoInfoUseCase().collect { userInfo ->
+    private suspend fun getUserInfoDB() {
+        getUserInfoDBUseCase().collect { userInfo ->
             _userInfoList.value = userInfo
         }
     }
 
+    init {
+        viewModelScope.launch {
+            getUserInfoDB()
+        }
+    }
 
 }
 

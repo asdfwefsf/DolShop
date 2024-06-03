@@ -1,4 +1,4 @@
-package com.company.dolshop.screens.screentype.subscreen
+package com.company.dolshop.screens.screentype.authscreen.signin
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
@@ -32,7 +32,6 @@ import com.airbnb.lottie.compose.LottieCompositionSpec
 import com.airbnb.lottie.compose.LottieConstants
 import com.airbnb.lottie.compose.rememberLottieComposition
 import com.company.dolshop.screens.ScreenList
-import com.company.dolshop.viewmodel.FirebaseAuthViewModel
 import com.company.dolshop.viewmodel.AuthiViewModel
 import com.company.presentation.R
 import com.company.utility.DataStoreUtility

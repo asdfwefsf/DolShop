@@ -1,8 +1,5 @@
-package com.company.dolshop.screens.screentype.subscreen
+package com.company.dolshop.screens.screentype.authscreen.signup
 
-import android.app.Activity
-import android.content.Intent
-import android.net.Uri
 import android.util.Log
 import android.widget.Toast
 import androidx.compose.foundation.background
@@ -11,7 +8,6 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -26,7 +22,6 @@ import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -44,7 +39,6 @@ import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.focus.onFocusChanged
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -52,20 +46,15 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.company.dolshop.screens.ScreenList
 import com.company.dolshop.viewmodel.AuthiViewModel
-import com.company.dolshop.viewmodel.FirebaseAuthViewModel
 import com.company.dolshop.viewmodel.SinnUpScreen2ViewModel
-import com.company.dolshop.viewmodel.publicdiary.PublicDiaryViewModel
 import com.company.domain.model.DomainUserInfoModel
 import com.company.utility.DataStoreUtility
 import com.company.utility.DataStoreUtility.Companion.isDeepLinkFlow
 import com.company.utility.DataStoreUtility.Companion.setDeepLinkState
 import com.google.firebase.auth.ktx.auth
-import com.google.firebase.dynamiclinks.ktx.dynamicLinks
 import com.google.firebase.ktx.Firebase
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import org.w3c.dom.Text
 
 @Composable
 fun SingUpScreen2(navController: NavController, emailConfirm: String) {
@@ -85,7 +74,6 @@ fun SingUpScreen2(navController: NavController, emailConfirm: String) {
         context.isDeepLinkFlow.collectAsState(initial = false)
     }
 
-    val firebaseAuthViewModel: FirebaseAuthViewModel = hiltViewModel()
     val signUpScreen2ViewModel: SinnUpScreen2ViewModel = hiltViewModel()
     val authiViewModel: AuthiViewModel = hiltViewModel()
 

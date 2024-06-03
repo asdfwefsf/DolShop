@@ -1,4 +1,4 @@
-package com.company.dolshop.screens.screentype.subscreen
+package com.company.dolshop.screens.screentype.authscreen.signup
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable

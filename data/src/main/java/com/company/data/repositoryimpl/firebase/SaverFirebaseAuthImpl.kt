@@ -1,6 +1,5 @@
 package com.company.data.repositoryimpl.firebase
 
-import android.util.Log
 import com.company.data.datasource.userinfo.UserInfo
 import com.company.data.datasource.userinfo.UserInfoDao
 import com.company.domain.model.DomainUserInfoModel
@@ -34,10 +33,7 @@ class SaverFirebaseAuthImpl @Inject constructor(
                     userInfo.authProfileImage,
                     " "
                 )
-
-
             )
-            Log.d("daoTest", "userinfo insert")
         } else {
             dao.updateUserInfo(
                 UserInfo(
@@ -49,8 +45,6 @@ class SaverFirebaseAuthImpl @Inject constructor(
                     " "
                 )
             )
-            Log.d("daoTest", "userinfo update")
-
         }
     }
 }
