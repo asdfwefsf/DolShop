@@ -8,10 +8,13 @@ import com.company.domain.repository.firebase.SaverFirebaseAuthRepository
 import javax.inject.Inject
 
 class SaverFirebaseAuthImpl @Inject constructor(
-    private val dao : UserInfoDao
-) : SaverFirebaseAuthRepository{
+    private val dao: UserInfoDao
+) : SaverFirebaseAuthRepository {
 
-    override suspend fun saveFirebaseAuth(domainUserInfoModel: DomainUserInfoModel , currentUser : String) {
+    override suspend fun saveFirebaseAuth(
+        domainUserInfoModel: DomainUserInfoModel,
+        currentUser: String
+    ) {
         val userInfo = UserInfo(
             0,
             currentUser,
@@ -33,21 +36,21 @@ class SaverFirebaseAuthImpl @Inject constructor(
                 )
 
 
-
             )
             Log.d("daoTest", "userinfo insert")
         } else {
-//                        dao.updateUserInfo(
-//                            UserInfo(
-//                                userInfo.id,
-//                                userInfo.authNumber,
-//                                userInfo.authEmail,
-//                                userInfo.authNicName,
-//                                userInfo.authProfileImage,
-//                                " "
-//                            )
-//                        )
+            dao.updateUserInfo(
+                UserInfo(
+                    userInfo.id,
+                    userInfo.authNumber,
+                    userInfo.authEmail,
+                    userInfo.authNicName,
+                    userInfo.authProfileImage,
+                    " "
+                )
+            )
             Log.d("daoTest", "userinfo update")
 
-        }    }
+        }
+    }
 }

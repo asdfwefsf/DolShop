@@ -58,16 +58,16 @@ class getUserKakaoInfoRepositoryImpl @Inject constructor(
                         )
                         Log.d("daoTest", "userinfo insert")
                     } else {
-//                        dao.updateUserInfo(
-//                            UserInfo(
-//                                userInfo.id,
-//                                userInfo.authNumber,
-//                                userInfo.authEmail,
-//                                userInfo.authNicName,
-//                                userInfo.authProfileImage,
-//                                " "
-//                            )
-//                        )
+                        dao.updateUserInfo(
+                            UserInfo(
+                                userInfo.id,
+                                userInfo.authNumber,
+                                userInfo.authEmail,
+                                userInfo.authNicName,
+                                userInfo.authProfileImage,
+                                " "
+                            )
+                        )
                         Log.d("daoTest", "userinfo update")
 
                     }

@@ -35,7 +35,7 @@ import androidx.paging.compose.collectAsLazyPagingItems
 import com.company.designsystem.designsystem.component.card.DetailDialog
 import com.company.designsystem.designsystem.component.card.SomenailCard
 import com.company.dolshop.viewmodel.DolsViewModel
-import com.company.dolshop.viewmodel.KakaoAuthiViewModel
+import com.company.dolshop.viewmodel.AuthiViewModel
 import com.company.dolshop.viewmodel.publicdiary.PublicDiaryViewModel
 import com.company.domain.entity.PublicDiary
 
@@ -89,9 +89,9 @@ fun PublicDiarys(
     var selectedDiary by remember { mutableStateOf<PublicDiary?>(null) }
 
     val publicDiaryViewModel : PublicDiaryViewModel = hiltViewModel()
-    val kakaoAuthiViewModel : KakaoAuthiViewModel = hiltViewModel()
-    val myAuthNumber = kakaoAuthiViewModel.userInfoList.collectAsState().value.authNumber
-    val myName = kakaoAuthiViewModel.userInfoList.collectAsState().value.authNicName
+    val authiViewModel : AuthiViewModel = hiltViewModel()
+    val myAuthNumber = authiViewModel.userInfoList.collectAsState().value.authNumber
+    val myName = authiViewModel.userInfoList.collectAsState().value.authNicName
 //    var joayoData = remember { mutableStateOf<Pair<Int, Boolean>?>(null) }
     val showDialog = remember { mutableStateOf(false) }
 

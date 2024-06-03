@@ -1,9 +1,6 @@
 package com.company.dolshop.screens.screentype.bottomnavscreen
 
 
-import android.net.Uri
-import android.util.Log
-import android.widget.Toast
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
@@ -27,13 +24,11 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
-import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
-import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.company.dolshop.screens.ScreenList
 import com.company.dolshop.screens.screentype.announcementscreen.AnnouncementScreen
@@ -57,14 +52,12 @@ import com.company.dolshop.screens.screentype.subscreen.PersonInfoWebView
 import com.company.dolshop.screens.screentype.subscreen.SignUpScreen1
 import com.company.dolshop.screens.screentype.subscreen.SingUpScreen2
 import com.company.dolshop.screens.screentype.subscreen.SingUpScreen3
-import com.company.dolshop.viewmodel.KakaoAuthiViewModel
+import com.company.dolshop.viewmodel.AuthiViewModel
 import com.company.dolshop.viewmodel.UpdateBaseProductViewModel
 import com.company.domain.model.DomainProductModel
 import com.company.presentation.R
 import com.company.utility.DataStoreUtility
 import com.company.utility.DataStoreUtility.Companion.isLoggedInFlow
-import com.google.firebase.dynamiclinks.ktx.dynamicLinks
-import com.google.firebase.ktx.Firebase
 import com.google.gson.Gson
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -226,7 +219,7 @@ fun BottomNav(navController: NavHostController) {
                 SingUpScreen3(navController)
             }
             composable(route = ScreenList.LoginScreen.route) {
-                val viewmodel: KakaoAuthiViewModel = hiltViewModel()
+                val viewmodel: AuthiViewModel = hiltViewModel()
                 LoginScreen(navController, viewmodel)
             }
             composable(route = ScreenList.LoginScreen2.route) {
@@ -278,7 +271,7 @@ fun BottomNav(navController: NavHostController) {
 
 
             composable(route = ScreenList.RocksScreen.route) {
-                val viewmodel = hiltViewModel<KakaoAuthiViewModel>()
+                val viewmodel = hiltViewModel<AuthiViewModel>()
                 RocksScreen(innerPadding, viewmodel, navController)
             }
 
@@ -292,7 +285,7 @@ fun BottomNav(navController: NavHostController) {
 
             // 마이페이지 nested
             composable(route = ScreenList.MyPageScreen.route) {
-                val viewmodel: KakaoAuthiViewModel = hiltViewModel()
+                val viewmodel: AuthiViewModel = hiltViewModel()
                 MyPageScreen(navController)
             }
 

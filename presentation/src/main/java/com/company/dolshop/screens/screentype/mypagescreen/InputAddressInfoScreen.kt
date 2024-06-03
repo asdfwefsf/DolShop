@@ -20,22 +20,18 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.company.dolshop.screens.ScreenList
-import com.company.dolshop.ui.theme.DolShopTheme
 import com.company.dolshop.viewmodel.AddressViewModel
-import com.company.dolshop.viewmodel.KakaoAuthiViewModel
+import com.company.dolshop.viewmodel.AuthiViewModel
 import com.company.domain.model.DomainAddress
 import com.company.domain.model.DomainProductModel
-import com.company.utility.decodeUrl
 import com.company.utility.encodeUrl
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
@@ -44,11 +40,11 @@ import com.google.gson.Gson
 @Composable
 @ExperimentalMaterial3Api
 fun InputAddressInfoScreen(navController: NavController, gumaeDolInfo: DomainProductModel) {
-    val kakaoAuthiViewModel: KakaoAuthiViewModel = hiltViewModel()
+    val authiViewModel: AuthiViewModel = hiltViewModel()
 
     val scope = rememberCoroutineScope()
     val realtimeDB = Firebase.database
-    val authNumber = kakaoAuthiViewModel.userInfoList.collectAsState().value.authNumber
+    val authNumber = authiViewModel.userInfoList.collectAsState().value.authNumber
 
     val savedStateHandle = navController.currentBackStackEntry?.savedStateHandle
     val addressViewModel: AddressViewModel = hiltViewModel()

@@ -40,7 +40,7 @@ import coil.compose.AsyncImage
 import com.bumptech.glide.Glide
 import com.company.dolshop.screens.ScreenList
 import com.company.dolshop.viewmodel.DiaryNumberRoomViewmodel
-import com.company.dolshop.viewmodel.KakaoAuthiViewModel
+import com.company.dolshop.viewmodel.AuthiViewModel
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
@@ -90,10 +90,10 @@ fun ImageAndDiaryScreen(
     onImageClick: () -> Unit,
     onTextChange: (String) -> Unit,
 ) {
-    val kakaoAuthiViewModel : KakaoAuthiViewModel = hiltViewModel()
+    val authiViewModel : AuthiViewModel = hiltViewModel()
     val context = LocalContext.current
-    val authNumber = kakaoAuthiViewModel.userInfoList.collectAsState().value.authNumber
-    val authNickName = kakaoAuthiViewModel.userInfoList.collectAsState().value.authNicName
+    val authNumber = authiViewModel.userInfoList.collectAsState().value.authNumber
+    val authNickName = authiViewModel.userInfoList.collectAsState().value.authNicName
     val scope = rememberCoroutineScope()
 
     val diaryNumberViewmodel : DiaryNumberRoomViewmodel = hiltViewModel()

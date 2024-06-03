@@ -27,6 +27,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class FirebaseAuthViewModel @Inject constructor(
+    // SaverFirebaseAuthUseCase가 회원정보를 UserInfo에 저장
     private val SaverFirebaseAuthUseCase: SaverFirebaseAuthUseCase,
     private val UpdateKakaoUserInfoUseCase: UpdateKakaoUserInfoUseCase
 ) : ViewModel() {
@@ -39,81 +40,72 @@ class FirebaseAuthViewModel @Inject constructor(
     val loginValue = _loginValue.asStateFlow()
 
     // 파이어베이스 회원가입
-    fun signUpFirebaseAuth(
-        kakaoEmail: String,
-        password: String,
-        name: String,
-        phoneNumber: String,
-        context: Context,
-        domainUserInfoModel: DomainUserInfoModel
-    ) {
-        Firebase.auth.createUserWithEmailAndPassword(kakaoEmail, password)
-            .addOnCompleteListener { task ->
-                if (task.isSuccessful) {
-                    val currentUser = Firebase.auth.currentUser?.uid
-
-                    Toast.makeText(context, "회원가입에 성공했습니다. 로그인해주세요.", Toast.LENGTH_SHORT).show()
-                    CoroutineScope(Dispatchers.IO).launch {
-                        SaverFirebaseAuthUseCase(domainUserInfoModel, currentUser.toString())
-
-                    }
-                } else {
-                    Toast.makeText(context, "회원가입에 실패했습니다.", Toast.LENGTH_SHORT).show()
-                }
-            }
-    }
-
-    // 파이어베이스 로그인
-    suspend fun signInFirebaseAuth(kakaoEmail: String, password: String, context: Context) {
-//        _loginValue.emit(true)
-
-        Firebase.auth.signInWithEmailAndPassword(kakaoEmail, password)
-            .addOnCompleteListener() { task ->
-                val currentUser = Firebase.auth.currentUser
-                if (task.isSuccessful && currentUser != null) {
-//                    viewModelScope.launch {
+    // 여기서 유저 정보 Room DB에 저장
+//    fun signUpFirebaseAuth(
+//        kakaoEmail: String,
+//        password: String,
+//        name: String,
+//        phoneNumber: String,
+//        context: Context,
+//        domainUserInfoModel: DomainUserInfoModel
+//    ) {
+//        Firebase.auth.createUserWithEmailAndPassword(kakaoEmail, password)
+//            .addOnCompleteListener { task ->
+//                if (task.isSuccessful) {
+//                    val currentUser = Firebase.auth.currentUser?.uid
+//
+//                    Toast.makeText(context, "회원가입에 성공했습니다. 로그인해주세요.", Toast.LENGTH_SHORT).show()
+//                    CoroutineScope(Dispatchers.IO).launch {
+//                        SaverFirebaseAuthUseCase(domainUserInfoModel, currentUser.toString())
 //
 //                    }
-                    viewModelScope.launch {
+//                } else {
+//                    Toast.makeText(context, "회원가입에 실패했습니다.", Toast.LENGTH_SHORT).show()
+//                }
+//            }
+//    }
 
-                        withContext(Dispatchers.IO) {
-                            _loginValue.emit(true)
-                            Log.d("slfjoef" , "sfjlsefjislefj")
-                        }
-
-                    }
-                    val userId = Firebase.auth.currentUser!!.uid
-                    Log.d("teef3333st", userId)
+    // 파이어베이스 로그인
+//    suspend fun signInFirebaseAuth(kakaoEmail: String, password: String, context: Context) {
+//        Firebase.auth.signInWithEmailAndPassword(kakaoEmail, password)
+//            .addOnCompleteListener() { task ->
+//                val currentUser = Firebase.auth.currentUser
+//                if (task.isSuccessful && currentUser != null) {
+//                    viewModelScope.launch {
+//                        withContext(Dispatchers.IO) {
+//                            _loginValue.emit(true)
+//                        }
+//                    }
 //                    Toast.makeText(context, "로그인에 성공했습니다.", Toast.LENGTH_SHORT).show()
-                } else {
-                    Toast.makeText(context, "로그인에 실패했습니다.", Toast.LENGTH_SHORT).show()
-                }
-            }
-            .addOnFailureListener {
-                Log.d("test", "에러났음")
-            }
-    }
+//                } else {
+//                    Toast.makeText(context, "로그인에 실패했습니다.", Toast.LENGTH_SHORT).show()
+//                }
+//            }
+//            .addOnFailureListener {
+//                Log.d("test", "에러났음")
+//            }
+//    }
 
-    fun emailConfirm(email: String) {
-        val actionCodeSettings = ActionCodeSettings.newBuilder()
-            .setUrl("https://dolshop.page.link/eNh4")
-            .setHandleCodeInApp(true)
-            .setAndroidPackageName(
-                "com.company.dolshop",
-                true,
-                "1"
-            )
-            .build()
-
-        Firebase.auth.sendSignInLinkToEmail(email, actionCodeSettings)
-            .addOnCompleteListener { task ->
-                if (task.isSuccessful) {
-                    Log.d("emailConfirm", "ok")
-                } else {
-                    Log.d("emailConfirm", "no${task.exception?.message}")
-                }
-            }
-    }
+//    fun emailConfirm(email: String) {
+//        val actionCodeSettings = ActionCodeSettings.newBuilder()
+//            .setUrl("https://dolshop.page.link/eNh4")
+//            .setHandleCodeInApp(true)
+//            .setAndroidPackageName(
+//                "com.company.dolshop",
+//                true,
+//                "1"
+//            )
+//            .build()
+//
+//        Firebase.auth.sendSignInLinkToEmail(email, actionCodeSettings)
+//            .addOnCompleteListener { task ->
+//                if (task.isSuccessful) {
+//                    Log.d("emailConfirm", "ok")
+//                } else {
+//                    Log.d("emailConfirm", "no${task.exception?.message}")
+//                }
+//            }
+//    }
 
     init {
         viewModelScope.launch {

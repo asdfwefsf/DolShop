@@ -8,15 +8,9 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
-import androidx.compose.material3.Button
-import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
@@ -39,7 +33,7 @@ import com.airbnb.lottie.compose.LottieConstants
 import com.airbnb.lottie.compose.rememberLottieComposition
 import com.company.dolshop.screens.ScreenList
 import com.company.dolshop.viewmodel.FirebaseAuthViewModel
-import com.company.dolshop.viewmodel.KakaoAuthiViewModel
+import com.company.dolshop.viewmodel.AuthiViewModel
 import com.company.presentation.R
 import com.company.utility.DataStoreUtility
 import com.company.utility.DataStoreUtility.Companion.setLoginState
@@ -48,14 +42,15 @@ import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.launch
 
 @Composable
-fun LoginScreen(navController: NavController, viewModel: KakaoAuthiViewModel) {
+fun LoginScreen(navController: NavController, viewModel: AuthiViewModel) {
 
     val scope = rememberCoroutineScope()
     val realtimeDB = Firebase.database
     val context = LocalContext.current
     val dataStoreUtility = DataStoreUtility.getInstance()
 
-    val fireabaseAuthViewModel: FirebaseAuthViewModel = hiltViewModel()
+//    val fireabaseAuthViewModel: FirebaseAuthViewModel = hiltViewModel()
+    val authiViewModel: AuthiViewModel = hiltViewModel()
 
     val lottie by rememberLottieComposition(
         spec = LottieCompositionSpec.RawRes(R.raw.jjinreal)
@@ -65,7 +60,7 @@ fun LoginScreen(navController: NavController, viewModel: KakaoAuthiViewModel) {
     var password by remember { mutableStateOf("") }
 
 
-    val loginValue by fireabaseAuthViewModel.loginValue.collectAsState()
+    val loginValue by authiViewModel.loginValue.collectAsState()
 
     LaunchedEffect(loginValue) {
         if (loginValue) {

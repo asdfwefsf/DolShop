@@ -1,30 +1,26 @@
 package com.company.dolshop.screens.screentype.mypagescreen
 
 import android.util.Log
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.layout.width
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.KeyboardArrowRight
-import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Divider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -33,7 +29,7 @@ import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import com.company.dolshop.screens.ScreenList
 import com.company.dolshop.viewmodel.AddressViewModel
-import com.company.dolshop.viewmodel.KakaoAuthiViewModel
+import com.company.dolshop.viewmodel.AuthiViewModel
 import com.company.domain.model.DomainProductModel
 import com.company.utility.encodeUrl
 import com.google.gson.Gson
@@ -41,18 +37,28 @@ import com.google.gson.Gson
 @Composable
 fun AuthInfoScreen(navController: NavController) {
 
-    val kakaoViewmodel: KakaoAuthiViewModel = hiltViewModel()
-    val userInfoList = kakaoViewmodel.userInfoList.collectAsState().value
+    val authiViewModel: AuthiViewModel = hiltViewModel()
+    val userInfoList = authiViewModel.userInfoList.collectAsState().value
+
 
     val addressViewModel : AddressViewModel = hiltViewModel()
     val addressList = addressViewModel.addressList.collectAsState().value
 
-    Column {
+    Log.d("sflsejfisfen" , userInfoList.toString())
+    Column(
+        modifier = Modifier.fillMaxSize().background(Color.White)
+    ) {
         if (userInfoList != null) {
             Column {
                 Spacer(modifier = Modifier.padding(top = 8.dp))
-                AsyncImage(model = userInfoList.authProfileImage, contentDescription = null,
-                    modifier = Modifier.padding(start = 16.dp))
+                if(userInfoList.authProfileImage.isNotEmpty()) {
+                    AsyncImage(model = userInfoList.authProfileImage, contentDescription = null,
+                        modifier = Modifier.padding(start = 16.dp))
+                } else {
+                    AsyncImage(model = "https://t1.kakaocdn.net/account_images/default_profile.jpeg.twg.thumb.R110x110", contentDescription = null,
+                        modifier = Modifier.padding(start = 16.dp))
+                }
+
                 TopInfoItems("이름", userInfoList.authNicName)
                 InfoItems("이메일 주소", userInfoList.authEmail)
                 InfoItems("아이디 번호", userInfoList.authNumber)

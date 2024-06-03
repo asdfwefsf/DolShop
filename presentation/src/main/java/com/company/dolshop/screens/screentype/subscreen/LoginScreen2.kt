@@ -41,6 +41,7 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.company.dolshop.screens.ScreenList
+import com.company.dolshop.viewmodel.AuthiViewModel
 import com.company.dolshop.viewmodel.FirebaseAuthViewModel
 import com.company.presentation.R
 import com.company.utility.DataStoreUtility
@@ -60,6 +61,7 @@ fun LoginScreen2(navController: NavController) {
     val context = LocalContext.current
 
     val fireabaseAuthViewModel: FirebaseAuthViewModel = hiltViewModel()
+    val authiViewModel: AuthiViewModel = hiltViewModel()
 
     val dataStoreUtility = DataStoreUtility.getInstance()
 
@@ -157,11 +159,10 @@ fun LoginScreen2(navController: NavController) {
                 Log.d("sfljeo22323"  ,"1")
                     scope.launch {
                         Log.d("sfljeo22323"  ,"2")
-                        Log.d("sfljeo22323"  ,fireabaseAuthViewModel.loginValue.value.toString())
 
-                        fireabaseAuthViewModel.signInFirebaseAuth(kakaoEmail, password, context)
-                        val userInfolist = fireabaseAuthViewModel.userInfoList
-                        val loginValue = fireabaseAuthViewModel.loginValue
+                        authiViewModel.signInFirebaseAuth(kakaoEmail, password, context)
+                        val userInfolist = authiViewModel.userInfoList
+                        val loginValue = authiViewModel.loginValue
 
                         loginValue.collect { it ->
                             Log.d("sfslf" , "sfsf")

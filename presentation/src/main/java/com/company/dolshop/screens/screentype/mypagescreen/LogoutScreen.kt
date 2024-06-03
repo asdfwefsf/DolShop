@@ -13,7 +13,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.platform.LocalContext
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.company.dolshop.viewmodel.KakaoAuthiViewModel
+import com.company.dolshop.viewmodel.AuthiViewModel
 import com.company.utility.DataStoreUtility
 import com.company.utility.DataStoreUtility.Companion.setLoginState
 import kotlinx.coroutines.launch
@@ -21,7 +21,7 @@ import kotlinx.coroutines.launch
 @Composable
 fun LogoutScreen() {
     val scope = rememberCoroutineScope()
-    val viewmodel : KakaoAuthiViewModel = hiltViewModel()
+    val viewmodel : AuthiViewModel = hiltViewModel()
     var showDialog by remember { mutableStateOf(false) }
     val context = LocalContext.current
     val dataStoreUtility = DataStoreUtility.getInstance()

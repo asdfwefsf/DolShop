@@ -16,7 +16,6 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
-import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.RadioButton
@@ -45,7 +44,7 @@ import com.company.designsystem.designsystem.Paddings
 import com.company.designsystem.designsystem.component.card.RockScreenCard
 import com.company.dolshop.screens.ScreenList
 import com.company.dolshop.viewmodel.DolsViewModel
-import com.company.dolshop.viewmodel.KakaoAuthiViewModel
+import com.company.dolshop.viewmodel.AuthiViewModel
 import com.company.domain.entity.Diary
 import kotlinx.coroutines.delay
 import java.util.Calendar
@@ -55,7 +54,7 @@ import java.util.Locale
 @Composable
 fun RocksScreen(
     innerPadding: PaddingValues,
-    viewmodel: KakaoAuthiViewModel,
+    viewmodel: AuthiViewModel,
     navController: NavController,
 ) {
     val dolsViewModel: DolsViewModel = hiltViewModel()

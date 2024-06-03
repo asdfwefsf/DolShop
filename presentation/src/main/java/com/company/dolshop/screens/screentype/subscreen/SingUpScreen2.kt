@@ -51,6 +51,7 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.company.dolshop.screens.ScreenList
+import com.company.dolshop.viewmodel.AuthiViewModel
 import com.company.dolshop.viewmodel.FirebaseAuthViewModel
 import com.company.dolshop.viewmodel.SinnUpScreen2ViewModel
 import com.company.dolshop.viewmodel.publicdiary.PublicDiaryViewModel
@@ -86,6 +87,7 @@ fun SingUpScreen2(navController: NavController, emailConfirm: String) {
 
     val firebaseAuthViewModel: FirebaseAuthViewModel = hiltViewModel()
     val signUpScreen2ViewModel: SinnUpScreen2ViewModel = hiltViewModel()
+    val authiViewModel: AuthiViewModel = hiltViewModel()
 
     var name by remember { mutableStateOf("") }
     var id by remember { mutableStateOf("") }
@@ -261,7 +263,7 @@ fun SingUpScreen2(navController: NavController, emailConfirm: String) {
 
                 Button(
                     onClick = {
-                        firebaseAuthViewModel.emailConfirm(kakaoEmail)
+                        authiViewModel.emailConfirm(kakaoEmail)
                         Toast.makeText(context, "메일함을 확인 후 링크 클릭해주세요.", Toast.LENGTH_LONG).show()
                     },
                     colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF7BF579))
@@ -305,7 +307,7 @@ fun SingUpScreen2(navController: NavController, emailConfirm: String) {
                         }
                         val currentUser = Firebase.auth.currentUser
                         var domainUserInfoModel = DomainUserInfoModel("", kakaoEmail, name, "")
-                        firebaseAuthViewModel.signUpFirebaseAuth(
+                        authiViewModel.signUpFirebaseAuth(
                             kakaoEmail,
                             password,
                             name,
