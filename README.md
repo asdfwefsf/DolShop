@@ -194,7 +194,7 @@
 
 2024-06-03
 1. KakaoAuthViewModel && FirebaseAuthViewModel Merge -> AuthViewModel (로그인 및 회원가입 변수 병합 , 함수 로직은 분리 , 로그인 및 회원가입은 무조건 AuthViewModel에서 실행한다.)
-
+2. AuthViewModel과 롼련된 UseCase , Repository , RepositoryImpl 들을 역할에 맞게 이름 수정 및 주석 달았음.
 
 # 적용된 안드로이드 개념
 1. Presentation -> Domain <- Data : 공식문서에서 지향하는 클린 아키텍처와 다른 안드로이드 클린아키텍처
