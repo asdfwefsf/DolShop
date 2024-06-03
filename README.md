@@ -193,6 +193,7 @@
 10. 로그인2 화면 : 안드로이드 -> 파이어베이스 디비 저장 (수정 및 완료)
 
 2024-06-03
+1. KakaoAuthViewModel && FirebaseAuthViewModel Merge -> AuthViewModel (로그인 및 회원가입 변수 병합 , 함수 로직은 분리 , 로그인 및 회원가입은 무조건 AuthViewModel에서 실행한다.)
 
 
 # 적용된 안드로이드 개념
