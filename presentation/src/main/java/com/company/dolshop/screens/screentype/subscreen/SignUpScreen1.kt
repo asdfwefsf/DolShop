@@ -104,7 +104,7 @@ fun SignUpScreen1(navController: NavController) {
 
             )
             Spacer(modifier = Modifier.weight(1f))
-            Text("회원가입", fontSize = 20.sp)
+            Text("회원가입", fontSize = 20.sp , color = Color.Black)
             Spacer(modifier = Modifier.weight(1f))
         }
         Box(
@@ -127,31 +127,29 @@ fun SignUpScreen1(navController: NavController) {
             color = Color.Black,
             modifier = Modifier.padding(start = 20.dp, top = 20.dp)
         )
-        Row {
-            Text(
-                "약관에 동의해주세요",
-                fontSize = 30.sp,
-                color = Color.Black,
-                modifier = Modifier.padding(start = 20.dp, top = 5.dp)
-            )
-            Box(
-                modifier = Modifier.background(Color.White)
+        Text(
+            "약관에 동의해주세요",
+            fontSize = 30.sp,
+            color = Color.Black,
+            modifier = Modifier.padding(start = 20.dp, top = 5.dp)
+        )
 
-            ) {
-                Button(
-                    modifier = Modifier.width(100.dp),
-                    colors = ButtonDefaults.buttonColors(Color.Green),
-                    onClick = {
-                        scope.launch {
-                            scaffoldState.bottomSheetState.expand()
-                        }
-                    }
-                ) {
-                    Text(text = "약관보기" , color = Color.Black)
+
+        Button(
+            modifier = Modifier.width(120.dp).padding(start = 20.dp),
+            colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF7BF579)),
+            onClick = {
+                scope.launch {
+                    scaffoldState.bottomSheetState.expand()
                 }
             }
-
+        ) {
+            Text(text = "약관보기", color = Color.Black)
         }
+
+
+
+
 
         Surface(
             modifier = Modifier.fillMaxSize(),
@@ -230,10 +228,13 @@ fun SignUpScreen1(navController: NavController) {
                                         .makeText(context, "약관에 동의해주세요", Toast.LENGTH_SHORT)
                                         .show()
                                 }
-                            }
+                            },
+                            colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF7BF579))
+
                         ) {
                             Text(
-                                text = "동의하고 시작하기"
+                                text = "동의하고 시작하기",
+                                color = Color.Black
                             )
                         }
 
@@ -247,7 +248,6 @@ fun SignUpScreen1(navController: NavController) {
         }
 
     }
-
 
 
 }

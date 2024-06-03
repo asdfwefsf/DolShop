@@ -15,6 +15,7 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -50,7 +51,7 @@ fun SingUpScreen3(navController: NavController) {
 
             )
             Spacer(modifier = Modifier.weight(1f))
-            Text("회원가입", fontSize = 20.sp)
+            Text("회원가입", fontSize = 20.sp , color = Color.Black)
             Spacer(modifier = Modifier.weight(1f))
         }
         Box(
@@ -102,9 +103,11 @@ fun SingUpScreen3(navController: NavController) {
                         inclusive = true
                     }
                 }
-            }
+            },
+            colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF7BF579))
+
         ) {
-            Text( text = "로그인하기" )
+            Text(text = "로그인하기" , color = Color.Black)
         }
 
     }
