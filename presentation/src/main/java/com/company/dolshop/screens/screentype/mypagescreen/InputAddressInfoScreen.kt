@@ -67,6 +67,12 @@ fun InputAddressInfoScreen(navController: NavController, gumaeDolInfo: DomainPro
         Log.d("jisung", addressNumber + address)
     }
 
+    if (fsfsef?.route == "개인정보") {
+        var gumaeDolInfo = DomainProductModel("", "", "", "", "", "", "", "", "", "")
+        val encodedProductInfo =
+            encodeUrl(Gson().toJson(gumaeDolInfo, DomainProductModel::class.java))
+    }
+
     // 상품 정보
 //    val productInfo = gumaeDolInfo?.let { Gson().fromJson(it, DomainProductModel::class.java) }
 //    val productInfo = decodeUrl(gumaeDolInfo!!)
@@ -102,8 +108,15 @@ fun InputAddressInfoScreen(navController: NavController, gumaeDolInfo: DomainPro
                 modifier = Modifier.weight(1f)
             )
             Spacer(modifier = Modifier.width(8.dp))
+
+//            if (fsfsef?.route == "개인정보") {
+//
+//            } else {
+//
+//            }
+
             Button(
-                onClick = { navController.navigate(ScreenList.AddressScreen.route) },
+                onClick = { navController.navigate("${ScreenList.AddressScreen.route}") },
                 modifier = Modifier.align(Alignment.CenterVertically)
             ) {
                 Text("조회")
@@ -166,7 +179,8 @@ fun InputAddressInfoScreen(navController: NavController, gumaeDolInfo: DomainPro
                         }
                     }
                 } else {
-                    val encodedProductInfo = encodeUrl(Gson().toJson(gumaeDolInfo, DomainProductModel::class.java))
+                    val encodedProductInfo =
+                        encodeUrl(Gson().toJson(gumaeDolInfo, DomainProductModel::class.java))
                     navController.navigate("${ScreenList.GuMaeScreen.route}/${encodedProductInfo}") {
                         launchSingleTop = true
                         popUpTo(ScreenList.GuMaeScreen.route) {
@@ -191,7 +205,11 @@ fun InputAddressInfoScreen(navController: NavController, gumaeDolInfo: DomainPro
         ) {
             if (fsfsef?.route == "개인정보") {
                 Text("저장하기")
-            } else {
+            }
+//            else if (fsfsef?.route == "") {
+//                Text("저장하기")
+//            }
+            else {
                 Text(text = "새로운 주소 저장하기")
             }
         }

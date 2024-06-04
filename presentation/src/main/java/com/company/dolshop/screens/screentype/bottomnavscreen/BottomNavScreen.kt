@@ -302,7 +302,10 @@ fun BottomNav(navController: NavHostController) {
                 LogoutScreen()
             }
 
-            composable(route = ScreenList.AddressScreen.route) {
+            composable(
+                route = "${ScreenList.AddressScreen.route}",
+
+            ) {
                 AddressScreen(navController, coroutineScope)
             }
 

@@ -28,7 +28,6 @@ import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.KeyboardArrowDown
-import androidx.compose.material.icons.filled.ShoppingCart
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.Icon
@@ -69,7 +68,6 @@ import com.company.dolshop.screens.ScreenList
 import com.company.dolshop.viewmodel.UpdateBaseProductViewModel
 import com.company.dolshop.viewmodel.UpdateProductSaleViewModel
 import com.company.dolshop.viewmodel.getProductViewModel
-import com.company.domain.model.DomainBaseProductModel
 import com.company.domain.model.DomainProductModel
 import com.company.presentation.R
 import com.company.utility.DataStoreUtility
@@ -105,10 +103,6 @@ fun ProductScreen(innerPadding: PaddingValues, count: Int, navController: NavCon
         initialPage = count
     )
 
-//    if (changPproductList.value.isEmpty() || baseProductList.value.isEmpty()) {
-//        CircularProgressIndicator()
-//        Log.d("circular", "loading")
-//    } else {
     LazyColumn(
         modifier = Modifier
             .fillMaxSize()
@@ -116,7 +110,7 @@ fun ProductScreen(innerPadding: PaddingValues, count: Int, navController: NavCon
         state = listState
     ) {
         item {
-            firstBaseScreen()
+            FirstBaseScreen()
         }
         item {
             secondBaseScreen(horizontalPagerState, updateBaseProductViewModel)
@@ -136,58 +130,19 @@ fun ProductScreen(innerPadding: PaddingValues, count: Int, navController: NavCon
 }
 
 @Composable
-fun firstBaseScreen() {
-    ConstraintLayout(
+fun FirstBaseScreen() {
+    Row(
         modifier = Modifier
             .fillMaxWidth()
             .background(Color.White)
+            .padding(top = 4.dp),
+        horizontalArrangement = Arrangement.Center
     ) {
-        val (person, text, search, shoppingCart) = createRefs()
-        // 나중에 사용
-//        Icon(
-//            imageVector = Icons.Default.Person,
-//            contentDescription = null,
-//            modifier = Modifier
-//                .constrainAs(person) {
-//                    start.linkTo(parent.start)
-//                }
-//                .size(40.dp)
-//                .padding(start = 16.dp)
-//        )
         Text(
             text = "내 친구 돌돌이",
-            modifier = Modifier
-                .constrainAs(text) {
-                    start.linkTo(person.end)
-                    end.linkTo(search.start)
-                    bottom.linkTo(person.bottom)
-                }
-                .padding(start = 16.dp),
             textAlign = TextAlign.Center,
-            fontSize = 24.sp
-        )
-        // 나중에 사용
-//        Icon(
-//            imageVector = Icons.Default.Search,
-//            contentDescription = null,
-//            modifier = Modifier
-//                .constrainAs(search) {
-//                    end.linkTo(shoppingCart.start)
-//                    bottom.linkTo(person.bottom)
-//                }
-//                .padding(end = 24.dp)
-//                .size(30.dp)
-//        )
-        Icon(
-            imageVector = Icons.Default.ShoppingCart,
-            contentDescription = null,
-            modifier = Modifier
-                .constrainAs(shoppingCart) {
-                    end.linkTo(parent.end)
-                    bottom.linkTo(person.bottom)
-                }
-                .size(35.dp)
-                .padding(end = 16.dp)
+            fontSize = 24.sp,
+            color = Color.Black
         )
     }
 }
@@ -447,7 +402,7 @@ fun Coupon1Dialog(
     if (coupon1Boolean) {
         AlertDialog(
             onDismissRequest = { dialogBoolean.value = false },
-            title = { Text("이미 쿠폰1이 있습니다. 쿠폰함으로 가시겠습니까?") },
+            title = { Text("이미 쿠폰1이 있습니다. 쿠폰함으로 가시겠습니까?" , color = Color.Black) },
             confirmButton = {
                 Button(
                     onClick = {
@@ -456,14 +411,15 @@ fun Coupon1Dialog(
                         navController.navigate(ScreenList.MyCouponScreen.route)
                     }
                 ) {
-                    Text("확인")
+                    Text("확인" , color = Color.Black)
                 }
-            }
+            },
+            containerColor = Color.White
         )
     } else {
         AlertDialog(
             onDismissRequest = { dialogBoolean.value = false },
-            title = { Text("쿠폰1을 저장하시겠습니까 ?") },
+            title = { Text("쿠폰1을 저장하시겠습니까 ?" , color = Color.Black) },
             confirmButton = {
                 Button(
                     onClick = {
@@ -475,9 +431,10 @@ fun Coupon1Dialog(
                         }
                     }
                 ) {
-                    Text("확인")
+                    Text("확인" , color = Color.Black)
                 }
-            }
+            },
+            containerColor = Color.White
         )
     }
 
@@ -499,25 +456,24 @@ fun Coupon2Dialog(
     if (coupon2Boolean) {
         AlertDialog(
             onDismissRequest = { dialogBoolean.value = false },
-            title = { Text("이미 쿠폰2이 있습니다. 쿠폰함으로 가시겠습니까?") },
+            title = { Text("이미 쿠폰2이 있습니다. 쿠폰함으로 가시겠습니까?" , color = Color.Black) },
             confirmButton = {
                 Button(
                     onClick = {
                         dialogBoolean.value = false
 //                        viewmodel.setSavedSaleCoupon2Boolean(true)
-
                         navController.navigate(ScreenList.MyCouponScreen.route)
-
                     }
                 ) {
-                    Text("확인")
+                    Text("확인" , color = Color.Black)
                 }
-            }
+            },
+            containerColor = Color.White
         )
     } else {
         AlertDialog(
             onDismissRequest = { dialogBoolean.value = false },
-            title = { Text("쿠폰2을 저장하시겠습니까 ?") },
+            title = { Text("쿠폰2을 저장하시겠습니까 ?" , color = Color.Black) },
             confirmButton = {
                 Button(
                     onClick = {
@@ -529,9 +485,11 @@ fun Coupon2Dialog(
                         }
                     }
                 ) {
-                    Text("확인")
+                    Text("확인" , color = Color.Black)
                 }
-            }
+            },
+            containerColor = Color.White
+
         )
     }
 
@@ -660,7 +618,7 @@ fun PagerState.offsetForPage(page: Int) = (currentPage - page) + currentPageOffs
 @Composable
 fun testFirstBaseScreen() {
     com.company.designsystem.designsystem.DolShopTheme {
-        firstBaseScreen()
+        FirstBaseScreen()
     }
 }
 

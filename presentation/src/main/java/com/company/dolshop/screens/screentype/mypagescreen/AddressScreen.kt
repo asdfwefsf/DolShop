@@ -10,6 +10,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.navigation.NavController
 import com.company.dolshop.screens.ScreenList
+import com.company.domain.model.DomainProductModel
+import com.company.utility.encodeUrl
+import com.google.gson.Gson
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -35,7 +38,7 @@ fun AddressScreen(navController: NavController, coroutineScope: CoroutineScope) 
 //                addJavascriptInterface(WebAppInterface(this), "AndroidBridge")
 
                 loadUrl("https://dolshop-aa5e8.web.app")
-                addJavascriptInterface(BridgeInterface(navController, coroutineScope , this), "Android")
+                addJavascriptInterface(BridgeInterface(navController, coroutineScope , this ), "Android")
 
             }
         },
@@ -49,8 +52,7 @@ fun AddressScreen(navController: NavController, coroutineScope: CoroutineScope) 
 class BridgeInterface(
     val navController: NavController,
     val coroutineScope: CoroutineScope,
-    val webView: WebView
-
+    val webView: WebView,
 ) {
     // JavaScript -> Android
     @JavascriptInterface
@@ -70,7 +72,10 @@ class BridgeInterface(
 
             }
             withContext(Dispatchers.Main) {
-                navController.navigate(ScreenList.InputAddressInfoScreen.route) {
+                var gumaeDolInfo = DomainProductModel("","","","","","","","","","")
+                val encodedProductInfo = encodeUrl(Gson().toJson(gumaeDolInfo, DomainProductModel::class.java))
+
+                navController.navigate("${ScreenList.InputAddressInfoScreen.route}/${encodedProductInfo}") {
                     navController.popBackStack()
 
                     launchSingleTop = true
