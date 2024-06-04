@@ -27,7 +27,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.company.dolshop.screens.ScreenList
-import com.company.dolshop.viewmodel.AuthiViewModel
+import com.company.dolshop.viewmodel.auth.AuthiViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

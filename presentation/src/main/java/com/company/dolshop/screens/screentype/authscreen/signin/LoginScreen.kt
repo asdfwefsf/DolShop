@@ -32,7 +32,7 @@ import com.airbnb.lottie.compose.LottieCompositionSpec
 import com.airbnb.lottie.compose.LottieConstants
 import com.airbnb.lottie.compose.rememberLottieComposition
 import com.company.dolshop.screens.ScreenList
-import com.company.dolshop.viewmodel.AuthiViewModel
+import com.company.dolshop.viewmodel.auth.AuthiViewModel
 import com.company.presentation.R
 import com.company.utility.DataStoreUtility
 import com.company.utility.DataStoreUtility.Companion.setLoginState

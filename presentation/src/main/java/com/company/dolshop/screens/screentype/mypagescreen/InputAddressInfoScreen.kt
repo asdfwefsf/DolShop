@@ -29,7 +29,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.company.dolshop.screens.ScreenList
 import com.company.dolshop.viewmodel.AddressViewModel
-import com.company.dolshop.viewmodel.AuthiViewModel
+import com.company.dolshop.viewmodel.auth.AuthiViewModel
 import com.company.domain.model.DomainAddress
 import com.company.domain.model.DomainProductModel
 import com.company.utility.encodeUrl

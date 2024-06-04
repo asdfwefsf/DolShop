@@ -13,7 +13,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
-import com.company.dolshop.viewmodel.AuthiViewModel
+import com.company.dolshop.viewmodel.auth.AuthiViewModel
 import com.company.domain.model.JuMunNaeYeockModel
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError

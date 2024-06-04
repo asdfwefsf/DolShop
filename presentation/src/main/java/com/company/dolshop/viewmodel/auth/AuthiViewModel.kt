@@ -1,4 +1,4 @@
-package com.company.dolshop.viewmodel
+package com.company.dolshop.viewmodel.auth
 
 import android.content.Context
 import android.util.Log

@@ -44,7 +44,7 @@ import com.company.designsystem.designsystem.Paddings
 import com.company.designsystem.designsystem.component.card.RockScreenCard
 import com.company.dolshop.screens.ScreenList
 import com.company.dolshop.viewmodel.DolsViewModel
-import com.company.dolshop.viewmodel.AuthiViewModel
+import com.company.dolshop.viewmodel.auth.AuthiViewModel
 import com.company.domain.entity.Diary
 import kotlinx.coroutines.delay
 import java.util.Calendar
@@ -98,42 +98,11 @@ fun RocksScreen(
     }
 }
 
-//@Composable
-//fun DaySortSelector(viewModel: DolsViewModel) {
-//    val sortOptions = listOf("모두", "오늘", "특정날")
-//    val (selectedOption, onOptionSelected) = remember { mutableStateOf(sortOptions[0]) }
-//
-//    Row {
-//        sortOptions.forEach { option ->
-//            Row(
-//                verticalAlignment = Alignment.CenterVertically,
-//                modifier = Modifier
-//                    .padding(8.dp)
-//                    .clickable(onClick = {
-//                        onOptionSelected(option)
-//                        viewModel.updateSort(option)
-//                    })
-//            ) {
-//                RadioButton(
-//                    selected = option == selectedOption,
-//                    onClick = {
-//                        onOptionSelected(option)
-//                        viewModel.updateSort(option)
-//                    }
-//                )
-//                Text(
-//                    text = option,
-//                    modifier = Modifier.padding(start = 8.dp)
-//                )
-//            }
-//        }
-//    }
-//}
 
 @Composable
 fun FirstUI(myName: String, navController: NavController) {
     Row(modifier = Modifier.padding(Paddings.small)) {
-        Text("${myName}님의 하루 일기", fontSize = 15.sp, color = Color.Black)
+        Text("${myName}님의 하루 일기", fontSize = 15.sp, color = Color.Black , modifier = Modifier.padding(start = 4.dp))
         Spacer(modifier = Modifier.fillMaxWidth(0.9f))
         Icon(
             imageVector = Icons.Default.Add,
@@ -187,17 +156,6 @@ fun DaySortSelector(viewModel: DolsViewModel) {
         sortOptions.forEach { option ->
             Row(
                 verticalAlignment = Alignment.CenterVertically,
-                modifier = Modifier
-//                    .padding(8.dp)
-//                    .clickable(onClick = {
-//                        onOptionSelected(option)
-//                        viewModel.updateSort(option)
-//                        if (option == "특정날") {
-//                            showDialog.value = true
-////                            CallDatePickerDialog(viewModel, context, showDialog)
-//
-//                        }
-//                    })
             ) {
                 RadioButton(
                     selected = option == selectedOption,
@@ -206,8 +164,6 @@ fun DaySortSelector(viewModel: DolsViewModel) {
                         viewModel.updateSort(option)
                         if (option == "특정날") {
                             showDialog.value = true
-//                            CallDatePickerDialog(viewModel, context, showDialog)
-
                         }
                     }
                 )
@@ -226,7 +182,6 @@ fun CallDatePickerDialog(
     context: Context = LocalContext.current,
     showDialog: MutableState<Boolean>
 ) {
-//    if (showDialog.value) {
     showDialog.value = false
 
     val calendar = Calendar.getInstance()
@@ -247,6 +202,5 @@ fun CallDatePickerDialog(
         calendar.get(Calendar.MONTH),
         calendar.get(Calendar.DAY_OF_MONTH)
     ).show()
-//    }
 }
 

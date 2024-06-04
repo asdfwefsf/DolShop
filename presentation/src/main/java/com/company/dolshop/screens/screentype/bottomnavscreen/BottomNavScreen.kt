@@ -52,7 +52,7 @@ import com.company.dolshop.screens.screentype.authscreen.signup.SignUpScreen1
 import com.company.dolshop.screens.screentype.authscreen.signup.SingUpScreen2
 import com.company.dolshop.screens.screentype.authscreen.signup.SingUpScreen3
 import com.company.dolshop.screens.screentype.webview.AgreeWebView
-import com.company.dolshop.viewmodel.AuthiViewModel
+import com.company.dolshop.viewmodel.auth.AuthiViewModel
 import com.company.dolshop.viewmodel.UpdateBaseProductViewModel
 import com.company.domain.model.DomainProductModel
 import com.company.presentation.R
@@ -322,7 +322,7 @@ fun BottomNav(navController: NavHostController) {
             }
 
             composable(route = ScreenList.SavePublicDiaryScreen.route) {
-                SavePublicDiaryScreen()
+                SavePublicDiaryScreen(navController)
             }
 
             composable(route = ScreenList.MyCouponScreen.route) {

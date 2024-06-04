@@ -1,16 +1,24 @@
 package com.company.dolshop.screens.screentype.mypagescreen
 
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Delete
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
@@ -26,12 +34,17 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
+import androidx.core.net.toUri
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import androidx.navigation.NavController
 import coil.compose.AsyncImage
 import coil.request.CachePolicy
 import coil.request.ImageRequest
+import com.company.designsystem.designsystem.component.card.fromFireStoreToPublicDiary
+import com.company.dolshop.screens.ScreenList
 import com.company.dolshop.viewmodel.publicdiary.PublicDiaryViewModel
 import com.company.domain.entity.PublicDiary
 import com.company.presentation.R
@@ -40,22 +53,45 @@ import kotlinx.coroutines.launch
 
 @Composable
 fun SavePublicDiaryScreen(
+    navController: NavController
 ) {
 
     val publicDiaryviewModel: PublicDiaryViewModel = hiltViewModel()
-
     // collectAsStateWithLifecycle() : Flow를 가져와서 State로 변환 -> 생명주기OK -> 리컴포지션 발생 시킴
     val publicDiaryList by publicDiaryviewModel.publicDiary.collectAsStateWithLifecycle()
 
+
+    Row(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(top = 5.dp),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        Icon(
+            imageVector = Icons.AutoMirrored.Filled.ArrowBack,
+            contentDescription = "",
+            modifier = Modifier
+                .size(24.dp)
+                .clickable {
+                    navController.navigate(ScreenList.MyPageScreen.route) {
+                        popUpTo(ScreenList.MyPageScreen.route) {
+                            inclusive = true
+                        }
+                    }
+                }
+
+        )
+        Spacer(modifier = Modifier.weight(1f))
+        Text("저장일기", fontSize = 20.sp, color = Color.Black)
+        Spacer(modifier = Modifier.weight(1.1f))
+    }
     LazyColumn(
+        modifier = Modifier.fillMaxSize().padding(top = 30.dp).background(Color.White)
     ) {
         items(publicDiaryList.size) { index ->
-//            publicDiaryList[index].let {
             PublicDiaryItem(publicDiaryviewModel, index, publicDiaryList)
-//            }
         }
     }
-
 }
 
 
@@ -66,130 +102,64 @@ fun PublicDiaryItem(
     index: Int,
     publicDiaryList: List<PublicDiary>
 ) {
-
     val scope = rememberCoroutineScope()
     val publicDiary = publicDiaryList[index]
     var loadState by remember { mutableStateOf("") }
 
-    ConstraintLayout(
-        modifier = Modifier.fillMaxSize()
+    val imageRequest = ImageRequest.Builder(LocalContext.current)
+        .data(publicDiary.image)
+        .crossfade(true)
+        .diskCachePolicy(CachePolicy.ENABLED)
+        .memoryCachePolicy(CachePolicy.ENABLED)
+        .build()
+
+    Card(
+        modifier = Modifier
+            .padding(8.dp),
+        elevation = CardDefaults.cardElevation(4.dp),
+        colors = CardDefaults.cardColors(Color.White)
     ) {
-        val (baseImage, diaryImage, diary, writerText, dayText , loadingBox) = createRefs()
-
-        val imageRequest = ImageRequest.Builder(LocalContext.current)
-            .data(publicDiary.image)
-            .crossfade(true)
-            .diskCachePolicy(CachePolicy.ENABLED)
-            .memoryCachePolicy(CachePolicy.ENABLED)
-            .build()
-
-        // TODO 위치 조정
-
-
-        Image(
-            painter = painterResource(id = R.drawable.seve_publicdiary_base_image),
-            contentDescription = "",
-            modifier = Modifier.constrainAs(baseImage) {
-                start.linkTo(parent.start)
-                top.linkTo(parent.top)
-                bottom.linkTo(parent.bottom)
-            }
-        )
-
-        AsyncImage(
-            model = imageRequest,
-            contentDescription = "",
-            modifier = Modifier
-                .height(200.dp)
-                .constrainAs(diaryImage) {
-                    top.linkTo(baseImage.top, margin = 4.dp)
-                    start.linkTo(baseImage.start, margin = 4.dp)
-                },
-            onLoading = { loadState = "loading" },
-            onSuccess = { loadState = "success"},
-            onError = { loadState = "error" }
-
-            )
-        when (loadState) {
-
-            "loading" -> Box(
-                modifier = Modifier.fillMaxSize().constrainAs(loadingBox) {
-                    centerTo(baseImage)
-                },
-                contentAlignment = Alignment.Center,
+        Column(modifier = Modifier.padding(8.dp)) {
+            Row(
+                modifier = Modifier.padding(top = 4.dp)
             ) {
-                CircularProgressIndicator()
+                Text(
+                    publicDiary.day,
+//                    "${day} ${diaryNumber}",
+                    fontSize = 15.sp,
+                    color = Color.Black,
+                )
+                Spacer(modifier = Modifier.padding(4.dp))
+                Text(
+                    publicDiary.writer,
+//                    "${day} ${diaryNumber}",
+                    fontSize = 15.sp,
+                    color = Color.Black,
+                )
+                Icon(
+                    painter = painterResource(id = R.drawable.delete),
+                    contentDescription = "",
+                    tint = Color(0xFF7BF579),
+                    modifier = Modifier.clickable {
+                        scope.launch(Dispatchers.IO) {
+                            viewmodel.deletePublicDiary(publicDiary)
+                        }
+                    }
+                )
             }
-
-            "error" -> Box(contentAlignment = Alignment.Center, modifier = Modifier.fillMaxSize()) {
-                Icon(Icons.Filled.Close, contentDescription = "Error", modifier = Modifier.size(24.dp))
-            }
-
-            "success" -> {
-            }
-
-        }
-
-        Text(
-            text = publicDiary.writer,
-            modifier = Modifier.constrainAs(writerText) {
-                top.linkTo(baseImage.top, margin = 4.dp)
-                start.linkTo(diaryImage.end, margin = 8.dp)
-            },
-            color = Color.White
-        )
-
-        Text(
-            text = publicDiary.day,
-            modifier = Modifier.constrainAs(dayText) {
-                start.linkTo(writerText.end , margin = 4.dp)
-                top.linkTo(baseImage.top , margin = 4.dp)
-            },
-            color = Color.White
-        )
-
-        LazyColumn(
-            modifier = Modifier
-                .height(300.dp)
-                .constrainAs(diary) {
-                    start.linkTo(diaryImage.end, margin = 8.dp)
-                    top.linkTo(writerText.bottom , margin = 4.dp)
-                }
-        ) {
-            item {
-                Column(
-                    modifier = Modifier.fillMaxSize()
-                ) {
-//                    Row{
-//                        Text(
-//                            text = publicDiary.writer,
-//                            color = Color.White
-//                        )
-//
-//                        Text(
-//                            text = publicDiary.day,
-//                            color = Color.White
-//
-//                        )
-//                    }
-                    Text(
-                        publicDiary.diary,
-                        color = Color.White
-                    )
-                }
-            }
+            AsyncImage(
+                model = imageRequest,
+                contentDescription = "",
+                modifier = Modifier
+                    .height(500.dp)
+                    .fillMaxWidth()
+            )
+            Text(
+                text = publicDiary.diary,
+                color = Color.Black,
+                modifier = Modifier.padding(top = 8.dp)
+            )
         }
     }
-
-    Icon(
-        imageVector = Icons.Filled.Delete,
-        contentDescription = "",
-        modifier = Modifier.clickable {
-            scope.launch(Dispatchers.IO) {
-                viewmodel.deletePublicDiary(publicDiary)
-            }
-        }
-    )
-
 }
 

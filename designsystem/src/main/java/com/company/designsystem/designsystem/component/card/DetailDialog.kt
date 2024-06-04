@@ -1,18 +1,18 @@
 package com.company.designsystem.designsystem.component.card
 
+import android.widget.Toast
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Favorite
 import androidx.compose.material.icons.filled.FavoriteBorder
 import androidx.compose.material3.Card
@@ -28,10 +28,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.ui.window.Dialog
-import androidx.hilt.navigation.compose.hiltViewModel
+import com.company.designsystem.R
 import com.company.designsystem.designsystem.component.loadcoil.LoadImageWithCoil
 import com.company.domain.entity.PublicDiary
 
@@ -46,7 +47,9 @@ fun DetailDialog(
     deletePublicDiary : () -> Unit,
     savePublicDiary : () -> Unit,
     joayoNumber: Int,
-    joayoBoolean: Boolean
+    joayoBoolean: Boolean,
+    myAuthNumber : String,
+    writerAuthNumber : String
 ) {
     Dialog(
         onDismissRequest = onDismissRequest,
@@ -62,6 +65,8 @@ fun DetailDialog(
                 loveNumber = diary.love,
                 joayoNumber = joayoNumber,
                 joayoBoolean = joayoBoolean,
+                myAuthNumber = myAuthNumber,
+                writerAuthNumber = writerAuthNumber,
                 deletePublicDiary = {
                     deletePublicDiary()
                 },
@@ -88,13 +93,16 @@ fun DetailCard(
     loveNumber: String,
     joayoNumber: Int,
     joayoBoolean: Boolean,
+    myAuthNumber : String,
+    writerAuthNumber : String,
     deletePublicDiary : () -> Unit,
     savePublicDiary : () -> Unit,
     joayoGet : () -> Unit,
 ) {
-
+    val context = LocalContext.current
     var savePublicDiaryBoolean by remember { mutableStateOf(false) }
-    var myDiaryBoolean = writer == currentAppUserName
+    // TODO 여기서 authNumber가 같아야 삭제 할 수 있는 걸로 로직 수정.
+    var myDiaryBoolean = writerAuthNumber == myAuthNumber
     Card(
         modifier = Modifier
             .padding(8.dp)
@@ -106,17 +114,22 @@ fun DetailCard(
             modifier = Modifier.padding(8.dp),
         ) {
             items(1) {
-                Row {
+                Row(
+                    modifier = Modifier.fillMaxWidth(),
+                    verticalAlignment = Alignment.CenterVertically,
+                ) {
                     Text(
-                        "${day} ${diaryNumber} ${writer}",
+//                        "${day} ${diaryNumber} ${writer}",
+                        "${day} ${writer}",
                         fontSize = 15.sp,
                         color = Color.Black
                     )
 
                     if (myDiaryBoolean) {
                         Icon(
-                            imageVector = Icons.Filled.Delete,
+                            painter = painterResource(id = R.drawable.delete),
                             contentDescription = "",
+                            tint = Color(0xFF7BF579),
                             modifier = Modifier.clickable {
                                 deletePublicDiary()
 
@@ -148,18 +161,25 @@ fun DetailCard(
                             joayoGet()
                         }
                     )
-                    Spacer(Modifier.size(8.dp))
                     Text(joayoNumber.toString())
-                    Icon(
-                        imageVector = if (savePublicDiaryBoolean) Icons.Filled.Favorite else Icons.Default.FavoriteBorder,
-                        contentDescription = "Favorite",
-                        tint = if (savePublicDiaryBoolean) Color.Red else Color.Gray,
+                    Spacer(Modifier.size(8.dp))
+
+                    Row (
                         modifier = Modifier.clickable {
                             savePublicDiaryBoolean = !savePublicDiaryBoolean
                             savePublicDiary()
+                            Toast.makeText(context, "저장되었습니다.", Toast.LENGTH_SHORT).show()
                         }
-                    )
+                    ) {
+                        Text("저장하기")
+                        Spacer(Modifier.size(4.dp))
+                        Icon(
+                            painter = if (savePublicDiaryBoolean) painterResource(id = R.drawable.savediary) else painterResource(id = R.drawable.savediary),
+                            contentDescription = "Favorite",
+                            tint = if (savePublicDiaryBoolean) Color.Red else Color.Gray,
 
+                        )
+                    }
                 }
             }
         }

@@ -45,7 +45,7 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.company.dolshop.screens.ScreenList
-import com.company.dolshop.viewmodel.AuthiViewModel
+import com.company.dolshop.viewmodel.auth.AuthiViewModel
 import com.company.dolshop.viewmodel.SinnUpScreen2ViewModel
 import com.company.domain.model.DomainUserInfoModel
 import com.company.utility.DataStoreUtility

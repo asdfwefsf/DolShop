@@ -40,7 +40,7 @@ import coil.compose.AsyncImage
 import com.bumptech.glide.Glide
 import com.company.dolshop.screens.ScreenList
 import com.company.dolshop.viewmodel.DiaryNumberRoomViewmodel
-import com.company.dolshop.viewmodel.AuthiViewModel
+import com.company.dolshop.viewmodel.auth.AuthiViewModel
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage

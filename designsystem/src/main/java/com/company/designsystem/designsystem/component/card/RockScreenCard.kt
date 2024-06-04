@@ -21,12 +21,15 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.core.net.toUri
 import coil.compose.AsyncImage
+import com.company.designsystem.R
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
@@ -44,7 +47,7 @@ fun RockScreenCard(
     writer: String,
     image: String,
     diary: String,
-    myAuthNumber : String
+    myAuthNumber: String
 ) {
     val scope = CoroutineScope(Dispatchers.IO)
     Card(
@@ -54,33 +57,41 @@ fun RockScreenCard(
         colors = CardDefaults.cardColors(Color.White)
     ) {
         Column(modifier = Modifier.padding(8.dp)) {
-            Row (
+            Row(
                 modifier = Modifier.padding(top = 4.dp)
             ) {
                 Text(
-                    "${day} ${diaryNumber}",
+                    day,
+//                    "${day} ${diaryNumber}",
                     fontSize = 15.sp,
                     color = Color.Black,
-                    modifier = Modifier.padding(top = 8.dp)
                 )
                 Spacer(modifier = Modifier.padding(4.dp))
-                Text(
-                    text = "커뮤니티에 자랑하기",
-                    fontSize = 15.sp,
-                    color = Color.Black,
-                    modifier = Modifier.padding(top = 8.dp).clickable {
+                Row(
+                    verticalAlignment = Alignment.CenterVertically,
+                    modifier = Modifier.clickable {
                         scope.launch {
-                            fromFireStoreToPublicDiary(image.toUri() , myAuthNumber , diary , diaryNumber , writer)
+                            fromFireStoreToPublicDiary(
+                                image.toUri(),
+                                myAuthNumber,
+                                diary,
+                                diaryNumber,
+                                writer
+                            )
 
                         }
                     }
-                )
-                Spacer(modifier = Modifier.padding(4.dp))
-                Icon(
-                    imageVector = Icons.Default.Share,
-                    contentDescription = "",
-                    modifier = Modifier.padding(top = 4.dp)
-                )
+                ) {
+                    Text(
+                        text = "커뮤니티에 자랑하기",
+                        color = Color.Black
+                    )
+                    Icon(
+                        painter = painterResource(id = R.drawable.share),
+                        tint = Color(0xFF7BF579),
+                        contentDescription = "",
+                    )
+                }
             }
 
             AsyncImage(
@@ -95,18 +106,6 @@ fun RockScreenCard(
                 color = Color.Black,
                 modifier = Modifier.padding(top = 8.dp)
             )
-
-//            Row {
-//                var like by remember { mutableStateOf(false) }
-//                Icon(
-//                    imageVector = if (like) Icons.Filled.Favorite else Icons.Default.FavoriteBorder,
-//                    contentDescription = "Favorite",
-//                    tint = if (like) Color.Red else Color.Gray,
-//                    modifier = Modifier.clickable {
-//                        like = !like
-//                    }
-//                )
-//            }
         }
     }
 }
@@ -118,13 +117,26 @@ fun fromFireStoreToPublicDiary(
     diaryNumber: String,
     authNickName: String
 ) {
-    val storageRef = FirebaseStorage.getInstance().getReference("images/${imageUri.lastPathSegment}")
+    val storageRef =
+        FirebaseStorage.getInstance().getReference("images/${imageUri.lastPathSegment}")
 
 
-    saveImageUrlToRealtimeDatabase(imageUri.toString() , authNumber , diaryText , diaryNumber , authNickName)
+    saveImageUrlToRealtimeDatabase(
+        imageUri.toString(),
+        authNumber,
+        diaryText,
+        diaryNumber,
+        authNickName
+    )
 }
 
-fun saveImageUrlToRealtimeDatabase(imageUrl: String, authNumber: String , diaryText : String , diaryNumber : String , authNickName : String) {
+fun saveImageUrlToRealtimeDatabase(
+    imageUrl: String,
+    authNumber: String,
+    diaryText: String,
+    diaryNumber: String,
+    authNickName: String
+) {
     val databaseRef = Firebase.database.reference
 
 
@@ -138,13 +150,8 @@ fun saveImageUrlToRealtimeDatabase(imageUrl: String, authNumber: String , diaryT
     ////
 
     val diaryDate = getCurrentDateString()
-    val love : String = "0"
-    val diary = mapOf(
-        "image" to imageUrl,
-        "diary" to diaryText,
-        "day" to diaryDate,
-        "diaryNumber" to diaryNumber
-    )
+    val love: String = "0"
+
 
     val publicDiaryImage = mapOf(
         "image" to imageUrl,
