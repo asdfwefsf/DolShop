@@ -20,7 +20,7 @@ import kotlinx.coroutines.withContext
 import org.json.JSONObject
 
 @Composable
-fun AddressScreen(navController: NavController, coroutineScope: CoroutineScope) {
+fun AddressScreen(navController: NavController, coroutineScope: CoroutineScope , gumaeDolInfo : DomainProductModel) {
 
     AndroidView(
         modifier = Modifier.fillMaxSize(),
@@ -38,7 +38,10 @@ fun AddressScreen(navController: NavController, coroutineScope: CoroutineScope) 
 //                addJavascriptInterface(WebAppInterface(this), "AndroidBridge")
 
                 loadUrl("https://dolshop-aa5e8.web.app")
-                addJavascriptInterface(BridgeInterface(navController, coroutineScope , this ), "Android")
+                addJavascriptInterface(
+                    BridgeInterface(navController, coroutineScope, this , gumaeDolInfo),
+                    "Android"
+                )
 
             }
         },
@@ -53,6 +56,7 @@ class BridgeInterface(
     val navController: NavController,
     val coroutineScope: CoroutineScope,
     val webView: WebView,
+    val gumaeDolInfo : DomainProductModel
 ) {
     // JavaScript -> Android
     @JavascriptInterface
@@ -67,13 +71,25 @@ class BridgeInterface(
             navController.previousBackStackEntry?.savedStateHandle?.apply {
                 set("addressNumber", addressNumber)
                 set("address", address + additionalInfo)
-                set("change" , true)
-                Log.d("NavigationData", "Data set - AddressNumber: $addressNumber, Address: $address $additionalInfo")
+                set("change", true)
 
+//                if (navController.previousBackStackEntry?.destination?.route != "개인정보") {
+//                    set("HARD", gumaeDolInfo)
+//
+//                }
+                Log.d(
+                    "NavigationData",
+                    "Data set - AddressNumber: $addressNumber, Address: $address $additionalInfo"
+                )
             }
             withContext(Dispatchers.Main) {
-                var gumaeDolInfo = DomainProductModel("","","","","","","","","","")
-                val encodedProductInfo = encodeUrl(Gson().toJson(gumaeDolInfo, DomainProductModel::class.java))
+//                var gumaeDolInfo = DomainProductModel("","","","","","","","","","")
+
+//                val gumaeDolInfo =
+//                    navController.previousBackStackEntry?.savedStateHandle?.get<DomainProductModel>("HARD") ?: DomainProductModel("", "", "", "", "", "", "", "", "", "")
+
+                val encodedProductInfo =
+                    encodeUrl(Gson().toJson(gumaeDolInfo, DomainProductModel::class.java))
 
                 navController.navigate("${ScreenList.InputAddressInfoScreen.route}/${encodedProductInfo}") {
                     navController.popBackStack()
@@ -87,7 +103,19 @@ class BridgeInterface(
                     loadUrl("about:blank")
                     destroy()
                 }
-
+//                navController.previousBackStackEntry?.savedStateHandle?.apply {
+//                    set("addressNumber", addressNumber)
+//                    set("address", address + additionalInfo)
+//                    set("change", true)
+//                    if(navController.previousBackStackEntry?.destination?.route != "개인정보") {
+//                        set("HARD" , gumaeDolInfo)
+//
+//                    }
+//                    Log.d(
+//                        "NavigationData",
+//                        "Data set - AddressNumber: $addressNumber, Address: $address $additionalInfo"
+//                    )
+//                }
             }
 
 

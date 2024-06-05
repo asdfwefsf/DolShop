@@ -40,6 +40,20 @@ import com.google.gson.Gson
 @Composable
 @ExperimentalMaterial3Api
 fun InputAddressInfoScreen(navController: NavController, gumaeDolInfo: DomainProductModel) {
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     val authiViewModel: AuthiViewModel = hiltViewModel()
 
     val scope = rememberCoroutineScope()
@@ -52,6 +66,7 @@ fun InputAddressInfoScreen(navController: NavController, gumaeDolInfo: DomainPro
     // test
     var addressNumber: String? by remember { mutableStateOf("") }
     var address: String? by remember { mutableStateOf("") }
+    var HARD: DomainProductModel? by remember { mutableStateOf(DomainProductModel("","","","","","","","","","")) }
     var changeResult = savedStateHandle?.get<Boolean>("change") ?: false
 
     val addressName by addressViewModel.addressName.collectAsState()
@@ -60,18 +75,26 @@ fun InputAddressInfoScreen(navController: NavController, gumaeDolInfo: DomainPro
 
     val fsfsef = navController.previousBackStackEntry?.destination
 
+
+
     Log.d("sfsesvinoesfnof", fsfsef?.route!!)
     LaunchedEffect(key1 = savedStateHandle) {
         addressNumber = savedStateHandle?.get<String>("addressNumber") ?: ""
         address = savedStateHandle?.get<String>("address") ?: ""
+        HARD = savedStateHandle?.get<DomainProductModel>("HARD")
+
+
         Log.d("jisung", addressNumber + address)
     }
 
-    if (fsfsef?.route == "개인정보") {
-        var gumaeDolInfo = DomainProductModel("", "", "", "", "", "", "", "", "", "")
-        val encodedProductInfo =
-            encodeUrl(Gson().toJson(gumaeDolInfo, DomainProductModel::class.java))
-    }
+
+//    if (fsfsef?.route == "개인정보") {
+//        var gumaeDolInfo = DomainProductModel("", "", "", "", "", "", "", "", "", "")
+//        val encodedProductInfo =
+//            encodeUrl(Gson().toJson(gumaeDolInfo, DomainProductModel::class.java))
+//    } else {
+//        val sssss = gumaeDolInfo
+//    }
 
     // 상품 정보
 //    val productInfo = gumaeDolInfo?.let { Gson().fromJson(it, DomainProductModel::class.java) }
@@ -109,18 +132,31 @@ fun InputAddressInfoScreen(navController: NavController, gumaeDolInfo: DomainPro
             )
             Spacer(modifier = Modifier.width(8.dp))
 
-//            if (fsfsef?.route == "개인정보") {
-//
-//            } else {
-//
-//            }
-
-            Button(
-                onClick = { navController.navigate("${ScreenList.AddressScreen.route}") },
-                modifier = Modifier.align(Alignment.CenterVertically)
-            ) {
-                Text("조회")
+            if (fsfsef?.route == "개인정보") {
+                val gibon = DomainProductModel("", "", "", "", "", "", "", "", "", "")
+                val encodedgibon =
+                    encodeUrl(Gson().toJson(gibon, DomainProductModel::class.java))
+                Button(
+                    onClick = { navController.navigate("${ScreenList.AddressScreen.route}/${encodedgibon}") },
+                    modifier = Modifier.align(Alignment.CenterVertically)
+                ) {
+                    Text("기본꼴 조회")
+                }
+            } else {
+                val encodedgumaeDolInfo =
+                    encodeUrl(Gson().toJson(gumaeDolInfo, DomainProductModel::class.java))
+                Button(
+                    onClick = { navController.navigate("${ScreenList.AddressScreen.route}/${encodedgumaeDolInfo}") },
+                    modifier = Modifier.align(Alignment.CenterVertically)
+                ) {
+                    Text("변형꼴 조회")
+                }
             }
+
+
+
+
+
         }
 
         // 주소
@@ -215,3 +251,4 @@ fun InputAddressInfoScreen(navController: NavController, gumaeDolInfo: DomainPro
         }
     }
 }
+

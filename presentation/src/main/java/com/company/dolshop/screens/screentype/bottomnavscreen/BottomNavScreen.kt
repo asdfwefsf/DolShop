@@ -303,10 +303,18 @@ fun BottomNav(navController: NavHostController) {
             }
 
             composable(
-                route = "${ScreenList.AddressScreen.route}",
+                route = "${ScreenList.AddressScreen.route}/{gumaeDolInfo}",
+                arguments = listOf(navArgument("gumaeDolInfo") { type = NavType.StringType })
 
-            ) {
-                AddressScreen(navController, coroutineScope)
+            ) { backStackEntry ->
+
+                val gumaeDolInfo = backStackEntry.arguments?.getString("gumaeDolInfo")
+
+                //
+                val gumaeDolInfoName = gumaeDolInfo
+                val real = Gson().fromJson(gumaeDolInfoName, DomainProductModel::class.java)
+                //
+                AddressScreen(navController, coroutineScope , real)
             }
 
             composable(
