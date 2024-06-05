@@ -1,6 +1,7 @@
 package com.company.dolshop.screens.screentype.mypagescreen
 
 import android.util.Log
+import android.widget.Toast
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -23,6 +24,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -40,23 +42,8 @@ import com.google.gson.Gson
 @Composable
 @ExperimentalMaterial3Api
 fun InputAddressInfoScreen(navController: NavController, gumaeDolInfo: DomainProductModel) {
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     val authiViewModel: AuthiViewModel = hiltViewModel()
 
-    val scope = rememberCoroutineScope()
     val realtimeDB = Firebase.database
     val authNumber = authiViewModel.userInfoList.collectAsState().value.authNumber
 
@@ -66,7 +53,22 @@ fun InputAddressInfoScreen(navController: NavController, gumaeDolInfo: DomainPro
     // test
     var addressNumber: String? by remember { mutableStateOf("") }
     var address: String? by remember { mutableStateOf("") }
-    var HARD: DomainProductModel? by remember { mutableStateOf(DomainProductModel("","","","","","","","","","")) }
+    var HARD: DomainProductModel? by remember {
+        mutableStateOf(
+            DomainProductModel(
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                "",
+                ""
+            )
+        )
+    }
     var changeResult = savedStateHandle?.get<Boolean>("change") ?: false
 
     val addressName by addressViewModel.addressName.collectAsState()
@@ -106,6 +108,7 @@ fun InputAddressInfoScreen(navController: NavController, gumaeDolInfo: DomainPro
             .padding(16.dp)
             .fillMaxWidth()
     ) {
+        val context = LocalContext.current
         Text("배송지 관련 정보 추가")
 
         Spacer(modifier = Modifier.height(8.dp))
@@ -154,9 +157,6 @@ fun InputAddressInfoScreen(navController: NavController, gumaeDolInfo: DomainPro
             }
 
 
-
-
-
         }
 
         // 주소
@@ -196,45 +196,56 @@ fun InputAddressInfoScreen(navController: NavController, gumaeDolInfo: DomainPro
         Spacer(modifier = Modifier.height(16.dp))
         Button(
             onClick = {
-                addressViewModel.saveAddress(
-                    DomainAddress(
-                        addressName = addressName,
-                        addressNumber = addressNumber.toString(),
-                        address = address.toString(),
-                        addressDetailName = detailedAddress,
-                        phoneNumber = phoneNumber
+
+                if (addressName.isNotEmpty() &&
+                    addressNumber.toString().isNotEmpty() &&
+                    address.toString().isNotEmpty() &&
+                    detailedAddress.isNotEmpty() &&
+                    phoneNumber.isNotEmpty()
+                ) {
+                    addressViewModel.saveAddress(
+                        DomainAddress(
+                            addressName = addressName,
+                            addressNumber = addressNumber.toString(),
+                            address = address.toString(),
+                            addressDetailName = detailedAddress,
+                            phoneNumber = phoneNumber
+                        )
                     )
-                )
 
 
-                if (fsfsef?.route == "개인정보") {
-                    navController.navigate(ScreenList.AuthInfoScreen.route) {
-                        launchSingleTop = true
-                        popUpTo(ScreenList.AuthInfoScreen.route) {
-                            inclusive = true
+                    if (fsfsef?.route == "개인정보") {
+                        navController.navigate(ScreenList.AuthInfoScreen.route) {
+                            launchSingleTop = true
+                            popUpTo(ScreenList.AuthInfoScreen.route) {
+                                inclusive = true
+                            }
+                        }
+                    } else {
+                        val encodedProductInfo =
+                            encodeUrl(Gson().toJson(gumaeDolInfo, DomainProductModel::class.java))
+                        navController.navigate("${ScreenList.GuMaeScreen.route}/${encodedProductInfo}") {
+                            launchSingleTop = true
+                            popUpTo(ScreenList.GuMaeScreen.route) {
+                                inclusive = true
+                            }
                         }
                     }
+
+
+                    val userRef = realtimeDB.getReference("users/$authNumber/address")
+                    val userData = mapOf(
+                        "addressName" to addressName,
+                        "addressNumber" to addressNumber,
+                        "address" to address,
+                        "detailedAddress" to detailedAddress,
+                        "phoneNumber" to phoneNumber
+                    )
+                    userRef.setValue(userData)
                 } else {
-                    val encodedProductInfo =
-                        encodeUrl(Gson().toJson(gumaeDolInfo, DomainProductModel::class.java))
-                    navController.navigate("${ScreenList.GuMaeScreen.route}/${encodedProductInfo}") {
-                        launchSingleTop = true
-                        popUpTo(ScreenList.GuMaeScreen.route) {
-                            inclusive = true
-                        }
-                    }
+                    Toast.makeText(context , "모든 정보를 입력해주세요", Toast.LENGTH_SHORT).show()
                 }
 
-
-                val userRef = realtimeDB.getReference("users/$authNumber/address")
-                val userData = mapOf(
-                    "addressName" to addressName,
-                    "addressNumber" to addressNumber,
-                    "address" to address,
-                    "detailedAddress" to detailedAddress,
-                    "phoneNumber" to phoneNumber
-                )
-                userRef.setValue(userData)
 
             },
             modifier = Modifier.fillMaxWidth()

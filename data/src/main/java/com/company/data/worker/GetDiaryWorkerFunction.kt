@@ -24,6 +24,12 @@ class GetDiaryWorkerFunction @Inject constructor(
 
     override suspend fun callDiaryWorkerFunction(sort : String): Flow<PagingData<Diary>> = flow {
         val authNumber = getAuthNumber(dao)
+
+        if(authNumber.isEmpty()) {
+            throw IllegalStateException("Auth number is null or empty")
+
+        }
+
 //        val diaryDate = getCurrentDateString()
 
         val query = when (sort) {

@@ -2,15 +2,13 @@ package com.company.dolshop.screens.screentype.productscreen
 
 import android.util.Log
 import android.widget.Toast
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.fadeIn
-import androidx.compose.animation.fadeOut
-import androidx.compose.animation.slideInVertically
-import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.interaction.MutableInteractionSource
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -20,6 +18,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -29,10 +28,8 @@ import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ExposedDropdownMenuBox
 import androidx.compose.material3.ExposedDropdownMenuDefaults
-import androidx.compose.material3.MenuDefaults
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
@@ -40,7 +37,6 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -52,6 +48,8 @@ import androidx.compose.ui.window.Dialog
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import coil.compose.AsyncImage
+import com.company.designsystem.designsystem.component.OutlinedTextField.DefaultRowTwoOutLinedTextField
+import com.company.designsystem.designsystem.component.dialog.BaseDialog
 import com.company.dolshop.screens.ScreenList
 import com.company.dolshop.viewmodel.AddressViewModel
 import com.company.dolshop.viewmodel.auth.AuthiViewModel
@@ -112,29 +110,28 @@ fun BaesongzInputScreen(
             )
         )
     ).value
-    val scope = rememberCoroutineScope()
     var selectedText by remember { mutableStateOf("0개") }
 
-    // 애니메이션 보이는거 불리안 값
-    var isAddressVisible by remember { mutableStateOf(false) }
+    var moveToAddressChangeDialogBoolean = remember { mutableStateOf(false) }
 
     Column(
-        modifier = Modifier.fillMaxWidth()
+        modifier = Modifier.fillMaxSize()
     ) {
-        Text("기본 배송지", color = Color.Black, modifier = Modifier.clickable {
-            isAddressVisible = !isAddressVisible
-        })
-
         Row(
-            modifier = Modifier.fillMaxWidth()
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(start = 4.dp, end = 4.dp, top = 4.dp, bottom = 4.dp)
         ) {
-            AsyncImage(model = gumaeProductModel.image1, contentDescription = "")
+            AsyncImage(
+                model = gumaeProductModel.image1,
+                contentDescription = "",
+                modifier = Modifier.padding(start = 4.dp)
+            )
             Spacer(Modifier.size(10.dp))
             Column {
                 Row {
                     Text("상품명 : ", color = Color.Black)
                     Text(decodeUrl(gumaeProductModel.text1), color = Color.Black)
-
                 }
                 Spacer(Modifier.size(10.dp))
                 Row(
@@ -142,7 +139,6 @@ fun BaesongzInputScreen(
                     verticalAlignment = Alignment.CenterVertically
                 ) {
                     var expanded by remember { mutableStateOf(false) }
-//                    var selectedText by remember { mutableStateOf("0개") }
                     val items = listOf("1개", "2개", "3개", "4개", "5개", "6개", "7개", "8개", "9개", "10개")
                     Text("주문 갯수", color = Color.Black)
                     ExposedDropdownMenuBox(
@@ -190,69 +186,47 @@ fun BaesongzInputScreen(
             }
 
         }
-        var message by remember { mutableStateOf("") }
-        AnimatedVisibility(
-            visible = isAddressVisible,
-            enter = fadeIn() + slideInVertically(),
-            exit = fadeOut() + slideOutVertically(),
-        ) {
-            if (addressInfo.isNotEmpty()) {
-                Column {
-                    Text(addressInfo[0].addressName, color = Color.Black)
-                    Text(addressInfo[0].address, color = Color.Black)
-                    Text(addressInfo[0].addressNumber, color = Color.Black)
-                    Text(addressInfo[0].addressDetailName, color = Color.Black)
-                    Text(addressInfo[0].phoneNumber, color = Color.Black)
-                    Text("이대로 배송하시겠습니까 ? ", color = Color.Black)
 
-                    Row(
-                        horizontalArrangement = Arrangement.spacedBy(16.dp),
-                        modifier = Modifier.fillMaxWidth()
-                    ) {
-                        Button(
-                            onClick = {
-                                message = "위의 주소로 배송될 예정입니다."
-                                baesongInfo.addressName = addressInfo[0].addressName
-                                baesongInfo.address = addressInfo[0].address
-                                baesongInfo.addressNumber = addressInfo[0].addressNumber
-                                baesongInfo.addressDetailName = addressInfo[0].addressDetailName
-                                baesongInfo.phoneNumber = addressInfo[0].phoneNumber
-                                Log.d("sfsfs", baesongInfo.toString())
-                            },
-                            modifier = Modifier.weight(1f)
-                        ) {
-                            Text("네", color = Color.Black)
-                        }
-                        Button(
-                            onClick = {
-                                message = "새로운 주소로 배송될 예정입니다."
-                            },
-                            modifier = Modifier.weight(1f)
-                        ) {
-                            Text("아니오", color = Color.Black)
-                        }
-                    }
-                }
-            } else {
-                Button(
-                    onClick = {
-//                        message = "주소를 입력해주세요."
-                        val realArgument = encodeUrl(Gson().toJson(gumaeProductModel))
-                        navController.navigate("${ScreenList.InputAddressInfoScreen.route}/${realArgument}")
-                    },
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(top = 30.dp, start = 15.dp, end = 15.dp),
-                    colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF7BF579))
-                ) {
-                    Text("주소 입력하러가기", color = Color.Black)
-                }
-            }
+        if (addressInfo.isNotEmpty()) {
+            DefaultRowTwoOutLinedTextField("우편번호", "우편번호", addressInfo[0].addressNumber)
+            DefaultRowTwoOutLinedTextField("주소", "주소", addressInfo[0].address)
+            DefaultRowTwoOutLinedTextField("상세주소", "상세주소", addressInfo[0].addressDetailName)
+            DefaultRowTwoOutLinedTextField("전화번호", "전화번호", addressInfo[0].phoneNumber)
         }
+
+        // 배송지 버튼 TODO 이 아래로 주소 정보 입력 하면 될 듯
+        Button(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(top = 30.dp, start = 15.dp, end = 15.dp),
+            onClick = {
+                moveToAddressChangeDialogBoolean.value = !moveToAddressChangeDialogBoolean.value
+            },
+            colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF7BF579))
+        ) {
+            Text(
+                text = "배송지 변경",
+                color = Color.Black
+            )
+        }
+        if (moveToAddressChangeDialogBoolean.value) {
+            val realArgument = encodeUrl(Gson().toJson(gumaeProductModel))
+
+            BaseDialog(
+                moveToAddressChangeDialogBoolean,
+                "배송지 변경",
+                "배송지 변경하러 가시겠습니까?",
+                { navController.navigate("${ScreenList.InputAddressInfoScreen.route}/${realArgument}") },
+                {}
+            )
+        }
+
+
+        var message by remember { mutableStateOf("") }
+        var addressDialogBoolean by remember { mutableStateOf("") }
+
         Spacer(modifier = Modifier.size(16.dp))
         if (message == "새로운 주소로 배송될 예정입니다.") {
-//            gumaeProductModel
-//            ${encodeUrl(Gson().toJson(dolURL))
             Button(onClick = {
                 val realArgument = encodeUrl(Gson().toJson(gumaeProductModel))
                 navController.navigate("${ScreenList.InputAddressInfoScreen.route}/${realArgument}")
@@ -261,12 +235,17 @@ fun BaesongzInputScreen(
             }
         }
         Text(message, color = Color.Black)
-        test(
-            baesongInfo,
-            selectedText,
-            decodeUrl(gumaeProductModel.text1),
-            decodeUrl(gumaeProductModel.image1)
-        )
+        if(addressInfo.isNotEmpty()) {
+            test(
+                baesongInfo,
+                selectedText,
+                decodeUrl(gumaeProductModel.text1),
+                decodeUrl(gumaeProductModel.image1),
+                navController,
+                addressInfo[0]
+            )
+        }
+
     }
 }
 
@@ -275,88 +254,97 @@ fun test(
     baesongInfo: DomainBaesongInfo,
     selectedText: String,
     productName: String,
-    productLink: String
+    productLink: String,
+    navController: NavController,
+    domainAddress: DomainAddress
 ) {
     var selectedImageName by remember { mutableStateOf("") }
 
     Column(
         modifier = Modifier.padding(start = 4.dp, end = 4.dp)
     ) {
+        val clickedIndication = remember { MutableInteractionSource() }
         // 은행3개 가로로
         Row(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceEvenly
         ) {
-            Image(
-                painter = painterResource(id = R.drawable.nonghub_bank),
-                contentDescription = "",
-                modifier = Modifier
-                    .size(100.dp)
+            val banks = listOf(
+                "농협은행" to R.drawable.nonghub_bank,
+                "기업은행" to R.drawable.giup_bank,
+                "하나은행" to R.drawable.hana_bank,
+            )
+            banks.forEach { (name, image) ->
+                val selectedBoolean = selectedImageName == name
 
-                    .clickable {
-                        selectedImageName = "농협은행"
-                        baesongInfo.bankName = "농협은행"
-                    }
-            )
-            Image(
-                painter = painterResource(id = R.drawable.giup_bank),
-                contentDescription = "",
-                modifier = Modifier
-                    .size(100.dp)
-                    .clickable {
-                        selectedImageName = "기업은행"
-                        baesongInfo.bankName = "기업은행"
-                    }
-            )
-            Image(
-                painter = painterResource(id = R.drawable.hana_bank),
-                contentDescription = "",
-                modifier = Modifier
-                    .size(100.dp)
+                val borderWidth = if (selectedBoolean) 3.dp else 0.dp
+                val borderColor = if (selectedBoolean) Color(0xFF7BF579) else Color.Black
 
-                    .clickable {
-                        selectedImageName = "하나은행"
-                        baesongInfo.bankName = "하나은행"
-                    }
-            )
+                Box(
+                    modifier = Modifier
+                        .size(100.dp)
+                        .border(
+                            width = borderWidth,
+                            color = borderColor,
+                        )
+                        .clickable(
+                            interactionSource = remember { clickedIndication },
+                            indication = null
+                        ) {
+                            selectedImageName = name
+                            baesongInfo.bankName = name
+                        }
+                ) {
+                    Image(
+                        painter = painterResource(id = image),
+                        contentDescription = "",
+                        modifier= Modifier.height(100.dp).width(100.dp)
+                    )
+                }
+
+            }
         }
-        // 은행3개 가로로
         Row(
             modifier = Modifier.fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceEvenly
-
         ) {
-            Image(
-                painter = painterResource(id = R.drawable.pepole_bank),
-                contentDescription = "",
-                modifier = Modifier
-                    .size(100.dp)
-                    .clickable {
-                        selectedImageName = "국민은행"
-                        baesongInfo.bankName = "국민은행"
-                    }
+            val banks = listOf(
+                "국민은행" to R.drawable.pepole_bank,
+                "신한은행" to R.drawable.sinhan_bank,
+                "우리은행" to R.drawable.woori_bank,
             )
-            Image(
-                painter = painterResource(id = R.drawable.sinhan_bank),
-                contentDescription = "",
-                modifier = Modifier
-                    .size(100.dp)
-                    .clickable {
-                        selectedImageName = "신한은행"
-                        baesongInfo.bankName = "신한은행"
-                    }
-            )
-            Image(
-                painter = painterResource(id = R.drawable.woori_bank),
-                contentDescription = "",
-                modifier = Modifier
-                    .size(100.dp)
-                    .clickable {
-                        selectedImageName = "우리은행"
-                        baesongInfo.bankName = "우리은행"
-                    }
-            )
+            banks.forEach { (name, image) ->
+                val selectedBoolean = selectedImageName == name
+
+                val borderWidth = if (selectedBoolean) 3.dp else 0.dp
+                val borderColor = if (selectedBoolean) Color(0xFF7BF579) else Color.Black
+
+                Box(
+                    modifier = Modifier
+                        .size(100.dp)
+                        .border(
+                            width = borderWidth,
+                            color = borderColor,
+                        )
+                        .clickable(
+                            interactionSource = remember { clickedIndication },
+                            indication = null
+                        ) {
+                            selectedImageName = name
+                            baesongInfo.bankName = name
+                        }
+                ) {
+                    Image(
+                        painter = painterResource(id = image),
+                        contentDescription = "",
+                        modifier= Modifier.height(100.dp).width(100.dp)
+                    )
+                }
+
+            }
         }
+        // 은행3개 가로로
+
 
         Row(
             modifier = Modifier
@@ -381,7 +369,8 @@ fun test(
                     unfocusedContainerColor = Color.White,
                     unfocusedIndicatorColor = Color.Black,
                     focusedIndicatorColor = Color.Green
-                )
+                ),
+                readOnly = true
             )
         }
 
@@ -447,216 +436,277 @@ fun test(
 
         var dialogBoolean = remember { mutableStateOf(false) }
 
-        Button(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(top = 30.dp, start = 15.dp, end = 15.dp),
-            onClick = {
-                dialogBoolean.value = true
-            },
-            colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF7BF579))
-        ) {
-            Text(
-                text = "주문하기",
-                color = Color.Black
-            )
-        }
+//        Button(
+//            modifier = Modifier
+//                .fillMaxWidth()
+//                .padding(top = 30.dp, start = 15.dp, end = 15.dp),
+//            onClick = {
+//                dialogBoolean.value = true
+//            },
+//            colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF7BF579))
+//        ) {
+//            Text(
+//                text = "주문하기",
+//                color = Color.Black
+//            )
+//        }
 
-        if (dialogBoolean.value == true) {
-            baesongConfirmDialog(baesongInfo, dialogBoolean, selectedText, productName, productLink)
-        }
+
+        Jumun(baesongInfo, selectedText, productName, productLink , navController , domainAddress)
+
+//        if (dialogBoolean.value == true) {
+//            baesongConfirmDialog(baesongInfo, dialogBoolean, selectedText, productName, productLink)
+//        }
     }
 
+
+}
+
+@Composable
+private fun Jumun(
+    baesongInfo: DomainBaesongInfo,
+    selectedText: String,
+    productName: String,
+    productLink: String,
+    navController: NavController,
+    domainAddress : DomainAddress
+    ) {
+    val userViewModel: AuthiViewModel = hiltViewModel()
+    val realtimeDB = Firebase.database
+    val userInfoList = userViewModel.userInfoList.collectAsState().value
+    val authNumber = userInfoList.authNumber
+    val userRef = realtimeDB.getReference("users/$authNumber/baesongNaeYeock")
+
+    //        "addressName" to baesongInfo.addressName,
+    val baesongFirebase = mapOf(
+        "addressNumber" to domainAddress.addressNumber,
+        "address" to domainAddress.address,
+        "addressDetailName" to domainAddress.addressDetailName,
+        "phoneNumber" to domainAddress.phoneNumber,
+        "bankName" to baesongInfo.bankName,
+        "accountNumber" to baesongInfo.accountNumber,
+        "accountOwnerName" to baesongInfo.accountOwnerName,
+        "baesongBoolean" to "false",
+        "productName" to productName,
+        "productGaeSu" to selectedText,
+        "productURL" to productLink,
+        "arrivedTime" to "ㅇ"
+    )
+    val context = LocalContext.current
+
+    var dialogBoolean = remember { mutableStateOf(false) }
+    Button(
+        onClick = {
+
+            if (!checkAllJuMun(baesongFirebase)) {
+                Log.d("sfwetlll", "빈 값이 있습니다.")
+                Log.d("sfwetlll", baesongFirebase.toString())
+                Toast.makeText(context, "빈 값이 있습니다.", Toast.LENGTH_SHORT).show()
+
+            } else  {
+                userRef.push().setValue(baesongFirebase)
+                Toast.makeText(context, "주문 완료하였습니다.", Toast.LENGTH_SHORT).show()
+                dialogBoolean.value = true
+
+            }
+        }
+    ) {
+        Text("주문하기", color = Color.Black)
+    }
+    if(dialogBoolean.value) {
+        BaseDialog(
+            dialogBoolean,
+            "주문완료",
+            "주문 내역 확인하러 가시겠습니까?",
+            {navController.navigate(ScreenList.GuMaeNaeYeokScreen.route)},
+            {navController.navigate(ScreenList.RocksScreen.route)}
+        )
+    }
 
 }
 
 //@Composable
-//fun BankInfo(selectedImageName: String , modifier : Modifier) {
-//    Text(selectedImageName, color = Color.Black , modifier = modifier)
+//fun baesongConfirmDialog(
+//    baesongInfo: DomainBaesongInfo,
+//    dialogBoolean: MutableState<Boolean>,
+//    selectedText: String,
+//    productName: String,
+//    productLink: String
+//) {
+//    val realtimeDB = Firebase.database
+//    val userViewModel: AuthiViewModel = hiltViewModel()
+//    val userInfoList = userViewModel.userInfoList.collectAsState().value
+//    val authNumber = userInfoList.authNumber
+//
+//    val userRef = realtimeDB.getReference("users/$authNumber/baesongNaeYeock")
+//
+//    Dialog(
+//        onDismissRequest = { dialogBoolean.value = false },
+//
+//        ) {
+//        Card(
+//            modifier = Modifier
+//                .padding(8.dp)
+//                .fillMaxWidth()
+//                .fillMaxHeight(0.7f),
+//            elevation = CardDefaults.cardElevation(4.dp),
+//            colors = CardDefaults.cardColors(Color.White)
+//        ) {
+//            Column(
+//                modifier = Modifier.padding(4.dp)
+//            ) {
+////                Row(
+////                    modifier = Modifier
+////                        .fillMaxWidth()
+////                        .padding(horizontal = 8.dp)
+////                ) {
+////                    Text("손님 주소 별명", color = Color.Black)
+////                    Spacer(modifier = Modifier.weight(1f))
+////                    Text(baesongInfo.addressName, color = Color.Black)
+////                }
+////                Spacer(modifier = Modifier.height(4.dp))
+////
+////                Row(
+////                    modifier = Modifier
+////                        .fillMaxWidth()
+////                        .padding(horizontal = 8.dp)
+////                ) {
+////                    Text("손님 우편번호", color = Color.Black)
+////                    Spacer(modifier = Modifier.weight(1f))
+////                    Text(baesongInfo.addressNumber, color = Color.Black)
+////                }
+////                Spacer(modifier = Modifier.height(4.dp))
+////
+////                Row(
+////                    modifier = Modifier
+////                        .fillMaxWidth()
+////                        .padding(horizontal = 8.dp)
+////                ) {
+////                    Text("손님 주소", color = Color.Black)
+////                    Spacer(modifier = Modifier.weight(1f))
+////                    Text(baesongInfo.address, color = Color.Black)
+////                }
+////                Spacer(modifier = Modifier.height(4.dp))
+////
+////                Row(
+////                    modifier = Modifier
+////                        .fillMaxWidth()
+////                        .padding(horizontal = 8.dp)
+////                ) {
+////                    Text("손님 상세 주소", color = Color.Black)
+////                    Spacer(modifier = Modifier.weight(1f))
+////                    Text(baesongInfo.addressDetailName, color = Color.Black)
+////                }
+////                Spacer(modifier = Modifier.height(4.dp))
+////
+////
+////                Row(
+////                    modifier = Modifier
+////                        .fillMaxWidth()
+////                        .padding(horizontal = 8.dp)
+////                ) {
+////                    Text("손님 전화번호", color = Color.Black)
+////                    Spacer(modifier = Modifier.weight(1f))
+////                    Text(baesongInfo.phoneNumber, color = Color.Black)
+////                }
+////                Spacer(modifier = Modifier.height(4.dp))
+////
+////
+////                Row(
+////                    modifier = Modifier
+////                        .fillMaxWidth()
+////                        .padding(horizontal = 8.dp)
+////                ) {
+////                    Text("은행이름", color = Color.Black)
+////                    Spacer(modifier = Modifier.weight(1f))
+////                    Text(baesongInfo.bankName, color = Color.Black)
+////                }
+////                Spacer(modifier = Modifier.height(4.dp))
+////
+////
+////                Row(
+////                    modifier = Modifier
+////                        .fillMaxWidth()
+////                        .padding(horizontal = 8.dp)
+////                ) {
+////                    Text("손님 계좌번호", color = Color.Black)
+////                    Spacer(modifier = Modifier.weight(1f))
+////                    Text(baesongInfo.accountNumber, color = Color.Black)
+////                }
+////                Spacer(modifier = Modifier.height(4.dp))
+////
+////
+////                Row(
+////                    modifier = Modifier
+////                        .fillMaxWidth()
+////                        .padding(horizontal = 8.dp)
+////                ) {
+////                    Text("손님 성함", color = Color.Black)
+////                    Spacer(modifier = Modifier.weight(1f))
+////                    Text(baesongInfo.accountOwnerName, color = Color.Black)
+////                }
+////                Spacer(modifier = Modifier.height(4.dp))
+////
+////                Row(
+////                    modifier = Modifier
+////                        .fillMaxWidth()
+////                        .padding(horizontal = 8.dp)
+////                ) {
+////                    Text("상품 이름", color = Color.Black)
+////                    Spacer(modifier = Modifier.weight(1f))
+////                    Text(productName, color = Color.Black)
+////                }
+////                Spacer(modifier = Modifier.height(4.dp))
+////
+////                Row(
+////                    modifier = Modifier
+////                        .fillMaxWidth()
+////                        .padding(horizontal = 8.dp)
+////                ) {
+////                    Text("상품 갯수", color = Color.Black)
+////                    Spacer(modifier = Modifier.weight(1f))
+////                    Text(selectedText, color = Color.Black)
+////                }
+////                Spacer(modifier = Modifier.height(4.dp))
+//
+//
+////                val baesongFirebase = mapOf(
+////                    "addressName" to baesongInfo.addressName,
+////                    "addressNumber" to baesongInfo.addressNumber,
+////                    "address" to baesongInfo.address,
+////                    "addressDetailName" to baesongInfo.addressDetailName,
+////                    "phoneNumber" to baesongInfo.phoneNumber,
+////                    "bankName" to baesongInfo.bankName,
+////                    "accountNumber" to baesongInfo.accountNumber,
+////                    "accountOwnerName" to baesongInfo.accountOwnerName,
+////                    "baesongBoolean" to "false",
+////                    "productName" to productName,
+////                    "productGaeSu" to selectedText,
+////                    "productURL" to productLink,
+////                    "arrivedTime" to ""
+////                )
+////                val context = LocalContext.current
+////
+////                Button(
+////                    onClick = {
+////
+////                        if (!checkAllJuMun(baesongFirebase)) {
+////                            Log.d("sfwetlll", "빈 값이 있습니다.")
+////                            dialogBoolean.value = false
+////                            Toast.makeText(context, "빈 값이 있습니다.", Toast.LENGTH_SHORT).show()
+////                        } else {
+////                            userRef.push().setValue(baesongFirebase)
+////                            dialogBoolean.value = false
+////                        }
+////                    }
+////                ) {
+////                    Text("주문 완료", color = Color.Black)
+////                }
+//            }
+//
+//        }
+//    }
 //}
-
-@Composable
-fun baesongConfirmDialog(
-    baesongInfo: DomainBaesongInfo,
-    dialogBoolean: MutableState<Boolean>,
-    selectedText: String,
-    productName: String,
-    productLink: String
-) {
-    val realtimeDB = Firebase.database
-    val userViewModel: AuthiViewModel = hiltViewModel()
-    val userInfoList = userViewModel.userInfoList.collectAsState().value
-    val authNumber = userInfoList.authNumber
-
-    val userRef = realtimeDB.getReference("users/$authNumber/baesongNaeYeock")
-
-    Dialog(
-        onDismissRequest = { dialogBoolean.value = false },
-
-        ) {
-        Card(
-            modifier = Modifier
-                .padding(8.dp)
-                .fillMaxWidth()
-                .fillMaxHeight(0.7f),
-            elevation = CardDefaults.cardElevation(4.dp),
-            colors = CardDefaults.cardColors(Color.White)
-        ) {
-            Column(
-                modifier = Modifier.padding(4.dp)
-            ) {
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(horizontal = 8.dp)
-                ) {
-                    Text("손님 주소 별명", color = Color.Black)
-                    Spacer(modifier = Modifier.weight(1f))
-                    Text(baesongInfo.addressName, color = Color.Black)
-                }
-                Spacer(modifier = Modifier.height(4.dp))
-
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(horizontal = 8.dp)
-                ) {
-                    Text("손님 우편번호", color = Color.Black)
-                    Spacer(modifier = Modifier.weight(1f))
-                    Text(baesongInfo.addressNumber, color = Color.Black)
-                }
-                Spacer(modifier = Modifier.height(4.dp))
-
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(horizontal = 8.dp)
-                ) {
-                    Text("손님 주소", color = Color.Black)
-                    Spacer(modifier = Modifier.weight(1f))
-                    Text(baesongInfo.address, color = Color.Black)
-                }
-                Spacer(modifier = Modifier.height(4.dp))
-
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(horizontal = 8.dp)
-                ) {
-                    Text("손님 상세 주소", color = Color.Black)
-                    Spacer(modifier = Modifier.weight(1f))
-                    Text(baesongInfo.addressDetailName, color = Color.Black)
-                }
-                Spacer(modifier = Modifier.height(4.dp))
-
-
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(horizontal = 8.dp)
-                ) {
-                    Text("손님 전화번호", color = Color.Black)
-                    Spacer(modifier = Modifier.weight(1f))
-                    Text(baesongInfo.phoneNumber, color = Color.Black)
-                }
-                Spacer(modifier = Modifier.height(4.dp))
-
-
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(horizontal = 8.dp)
-                ) {
-                    Text("은행이름", color = Color.Black)
-                    Spacer(modifier = Modifier.weight(1f))
-                    Text(baesongInfo.bankName, color = Color.Black)
-                }
-                Spacer(modifier = Modifier.height(4.dp))
-
-
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(horizontal = 8.dp)
-                ) {
-                    Text("손님 계좌번호", color = Color.Black)
-                    Spacer(modifier = Modifier.weight(1f))
-                    Text(baesongInfo.accountNumber, color = Color.Black)
-                }
-                Spacer(modifier = Modifier.height(4.dp))
-
-
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(horizontal = 8.dp)
-                ) {
-                    Text("손님 성함", color = Color.Black)
-                    Spacer(modifier = Modifier.weight(1f))
-                    Text(baesongInfo.accountOwnerName, color = Color.Black)
-                }
-                Spacer(modifier = Modifier.height(4.dp))
-
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(horizontal = 8.dp)
-                ) {
-                    Text("상품 이름", color = Color.Black)
-                    Spacer(modifier = Modifier.weight(1f))
-                    Text(productName, color = Color.Black)
-                }
-                Spacer(modifier = Modifier.height(4.dp))
-
-                Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(horizontal = 8.dp)
-                ) {
-                    Text("상품 갯수", color = Color.Black)
-                    Spacer(modifier = Modifier.weight(1f))
-                    Text(selectedText, color = Color.Black)
-                }
-                Spacer(modifier = Modifier.height(4.dp))
-
-
-                val baesongFirebase = mapOf(
-                    "addressName" to baesongInfo.addressName,
-                    "addressNumber" to baesongInfo.addressNumber,
-                    "address" to baesongInfo.address,
-                    "addressDetailName" to baesongInfo.addressDetailName,
-                    "phoneNumber" to baesongInfo.phoneNumber,
-                    "bankName" to baesongInfo.bankName,
-                    "accountNumber" to baesongInfo.accountNumber,
-                    "accountOwnerName" to baesongInfo.accountOwnerName,
-                    "baesongBoolean" to "false",
-                    "productName" to productName,
-                    "productGaeSu" to selectedText,
-                    "productURL" to productLink,
-                    "arrivedTime" to ""
-                )
-                val context = LocalContext.current
-
-                Button(
-                    onClick = {
-
-                        if (!checkAllJuMun(baesongFirebase)) {
-                            Log.d("sfwetlll", "빈 값이 있습니다.")
-                            dialogBoolean.value = false
-                            Toast.makeText(context, "빈 값이 있습니다.", Toast.LENGTH_SHORT).show()
-                        } else {
-                            userRef.push().setValue(baesongFirebase)
-                            dialogBoolean.value = false
-                        }
-                    }
-                ) {
-                    Text("주문 완료", color = Color.Black)
-                }
-            }
-
-        }
-    }
-}
 
 fun checkAllJuMun(map: Map<String, String>): Boolean {
     return map.values.none { it.isEmpty() }
