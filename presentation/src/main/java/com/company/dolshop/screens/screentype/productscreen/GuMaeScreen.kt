@@ -349,7 +349,7 @@ fun test(
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(start = 4.dp, bottom = 4.dp, end = 4.dp),
+                .padding(start = 4.dp, bottom = 4.dp, end = 4.dp , top = 4.dp),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceEvenly
         ) {
@@ -486,16 +486,23 @@ private fun Jumun(
         "bankName" to baesongInfo.bankName,
         "accountNumber" to baesongInfo.accountNumber,
         "accountOwnerName" to baesongInfo.accountOwnerName,
+        // 배송 여부
         "baesongBoolean" to "false",
         "productName" to productName,
         "productGaeSu" to selectedText,
         "productURL" to productLink,
-        "arrivedTime" to "ㅇ"
+        // 배송 예정 시간
+        "arrivedTime" to "ㅇ",
+        // 위치 추적
+        "location" to "ㅇ"
     )
     val context = LocalContext.current
 
     var dialogBoolean = remember { mutableStateOf(false) }
     Button(
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(start = 15.dp, end = 15.dp),
         onClick = {
 
             if (!checkAllJuMun(baesongFirebase)) {
@@ -509,7 +516,8 @@ private fun Jumun(
                 dialogBoolean.value = true
 
             }
-        }
+        },
+        colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF7BF579))
     ) {
         Text("주문하기", color = Color.Black)
     }

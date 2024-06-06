@@ -15,4 +15,5 @@ data class JuMunNaeYeockModel(
     var productName : String = "",
     var productURL : String = "",
     var arrivedTime : String = "",
+    var location : String = ""
 )

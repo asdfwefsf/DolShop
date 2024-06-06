@@ -1,20 +1,43 @@
 package com.company.dolshop.screens.screentype.mypagescreen
 
 import android.util.Log
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material3.Button
+import androidx.compose.material3.DropdownMenuItem
+import androidx.compose.material3.ExposedDropdownMenuBox
+import androidx.compose.material3.ExposedDropdownMenuDefaults
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
+import com.company.designsystem.designsystem.component.OutlinedTextField.DefaultRowTwoOutLinedTextField
+import com.company.designsystem.designsystem.component.loadcoil.LoadImageWithCoil
 import com.company.dolshop.viewmodel.auth.AuthiViewModel
 import com.company.domain.model.JuMunNaeYeockModel
+import com.company.utility.decodeUrl
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
@@ -53,7 +76,9 @@ fun GuMaeNaeYeokScreen() {
     })
 
     Log.d("sfaegawetasdfsf", "${test}")
-    LazyColumn {
+    LazyColumn(
+        modifier = Modifier.fillMaxSize().background(Color.White)
+    ) {
 
 
         if (test.isNotEmpty()) {
@@ -72,19 +97,66 @@ fun GuMaeNaeYeokScreen() {
 
 @Composable
 fun DetailJuMunNaeYeok(domainBaesongInfo: JuMunNaeYeockModel) {
-    Column {
-        Text("Address Name: ${domainBaesongInfo.addressName}")
-        Text("Address Number: ${domainBaesongInfo.addressNumber}")
-        Text("Address: ${domainBaesongInfo.address}")
-        Text("Address Detail Name: ${domainBaesongInfo.addressDetailName}")
-        Text("휴대폰 번호: ${domainBaesongInfo.phoneNumber}")
-        Text("은행 이름: ${domainBaesongInfo.bankName}")
-        Text("입금자 계좌번호: ${domainBaesongInfo.accountNumber}")
-        Text("입금자명: ${domainBaesongInfo.accountOwnerName}")
-        Text("baesongBoolean: ${domainBaesongInfo.baesongBoolean}")
-        Text("상품갯수: ${domainBaesongInfo.productGaeSu}")
-        Text("상품명: ${domainBaesongInfo.productName}")
-        Text("도착 예정 날짜 : ${domainBaesongInfo.arrivedTime}")
-        AsyncImage(model = domainBaesongInfo.productURL, contentDescription = "")
+    Column(
+        modifier = Modifier.fillMaxSize().background(Color.White).padding(start = 4.dp)
+    ) {
+        Row(
+            modifier = Modifier.background(Color.White).fillMaxWidth(),
+            horizontalArrangement = Arrangement.Center,
+            verticalAlignment = Alignment.CenterVertically
+        ) {
+            Text("Dol And Shop", color = Color.Black , modifier = Modifier.padding(top = 4.dp , bottom = 4.dp))
+        }
+
+        Text("상품 정보" , color = Color.Black)
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(end = 4.dp, top = 4.dp, bottom = 4.dp)
+        ) {
+            AsyncImage(
+                model = domainBaesongInfo.productURL,
+                contentDescription = "",
+                modifier = Modifier.padding(start = 4.dp , top = 4.dp)
+            )
+        }
+        Column {
+            DefaultRowTwoOutLinedTextField("상품명" , "" , domainBaesongInfo.productName)
+            DefaultRowTwoOutLinedTextField("주문 갯수" , "" , domainBaesongInfo.productGaeSu)
+            DefaultRowTwoOutLinedTextField("상품명" , "" , decodeUrl(domainBaesongInfo.productName))
+        }
+
+        Text("배송지 정보" , color = Color.Black , modifier = Modifier.padding(top = 20.dp))
+        DefaultRowTwoOutLinedTextField("주소" , "" , domainBaesongInfo.address)
+        DefaultRowTwoOutLinedTextField("우편번호" , "" , domainBaesongInfo.addressNumber)
+        DefaultRowTwoOutLinedTextField("상세주소" , "" , domainBaesongInfo.addressDetailName)
+        DefaultRowTwoOutLinedTextField("전화번호" , "" , domainBaesongInfo.phoneNumber)
+        if(domainBaesongInfo.arrivedTime != "ㅇ") {
+            DefaultRowTwoOutLinedTextField("도착날짜" , "" , domainBaesongInfo.arrivedTime)
+        }
+        if(domainBaesongInfo.baesongBoolean != "false") {
+            DefaultRowTwoOutLinedTextField("출발여부" , "" , domainBaesongInfo.baesongBoolean)
+        }
+        DefaultRowTwoOutLinedTextField("위치추적" , "" , domainBaesongInfo.location)
+
+
+
+
+
+
+
+        Text("결제 정보" , color = Color.Black , modifier = Modifier.padding(top = 20.dp))
+        DefaultRowTwoOutLinedTextField("은행이름" , "" , domainBaesongInfo.bankName)
+        DefaultRowTwoOutLinedTextField("계좌번호" , "" , domainBaesongInfo.accountNumber)
+        DefaultRowTwoOutLinedTextField("입금자명" , "" , domainBaesongInfo.accountOwnerName)
+
+
     }
 }
+
+
+
+
+
+
+
