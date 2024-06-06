@@ -6,7 +6,6 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -22,7 +21,6 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.semantics.Role.Companion.Image
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
@@ -48,14 +46,8 @@ fun MyCouponScreen() {
     val isCoupon2Boolean =
         dataStoreUtility.run { context.isCoupon2Flow.collectAsStateWithLifecycle(initialValue = false) }
 
-
-    Log.d("Coupon1", "${Coupon1}")
-    Log.d("Coupon2", "${Coupon2}")
-    Log.d("isCoupon1Boolean", "${isCoupon1Boolean}")
-    Log.d("isCoupon2Boolean", "${isCoupon2Boolean}")
     when {
         isCoupon1Boolean.value && isCoupon2Boolean.value -> {
-            Log.d("sfjlsjflsjf", "SFsfdsf")
             if (Coupon1.isNotEmpty() && Coupon2.isNotEmpty()) {
                 Column(
                     modifier = Modifier
@@ -97,10 +89,7 @@ fun MyCouponScreen() {
 
                     CouponCard(Coupon1[0].saleMunGu, Coupon1[0].couponNumber)
                     CouponCard(Coupon2[0].saleMunGu, Coupon2[0].couponNumber)
-//                    Text(Coupon1[0].saleMunGu , color = Color.Blue)
-//                    Text(Coupon1[0].couponNumber , color = Color.Blue)
-//                    Text(Coupon2[0].saleMunGu , color = Color.Blue)
-//                    Text(Coupon2[0].couponNumber , color = Color.Blue)
+
                 }
             }
 
@@ -108,7 +97,6 @@ fun MyCouponScreen() {
 
         isCoupon1Boolean.value && !isCoupon2Boolean.value -> {
             if (Coupon1.isNotEmpty() && Coupon2.isNotEmpty()) {
-
                 Column {
                     Text(Coupon1[0].saleMunGu)
                     Text(Coupon1[0].couponNumber)
@@ -119,7 +107,6 @@ fun MyCouponScreen() {
 
         !isCoupon1Boolean.value && isCoupon2Boolean.value -> {
             if (Coupon1.isNotEmpty() && Coupon2.isNotEmpty()) {
-
                 Column {
                     Text(Coupon2[0].couponNumber)
                     Text(Coupon2[0].couponNumber)

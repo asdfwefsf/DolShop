@@ -1,6 +1,7 @@
 package com.company.dolshop.screens.screentype.mypagescreen
 
 import android.util.Log
+import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -13,7 +14,9 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.ExposedDropdownMenuBox
 import androidx.compose.material3.ExposedDropdownMenuDefaults
@@ -35,6 +38,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import coil.compose.AsyncImage
 import com.company.designsystem.designsystem.component.OutlinedTextField.DefaultRowTwoOutLinedTextField
 import com.company.designsystem.designsystem.component.loadcoil.LoadImageWithCoil
+import com.company.dolshop.screens.screentype.productscreen.checkAllJuMun
 import com.company.dolshop.viewmodel.auth.AuthiViewModel
 import com.company.domain.model.JuMunNaeYeockModel
 import com.company.utility.decodeUrl
@@ -140,21 +144,68 @@ fun DetailJuMunNaeYeok(domainBaesongInfo: JuMunNaeYeockModel) {
         DefaultRowTwoOutLinedTextField("위치추적" , "" , domainBaesongInfo.location)
 
 
+        var showDialog by remember { mutableStateOf(false) }
+        val locations = splitLocations(domainBaesongInfo.location)
 
+        Button(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(start = 15.dp, end = 15.dp),
+            onClick = {
+                showDialog = true
+            },
+            colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF7BF579))
+        ) {
+            Text("위치추적", color = Color.Black)
+        }
 
+        if (showDialog) {
+            AlertDialog(
+                onDismissRequest = {
+                    showDialog = false
+                },
+                title = {
+                    Text(text = "위치추적" , color = Color.Black)
+                },
+                text = {
+                    Column {
+                        Text("현재 위치가 빨간색으로 표시됩니다." , color = Color.Black)
 
+                        locations.forEachIndexed { index, location ->
+                            val displayLocation = location.replace("현재", "")
+
+                            val textColor = if (location.contains("현재")) Color.Red else Color.Black
+                            Text("배송지 위치 ${index + 1}: $displayLocation", color = textColor)
+                        }
+                    }
+                },
+                confirmButton = {
+                    Button(
+                        onClick = {
+                            showDialog = false
+                        }
+                    ) {
+                        Text("닫기" , color = Color.Black)
+                    }
+                },
+                containerColor = Color.White
+            )
+        }
 
 
         Text("결제 정보" , color = Color.Black , modifier = Modifier.padding(top = 20.dp))
         DefaultRowTwoOutLinedTextField("은행이름" , "" , domainBaesongInfo.bankName)
         DefaultRowTwoOutLinedTextField("계좌번호" , "" , domainBaesongInfo.accountNumber)
         DefaultRowTwoOutLinedTextField("입금자명" , "" , domainBaesongInfo.accountOwnerName)
+        Spacer(Modifier.size(4.dp))
 
 
     }
 }
 
-
+fun splitLocations(location: String): List<String> {
+    return location.split(":")
+}
 
 
 
