@@ -337,7 +337,7 @@ fun BottomNav(navController: NavHostController) {
             }
 
             composable(route = ScreenList.MyCouponScreen.route) {
-                MyCouponScreen()
+                MyCouponScreen(navController)
             }
 
             composable(route = ScreenList.GuMaeNaeYeokScreen.route) {
