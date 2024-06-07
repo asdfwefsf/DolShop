@@ -20,7 +20,6 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -34,7 +33,7 @@ import com.company.dolshop.viewmodel.AddressViewModel
 import com.company.dolshop.viewmodel.auth.AuthiViewModel
 import com.company.domain.model.DomainAddress
 import com.company.domain.model.DomainProductModel
-import com.company.utility.encodeUrl
+import com.company.utility.urlmapper.encodeUrl
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import com.google.gson.Gson

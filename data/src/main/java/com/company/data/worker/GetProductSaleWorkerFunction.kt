@@ -1,8 +1,8 @@
 package com.company.data.worker
 
 import android.util.Log
-import com.company.datasource_local_productsale.productsale.ProductSaleDao
-import com.company.datasource_local_productsale.productsale.ProductSaleInfo
+import com.company.data.datasource.productsale.ProductSaleDao
+import com.company.data.datasource.productsale.ProductSaleInfo
 import com.company.product.api.ProductAPI
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext

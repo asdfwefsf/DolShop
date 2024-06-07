@@ -35,8 +35,13 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.company.dolshop.screens.ScreenList
 import com.company.dolshop.viewmodel.auth.AuthiViewModel
-import com.company.utility.DataStoreUtility
-import com.company.utility.DataStoreUtility.Companion.setLoginState
+import com.company.utility.datastore.DataStoreUtility
+import com.company.utility.datastore.DataStoreUtility.Companion.setLoginState
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.launch
@@ -145,17 +150,35 @@ fun LoginScreen2(navController: NavController) {
                 .fillMaxWidth()
                 .padding(top = 30.dp, start = 15.dp, end = 15.dp),
             onClick = {
-                Log.d("sfljeo22323"  ,"1")
                     scope.launch {
-                        Log.d("sfljeo22323"  ,"2")
-
                         authiViewModel.signInFirebaseAuth(kakaoEmail, password, context)
                         val userInfolist = authiViewModel.userInfoList
                         val loginValue = authiViewModel.loginValue
-
+//                        val test = FirebaseDatabase.getInstance().reference
+//                        val email = kakaoEmail
+//                        getUserIdByEmail(email, test) { userId ->
+//                            if (userId != null) {
+//                                Log.d("UserId", "User ID: $userId")
+//
+//
+//
+//
+//
+//
+//                            } else {
+//                                Log.d("UserId", "User ID not found")
+//                            }
+//                        }
                         loginValue.collect { it ->
-                            Log.d("sfslf" , "sfsf")
                             if (it) {
+//                                val test = FirebaseDatabase.getInstance().reference
+//                                val email = kakaoEmail
+
+
+
+
+
+
                                 userInfolist.collect { userInfo ->
                                     if (userInfo.authNumber != "ds") {
                                         val userRef =
@@ -169,6 +192,8 @@ fun LoginScreen2(navController: NavController) {
                                         )
                                         userRef.setValue(userData)
                                     }
+
+
 
                                     dataStoreUtility.apply {
                                         context.setLoginState(true)
@@ -185,13 +210,6 @@ fun LoginScreen2(navController: NavController) {
                             }
 
                         }
-//                        if (fireabaseAuthViewModel.loginValue.value) {
-//                            Log.d("sfljeo22323"  ,"3")
-//
-//
-//
-//                        }
-
                     }
             },
             colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF7BF579))
@@ -219,56 +237,28 @@ fun LoginScreen2(navController: NavController) {
             })
         }
 
-
-//        Row(
-//            modifier = Modifier
-//                .width(381.dp)
-//                .background(Color(0xFF7BF579))
-//                .padding(top = 30.dp, start = 15.dp, end = 15.dp)
-//                .clickable {
-//
-//                }
-//
-//        ) {
-//            Text("로그인하기", color = Color.Black)
-//        }
-
-
-//        Column(
-//            modifier = Modifier
-//                .fillMaxWidth()
-//                .padding(start = 8.dp, end = 8.dp),
-//            verticalAlignment = Alignment.CenterVertically,
-//            horizontalArrangement = Arrangement.SpaceBetween
-//        ) {
-//
-//        }
-
-//        Row(
-//            modifier = Modifier
-//                .fillMaxWidth()
-//                .padding(start = 8.dp, end = 8.dp, top = 8.dp),
-//            verticalAlignment = Alignment.CenterVertically,
-//            horizontalArrangement = Arrangement.SpaceBetween
-//        ) {
-////            Text("비밀번호", color = Color.Black, modifier = Modifier.weight(1f))
-//            OutlinedTextField(
-//                label = { Text("비밀번호") },
-//                placeholder = { Text("비밀번호를 입력해주세요") },
-//                value = password,
-//                onValueChange = { password = it },
-//                modifier = Modifier
-//                    .weight(5f)
-//                    .padding(start = 4.dp),
-//                colors = TextFieldDefaults.colors(
-//                    focusedContainerColor = Color.White,
-//                    unfocusedContainerColor = Color.White,
-//                    unfocusedIndicatorColor = Color.Black,
-//                    focusedIndicatorColor = Color.Green
-//                )
-//            )
-//        }
     }
 
 
 }
+
+
+//fun getUserIdByEmail(email: String, databaseReference: DatabaseReference, callback: (String?) -> Unit) {
+//    val query = databaseReference.child("users").orderByChild("kakaoAuth/authEmail").equalTo(email)
+//    query.addListenerForSingleValueEvent(object : ValueEventListener {
+//        override fun onDataChange(snapshot: DataSnapshot) {
+//            if (snapshot.exists()) {
+//                for (userSnapshot in snapshot.children) {
+//                    val userId = userSnapshot.key
+//                    callback(userId)
+//                    return
+//                }
+//            }
+//            callback(null)
+//        }
+//
+//        override fun onCancelled(error: DatabaseError) {
+//            callback(null)
+//        }
+//    })
+//}

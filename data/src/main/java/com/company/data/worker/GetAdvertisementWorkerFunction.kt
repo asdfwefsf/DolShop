@@ -2,15 +2,15 @@ package com.company.data.worker
 
 import android.util.Log
 import com.company.announcement.api.AnnouncementAPI
-import com.company.data.datasource.advertisement.AdvertisementDao
-import com.company.data.datasource.advertisement.AdvertisementInfo
+import com.company.data.datasource.advertisement.AnnouncemenDao
+import com.company.data.datasource.advertisement.AnnouncementInfo
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 class GetAdvertisementWorkerFunction @Inject constructor(
     private val announcementAPI: AnnouncementAPI,
-    private val dao: AdvertisementDao
+    private val dao: AnnouncemenDao
 ) {
     suspend fun getAdvertisementInfo() {
         val response = announcementAPI.getAnnouncement1()
@@ -20,10 +20,10 @@ class GetAdvertisementWorkerFunction @Inject constructor(
                 responseBody.forEach {
                     if (!dao.provideAdvertisementInfoExists(responseBody.size)) {
                         dao.insertAdvertisementInfo(
-                            AdvertisementInfo(
+                            AnnouncementInfo(
                                 id = it.id,
-                                AdvertisementMunGu = it.AdvertisementMunGu,
-                                AdvertisementImage = it.AdvertisementImage
+                                AnnouncementName = it.AnnouncementName,
+                                AnnouncementImage = it.AnnouncementImage
                             )
                         )
 //                        dao.deleteAllAdvertisementInfo()
@@ -33,10 +33,10 @@ class GetAdvertisementWorkerFunction @Inject constructor(
 
 //                        dao.deleteAllAdvertisementInfo()
                         dao.updateAdvertisementInfo(
-                            AdvertisementInfo(
+                            AnnouncementInfo(
                                 id = it.id,
-                                AdvertisementMunGu = it.AdvertisementMunGu,
-                                AdvertisementImage = it.AdvertisementImage
+                                AnnouncementName = it.AnnouncementName,
+                                AnnouncementImage = it.AnnouncementImage
                             )
                         )
                         Log.d("daoTest", "AdvertisementInfoUpdate : ${it.id}")

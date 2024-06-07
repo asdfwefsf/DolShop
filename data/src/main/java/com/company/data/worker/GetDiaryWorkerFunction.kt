@@ -28,6 +28,7 @@ class GetDiaryWorkerFunction @Inject constructor(
         if(authNumber.isEmpty()) {
             throw IllegalStateException("Auth number is null or empty")
 
+
         }
 
 //        val diaryDate = getCurrentDateString()

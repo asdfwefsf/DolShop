@@ -76,13 +76,10 @@ dependencies {
     implementation(project(":presentation"))
     implementation(project(":domain"))
     implementation(project(":data"))
+
+
     implementation(project(":core:network:product"))
     implementation(project(":core:network:announcement"))
-    implementation(project(":data:data-impl:update-productsale-impl"))
-    implementation(project(":data:data-mapper:saletodomain"))
-    implementation(project(":data:data-datasource"))
-    implementation(project(":datasource-local-productsale"))
-    implementation(project(":datasource-local-delivery"))
 
 
     implementation("com.google.dagger:hilt-android:2.49")

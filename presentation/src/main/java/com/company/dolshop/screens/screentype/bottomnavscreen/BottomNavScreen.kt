@@ -56,8 +56,8 @@ import com.company.dolshop.viewmodel.auth.AuthiViewModel
 import com.company.dolshop.viewmodel.UpdateBaseProductViewModel
 import com.company.domain.model.DomainProductModel
 import com.company.presentation.R
-import com.company.utility.DataStoreUtility
-import com.company.utility.DataStoreUtility.Companion.isLoggedInFlow
+import com.company.utility.datastore.DataStoreUtility
+import com.company.utility.datastore.DataStoreUtility.Companion.isLoggedInFlow
 import com.google.gson.Gson
 
 @OptIn(ExperimentalMaterial3Api::class)

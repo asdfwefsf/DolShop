@@ -48,9 +48,9 @@ import com.company.dolshop.screens.ScreenList
 import com.company.dolshop.viewmodel.auth.AuthiViewModel
 import com.company.dolshop.viewmodel.SinnUpScreen2ViewModel
 import com.company.domain.model.DomainUserInfoModel
-import com.company.utility.DataStoreUtility
-import com.company.utility.DataStoreUtility.Companion.isDeepLinkFlow
-import com.company.utility.DataStoreUtility.Companion.setDeepLinkState
+import com.company.utility.datastore.DataStoreUtility
+import com.company.utility.datastore.DataStoreUtility.Companion.isDeepLinkFlow
+import com.company.utility.datastore.DataStoreUtility.Companion.setDeepLinkState
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.Dispatchers
@@ -115,7 +115,7 @@ fun SingUpScreen2(navController: NavController, emailConfirm: String) {
 
             )
             Spacer(modifier = Modifier.weight(1f))
-            Text("회원가입", fontSize = 20.sp , color = Color.Black)
+            Text("회원가입", fontSize = 20.sp, color = Color.Black)
             Spacer(modifier = Modifier.weight(1f))
         }
 
@@ -149,9 +149,6 @@ fun SingUpScreen2(navController: NavController, emailConfirm: String) {
                 value = name,
                 onValueChange = {
                     name = it
-//                    signUpScreen2ViewModel.setName(it)
-
-//                    signUpScreen2ViewModel.name = it
                 },
                 modifier = Modifier.fillMaxWidth(),
                 colors = TextFieldDefaults.colors(
@@ -177,11 +174,8 @@ fun SingUpScreen2(navController: NavController, emailConfirm: String) {
                     focusedIndicatorColor = Color.Green
                 )
             )
-//            Button(onClick = { /*TODO*/ }) {
-//                Text("인증하기")
-//            }
-            Spacer(Modifier.size(10.dp))
 
+            Spacer(Modifier.size(10.dp))
 
             Text("비밀번호", color = Color.Black)
             Spacer(Modifier.size(5.dp))
@@ -277,7 +271,7 @@ fun SingUpScreen2(navController: NavController, emailConfirm: String) {
                     unfocusedIndicatorColor = Color.Black,
                     focusedIndicatorColor = Color.Green
                 ),
-                placeholder = { Text("01012345678" , color = Color.Black) }
+                placeholder = { Text("01012345678", color = Color.Black) }
             )
 
             Spacer(Modifier.size(50.dp))
@@ -331,8 +325,3 @@ fun SingUpScreen2(navController: NavController, emailConfirm: String) {
 
     }
 }
-//
-//
-//fun TextField.et() {
-//
-//}

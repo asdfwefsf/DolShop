@@ -11,13 +11,12 @@ import androidx.compose.ui.viewinterop.AndroidView
 import androidx.navigation.NavController
 import com.company.dolshop.screens.ScreenList
 import com.company.domain.model.DomainProductModel
-import com.company.utility.encodeUrl
+import com.company.utility.urlmapper.encodeUrl
 import com.google.gson.Gson
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
-import org.json.JSONObject
 
 @Composable
 fun AddressScreen(navController: NavController, coroutineScope: CoroutineScope , gumaeDolInfo : DomainProductModel) {

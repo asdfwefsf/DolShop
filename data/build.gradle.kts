@@ -62,11 +62,11 @@ dependencies {
 
     implementation(project(":core:network:product"))
     implementation(project(":core:network:announcement"))
-    implementation(project(":datasource-local-productsale"))
-    implementation(project(":datasource-local-delivery"))
-    implementation(project(":data:data-datasource"))
-    implementation(project(":data:data-impl:update-productsale-impl"))
-    implementation(project(":data:data-mapper:saletodomain"))
+//    implementation(project(":datasource-local-productsale"))
+//    implementation(project(":datasource-local-delivery"))
+//    implementation(project(":data:data-datasource"))
+//    implementation(project(":data:data-impl:update-productsale-impl"))
+//    implementation(project(":data:data-mapper:saletodomain"))
 
     // 차후에 수정
     implementation ("androidx.paging:paging-runtime-ktx:3.1.1")

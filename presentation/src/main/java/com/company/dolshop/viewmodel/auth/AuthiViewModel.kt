@@ -13,6 +13,11 @@ import com.company.domain.usecase.kakao.KakaoLoginUseCase
 import com.company.domain.usecase.kakao.KakaoLogoutUseCase
 import com.google.firebase.auth.ActionCodeSettings
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.DatabaseReference
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 import com.google.firebase.ktx.Firebase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineScope
@@ -69,6 +74,22 @@ class AuthiViewModel @Inject constructor(
 
     // 파이어베이스 로그인
     suspend fun signInFirebaseAuth(kakaoEmail: String, password: String, context: Context) {
+
+        val test = FirebaseDatabase.getInstance().reference
+        val email = kakaoEmail
+        viewModelScope.launch {
+            withContext(Dispatchers.IO) {
+                getUserIdByEmail(email, test) { userInfo ->
+                    if (userInfo != null) {
+                        Log.d("UserId", "User ID: $userInfo")
+                        saveFireabaseAuthInfo(userInfo , userInfo.authNumber)
+                    } else {
+                        Log.d("UserId", "User ID not found")
+                    }
+                }
+            }
+        }
+
         Firebase.auth.signInWithEmailAndPassword(kakaoEmail, password)
             .addOnCompleteListener() { task ->
                 val currentUser = Firebase.auth.currentUser
@@ -86,6 +107,41 @@ class AuthiViewModel @Inject constructor(
             .addOnFailureListener {
                 Log.d("test", "에러났음")
             }
+    }
+    fun getUserIdByEmail(email: String, databaseReference: DatabaseReference, callback: (DomainUserInfoModel?) -> Unit) {
+        val query = databaseReference.child("users").orderByChild("kakaoAuth/authEmail").equalTo(email)
+        query.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                if (snapshot.exists()) {
+                    for (userSnapshot in snapshot.children) {
+                        val kakaoAuth = userSnapshot.child("kakaoAuth").getValue(DomainUserInfoModel::class.java)
+                        if (kakaoAuth != null) {
+                            callback(kakaoAuth)
+                        } else {
+                            callback(null)
+                        }
+                        return
+                    }
+                }
+                callback(null)
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                callback(null)
+            }
+        })
+    }
+    // 파베에서 로그인 할 때 유저정보 룸 DB 저장
+    fun saveFireabaseAuthInfo(domainUserInfoModel: DomainUserInfoModel ,  currentUser : String) {
+        viewModelScope.launch {
+            withContext(Dispatchers.IO) {
+                saverFirebaseAuthUseCase(domainUserInfoModel, currentUser.toString())
+
+            }
+
+        }
+
+
     }
 
     // 파이어베이스 회원가입
@@ -113,6 +169,8 @@ class AuthiViewModel @Inject constructor(
                 }
             }
     }
+
+    //
 
     // 파이어베이스 이메일 인증
     fun emailConfirm(email: String) {

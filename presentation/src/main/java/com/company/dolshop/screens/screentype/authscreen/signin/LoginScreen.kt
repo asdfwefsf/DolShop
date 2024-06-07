@@ -34,8 +34,8 @@ import com.airbnb.lottie.compose.rememberLottieComposition
 import com.company.dolshop.screens.ScreenList
 import com.company.dolshop.viewmodel.auth.AuthiViewModel
 import com.company.presentation.R
-import com.company.utility.DataStoreUtility
-import com.company.utility.DataStoreUtility.Companion.setLoginState
+import com.company.utility.datastore.DataStoreUtility
+import com.company.utility.datastore.DataStoreUtility.Companion.setLoginState
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.launch

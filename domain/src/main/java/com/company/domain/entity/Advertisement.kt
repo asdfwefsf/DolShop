@@ -1,9 +1,9 @@
 package com.company.domain.entity
 
-data class Advertisement (
+data class Announcement (
     val id : Int = 0,
-    val AdvertisementMunGu : String = "",
-    val AdvertisementImage : String = ""
+    val AnnouncementName : String = "",
+    val AnnouncementImage : String = ""
 )
 
 

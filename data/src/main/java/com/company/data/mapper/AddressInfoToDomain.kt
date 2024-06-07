@@ -1,6 +1,6 @@
 package com.company.data.mapper
 
-import com.company.datasource_local_address.AddressInfo
+import com.company.data.datasource.address.AddressInfo
 import com.company.domain.model.DomainAddress
 
 fun AddressInfo.toDomainAddress() : DomainAddress {

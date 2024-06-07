@@ -2,8 +2,8 @@ package com.company.dolshop.di
 
 import android.content.Context
 import androidx.room.Room
-import com.company.data.datasource.advertisement.AdvertisementDao
-import com.company.data.datasource.advertisement.AdvertisementInfoDatabase
+import com.company.data.datasource.advertisement.AnnouncemenDao
+import com.company.data.datasource.advertisement.AnnouncementInfoDatabase
 import com.company.data.datasource.baseproductinfo1.BaseProductDao
 import com.company.data.datasource.baseproductinfo1.BaseProductInfoDataBase
 import com.company.data.datasource.diarynumber.DiaryNumberDao
@@ -19,6 +19,7 @@ import com.company.data.repositoryimpl.GetUserInfoDbRepositoryImpl
 import com.company.data.repositoryimpl.KakaoLoginRepositoryImpl
 import com.company.data.repositoryimpl.KakaoLogoutRepositoryImpl
 import com.company.data.repositoryimpl.UpdateBaseProductRepositoryImpl
+import com.company.data.repositoryimpl.UpdateProductSaleRepositoryImpl
 import com.company.data.repositoryimpl.address.GetAddressRepositoryImpl
 import com.company.data.repositoryimpl.address.SaveAddressRepositoryImpl
 import com.company.data.repositoryimpl.firebase.SaverFirebaseAuthImpl
@@ -29,10 +30,10 @@ import com.company.data.repositoryimpl.publicdiary.GetPublicDiaryRepositoryImpl
 import com.company.data.repositoryimpl.publicdiary.SavePublicDiaryRepositoryImpl
 import com.company.data.worker.GetDiaryWorkerFunction
 import com.company.data.worker.GetPublicDiaryWorkerFunction
-import com.company.datasource_local_address.AddressDao
-import com.company.datasource_local_address.AddressDataBase
-import com.company.datasource_local_productsale.productsale.ProductSaleDao
-import com.company.datasource_local_productsale.productsale.ProductSaleDataBase
+import com.company.data.datasource.address.AddressDao
+import com.company.data.datasource.address.AddressDataBase
+import com.company.data.datasource.productsale.ProductSaleDao
+import com.company.data.datasource.productsale.ProductSaleDataBase
 import com.company.domain.repository.AnnouncementRepository
 import com.company.domain.repository.CoroutineWorkerRepository
 import com.company.domain.repository.DiaryNumberRoomRepository
@@ -83,7 +84,7 @@ object DataModule {
     @Provides
     fun provideAnnouncementRepository(impl: AnnouncementRepositoryImpl) : AnnouncementRepository = impl
     @Provides
-    fun provideProductSaleRepository(impl: com.company.update_productsale_impl.UpdateProductSaleRepositoryImpl) : UpdateProductSaleRepository = impl
+    fun provideProductSaleRepository(impl: UpdateProductSaleRepositoryImpl) : UpdateProductSaleRepository = impl
     @Provides
     fun provideSaveAddressRepository(impl: SaveAddressRepositoryImpl) : SaveAddressRepository = impl
     @Provides
@@ -222,16 +223,16 @@ object DataModule {
     // SavePublicDiary
     @Provides
     @Singleton
-    fun provideAdvertisementInfoDatabase(@ApplicationContext appContext: Context): AdvertisementInfoDatabase {
+    fun provideAdvertisementInfoDatabase(@ApplicationContext appContext: Context): AnnouncementInfoDatabase {
         return Room.databaseBuilder(
             appContext,
-            AdvertisementInfoDatabase::class.java,
+            AnnouncementInfoDatabase::class.java,
             "advertisement_database"
         ).build()
     }
 
     @Provides
-    fun provideAdvertisementDao(database: AdvertisementInfoDatabase) : AdvertisementDao {
+    fun provideAdvertisementDao(database: AnnouncementInfoDatabase) : AnnouncemenDao {
         return database.dao
     }
 }

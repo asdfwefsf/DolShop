@@ -1,7 +1,5 @@
 package com.company.dolshop.screens.screentype.mypagescreen
 
-import android.util.Log
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -23,10 +21,8 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
@@ -41,9 +37,9 @@ import com.airbnb.lottie.compose.rememberLottieComposition
 import com.company.dolshop.screens.ScreenList
 import com.company.dolshop.viewmodel.UpdateProductSaleViewModel
 import com.company.presentation.R
-import com.company.utility.DataStoreUtility
-import com.company.utility.DataStoreUtility.Companion.isCoupon1Flow
-import com.company.utility.DataStoreUtility.Companion.isCoupon2Flow
+import com.company.utility.datastore.DataStoreUtility
+import com.company.utility.datastore.DataStoreUtility.Companion.isCoupon1Flow
+import com.company.utility.datastore.DataStoreUtility.Companion.isCoupon2Flow
 
 @Composable
 fun MyCouponScreen(navcontroller: NavController) {
@@ -62,7 +58,6 @@ fun MyCouponScreen(navcontroller: NavController) {
 
         isCoupon1Boolean.value && isCoupon2Boolean.value -> {
             if (Coupon1.isNotEmpty() && Coupon2.isNotEmpty()) {
-
                 Column(
                     modifier = Modifier
                         .fillMaxSize()

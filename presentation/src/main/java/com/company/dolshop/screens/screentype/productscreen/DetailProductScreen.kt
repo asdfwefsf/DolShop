@@ -1,7 +1,6 @@
 package com.company.dolshop.screens.screentype.productscreen
 
 import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -12,10 +11,6 @@ import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
@@ -24,9 +19,8 @@ import androidx.navigation.NavController
 import com.company.designsystem.designsystem.component.loadcoil.LoadDetailProductScreen
 import com.company.dolshop.screens.ScreenList
 import com.company.domain.model.DomainProductModel
-import com.company.domain.model.GumaeProductModel
-import com.company.utility.decodeUrl
-import com.company.utility.encodeUrl
+import com.company.utility.urlmapper.decodeUrl
+import com.company.utility.urlmapper.encodeUrl
 import com.google.gson.Gson
 
 @Composable

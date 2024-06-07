@@ -15,6 +15,5 @@ fun ProductResponse.toDomainProductModel(): DomainProductModel {
         text3 =  this.text3,
         text4 =  this.text4,
         text5 =  this.text5,
-
     )
 }

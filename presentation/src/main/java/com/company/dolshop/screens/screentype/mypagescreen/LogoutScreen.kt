@@ -1,17 +1,13 @@
 package com.company.dolshop.screens.screentype.mypagescreen
 
 import android.app.Activity
-import android.util.Log
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
@@ -23,10 +19,9 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.company.dolshop.screens.ScreenList
 import com.company.dolshop.viewmodel.auth.AuthiViewModel
-import com.company.utility.DataStoreUtility
-import com.company.utility.DataStoreUtility.Companion.setLoginState
+import com.company.utility.datastore.DataStoreUtility
+import com.company.utility.datastore.DataStoreUtility.Companion.setLoginState
 import kotlinx.coroutines.launch
 
 @Composable

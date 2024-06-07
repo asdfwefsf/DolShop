@@ -1,8 +1,5 @@
 package com.company.dolshop.screens.screentype.authscreen.signup
 
-import android.annotation.SuppressLint
-import android.webkit.WebView
-import android.webkit.WebViewClient
 import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
@@ -39,11 +36,10 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.compose.ui.viewinterop.AndroidView
 import androidx.navigation.NavController
 import com.company.dolshop.screens.ScreenList
 import com.company.presentation.R
-import com.company.utility.encodeUrl
+import com.company.utility.urlmapper.encodeUrl
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)

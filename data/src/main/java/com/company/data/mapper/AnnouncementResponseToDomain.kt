@@ -5,8 +5,8 @@ import com.company.domain.model.DomainAnnouncementModel
 
 fun AnnouncementResponse.toDomainAnnouncementModel(): DomainAnnouncementModel {
     return DomainAnnouncementModel(
-        AdvertisementMunGu = this.AdvertisementMunGu,
-        AdvertisementImage = this.AdvertisementImage
+        AnnouncementName = this.AnnouncementName,
+        AnnouncementImage = this.AnnouncementImage
     )
 
 }

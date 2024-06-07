@@ -31,7 +31,7 @@ import com.company.dolshop.screens.ScreenList
 import com.company.dolshop.viewmodel.AddressViewModel
 import com.company.dolshop.viewmodel.auth.AuthiViewModel
 import com.company.domain.model.DomainProductModel
-import com.company.utility.encodeUrl
+import com.company.utility.urlmapper.encodeUrl
 import com.google.gson.Gson
 
 @Composable
