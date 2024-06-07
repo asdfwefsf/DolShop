@@ -154,31 +154,9 @@ fun LoginScreen2(navController: NavController) {
                         authiViewModel.signInFirebaseAuth(kakaoEmail, password, context)
                         val userInfolist = authiViewModel.userInfoList
                         val loginValue = authiViewModel.loginValue
-//                        val test = FirebaseDatabase.getInstance().reference
-//                        val email = kakaoEmail
-//                        getUserIdByEmail(email, test) { userId ->
-//                            if (userId != null) {
-//                                Log.d("UserId", "User ID: $userId")
-//
-//
-//
-//
-//
-//
-//                            } else {
-//                                Log.d("UserId", "User ID not found")
-//                            }
-//                        }
+
                         loginValue.collect { it ->
                             if (it) {
-//                                val test = FirebaseDatabase.getInstance().reference
-//                                val email = kakaoEmail
-
-
-
-
-
-
                                 userInfolist.collect { userInfo ->
                                     if (userInfo.authNumber != "ds") {
                                         val userRef =

@@ -15,7 +15,7 @@ class SaverFirebaseAuthImpl @Inject constructor(
         currentUser: String
     ) {
         val userInfo = UserInfo(
-            0,
+            1,
             currentUser,
             domainUserInfoModel.authEmail,
             domainUserInfoModel.authNicName,
