@@ -9,7 +9,7 @@ data class UserInfo(
     val id : Int = 0,
     val authNumber : String,
     val authEmail : String,
-    val authNicName : String,
+    val authNickName : String,
     val authProfileImage : String,
     val authAddress : String
 )

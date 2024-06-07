@@ -1,5 +1,6 @@
 package com.company.data.repositoryimpl.firebase
 
+import android.util.Log
 import com.company.data.datasource.userinfo.UserInfo
 import com.company.data.datasource.userinfo.UserInfoDao
 import com.company.domain.model.DomainUserInfoModel
@@ -15,21 +16,22 @@ class SaverFirebaseAuthImpl @Inject constructor(
         currentUser: String
     ) {
         val userInfo = UserInfo(
-            1,
+            0,
             currentUser,
             domainUserInfoModel.authEmail,
-            domainUserInfoModel.authNicName,
+            domainUserInfoModel.authNickName,
             "",
             ""
         )
 
         if (!dao.prodideUserInfoExists(1)) {
+            Log.d("1d5e1f0" , dao.prodideUserInfoExists(1).toString())
             dao.insertUserInfo(
                 UserInfo(
                     userInfo.id,
                     userInfo.authNumber,
                     userInfo.authEmail,
-                    userInfo.authNicName,
+                    userInfo.authNickName,
                     userInfo.authProfileImage,
                     " "
                 )
@@ -37,10 +39,10 @@ class SaverFirebaseAuthImpl @Inject constructor(
         } else {
             dao.updateUserInfo(
                 UserInfo(
-                    userInfo.id,
+                    1,
                     userInfo.authNumber,
                     userInfo.authEmail,
-                    userInfo.authNicName,
+                    userInfo.authNickName,
                     userInfo.authProfileImage,
                     " "
                 )

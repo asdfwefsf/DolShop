@@ -18,7 +18,7 @@ class GetApiInfoCoroutineWorker @AssistedInject constructor(
     @Assisted context: Context,
     @Assisted workerParams: WorkerParameters,
     private val getBaseProductWorkerFunction1: GetBaseProductWorkerFunction1,
-    private val getPublicDiaryWorkerFunction: GetPublicDiaryWorkerFunction,
+//    private val getPublicDiaryWorkerFunction: GetPublicDiaryWorkerFunction,
     private val getProductSaleWorkerFunction : GetProductSaleWorkerFunction,
     private val getAdvertisementWorkerFunction : GetAdvertisementWorkerFunction
 ) : CoroutineWorker(context, workerParams) {
@@ -53,41 +53,3 @@ fun getInfoNowWork(context: Context) {
     WorkManager.getInstance(context).enqueue(immediateWorkRequest)
 
 }
-
-
-
-
-
-
-// core 또는 common 모듈
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

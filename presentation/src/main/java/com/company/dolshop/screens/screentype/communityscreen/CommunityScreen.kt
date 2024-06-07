@@ -94,7 +94,7 @@ fun PublicDiarys(
     val publicDiaryViewModel: PublicDiaryViewModel = hiltViewModel()
     val authiViewModel: AuthiViewModel = hiltViewModel()
     val myAuthNumber = authiViewModel.userInfoList.collectAsState().value.authNumber
-    val myName = authiViewModel.userInfoList.collectAsState().value.authNicName
+    val myName = authiViewModel.userInfoList.collectAsState().value.authNickName
     val showDialog = remember { mutableStateOf(false) }
 
     // gonee1o

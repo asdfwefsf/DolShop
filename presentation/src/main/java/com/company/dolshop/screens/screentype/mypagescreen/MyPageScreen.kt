@@ -37,7 +37,7 @@ fun MyPageScreen(navController: NavController) {
         topBar = {
             TopAppBar(
                 title = {
-                    Text(viewmodel.userInfoList.collectAsState().value.authNicName)
+                    Text(viewmodel.userInfoList.collectAsState().value.authNickName)
                 }
             )
         }

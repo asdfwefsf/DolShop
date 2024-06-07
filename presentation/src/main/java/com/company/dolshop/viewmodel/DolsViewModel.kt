@@ -282,28 +282,5 @@ class DolsViewModel @Inject constructor(
             })
     }
 
-    // 쿠폰 정보 저장 변수
 
 }
-
-
-    // 테스트
-
-//    private val _selectedDiary = MutableStateFlow<PublicDiary?>(null)
-//    val selectedDiary : MutableStateFlow<PublicDiary?> = _selectedDiary
-//    fun updateSelectedDiary(diary: PublicDiary) {
-//        _selectedDiary.value = diary
-//    }
-//
-//    // 좋아요 UI 변경 함수
-//    fun positiveJoayoUiChangessssss() {
-//        _selectedDiary.value?.let { diary ->
-//            _selectedDiary.value = diary.copy(love = diary.love + 1)
-//        }
-//    }
-//
-//    fun negativeJoayoUiChangessssss() {
-//        _selectedDiary.value?.let { diary ->
-//            _selectedDiary.value = diary.copy(love = diary.love - 1)
-//        }
-//    }

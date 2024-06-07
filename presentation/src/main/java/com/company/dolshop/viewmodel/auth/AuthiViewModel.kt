@@ -18,6 +18,7 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
+import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineScope
@@ -77,12 +78,54 @@ class AuthiViewModel @Inject constructor(
 
         val test = FirebaseDatabase.getInstance().reference
         val email = kakaoEmail
+        val realtimeDB = Firebase.database
+
         viewModelScope.launch {
             withContext(Dispatchers.IO) {
                 getUserIdByEmail(email, test) { userInfo ->
                     if (userInfo != null) {
                         Log.d("UserId", "User ID: $userInfo")
-                        saveFireabaseAuthInfo(userInfo , userInfo.authNumber)
+
+//                        saveFireabaseAuthInfo(userInfo , userInfo.authNumber)
+//                        val userRef =
+//                            realtimeDB.getReference("users/${userInfo.authNumber}/kakaoAuth")
+//                        val userData = mapOf(
+//                            "authNumber" to userInfo.authNumber,
+//                            "authEmail" to userInfo.authEmail,
+//                            "authNickName" to userInfo.authNickName,
+//                            "authProfileImage" to userInfo.authProfileImage,
+//                            "address" to ""
+//                        )
+//                        userRef.setValue(userData)
+                        saveFireabaseAuthInfo(userInfo, userInfo.authNumber)
+                        Log.d("Sfjslefisnef", "시도중1ㄴㄹㄴㄷㄹ")
+
+                        viewModelScope.launch {
+
+                            Firebase.auth.signInWithEmailAndPassword(kakaoEmail, password)
+                                .addOnCompleteListener() { task ->
+                                    val currentUser = Firebase.auth.currentUser
+                                    if (task.isSuccessful && currentUser != null) {
+                                        viewModelScope.launch {
+                                            withContext(Dispatchers.IO) {
+                                                _loginValue.emit(true)
+                                            }
+                                        }
+                                        Toast.makeText(context, "로그인에 성공했습니다.", Toast.LENGTH_SHORT)
+                                            .show()
+                                    } else {
+                                        Toast.makeText(context, "로그인에 실패했습니다.", Toast.LENGTH_SHORT)
+                                            .show()
+                                    }
+                                }
+                                .addOnFailureListener {
+                                    Log.d("test", "에러났음")
+                                }
+
+                            withContext(Dispatchers.IO) {
+                                _loginValue.emit(true)
+                            }
+                        }
                     } else {
                         Log.d("UserId", "User ID not found")
                     }
@@ -90,31 +133,38 @@ class AuthiViewModel @Inject constructor(
             }
         }
 
-        Firebase.auth.signInWithEmailAndPassword(kakaoEmail, password)
-            .addOnCompleteListener() { task ->
-                val currentUser = Firebase.auth.currentUser
-                if (task.isSuccessful && currentUser != null) {
-                    viewModelScope.launch {
-                        withContext(Dispatchers.IO) {
-                            _loginValue.emit(true)
-                        }
-                    }
-                    Toast.makeText(context, "로그인에 성공했습니다.", Toast.LENGTH_SHORT).show()
-                } else {
-                    Toast.makeText(context, "로그인에 실패했습니다.", Toast.LENGTH_SHORT).show()
-                }
-            }
-            .addOnFailureListener {
-                Log.d("test", "에러났음")
-            }
+//        Firebase.auth.signInWithEmailAndPassword(kakaoEmail, password)
+//            .addOnCompleteListener() { task ->
+//                val currentUser = Firebase.auth.currentUser
+//                if (task.isSuccessful && currentUser != null) {
+//                    viewModelScope.launch {
+//                        withContext(Dispatchers.IO) {
+//                            _loginValue.emit(true)
+//                        }
+//                    }
+//                    Toast.makeText(context, "로그인에 성공했습니다.", Toast.LENGTH_SHORT).show()
+//                } else {
+//                    Toast.makeText(context, "로그인에 실패했습니다.", Toast.LENGTH_SHORT).show()
+//                }
+//            }
+//            .addOnFailureListener {
+//                Log.d("test", "에러났음")
+//            }
     }
-    fun getUserIdByEmail(email: String, databaseReference: DatabaseReference, callback: (DomainUserInfoModel?) -> Unit) {
-        val query = databaseReference.child("users").orderByChild("kakaoAuth/authEmail").equalTo(email)
+
+    fun getUserIdByEmail(
+        email: String,
+        databaseReference: DatabaseReference,
+        callback: (DomainUserInfoModel?) -> Unit
+    ) {
+        val query =
+            databaseReference.child("users").orderByChild("kakaoAuth/authEmail").equalTo(email)
         query.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 if (snapshot.exists()) {
                     for (userSnapshot in snapshot.children) {
-                        val kakaoAuth = userSnapshot.child("kakaoAuth").getValue(DomainUserInfoModel::class.java)
+                        val kakaoAuth = userSnapshot.child("kakaoAuth")
+                            .getValue(DomainUserInfoModel::class.java)
                         if (kakaoAuth != null) {
                             callback(kakaoAuth)
                         } else {
@@ -132,16 +182,17 @@ class AuthiViewModel @Inject constructor(
         })
     }
     // 파베에서 로그인 할 때 유저정보 룸 DB 저장
-    fun saveFireabaseAuthInfo(domainUserInfoModel: DomainUserInfoModel ,  currentUser : String) {
-        viewModelScope.launch {
-            withContext(Dispatchers.IO) {
-                saverFirebaseAuthUseCase(domainUserInfoModel, currentUser.toString())
 
-            }
+    fun saveFireabaseAuthInfo(domainUserInfoModel: DomainUserInfoModel, currentUser: String) {
+        Log.d("Sfjslefisnef", "시도중")
+        CoroutineScope(Dispatchers.IO).launch {
+            Log.d("Sfjslefisnef", "fsefsfsf")
+
+            saverFirebaseAuthUseCase(domainUserInfoModel, currentUser.toString())
+            Log.d("Sfjslefisnef", "sfdefsfsefsfsfsfsfsf")
+
 
         }
-
-
     }
 
     // 파이어베이스 회원가입

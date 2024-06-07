@@ -44,6 +44,7 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.database.ktx.database
 import com.google.firebase.ktx.Firebase
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
 @Composable
@@ -154,22 +155,21 @@ fun LoginScreen2(navController: NavController) {
                         authiViewModel.signInFirebaseAuth(kakaoEmail, password, context)
                         val userInfolist = authiViewModel.userInfoList
                         val loginValue = authiViewModel.loginValue
-
-                        loginValue.collect { it ->
-                            if (it) {
+//                        loginValue.collect { it ->
+//                            if (it) {
                                 userInfolist.collect { userInfo ->
-                                    if (userInfo.authNumber != "ds") {
-                                        val userRef =
-                                            realtimeDB.getReference("users/${userInfolist.value.authNumber}/kakaoAuth")
-                                        val userData = mapOf(
-                                            "authNumber" to userInfolist.value.authNumber,
-                                            "authEmail" to userInfolist.value.authEmail,
-                                            "authNickName" to userInfolist.value.authNicName,
-                                            "authProfileImage" to userInfolist.value.authProfileImage,
-                                            "address" to ""
-                                        )
-                                        userRef.setValue(userData)
-                                    }
+//                                    if (userInfo.authNumber != "ds") {
+//                                        val userRef =
+//                                            realtimeDB.getReference("users/${userInfolist.value.authNumber}/kakaoAuth")
+//                                        val userData = mapOf(
+//                                            "authNumber" to userInfolist.value.authNumber,
+//                                            "authEmail" to userInfolist.value.authEmail,
+//                                            "authNickName" to userInfolist.value.authNickName,
+//                                            "authProfileImage" to userInfolist.value.authProfileImage,
+//                                            "address" to ""
+//                                        )
+//                                        userRef.setValue(userData)
+//                                    }
 
 
 
@@ -178,16 +178,16 @@ fun LoginScreen2(navController: NavController) {
                                         Log.d("sfljeo22323"  ,"4")
 
                                     }
-                                    navController.navigate(ScreenList.RocksScreen.route) {
-                                        popUpTo(ScreenList.RocksScreen.route) {
+                                    navController.navigate(ScreenList.ProductScreen.route) {
+                                        popUpTo(ScreenList.ProductScreen.route) {
                                             inclusive = true
                                         }
                                     }
 
                                 }
-                            }
+//                            }
 
-                        }
+//                        }
                     }
             },
             colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF7BF579))
@@ -219,24 +219,3 @@ fun LoginScreen2(navController: NavController) {
 
 
 }
-
-
-//fun getUserIdByEmail(email: String, databaseReference: DatabaseReference, callback: (String?) -> Unit) {
-//    val query = databaseReference.child("users").orderByChild("kakaoAuth/authEmail").equalTo(email)
-//    query.addListenerForSingleValueEvent(object : ValueEventListener {
-//        override fun onDataChange(snapshot: DataSnapshot) {
-//            if (snapshot.exists()) {
-//                for (userSnapshot in snapshot.children) {
-//                    val userId = userSnapshot.key
-//                    callback(userId)
-//                    return
-//                }
-//            }
-//            callback(null)
-//        }
-//
-//        override fun onCancelled(error: DatabaseError) {
-//            callback(null)
-//        }
-//    })
-//}

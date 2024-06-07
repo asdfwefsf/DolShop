@@ -37,7 +37,7 @@ class getUserKakaoInfoRepositoryImpl @Inject constructor(
                                 userInfo.id,
                                 userInfo.authNumber,
                                 userInfo.authEmail,
-                                userInfo.authNicName,
+                                userInfo.authNickName,
                                 userInfo.authProfileImage,
                                 " "
                             )
@@ -49,7 +49,7 @@ class getUserKakaoInfoRepositoryImpl @Inject constructor(
                                 userInfo.id,
                                 userInfo.authNumber,
                                 userInfo.authEmail,
-                                userInfo.authNicName,
+                                userInfo.authNickName,
                                 userInfo.authProfileImage,
                                 " "
                             )

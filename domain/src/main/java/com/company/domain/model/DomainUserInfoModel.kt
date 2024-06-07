@@ -1,8 +1,9 @@
 package com.company.domain.model
 
 data class DomainUserInfoModel(
-    val authNumber : String = "",
+    val address : String = "",
     val authEmail : String = "",
-    val authNicName : String = "",
+    val authNickName : String = "",
+    val authNumber : String = "",
     val authProfileImage : String = ""
 )

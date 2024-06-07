@@ -59,7 +59,7 @@ fun AuthInfoScreen(navController: NavController) {
                         modifier = Modifier.padding(start = 16.dp))
                 }
 
-                TopInfoItems("이름", userInfoList.authNicName)
+                TopInfoItems("이름", userInfoList.authNickName)
                 InfoItems("이메일 주소", userInfoList.authEmail)
                 InfoItems("아이디 번호", userInfoList.authNumber)
                 LeadingIconInfoItemsToInputAddressInfo(navController , "배송지 정보" , Icons.Default.KeyboardArrowRight, "입력하기" , ScreenList.InputAddressInfoScreen.route)

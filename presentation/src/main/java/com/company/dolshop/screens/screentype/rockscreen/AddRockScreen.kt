@@ -93,7 +93,7 @@ fun ImageAndDiaryScreen(
     val authiViewModel : AuthiViewModel = hiltViewModel()
     val context = LocalContext.current
     val authNumber = authiViewModel.userInfoList.collectAsState().value.authNumber
-    val authNickName = authiViewModel.userInfoList.collectAsState().value.authNicName
+    val authNickName = authiViewModel.userInfoList.collectAsState().value.authNickName
     val scope = rememberCoroutineScope()
 
     val diaryNumberViewmodel : DiaryNumberRoomViewmodel = hiltViewModel()
@@ -232,7 +232,7 @@ fun saveImageUrlToRealtimeDatabase(imageUrl: String, authNumber: String , diaryT
         "diary" to diaryText,
         "day" to diaryDate,
         "diaryNumber" to diaryNumber,
-        "authNicName" to authNickName
+        "authNickName" to authNickName
 
     )
 

@@ -74,9 +74,9 @@ fun RocksScreen(
     }
 
     val userInfolist = viewmodel.userInfoList.collectAsState()
-    val authNickName = userInfolist.value.authNicName
+    val authNickName = userInfolist.value.authNickName
     val myAuthNumber = userInfolist.value.authNumber
-    val myAuthNickName = userInfolist.value.authNicName
+    val myAuthNickName = userInfolist.value.authNickName
     Box(
         modifier = Modifier
             .fillMaxSize()

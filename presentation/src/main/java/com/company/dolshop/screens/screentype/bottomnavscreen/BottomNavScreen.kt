@@ -171,31 +171,10 @@ fun BottomNav(navController: NavHostController) {
         }
     ) { innerPadding ->
         route = if (isLoggedIn) {
-            ScreenList.RocksScreen.route
+            ScreenList.ProductScreen.route
         } else {
             ScreenList.LoginScreen.route
         }
-
-
-//        val dynamicLinkUri = Uri.parse("https://dolshop.page.link")
-//
-//        Firebase.dynamicLinks
-//            .getDynamicLink(dynamicLinkUri)
-//            .addOnSuccessListener() { pendingDynamicLinkData ->
-//                var deepLink: Uri? = null
-//                if (pendingDynamicLinkData != null) {
-//                    deepLink = pendingDynamicLinkData.link
-//                    Toast.makeText(context, deepLink.toString(), Toast.LENGTH_SHORT).show()
-//                    Log.d("deeplinkdatat" , deepLink.toString())
-//                    if(deepLink != null) {
-//                        navController.navigate(ScreenList.SignUpScreen2.route)
-//
-//                    }
-//
-//                }
-//            }
-//            .addOnFailureListener() { e -> Log.d("deeplink", "getDynamicLink:onFailure", e) }
-
 
         NavHost(navController = navController, startDestination = route) {
             // 커뮤니티 스크린
@@ -292,12 +271,7 @@ fun BottomNav(navController: NavHostController) {
             composable(route = ScreenList.AuthInfoScreen.route) {
                 AuthInfoScreen(navController)
             }
-
-//            composable(route = ScreenList.LoginScreen.route) {
-//                val viewmodel: KakaoAuthiViewModel = hiltViewModel()
-//                LoginScreen(navController, viewmodel)
-//            }
-
+            
             composable(route = ScreenList.LogoutScreen.route) {
                 LogoutScreen()
             }

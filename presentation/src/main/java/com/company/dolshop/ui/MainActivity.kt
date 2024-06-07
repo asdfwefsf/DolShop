@@ -93,28 +93,6 @@ class MainActivity : ComponentActivity() {
             }
         }
 
-////        val intent = (context as? Activity)?.intent
-//        val dynamicLinkUri = Uri.parse("https://dolshop.page.link/eNh4")
-//        intent?.data?.let { dynamicLinkUri ->
-//            Firebase.dynamicLinks
-//                .getDynamicLink(dynamicLinkUri)
-//                .addOnSuccessListener { pendingDynamicLinkData ->
-//                    var deepLink: Uri? = null
-//                    Log.d("fnweofwo" , dynamicLinkUri.toString())
-//                    if (pendingDynamicLinkData != null) {
-//                        deepLink = pendingDynamicLinkData.link
-//                        Log.d("ssfse" , deepLink.toString())
-////                        if (deepLink != null) {
-//                            val truedat = true.toString()
-//                            navController.navigate("${ScreenList.SignUpScreen2.route}/$truedat")
-//
-//
-//
-////                        }
-//                    }
-//                }
-//                .addOnFailureListener { e -> Log.d("deeplink", "getDynamicLink:onFailure", e) }
-//        }
 
         setContent {
 
@@ -122,26 +100,6 @@ class MainActivity : ComponentActivity() {
             CoroutineWorkerViewModel.test(this)
             navController = rememberNavController()
 
-//            // 딥링크
-//            val dynamicLinkUri = Uri.parse("https://dolshop.page.link/eNh4")
-//            Firebase.dynamicLinks
-//                .getDynamicLink(dynamicLinkUri)
-//                .addOnSuccessListener() { pendingDynamicLinkData ->
-//                    var deepLink: Uri? = null
-//                    if (pendingDynamicLinkData != null) {
-//                        deepLink = pendingDynamicLinkData.link
-//                        Toast.makeText(this, deepLink.toString(), Toast.LENGTH_SHORT).show()
-//                        Log.d("deeplinkdatat", deepLink.toString())
-//                        if (deepLink != null) {
-//                            val truedat = "true"
-//                            navController.navigate("${ScreenList.SignUpScreen2.route}/$truedat")
-////                            splashViewModel.setReadyState(false)
-//                        }
-//
-//                    }
-//                }
-//                .addOnFailureListener() { e -> Log.d("deeplink", "getDynamicLink:onFailure", e) }
-//            // 딥링크
 
 
             DolShopTheme {

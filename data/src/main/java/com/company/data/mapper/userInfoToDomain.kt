@@ -7,7 +7,7 @@ fun UserInfo.toDomainUserInfoModel(): DomainUserInfoModel {
     return DomainUserInfoModel(
         authNumber = this.authNumber,
         authEmail = this.authEmail,
-        authNicName = this.authNicName,
+        authNickName = this.authNickName,
         authProfileImage = this.authProfileImage
     )
 }

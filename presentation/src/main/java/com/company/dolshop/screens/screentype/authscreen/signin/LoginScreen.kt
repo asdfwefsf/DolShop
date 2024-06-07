@@ -152,7 +152,7 @@ fun LoginScreen(navController: NavController, viewModel: AuthiViewModel) {
 //                                val userData = mapOf(
 //                                    "authNumber" to userInfolist.value.authNumber,
 //                                    "authEmail" to userInfolist.value.authEmail,
-//                                    "authNickName" to userInfolist.value.authNicName,
+//                                    "authNickName" to userInfolist.value.authNickName,
 //                                    "authProfileImage" to userInfolist.value.authProfileImage,
 //                                    "address" to ""
 //                                )
@@ -199,7 +199,7 @@ fun LoginScreen(navController: NavController, viewModel: AuthiViewModel) {
                                 val userData = mapOf(
                                     "authNumber" to userInfolist.value.authNumber,
                                     "authEmail" to userInfolist.value.authEmail,
-                                    "authNickName" to userInfolist.value.authNicName,
+                                    "authNickName" to userInfolist.value.authNickName,
                                     "authProfileImage" to userInfolist.value.authProfileImage,
                                     "address" to ""
                                 )
