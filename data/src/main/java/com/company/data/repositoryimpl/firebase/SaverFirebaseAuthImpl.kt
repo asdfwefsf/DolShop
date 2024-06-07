@@ -10,7 +10,6 @@ import javax.inject.Inject
 class SaverFirebaseAuthImpl @Inject constructor(
     private val dao: UserInfoDao
 ) : SaverFirebaseAuthRepository {
-
     override suspend fun saveFirebaseAuth(
         domainUserInfoModel: DomainUserInfoModel,
         currentUser: String
