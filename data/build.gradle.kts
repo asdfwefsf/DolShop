@@ -59,9 +59,11 @@ android {
 
 dependencies {
     implementation(project(":domain"))
+//    implementation(project(":core:network:product"))
+    implementation(project(":kore:network"))
 
-    implementation(project(":core:network:product"))
-    implementation(project(":core:network:announcement"))
+//    implementation(project(":core:network:product"))
+//    implementation(project(":core:network:announcement"))
 //    implementation(project(":datasource-local-productsale"))
 //    implementation(project(":datasource-local-delivery"))
 //    implementation(project(":data:data-datasource"))

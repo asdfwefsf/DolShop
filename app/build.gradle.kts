@@ -78,8 +78,9 @@ dependencies {
     implementation(project(":data"))
 
 
-    implementation(project(":core:network:product"))
-    implementation(project(":core:network:announcement"))
+    implementation(project(":kore:network"))
+//    implementation(project(":core"))
+//    implementation(project(":core:network:announcement"))
 
 
     implementation("com.google.dagger:hilt-android:2.49")
