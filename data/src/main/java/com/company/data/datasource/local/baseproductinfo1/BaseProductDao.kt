@@ -1,4 +1,4 @@
-package com.company.data.datasource.baseproductinfo1
+package com.company.data.datasource.local.baseproductinfo1
 
 import androidx.room.Dao
 import androidx.room.Insert

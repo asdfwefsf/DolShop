@@ -1,6 +1,6 @@
 package com.company.data.mapper.publicdiary
 
-import com.company.data.datasource.publicdiary.PublicDiaryInfo
+import com.company.data.datasource.local.publicdiary.PublicDiaryInfo
 import com.company.domain.entity.PublicDiary
 
 fun PublicDiaryInfo.toPublicDiary(): PublicDiary {

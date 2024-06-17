@@ -1,6 +1,6 @@
 package com.company.data.repositoryimpl
 
-import com.company.data.datasource.advertisement.AnnouncemenDao
+import com.company.data.datasource.local.advertisement.AnnouncemenDao
 import com.company.data.mapper.advertisement.toAnnouncement
 import com.company.domain.entity.Announcement
 import com.company.domain.repository.AnnouncementRepository

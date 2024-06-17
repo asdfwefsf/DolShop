@@ -1,7 +1,7 @@
 package com.company.data.repositoryimpl
 
 
-import com.company.data.datasource.productsale.ProductSaleDao
+import com.company.data.datasource.local.productsale.ProductSaleDao
 import com.company.domain.model.DomainProductSaleModel
 import com.company.domain.repository.UpdateProductSaleRepository
 import com.company.data.mapper.toDomainProductSaleModel

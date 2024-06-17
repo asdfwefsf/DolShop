@@ -1,4 +1,4 @@
-package com.company.data.datasource.userinfo
+package com.company.data.datasource.local.userinfo
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey

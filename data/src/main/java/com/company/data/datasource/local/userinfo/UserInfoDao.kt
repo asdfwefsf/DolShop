@@ -1,4 +1,4 @@
-package com.company.data.datasource.userinfo
+package com.company.data.datasource.local.userinfo
 
 import androidx.room.Dao
 import androidx.room.Delete
@@ -7,7 +7,7 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import androidx.room.Update
 import androidx.room.Upsert
-import com.company.data.datasource.baseproductinfo1.BaseProductInfo
+import com.company.data.datasource.local.baseproductinfo1.BaseProductInfo
 import kotlinx.coroutines.flow.Flow
 
 @Dao

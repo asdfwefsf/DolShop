@@ -1,4 +1,4 @@
-package com.company.data.datasource.address
+package com.company.data.datasource.local.address
 
 import androidx.room.Database
 import androidx.room.RoomDatabase

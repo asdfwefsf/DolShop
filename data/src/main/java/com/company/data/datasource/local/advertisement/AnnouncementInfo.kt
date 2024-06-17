@@ -1,4 +1,4 @@
-package com.company.data.datasource.advertisement
+package com.company.data.datasource.local.advertisement
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey

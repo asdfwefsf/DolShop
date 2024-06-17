@@ -1,9 +1,9 @@
 package com.company.data.repositoryimpl
 
 import android.util.Log
-import com.company.data.datasource.baseproductinfo1.BaseProductInfo
-import com.company.data.datasource.userinfo.UserInfo
-import com.company.data.datasource.userinfo.UserInfoDao
+import com.company.data.datasource.local.baseproductinfo1.BaseProductInfo
+import com.company.data.datasource.local.userinfo.UserInfo
+import com.company.data.datasource.local.userinfo.UserInfoDao
 import com.company.domain.repository.getUserKakaoInfoRepository
 import com.kakao.sdk.user.UserApiClient
 import kotlinx.coroutines.CoroutineScope

@@ -1,6 +1,6 @@
 package com.company.data.repositoryimpl.publicdiary
 
-import com.company.data.datasource.publicdiary.PublicDiaryDao
+import com.company.data.datasource.local.publicdiary.PublicDiaryDao
 import com.company.data.mapper.publicdiary.toPublicDiaryInfo
 import com.company.domain.entity.PublicDiary
 import com.company.domain.repository.publicidary.DeletePublicDiaryRepository

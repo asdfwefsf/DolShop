@@ -1,4 +1,4 @@
-package com.company.data.datasource.diarynumber
+package com.company.data.datasource.local.diarynumber
 
 import androidx.room.Dao
 import androidx.room.Delete
@@ -6,7 +6,7 @@ import androidx.room.Insert
 import androidx.room.Query
 import androidx.room.Transaction
 import androidx.room.Update
-import com.company.data.datasource.userinfo.UserInfo
+import com.company.data.datasource.local.userinfo.UserInfo
 import kotlinx.coroutines.flow.Flow
 
 @Dao

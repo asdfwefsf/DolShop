@@ -1,7 +1,7 @@
 package com.company.data.repositoryimpl.address
 
 import com.company.data.mapper.toDomainAddress
-import com.company.data.datasource.address.AddressDao
+import com.company.data.datasource.local.address.AddressDao
 import com.company.domain.model.DomainAddress
 import com.company.domain.repository.GetAddressRepository
 import kotlinx.coroutines.flow.Flow

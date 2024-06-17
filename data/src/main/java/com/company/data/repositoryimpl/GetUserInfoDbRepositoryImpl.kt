@@ -1,6 +1,6 @@
 package com.company.data.repositoryimpl
 
-import com.company.data.datasource.userinfo.UserInfoDao
+import com.company.data.datasource.local.userinfo.UserInfoDao
 import com.company.data.mapper.toDomainUserInfoModel
 import com.company.domain.model.DomainUserInfoModel
 import com.company.domain.repository.GetUserInfoDbRepository

@@ -2,7 +2,7 @@ package com.company.data.repositoryimpl
 
 import android.content.Context
 import android.util.Log
-import com.company.data.datasource.userinfo.UserInfoDao
+import com.company.data.datasource.local.userinfo.UserInfoDao
 import com.company.domain.repository.KakaoLoginRepository
 import com.kakao.sdk.auth.model.OAuthToken
 import com.kakao.sdk.common.model.ClientError

@@ -78,10 +78,7 @@ dependencies {
     implementation(project(":data"))
 
 
-    implementation(project(":kore:network"))
-//    implementation(project(":core"))
-//    implementation(project(":core:network:announcement"))
-
+//    implementation(project(":kore:network"))
 
     implementation("com.google.dagger:hilt-android:2.49")
     kapt ("androidx.hilt:hilt-compiler:1.2.0")

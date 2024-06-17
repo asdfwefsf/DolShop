@@ -1,6 +1,6 @@
 package com.company.data.repositoryimpl
 
-import com.company.data.datasource.baseproductinfo1.BaseProductDao
+import com.company.data.datasource.local.baseproductinfo1.BaseProductDao
 import com.company.data.mapper.toDomainBaseProductModel
 import com.company.domain.model.DomainBaseProductModel
 import com.company.domain.repository.UpdateBaseProductRepository

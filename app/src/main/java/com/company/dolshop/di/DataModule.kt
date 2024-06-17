@@ -2,16 +2,16 @@ package com.company.dolshop.di
 
 import android.content.Context
 import androidx.room.Room
-import com.company.data.datasource.advertisement.AnnouncemenDao
-import com.company.data.datasource.advertisement.AnnouncementInfoDatabase
-import com.company.data.datasource.baseproductinfo1.BaseProductDao
-import com.company.data.datasource.baseproductinfo1.BaseProductInfoDataBase
-import com.company.data.datasource.diarynumber.DiaryNumberDao
-import com.company.data.datasource.diarynumber.DiaryNumberDatabase
-import com.company.data.datasource.publicdiary.PublicDiaryDao
-import com.company.data.datasource.publicdiary.PublicDiaryInfoDatabase
-import com.company.data.datasource.userinfo.UserInfoDao
-import com.company.data.datasource.userinfo.UserInfoDatabase
+import com.company.data.datasource.local.advertisement.AnnouncemenDao
+import com.company.data.datasource.local.advertisement.AnnouncementInfoDatabase
+import com.company.data.datasource.local.baseproductinfo1.BaseProductDao
+import com.company.data.datasource.local.baseproductinfo1.BaseProductInfoDataBase
+import com.company.data.datasource.local.diarynumber.DiaryNumberDao
+import com.company.data.datasource.local.diarynumber.DiaryNumberDatabase
+import com.company.data.datasource.local.publicdiary.PublicDiaryDao
+import com.company.data.datasource.local.publicdiary.PublicDiaryInfoDatabase
+import com.company.data.datasource.local.userinfo.UserInfoDao
+import com.company.data.datasource.local.userinfo.UserInfoDatabase
 import com.company.data.repositoryimpl.AnnouncementRepositoryImpl
 import com.company.data.repositoryimpl.CoroutineWorkerRepositoryImpl
 import com.company.data.repositoryimpl.DiaryNumberRoomRepositoryImpl
@@ -30,10 +30,10 @@ import com.company.data.repositoryimpl.publicdiary.GetPublicDiaryRepositoryImpl
 import com.company.data.repositoryimpl.publicdiary.SavePublicDiaryRepositoryImpl
 import com.company.data.worker.GetDiaryWorkerFunction
 import com.company.data.worker.GetPublicDiaryWorkerFunction
-import com.company.data.datasource.address.AddressDao
-import com.company.data.datasource.address.AddressDataBase
-import com.company.data.datasource.productsale.ProductSaleDao
-import com.company.data.datasource.productsale.ProductSaleDataBase
+import com.company.data.datasource.local.address.AddressDao
+import com.company.data.datasource.local.address.AddressDataBase
+import com.company.data.datasource.local.productsale.ProductSaleDao
+import com.company.data.datasource.local.productsale.ProductSaleDataBase
 import com.company.domain.repository.AnnouncementRepository
 import com.company.domain.repository.CoroutineWorkerRepository
 import com.company.domain.repository.DiaryNumberRoomRepository
@@ -66,6 +66,7 @@ import javax.inject.Singleton
 object DataModule {
 
     // RepositoryImpl 객체를 Repository 타입으로 주입한다. 즉, Repository를 사용하는데서는 RepositoryImpl도 사용 할 수 있게 Hilt가 인스턴스를 제공해주는거야.
+
     @Provides
     fun provideKakaoLoginRepository(impl: KakaoLoginRepositoryImpl) : KakaoLoginRepository = impl
 

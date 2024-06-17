@@ -1,6 +1,6 @@
 package com.company.data.mapper
 
-import com.company.data.datasource.baseproductinfo1.BaseProductInfo
+import com.company.data.datasource.local.baseproductinfo1.BaseProductInfo
 import com.company.domain.model.DomainBaseProductModel
 import com.company.domain.model.DomainProductModel
 

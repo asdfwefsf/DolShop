@@ -1,4 +1,4 @@
-package com.company.data.datasource.publicdiary
+package com.company.data.datasource.local.publicdiary
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey

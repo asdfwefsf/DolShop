@@ -60,7 +60,7 @@ android {
 dependencies {
     implementation(project(":domain"))
 //    implementation(project(":core:network:product"))
-    implementation(project(":kore:network"))
+    api(project(":kore:network"))
 
 //    implementation(project(":core:network:product"))
 //    implementation(project(":core:network:announcement"))

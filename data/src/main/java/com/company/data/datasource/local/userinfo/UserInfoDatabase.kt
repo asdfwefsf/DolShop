@@ -1,4 +1,4 @@
-package com.company.data.datasource.userinfo
+package com.company.data.datasource.local.userinfo
 
 import androidx.room.Database
 import androidx.room.RoomDatabase

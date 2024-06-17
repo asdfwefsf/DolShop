@@ -1,7 +1,7 @@
 package com.company.data.repositoryimpl
 
-import com.company.data.datasource.diarynumber.DiaryNumberDao
-import com.company.data.datasource.diarynumber.DiaryNumberInfo
+import com.company.data.datasource.local.diarynumber.DiaryNumberDao
+import com.company.data.datasource.local.diarynumber.DiaryNumberInfo
 import com.company.domain.repository.DiaryNumberRoomRepository
 import javax.inject.Inject
 

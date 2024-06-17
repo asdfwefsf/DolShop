@@ -1,4 +1,4 @@
-package com.company.data.datasource.diarynumber
+package com.company.data.datasource.local.diarynumber
 
 import androidx.room.Database
 import androidx.room.RoomDatabase

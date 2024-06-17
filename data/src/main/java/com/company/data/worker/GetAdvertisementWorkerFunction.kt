@@ -2,8 +2,8 @@ package com.company.data.worker
 
 import android.util.Log
 import com.company.announcement.api.AnnouncementAPI
-import com.company.data.datasource.advertisement.AnnouncemenDao
-import com.company.data.datasource.advertisement.AnnouncementInfo
+import com.company.data.datasource.local.advertisement.AnnouncemenDao
+import com.company.data.datasource.local.advertisement.AnnouncementInfo
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import javax.inject.Inject

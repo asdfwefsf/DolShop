@@ -1,8 +1,8 @@
 package com.company.data.repositoryimpl.firebase
 
 import android.util.Log
-import com.company.data.datasource.userinfo.UserInfo
-import com.company.data.datasource.userinfo.UserInfoDao
+import com.company.data.datasource.local.userinfo.UserInfo
+import com.company.data.datasource.local.userinfo.UserInfoDao
 import com.company.domain.model.DomainUserInfoModel
 import com.company.domain.repository.firebase.SaverFirebaseAuthRepository
 import javax.inject.Inject

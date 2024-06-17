@@ -36,7 +36,6 @@ dependencies {
     api ("androidx.datastore:datastore-preferences:1.1.1")
     api ("androidx.datastore:datastore-core:1.1.1")
 
-//    implementation(project(":utility"))
 
     implementation("androidx.core:core-ktx:1.13.1")
     implementation("androidx.appcompat:appcompat:1.6.1")

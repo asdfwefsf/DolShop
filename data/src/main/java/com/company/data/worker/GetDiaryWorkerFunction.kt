@@ -3,7 +3,7 @@ package com.company.data.worker
 import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
-import com.company.data.datasource.userinfo.UserInfoDao
+import com.company.data.datasource.local.userinfo.UserInfoDao
 import com.company.data.worker.test.ImagePagingSource
 import com.company.data.worker.test.ImagePagingSource2
 import com.company.domain.entity.Diary
