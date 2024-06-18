@@ -21,4 +21,9 @@ interface ProductAPI {
     @Headers("X-JSON-Path: BaseProduct2[:]")
     suspend fun getBaseProduct2() : Response<List<BaseProductResponse>>
 
+
+
+
 }
+
+

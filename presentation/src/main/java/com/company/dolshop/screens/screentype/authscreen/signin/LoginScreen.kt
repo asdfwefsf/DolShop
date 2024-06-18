@@ -10,6 +10,8 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.Button
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -24,13 +26,16 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.window.DialogProperties
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.airbnb.lottie.compose.LottieAnimation
 import com.airbnb.lottie.compose.LottieCompositionSpec
 import com.airbnb.lottie.compose.LottieConstants
 import com.airbnb.lottie.compose.rememberLottieComposition
+import com.company.designsystem.designsystem.DolShopTheme
 import com.company.dolshop.screens.ScreenList
 import com.company.dolshop.viewmodel.auth.AuthiViewModel
 import com.company.presentation.R
@@ -228,6 +233,61 @@ fun LoginScreen(navController: NavController, viewModel: AuthiViewModel) {
 
     }
 }
+
+
+@Composable
+fun ChoiceLanguage(onLanguageSelected: (String) -> Unit) {
+    val openDialog = remember { mutableStateOf(true) }
+    val selectedLanguage = remember { mutableStateOf("ko") }
+
+    if (openDialog.value) {
+        AlertDialog(
+            onDismissRequest = { openDialog.value = false },
+            title = { Text("언어 변경") },
+            text = {
+                Column {
+                    Text("언어를 선택하세요:")
+                    Button(onClick = { selectedLanguage.value = "ko" }) {
+                        Text("한국어")
+                    }
+                    Button(onClick = { selectedLanguage.value = "en" }) {
+                        Text("영어")
+                    }
+                    Button(onClick = { selectedLanguage.value = "zh" }) {
+                        Text("중국어")
+                    }
+                    Button(onClick = { selectedLanguage.value = "ja" }) {
+                        Text("일본어")
+                    }
+                }
+            },
+            confirmButton = {
+                Button(onClick = {
+                    onLanguageSelected(selectedLanguage.value)
+                    openDialog.value = false
+                }) {
+                    Text("확인")
+                }
+            },
+            properties = DialogProperties(
+                dismissOnBackPress = true,
+                dismissOnClickOutside = true
+            )
+        )
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+private fun ChoiceLanguageText() {
+    DolShopTheme {
+//        Text("dkdk")
+        ChoiceLanguage({})
+    }
+}
+
+
+
 
 
 

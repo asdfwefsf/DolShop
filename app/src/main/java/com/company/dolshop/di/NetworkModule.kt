@@ -12,6 +12,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 @InstallIn(SingletonComponent::class)
 @Module
 object NetworkModule {
+
     @Provides
     fun provideProductApi() : ProductAPI
     {
