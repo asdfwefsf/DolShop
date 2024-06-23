@@ -23,7 +23,7 @@ import com.company.dolshop.viewmodel.AnnouncementViewModel
 fun AnnouncementScreen() {
     val announcementViewModel: AnnouncementViewModel = hiltViewModel()
     Column {
-        Text("AnnouncementScreen")
+        Text("준비중입니다.")
         AdvertisementTestScreen(announcementViewModel, {})
     }
 
@@ -43,7 +43,7 @@ fun AdvertisementTestScreen(
 //        Log.d("sfec", imageUrl)
 
         val imageRequest = ImageRequest.Builder(LocalContext.current)
-            .data(viewmodel.announcement.collectAsState().value[0].AnnouncementImage)
+            .data(viewmodel.announcement.collectAsState().value[0].announcementImage)
             .crossfade(true)
             .diskCachePolicy(CachePolicy.ENABLED)
             .memoryCachePolicy(CachePolicy.ENABLED)
@@ -58,7 +58,7 @@ fun AdvertisementTestScreen(
                 modifier = Modifier.fillMaxSize()
             )
             Text(
-                text = viewmodel.announcement.collectAsState().value[0].AnnouncementName,
+                text = viewmodel.announcement.collectAsState().value[0].announcementName,
                 modifier = Modifier.align(Alignment.Center),
                 color = Color.White,
                 fontSize = 20.sp,

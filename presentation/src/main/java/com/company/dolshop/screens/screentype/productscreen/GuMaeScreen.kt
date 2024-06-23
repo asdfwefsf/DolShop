@@ -230,7 +230,7 @@ fun BaesongzInputScreen(
             }
         }
         Text(message, color = Color.Black)
-        if(addressInfo.isNotEmpty()) {
+        if (addressInfo.isNotEmpty()) {
             test(
                 baesongInfo,
                 selectedText,
@@ -293,7 +293,9 @@ fun test(
                     Image(
                         painter = painterResource(id = image),
                         contentDescription = "",
-                        modifier= Modifier.height(100.dp).width(100.dp)
+                        modifier = Modifier
+                            .height(100.dp)
+                            .width(100.dp)
                     )
                 }
 
@@ -332,7 +334,9 @@ fun test(
                     Image(
                         painter = painterResource(id = image),
                         contentDescription = "",
-                        modifier= Modifier.height(100.dp).width(100.dp)
+                        modifier = Modifier
+                            .height(100.dp)
+                            .width(100.dp)
                     )
                 }
 
@@ -344,7 +348,7 @@ fun test(
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(start = 4.dp, bottom = 4.dp, end = 4.dp , top = 4.dp),
+                .padding(start = 4.dp, bottom = 4.dp, end = 4.dp, top = 4.dp),
             verticalAlignment = Alignment.CenterVertically,
             horizontalArrangement = Arrangement.SpaceEvenly
         ) {
@@ -428,30 +432,8 @@ fun test(
                 )
             )
         }
+        Jumun(baesongInfo, selectedText, productName, productLink, navController, domainAddress)
 
-        var dialogBoolean = remember { mutableStateOf(false) }
-
-//        Button(
-//            modifier = Modifier
-//                .fillMaxWidth()
-//                .padding(top = 30.dp, start = 15.dp, end = 15.dp),
-//            onClick = {
-//                dialogBoolean.value = true
-//            },
-//            colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF7BF579))
-//        ) {
-//            Text(
-//                text = "주문하기",
-//                color = Color.Black
-//            )
-//        }
-
-
-        Jumun(baesongInfo, selectedText, productName, productLink , navController , domainAddress)
-
-//        if (dialogBoolean.value == true) {
-//            baesongConfirmDialog(baesongInfo, dialogBoolean, selectedText, productName, productLink)
-//        }
     }
 
 
@@ -464,15 +446,14 @@ private fun Jumun(
     productName: String,
     productLink: String,
     navController: NavController,
-    domainAddress : DomainAddress
-    ) {
+    domainAddress: DomainAddress
+) {
     val userViewModel: AuthiViewModel = hiltViewModel()
     val realtimeDB = Firebase.database
     val userInfoList = userViewModel.userInfoList.collectAsState().value
     val authNumber = userInfoList.authNumber
     val userRef = realtimeDB.getReference("users/$authNumber/baesongNaeYeock")
 
-    //        "addressName" to baesongInfo.addressName,
     val baesongFirebase = mapOf(
         "addressNumber" to domainAddress.addressNumber,
         "address" to domainAddress.address,
@@ -501,215 +482,45 @@ private fun Jumun(
         onClick = {
 
             if (!checkAllJuMun(baesongFirebase)) {
-                Log.d("sfwetlll", "빈 값이 있습니다.")
-                Log.d("sfwetlll", baesongFirebase.toString())
                 Toast.makeText(context, "빈 값이 있습니다.", Toast.LENGTH_SHORT).show()
 
-            } else  {
+            } else {
                 userRef.push().setValue(baesongFirebase)
                 Toast.makeText(context, "주문 완료하였습니다.", Toast.LENGTH_SHORT).show()
                 dialogBoolean.value = true
-
             }
         },
         colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF7BF579))
     ) {
         Text("주문하기", color = Color.Black)
     }
-    if(dialogBoolean.value) {
+    if (dialogBoolean.value) {
         BaseDialog(
             dialogBoolean,
             "주문완료",
             "주문 내역 확인하러 가시겠습니까?",
-            {navController.navigate(ScreenList.GuMaeNaeYeokScreen.route)},
-            {navController.navigate(ScreenList.RocksScreen.route)}
+            // confirm listenrer
+            {
+                navController.navigate(ScreenList.GuMaeNaeYeokScreen.route) {
+                    popUpTo(ScreenList.GuMaeNaeYeokScreen.route) {
+                        inclusive = true
+                    }
+                }
+
+            },
+            // cancel listener
+            {
+                navController.navigate(ScreenList.RocksScreen.route) {
+                    popUpTo(ScreenList.RocksScreen.route) {
+                        inclusive = true
+                    }
+                }
+
+            }
         )
     }
-
 }
 
-//@Composable
-//fun baesongConfirmDialog(
-//    baesongInfo: DomainBaesongInfo,
-//    dialogBoolean: MutableState<Boolean>,
-//    selectedText: String,
-//    productName: String,
-//    productLink: String
-//) {
-//    val realtimeDB = Firebase.database
-//    val userViewModel: AuthiViewModel = hiltViewModel()
-//    val userInfoList = userViewModel.userInfoList.collectAsState().value
-//    val authNumber = userInfoList.authNumber
-//
-//    val userRef = realtimeDB.getReference("users/$authNumber/baesongNaeYeock")
-//
-//    Dialog(
-//        onDismissRequest = { dialogBoolean.value = false },
-//
-//        ) {
-//        Card(
-//            modifier = Modifier
-//                .padding(8.dp)
-//                .fillMaxWidth()
-//                .fillMaxHeight(0.7f),
-//            elevation = CardDefaults.cardElevation(4.dp),
-//            colors = CardDefaults.cardColors(Color.White)
-//        ) {
-//            Column(
-//                modifier = Modifier.padding(4.dp)
-//            ) {
-////                Row(
-////                    modifier = Modifier
-////                        .fillMaxWidth()
-////                        .padding(horizontal = 8.dp)
-////                ) {
-////                    Text("손님 주소 별명", color = Color.Black)
-////                    Spacer(modifier = Modifier.weight(1f))
-////                    Text(baesongInfo.addressName, color = Color.Black)
-////                }
-////                Spacer(modifier = Modifier.height(4.dp))
-////
-////                Row(
-////                    modifier = Modifier
-////                        .fillMaxWidth()
-////                        .padding(horizontal = 8.dp)
-////                ) {
-////                    Text("손님 우편번호", color = Color.Black)
-////                    Spacer(modifier = Modifier.weight(1f))
-////                    Text(baesongInfo.addressNumber, color = Color.Black)
-////                }
-////                Spacer(modifier = Modifier.height(4.dp))
-////
-////                Row(
-////                    modifier = Modifier
-////                        .fillMaxWidth()
-////                        .padding(horizontal = 8.dp)
-////                ) {
-////                    Text("손님 주소", color = Color.Black)
-////                    Spacer(modifier = Modifier.weight(1f))
-////                    Text(baesongInfo.address, color = Color.Black)
-////                }
-////                Spacer(modifier = Modifier.height(4.dp))
-////
-////                Row(
-////                    modifier = Modifier
-////                        .fillMaxWidth()
-////                        .padding(horizontal = 8.dp)
-////                ) {
-////                    Text("손님 상세 주소", color = Color.Black)
-////                    Spacer(modifier = Modifier.weight(1f))
-////                    Text(baesongInfo.addressDetailName, color = Color.Black)
-////                }
-////                Spacer(modifier = Modifier.height(4.dp))
-////
-////
-////                Row(
-////                    modifier = Modifier
-////                        .fillMaxWidth()
-////                        .padding(horizontal = 8.dp)
-////                ) {
-////                    Text("손님 전화번호", color = Color.Black)
-////                    Spacer(modifier = Modifier.weight(1f))
-////                    Text(baesongInfo.phoneNumber, color = Color.Black)
-////                }
-////                Spacer(modifier = Modifier.height(4.dp))
-////
-////
-////                Row(
-////                    modifier = Modifier
-////                        .fillMaxWidth()
-////                        .padding(horizontal = 8.dp)
-////                ) {
-////                    Text("은행이름", color = Color.Black)
-////                    Spacer(modifier = Modifier.weight(1f))
-////                    Text(baesongInfo.bankName, color = Color.Black)
-////                }
-////                Spacer(modifier = Modifier.height(4.dp))
-////
-////
-////                Row(
-////                    modifier = Modifier
-////                        .fillMaxWidth()
-////                        .padding(horizontal = 8.dp)
-////                ) {
-////                    Text("손님 계좌번호", color = Color.Black)
-////                    Spacer(modifier = Modifier.weight(1f))
-////                    Text(baesongInfo.accountNumber, color = Color.Black)
-////                }
-////                Spacer(modifier = Modifier.height(4.dp))
-////
-////
-////                Row(
-////                    modifier = Modifier
-////                        .fillMaxWidth()
-////                        .padding(horizontal = 8.dp)
-////                ) {
-////                    Text("손님 성함", color = Color.Black)
-////                    Spacer(modifier = Modifier.weight(1f))
-////                    Text(baesongInfo.accountOwnerName, color = Color.Black)
-////                }
-////                Spacer(modifier = Modifier.height(4.dp))
-////
-////                Row(
-////                    modifier = Modifier
-////                        .fillMaxWidth()
-////                        .padding(horizontal = 8.dp)
-////                ) {
-////                    Text("상품 이름", color = Color.Black)
-////                    Spacer(modifier = Modifier.weight(1f))
-////                    Text(productName, color = Color.Black)
-////                }
-////                Spacer(modifier = Modifier.height(4.dp))
-////
-////                Row(
-////                    modifier = Modifier
-////                        .fillMaxWidth()
-////                        .padding(horizontal = 8.dp)
-////                ) {
-////                    Text("상품 갯수", color = Color.Black)
-////                    Spacer(modifier = Modifier.weight(1f))
-////                    Text(selectedText, color = Color.Black)
-////                }
-////                Spacer(modifier = Modifier.height(4.dp))
-//
-//
-////                val baesongFirebase = mapOf(
-////                    "addressName" to baesongInfo.addressName,
-////                    "addressNumber" to baesongInfo.addressNumber,
-////                    "address" to baesongInfo.address,
-////                    "addressDetailName" to baesongInfo.addressDetailName,
-////                    "phoneNumber" to baesongInfo.phoneNumber,
-////                    "bankName" to baesongInfo.bankName,
-////                    "accountNumber" to baesongInfo.accountNumber,
-////                    "accountOwnerName" to baesongInfo.accountOwnerName,
-////                    "baesongBoolean" to "false",
-////                    "productName" to productName,
-////                    "productGaeSu" to selectedText,
-////                    "productURL" to productLink,
-////                    "arrivedTime" to ""
-////                )
-////                val context = LocalContext.current
-////
-////                Button(
-////                    onClick = {
-////
-////                        if (!checkAllJuMun(baesongFirebase)) {
-////                            Log.d("sfwetlll", "빈 값이 있습니다.")
-////                            dialogBoolean.value = false
-////                            Toast.makeText(context, "빈 값이 있습니다.", Toast.LENGTH_SHORT).show()
-////                        } else {
-////                            userRef.push().setValue(baesongFirebase)
-////                            dialogBoolean.value = false
-////                        }
-////                    }
-////                ) {
-////                    Text("주문 완료", color = Color.Black)
-////                }
-//            }
-//
-//        }
-//    }
-//}
 
 fun checkAllJuMun(map: Map<String, String>): Boolean {
     return map.values.none { it.isEmpty() }

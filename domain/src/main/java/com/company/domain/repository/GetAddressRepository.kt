@@ -5,6 +5,6 @@ import com.company.domain.model.DomainProductModel
 import kotlinx.coroutines.flow.Flow
 
 interface GetAddressRepository {
-    suspend fun UpdateAddressList()  : Flow<List<DomainAddress>>
+    suspend fun updateAddressList()  : Flow<List<DomainAddress>>
 
 }

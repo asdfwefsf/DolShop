@@ -12,25 +12,20 @@ import retrofit2.converter.gson.GsonConverterFactory
 @InstallIn(SingletonComponent::class)
 @Module
 object NetworkModule {
-
     @Provides
-    fun provideProductApi() : ProductAPI
-    {
+    fun provideProductApi(): ProductAPI {
         return Retrofit.Builder()
             .baseUrl("https://api.jsonbin.io/v3/")
             .addConverterFactory(GsonConverterFactory.create())
             .build()
             .create(ProductAPI::class.java)
     }
-
     @Provides
-    fun provideAnnouncementApi() : AnnouncementAPI
-    {
+    fun provideAnnouncementApi(): AnnouncementAPI {
         return Retrofit.Builder()
             .baseUrl("https://api.jsonbin.io/v3/")
             .addConverterFactory(GsonConverterFactory.create())
             .build()
             .create(AnnouncementAPI::class.java)
     }
-
 }

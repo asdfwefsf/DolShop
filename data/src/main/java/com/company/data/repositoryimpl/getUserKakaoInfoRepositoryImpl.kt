@@ -11,7 +11,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
-class getUserKakaoInfoRepositoryImpl @Inject constructor(
+class GetUserKakaoInfoRepositoryImpl @Inject constructor(
     private val dao: UserInfoDao
 ) : getUserKakaoInfoRepository {
 
@@ -31,7 +31,7 @@ class getUserKakaoInfoRepositoryImpl @Inject constructor(
                     " "
                 )
                 scope.launch {
-                    if (!dao.prodideUserInfoExists(1)) {
+                    if (!dao.prodideUserInfoExists(0)) {
                         dao.insertUserInfo(
                             UserInfo(
                                 userInfo.id,

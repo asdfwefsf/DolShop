@@ -1,5 +1,4 @@
 package com.company.dolshop.screens
-
 sealed class ScreenList(val route : String) {
 
     // 카카오 3초만에 시작하기

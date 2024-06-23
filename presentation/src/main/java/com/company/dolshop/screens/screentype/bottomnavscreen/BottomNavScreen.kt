@@ -171,7 +171,7 @@ fun BottomNav(navController: NavHostController) {
         }
     ) { innerPadding ->
         route = if (isLoggedIn) {
-            ScreenList.ProductScreen.route
+            ScreenList.RocksScreen.route
         } else {
             ScreenList.LoginScreen.route
         }

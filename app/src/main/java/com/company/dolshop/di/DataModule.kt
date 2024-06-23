@@ -24,7 +24,7 @@ import com.company.data.repositoryimpl.address.GetAddressRepositoryImpl
 import com.company.data.repositoryimpl.address.SaveAddressRepositoryImpl
 import com.company.data.repositoryimpl.firebase.SaverFirebaseAuthImpl
 import com.company.data.repositoryimpl.getProductRepositoryImpl
-import com.company.data.repositoryimpl.getUserKakaoInfoRepositoryImpl
+import com.company.data.repositoryimpl.GetUserKakaoInfoRepositoryImpl
 import com.company.data.repositoryimpl.publicdiary.DeletePublicDiaryRepositoryImpl
 import com.company.data.repositoryimpl.publicdiary.GetPublicDiaryRepositoryImpl
 import com.company.data.repositoryimpl.publicdiary.SavePublicDiaryRepositoryImpl
@@ -46,7 +46,7 @@ import com.company.domain.repository.SaveAddressRepository
 import com.company.domain.repository.UpdateBaseProductRepository
 import com.company.domain.repository.UpdateProductSaleRepository
 import com.company.domain.repository.firebase.SaverFirebaseAuthRepository
-import com.company.domain.repository.getDiaryWorkerFunctionRepository
+import com.company.domain.repository.GetDiaryWorkerFunctionRepository
 import com.company.domain.repository.getProductRepository
 import com.company.domain.repository.getUserKakaoInfoRepository
 import com.company.domain.repository.publicidary.DeletePublicDiaryRepository
@@ -65,62 +65,55 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 object DataModule {
 
-    // RepositoryImpl 객체를 Repository 타입으로 주입한다. 즉, Repository를 사용하는데서는 RepositoryImpl도 사용 할 수 있게 Hilt가 인스턴스를 제공해주는거야.
-
-    @Provides
-    fun provideKakaoLoginRepository(impl: KakaoLoginRepositoryImpl) : KakaoLoginRepository = impl
-
-    @Provides
-    fun provideKakaoLogoutRepository(impl: KakaoLogoutRepositoryImpl) : KakaoLogoutRepository = impl
-    @Provides
-    fun providegetUserKakaoInfoRepository(impl: getUserKakaoInfoRepositoryImpl) : getUserKakaoInfoRepository = impl
-    @Provides
-    fun provideUpdateKakaoUserInfoRepository(impl: GetUserInfoDbRepositoryImpl) : GetUserInfoDbRepository = impl
-    @Provides
-    fun provideGetProductRepository(impl: getProductRepositoryImpl) : getProductRepository = impl
-    @Provides
-    fun provideUpdateBaseProductRepository(impl: UpdateBaseProductRepositoryImpl) : UpdateBaseProductRepository = impl
-    @Provides
-    fun provideCoroutineWorkerRepository(impl: CoroutineWorkerRepositoryImpl) : CoroutineWorkerRepository = impl
-    @Provides
-    fun provideAnnouncementRepository(impl: AnnouncementRepositoryImpl) : AnnouncementRepository = impl
-    @Provides
-    fun provideProductSaleRepository(impl: UpdateProductSaleRepositoryImpl) : UpdateProductSaleRepository = impl
-    @Provides
-    fun provideSaveAddressRepository(impl: SaveAddressRepositoryImpl) : SaveAddressRepository = impl
-    @Provides
-    fun provideGetAddressRepository(impl: GetAddressRepositoryImpl) : GetAddressRepository = impl
-    @Provides
-    fun provideDiaryNumberRepository(impl: DiaryNumberRoomRepositoryImpl) : DiaryNumberRoomRepository = impl
-    @Provides
-    fun provideGetDiaryWorkerFunctionRepository(impl: GetDiaryWorkerFunction) : getDiaryWorkerFunctionRepository = impl
-    @Provides
-    fun provideGetPublicDiaryWorkerFunction(impl: GetPublicDiaryWorkerFunction) : GetPublicDiaryWorkerFunctionRepository = impl
-    @Provides
-    fun provideSavePublicDiaryRepository(impl: SavePublicDiaryRepositoryImpl) : SavePublicDiaryRepository = impl
-    @Provides
-    fun provideGetPublicDiaryRepository(impl: GetPublicDiaryRepositoryImpl) : GetPublicDiaryRepository = impl
-    @Provides
-    fun provideDeletePublicDiaryRepository(impl: DeletePublicDiaryRepositoryImpl) : DeletePublicDiaryRepository = impl
-    @Provides
-    fun provideSaverFirebaseAuthRepository(impl: SaverFirebaseAuthImpl) : SaverFirebaseAuthRepository = impl
+//    @Provides
+//    fun provideKakaoLoginRepository(impl: KakaoLoginRepositoryImpl) : KakaoLoginRepository = impl
+//    @Provides
+//    fun provideKakaoLogoutRepository(impl: KakaoLogoutRepositoryImpl) : KakaoLogoutRepository = impl
+//    @Provides
+//    fun providegetUserKakaoInfoRepository(impl: GetUserKakaoInfoRepositoryImpl) : getUserKakaoInfoRepository = impl
+//    @Provides
+//    fun provideUpdateKakaoUserInfoRepository(impl: GetUserInfoDbRepositoryImpl) : GetUserInfoDbRepository = impl
+//    @Provides
+//    fun provideGetProductRepository(impl: getProductRepositoryImpl) : getProductRepository = impl
+//    @Provides
+//    fun provideUpdateBaseProductRepository(impl: UpdateBaseProductRepositoryImpl) : UpdateBaseProductRepository = impl
+//    @Provides
+//    fun provideCoroutineWorkerRepository(impl: CoroutineWorkerRepositoryImpl) : CoroutineWorkerRepository = impl
+//    @Provides
+//    fun provideAnnouncementRepository(impl: AnnouncementRepositoryImpl) : AnnouncementRepository = impl
+//    @Provides
+//    fun provideProductSaleRepository(impl: UpdateProductSaleRepositoryImpl) : UpdateProductSaleRepository = impl
+//    @Provides
+//    fun provideSaveAddressRepository(impl: SaveAddressRepositoryImpl) : SaveAddressRepository = impl
+//    @Provides
+//    fun provideGetAddressRepository(impl: GetAddressRepositoryImpl) : GetAddressRepository = impl
+//    @Provides
+//    fun provideDiaryNumberRepository(impl: DiaryNumberRoomRepositoryImpl) : DiaryNumberRoomRepository = impl
+//    @Provides
+//    fun provideGetDiaryWorkerFunctionRepository(impl: GetDiaryWorkerFunction) : getDiaryWorkerFunctionRepository = impl
+//    @Provides
+//    fun provideGetPublicDiaryWorkerFunction(impl: GetPublicDiaryWorkerFunction) : GetPublicDiaryWorkerFunctionRepository = impl
+//    @Provides
+//    fun provideSavePublicDiaryRepository(impl: SavePublicDiaryRepositoryImpl) : SavePublicDiaryRepository = impl
+//    @Provides
+//    fun provideGetPublicDiaryRepository(impl: GetPublicDiaryRepositoryImpl) : GetPublicDiaryRepository = impl
+//    @Provides
+//    fun provideDeletePublicDiaryRepository(impl: DeletePublicDiaryRepositoryImpl) : DeletePublicDiaryRepository = impl
+//    @Provides
+//    fun provideSaverFirebaseAuthRepository(impl: SaverFirebaseAuthImpl) : SaverFirebaseAuthRepository = impl
 
 
-    // 추후 수정
+    // 파베 리얼 DB
     @Provides
     fun provideFirebaseDatabase(): FirebaseDatabase {
         return FirebaseDatabase.getInstance()
     }
-
     @Provides
     fun provideDatabaseReference(firebaseDatabase: FirebaseDatabase): DatabaseReference {
         return firebaseDatabase.reference  // 기본 DatabaseReference
     }
-    // 추후 수정
 
-    // datasource module
-
-    // userinfo db
+    // UserInfo DB
     @Provides
     @Singleton
     fun provideUserInfoDatabase(@ApplicationContext appContext: Context): UserInfoDatabase {
@@ -135,14 +128,14 @@ object DataModule {
         return database.dao
     }
 
-    @Provides
-    @Singleton
-    fun providegetUserKakaoInfoRepositoryImpl(
-        dao : UserInfoDao
-    ) : getUserKakaoInfoRepositoryImpl = getUserKakaoInfoRepositoryImpl(dao)
+//    @Provides
+//    @Singleton
+//    fun provideGetUserKakaoInfoRepositoryImpl(
+//        dao : UserInfoDao
+//    ) : GetUserKakaoInfoRepositoryImpl = GetUserKakaoInfoRepositoryImpl(dao)
 
 
-    // product sale db
+    // ProductSale DB
     @Provides
     @Singleton
     fun provideProductSaleDataBase(@ApplicationContext appContext: Context): ProductSaleDataBase {
@@ -157,7 +150,7 @@ object DataModule {
         return database.dao
     }
 
-    // baseproduct db
+    // BaseProduct DB
     @Provides
     @Singleton
     fun provideBaseProductInfoDataBase(@ApplicationContext appContext: Context): BaseProductInfoDataBase {
@@ -172,7 +165,7 @@ object DataModule {
         return database.dao
     }
 
-    // address
+    // AddressDB
     @Provides
     @Singleton
     fun provideAddressDataBase(@ApplicationContext appContext: Context): AddressDataBase {
@@ -184,12 +177,12 @@ object DataModule {
     }
 
     @Provides
-    fun provideAddresstDao(database: AddressDataBase) : AddressDao {
+    fun provideAddressDao(database: AddressDataBase) : AddressDao {
         return database.dao
     }
 
-    // DiaryNumber
 
+    // DiaryNumber DB
     @Provides
     @Singleton
     fun provideDiaryNumberDatabase(@ApplicationContext appContext: Context): DiaryNumberDatabase {
@@ -205,7 +198,7 @@ object DataModule {
         return database.dao
     }
 
-    // SavePublicDiary
+    // SavedPublicDiary DB
     @Provides
     @Singleton
     fun providePublicDiaryInfoDatabase(@ApplicationContext appContext: Context): PublicDiaryInfoDatabase {

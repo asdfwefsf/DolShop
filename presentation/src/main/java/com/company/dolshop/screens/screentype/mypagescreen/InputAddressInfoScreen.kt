@@ -151,7 +151,7 @@ fun InputAddressInfoScreen(navController: NavController, gumaeDolInfo: DomainPro
                     onClick = { navController.navigate("${ScreenList.AddressScreen.route}/${encodedgumaeDolInfo}") },
                     modifier = Modifier.align(Alignment.CenterVertically)
                 ) {
-                    Text("변형꼴 조회")
+                    Text("주소 검색")
                 }
             }
 

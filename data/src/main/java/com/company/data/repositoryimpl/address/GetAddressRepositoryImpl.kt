@@ -11,7 +11,7 @@ import javax.inject.Inject
 class GetAddressRepositoryImpl @Inject constructor(
     private val dao : AddressDao
 ) : GetAddressRepository {
-    override suspend fun UpdateAddressList(): Flow<List<DomainAddress>> {
+    override suspend fun updateAddressList(): Flow<List<DomainAddress>> {
         return dao.getAddressInfo().map {
             it.map {
                 it.toDomainAddress()

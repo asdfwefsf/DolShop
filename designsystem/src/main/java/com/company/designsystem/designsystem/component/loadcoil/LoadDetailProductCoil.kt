@@ -31,7 +31,6 @@ fun LoadDetailProductScreen(
     context: Context,
     modifier: Modifier
 ) {
-    val localDensity = LocalDensity.current
     var heightDp by remember { mutableStateOf(0.dp) }
 
     var loadState by remember { mutableStateOf("loading") }

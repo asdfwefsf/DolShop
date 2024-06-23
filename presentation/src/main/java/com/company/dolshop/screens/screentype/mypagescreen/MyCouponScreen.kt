@@ -46,8 +46,8 @@ fun MyCouponScreen(navcontroller: NavController) {
     val saleCouponViewMoel: UpdateProductSaleViewModel = hiltViewModel()
     val context = LocalContext.current
 
-    val Coupon1 = saleCouponViewMoel.savedSaleCoupon1.collectAsState().value
-    val Coupon2 = saleCouponViewMoel.savedSaleCoupon2.collectAsState().value
+    val coupon1 = saleCouponViewMoel.savedSaleCoupon1.collectAsState().value
+    val coupon2 = saleCouponViewMoel.savedSaleCoupon2.collectAsState().value
     val dataStoreUtility = DataStoreUtility.getInstance()
     val isCoupon1Boolean =
         dataStoreUtility.run { context.isCoupon1Flow.collectAsStateWithLifecycle(initialValue = false) }
@@ -57,7 +57,7 @@ fun MyCouponScreen(navcontroller: NavController) {
     when {
 
         isCoupon1Boolean.value && isCoupon2Boolean.value -> {
-            if (Coupon1.isNotEmpty() && Coupon2.isNotEmpty()) {
+            if (coupon1.isNotEmpty() && coupon2.isNotEmpty()) {
                 Column(
                     modifier = Modifier
                         .fillMaxSize()
@@ -79,11 +79,11 @@ fun MyCouponScreen(navcontroller: NavController) {
                         modifier = Modifier.padding(start = 15.dp, end = 15.dp),
 
                     )
-                    CouponCard(Coupon1[0].saleMunGu, Coupon1[0].couponNumber)
+                    CouponCard(coupon1[0].saleMunGu, coupon1[0].couponNumber)
 
                     Spacer(Modifier.size(10.dp))
 
-                    CouponCard(Coupon2[0].saleMunGu, Coupon2[0].couponNumber)
+                    CouponCard(coupon2[0].saleMunGu, coupon2[0].couponNumber)
 
                 }
             }
@@ -91,7 +91,7 @@ fun MyCouponScreen(navcontroller: NavController) {
         }
 
         isCoupon1Boolean.value && !isCoupon2Boolean.value -> {
-            if (Coupon1.isNotEmpty() && Coupon2.isNotEmpty()) {
+            if (coupon1.isNotEmpty() && coupon2.isNotEmpty()) {
                 Column(
                     modifier = Modifier
                         .fillMaxSize()
@@ -113,11 +113,10 @@ fun MyCouponScreen(navcontroller: NavController) {
                         modifier = Modifier.padding(start = 15.dp, end = 15.dp),
 
                         )
-                    CouponCard(Coupon1[0].saleMunGu, Coupon1[0].couponNumber)
+                    CouponCard(coupon1[0].saleMunGu, coupon1[0].couponNumber)
 
                     Spacer(Modifier.size(10.dp))
 
-                    CouponCard(Coupon2[0].saleMunGu, Coupon2[0].couponNumber)
                     Text("쿠폰 1은 있고 2만 없을 때")
 
                 }
@@ -126,7 +125,7 @@ fun MyCouponScreen(navcontroller: NavController) {
         }
 
         !isCoupon1Boolean.value && isCoupon2Boolean.value -> {
-            if (Coupon1.isNotEmpty() && Coupon2.isNotEmpty()) {
+            if (coupon1.isNotEmpty() && coupon2.isNotEmpty()) {
                 Column(
                     modifier = Modifier
                         .fillMaxSize()
@@ -148,11 +147,10 @@ fun MyCouponScreen(navcontroller: NavController) {
                         modifier = Modifier.padding(start = 15.dp, end = 15.dp),
 
                         )
-                    CouponCard(Coupon1[0].saleMunGu, Coupon1[0].couponNumber)
 
                     Spacer(Modifier.size(10.dp))
 
-                    CouponCard(Coupon2[0].saleMunGu, Coupon2[0].couponNumber)
+                    CouponCard(coupon2[0].saleMunGu, coupon2[0].couponNumber)
                     Text("쿠폰 1은 없고 2만 있을 때")
 
                 }

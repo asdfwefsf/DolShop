@@ -8,7 +8,7 @@ import androidx.paging.PagingData
 import com.company.domain.entity.Diary
 import com.company.domain.entity.PublicDiary
 import com.company.domain.repository.GetPublicDiaryWorkerFunctionRepository
-import com.company.domain.repository.getDiaryWorkerFunctionRepository
+import com.company.domain.repository.GetDiaryWorkerFunctionRepository
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
@@ -23,7 +23,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class DolsViewModel @Inject constructor(
-    private val getDiaryWorkerFunction: getDiaryWorkerFunctionRepository,
+    private val getDiaryWorkerFunction: GetDiaryWorkerFunctionRepository,
     private val getPublicDiaryWorkerFunction: GetPublicDiaryWorkerFunctionRepository
 ) : ViewModel() {
 

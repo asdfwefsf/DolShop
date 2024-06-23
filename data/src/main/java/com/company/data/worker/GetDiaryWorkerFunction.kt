@@ -7,8 +7,9 @@ import com.company.data.datasource.local.userinfo.UserInfoDao
 import com.company.data.worker.test.ImagePagingSource
 import com.company.data.worker.test.ImagePagingSource2
 import com.company.domain.entity.Diary
-import com.company.domain.repository.getDiaryWorkerFunctionRepository
+import com.company.domain.repository.GetDiaryWorkerFunctionRepository
 import com.google.firebase.database.DatabaseReference
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.emitAll
 import kotlinx.coroutines.flow.first
@@ -20,16 +21,17 @@ import javax.inject.Inject
 class GetDiaryWorkerFunction @Inject constructor(
     private val databaseReference: DatabaseReference,
     private val dao: UserInfoDao,
-) : getDiaryWorkerFunctionRepository {
+) : GetDiaryWorkerFunctionRepository {
 
     override suspend fun callDiaryWorkerFunction(sort : String): Flow<PagingData<Diary>> = flow {
-        val authNumber = getAuthNumber(dao)
-
-        if(authNumber.isEmpty()) {
-            throw IllegalStateException("Auth number is null or empty")
-
+        val authNumber = if(getAuthNumber(dao).isEmpty()) {
+            return@flow
+        } else {
+            getAuthNumber(dao)
 
         }
+
+
 
 //        val diaryDate = getCurrentDateString()
 

@@ -22,14 +22,11 @@ class MyApplication : Application() , Configuration.Provider {
             .setWorkerFactory(workerFactory)
             .build()
 
-
     override fun onCreate() {
-
         super.onCreate()
         FirebaseApp.initializeApp(this)
-        var keyHash = Utility.getKeyHash(this)
-        Log.i("GlobalApplication", "$keyHash")
+        val keyHash = Utility.getKeyHash(this)
+        Log.i("GlobalApplication", keyHash)
         KakaoSdk.init(this, BuildConfig.KAKAO_NATIVE_APP_KEY)
-
     }
 }

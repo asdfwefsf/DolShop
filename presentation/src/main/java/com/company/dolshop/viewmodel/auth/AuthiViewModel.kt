@@ -152,7 +152,7 @@ class AuthiViewModel @Inject constructor(
 //            }
     }
 
-    fun getUserIdByEmail(
+    private fun getUserIdByEmail(
         email: String,
         databaseReference: DatabaseReference,
         callback: (DomainUserInfoModel?) -> Unit
@@ -183,7 +183,7 @@ class AuthiViewModel @Inject constructor(
     }
     // 파베에서 로그인 할 때 유저정보 룸 DB 저장
 
-    fun saveFireabaseAuthInfo(domainUserInfoModel: DomainUserInfoModel, currentUser: String) {
+    private fun saveFireabaseAuthInfo(domainUserInfoModel: DomainUserInfoModel, currentUser: String) {
         Log.d("Sfjslefisnef", "시도중")
         CoroutineScope(Dispatchers.IO).launch {
             Log.d("Sfjslefisnef", "fsefsfsf")
@@ -238,9 +238,9 @@ class AuthiViewModel @Inject constructor(
         Firebase.auth.sendSignInLinkToEmail(email, actionCodeSettings)
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
-                    Log.d("emailConfirm", "ok")
+                    Log.d("emailConfirm", "d")
                 } else {
-                    Log.d("emailConfirm", "no${task.exception?.message}")
+                    Log.d("emailConfirm", "${task.exception?.message}")
                 }
             }
     }

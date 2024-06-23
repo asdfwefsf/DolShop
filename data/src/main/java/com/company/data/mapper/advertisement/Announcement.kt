@@ -5,7 +5,7 @@ import com.company.domain.entity.Announcement
 
 fun AnnouncementInfo.toAnnouncement() : Announcement {
     return Announcement(
-        AnnouncementName = this.AnnouncementName,
-        AnnouncementImage = this.AnnouncementImage
+        announcementName = this.AnnouncementName,
+        announcementImage = this.AnnouncementImage
     )
 }

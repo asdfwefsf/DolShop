@@ -64,7 +64,7 @@ fun GuMaeNaeYeokScreen() {
         }
 
         override fun onCancelled(error: DatabaseError) {
-            TODO("Not yet implemented")
+
         }
 
     })
@@ -137,50 +137,125 @@ fun DetailJuMunNaeYeok(domainBaesongInfo: JuMunNaeYeockModel) {
         var showDialog by remember { mutableStateOf(false) }
         val locations = splitLocations(domainBaesongInfo.location)
 
-        Button(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(start = 15.dp, end = 15.dp),
-            onClick = {
-                showDialog = true
-            },
-            colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF7BF579))
-        ) {
-            Text("위치추적", color = Color.Black)
+
+        if (domainBaesongInfo.location.length > 10) {
+            Button(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(start = 15.dp, end = 15.dp),
+                onClick = {
+                    showDialog = true
+                },
+                colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF7BF579))
+            ) {
+                Text("위치추적", color = Color.Black)
+            }
+
+            if (showDialog) {
+                AlertDialog(
+                    onDismissRequest = {
+                        showDialog = false
+                    },
+                    title = {
+                        Text(text = "위치추적" , color = Color.Black)
+                    },
+                    text = {
+                        Column {
+                            Text("현재 위치가 빨간색으로 표시됩니다." , color = Color.Black)
+
+                            locations.forEachIndexed { index, location ->
+                                val displayLocation = location.replace("현재", "")
+
+                                val textColor = if (location.contains("현재")) Color.Red else Color.Black
+                                Text("배송지 위치 ${index + 1}: $displayLocation", color = textColor)
+                            }
+                        }
+                    },
+                    confirmButton = {
+                        Button(
+                            onClick = {
+                                showDialog = false
+                            }
+                        ) {
+                            Text("닫기" , color = Color.Black)
+                        }
+                    },
+                    containerColor = Color.White
+                )
+            }
+        } else {
+            Button(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(start = 15.dp, end = 15.dp),
+                onClick = {
+                    showDialog = true
+                },
+                colors = ButtonDefaults.buttonColors(containerColor = Color(0xFF7BF579))
+            ) {
+                Text("위치추적", color = Color.Black)
+            }
+
+            if (showDialog) {
+                AlertDialog(
+                    onDismissRequest = {
+                        showDialog = false
+                    },
+                    title = {
+                        Text(text = "위치추적" , color = Color.Black)
+                    },
+                    text = {
+                        Column {
+                            Text("배송전입니다." , color = Color.Black)
+                        }
+                    },
+                    confirmButton = {
+                        Button(
+                            onClick = {
+                                showDialog = false
+                            }
+                        ) {
+                            Text("닫기" , color = Color.Black)
+                        }
+                    },
+                    containerColor = Color.White
+                )
+            }
         }
 
-        if (showDialog) {
-            AlertDialog(
-                onDismissRequest = {
-                    showDialog = false
-                },
-                title = {
-                    Text(text = "위치추적" , color = Color.Black)
-                },
-                text = {
-                    Column {
-                        Text("현재 위치가 빨간색으로 표시됩니다." , color = Color.Black)
 
-                        locations.forEachIndexed { index, location ->
-                            val displayLocation = location.replace("현재", "")
-
-                            val textColor = if (location.contains("현재")) Color.Red else Color.Black
-                            Text("배송지 위치 ${index + 1}: $displayLocation", color = textColor)
-                        }
-                    }
-                },
-                confirmButton = {
-                    Button(
-                        onClick = {
-                            showDialog = false
-                        }
-                    ) {
-                        Text("닫기" , color = Color.Black)
-                    }
-                },
-                containerColor = Color.White
-            )
-        }
+//        if (showDialog) {
+//            AlertDialog(
+//                onDismissRequest = {
+//                    showDialog = false
+//                },
+//                title = {
+//                    Text(text = "위치추적" , color = Color.Black)
+//                },
+//                text = {
+//                    Column {
+//                        Text("현재 위치가 빨간색으로 표시됩니다." , color = Color.Black)
+//
+//                        locations.forEachIndexed { index, location ->
+//                            val displayLocation = location.replace("현재", "")
+//
+//                            val textColor = if (location.contains("현재")) Color.Red else Color.Black
+//                            Text("배송지 위치 ${index + 1}: $displayLocation", color = textColor)
+//                        }
+//                    }
+//                },
+//                confirmButton = {
+//                    Button(
+//                        onClick = {
+//                            showDialog = false
+//                        }
+//                    ) {
+//                        Text("닫기" , color = Color.Black)
+//                    }
+//                },
+//                containerColor = Color.White
+//            )
+//        }
 
 
         Text("결제 정보" , color = Color.Black , modifier = Modifier.padding(top = 20.dp))

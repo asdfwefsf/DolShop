@@ -5,6 +5,6 @@ import com.company.domain.entity.Diary
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 
-interface getDiaryWorkerFunctionRepository  {
+interface GetDiaryWorkerFunctionRepository  {
     suspend fun callDiaryWorkerFunction(sort : String) : Flow<PagingData<Diary>>
 }

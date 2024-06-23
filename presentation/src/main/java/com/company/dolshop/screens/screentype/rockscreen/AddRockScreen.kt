@@ -67,6 +67,7 @@ fun AddRockScreen(navController: NavController) {
 fun selectImageAndDiary(navController : NavController) {
     var selectedImage by remember { mutableStateOf<Uri?>(null) }
     var diaryText by remember { mutableStateOf("") }  // 텍스트 입력을 위한 상태 변수
+    // 사진가져옴
     val launcher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.GetContent()
     ) { uri: Uri? ->

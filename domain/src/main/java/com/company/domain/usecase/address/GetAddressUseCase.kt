@@ -10,6 +10,6 @@ class GetAddressUseCase @Inject constructor(
     private val repository : GetAddressRepository
 ) {
     suspend operator fun  invoke() : Flow<List<DomainAddress>> {
-        return repository.UpdateAddressList()
+        return repository.updateAddressList()
     }
 }
