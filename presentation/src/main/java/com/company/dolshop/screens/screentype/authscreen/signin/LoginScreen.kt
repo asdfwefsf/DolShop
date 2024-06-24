@@ -186,13 +186,14 @@ fun LoginScreen(navController: NavController, viewModel: AuthiViewModel) {
                 .clickable {
                     scope.launch {
                         viewModel.kakaoLogin()
+
                         val userInfolist = viewModel.userInfoList
                         if (viewModel.loginValue.value) {
                             dataStoreUtility.apply {
                                 context.setLoginState(true)
                             }
-                            navController.navigate(ScreenList.MyPageScreen.route) {
-                                popUpTo(ScreenList.MyPageScreen.route) {
+                            navController.navigate(ScreenList.RocksScreen.route) {
+                                popUpTo(ScreenList.RocksScreen.route) {
                                     inclusive = true
                                 }
                             }

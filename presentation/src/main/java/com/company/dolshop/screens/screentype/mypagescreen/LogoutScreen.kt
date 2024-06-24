@@ -42,6 +42,7 @@ fun LogoutScreen() {
                     onClick = {
                         scope.launch {
                             viewmodel.kakaoLogout()
+
 //                            viewmodel.
                             dataStoreUtility.apply {
                                 context.setLoginState(false)

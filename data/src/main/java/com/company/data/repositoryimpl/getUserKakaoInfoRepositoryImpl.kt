@@ -23,7 +23,7 @@ class GetUserKakaoInfoRepositoryImpl @Inject constructor(
                 Log.e("auth", "사용자 정보 요청 실패", error)
             } else if (user != null) {
                 val userInfo = UserInfo(
-                    0,
+                    1,
                     "${user.id}",
                     "${user.kakaoAccount?.email}",
                     "${user.kakaoAccount?.profile?.nickname}",
@@ -31,7 +31,7 @@ class GetUserKakaoInfoRepositoryImpl @Inject constructor(
                     " "
                 )
                 scope.launch {
-                    if (!dao.prodideUserInfoExists(0)) {
+                    if (!dao.prodideUserInfoExists(1)) {
                         dao.insertUserInfo(
                             UserInfo(
                                 userInfo.id,

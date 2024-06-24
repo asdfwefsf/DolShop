@@ -17,7 +17,7 @@ class KakaoLoginRepositoryImpl @Inject constructor(
     private val context : Context,
 ) : KakaoLoginRepository {
 
-    override suspend fun kakaoLogin(): Boolean = suspendCancellableCoroutine {returnvalue ->
+    override suspend fun kakaoLogin(): Boolean = suspendCancellableCoroutine { returnvalue ->
         val callback: (OAuthToken?, Throwable?) -> Unit = { token, error ->
             if (error != null) {
                 Log.e("login", "카카오계정으로 로그인 실패", error)
@@ -44,6 +44,7 @@ class KakaoLoginRepositoryImpl @Inject constructor(
                     UserApiClient.instance.loginWithKakaoAccount(context, callback = callback)
                 } else if (token != null) {
                     Log.i("login", "카카오톡으로 로그인 성공 ${token.accessToken}")
+                    UserApiClient.instance.loginWithKakaoAccount(context, callback = callback)
 
                 }
             }

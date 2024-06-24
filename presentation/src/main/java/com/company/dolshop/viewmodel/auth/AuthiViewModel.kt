@@ -5,6 +5,7 @@ import android.util.Log
 import android.widget.Toast
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.company.domain.model.DomainUserInfoModel
 import com.company.domain.usecase.firebase.SaverFirebaseAuthUseCase
 import com.company.domain.usecase.kakao.GetUserInfoDbUseCase
@@ -62,7 +63,10 @@ class AuthiViewModel @Inject constructor(
     }
 
     private suspend fun getUserKakaoInfo() {
-        getUserKakaoInfoUseCase()
+        viewModelScope.launch(Dispatchers.IO) {
+            getUserKakaoInfoUseCase()
+
+        }
     }
 
     // 카카오 로그아웃 및 앱 종료 기능
@@ -263,6 +267,10 @@ class AuthiViewModel @Inject constructor(
         viewModelScope.launch {
             getUserInfoDB()
         }
+    }
+
+    fun deleteUserInfo() {
+
     }
 
 }

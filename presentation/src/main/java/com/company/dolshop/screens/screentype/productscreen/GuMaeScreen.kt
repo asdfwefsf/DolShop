@@ -502,8 +502,8 @@ private fun Jumun(
             // confirm listenrer
             {
                 navController.navigate(ScreenList.GuMaeNaeYeokScreen.route) {
-                    popUpTo(ScreenList.GuMaeNaeYeokScreen.route) {
-                        inclusive = true
+                    popUpTo(ScreenList.ProductScreen.route) {
+                        inclusive = false
                     }
                 }
 
@@ -511,8 +511,8 @@ private fun Jumun(
             // cancel listener
             {
                 navController.navigate(ScreenList.RocksScreen.route) {
-                    popUpTo(ScreenList.RocksScreen.route) {
-                        inclusive = true
+                    popUpTo(ScreenList.ProductScreen.route) {
+                        inclusive = false
                     }
                 }
 

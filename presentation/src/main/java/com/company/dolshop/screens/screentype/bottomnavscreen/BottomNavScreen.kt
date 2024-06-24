@@ -121,7 +121,7 @@ fun BottomNav(navController: NavHostController) {
         )
 
     var selectedItemIndex by rememberSaveable {
-        mutableStateOf(2)
+        mutableStateOf(0)
     }
 
     var route: String
@@ -171,7 +171,7 @@ fun BottomNav(navController: NavHostController) {
         }
     ) { innerPadding ->
         route = if (isLoggedIn) {
-            ScreenList.RocksScreen.route
+            ScreenList.CommunityScreen.route
         } else {
             ScreenList.LoginScreen.route
         }

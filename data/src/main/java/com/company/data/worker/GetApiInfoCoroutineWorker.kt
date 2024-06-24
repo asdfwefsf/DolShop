@@ -36,7 +36,6 @@ class GetApiInfoCoroutineWorker @AssistedInject constructor(
         }
         Result.success()
     }
-
 }
 
 

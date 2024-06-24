@@ -8,7 +8,7 @@ import javax.inject.Inject
 class GetUserInfoDbUseCase @Inject constructor(
     private val repository : GetUserInfoDbRepository
 ){
-    operator suspend fun invoke() : Flow<DomainUserInfoModel> {
+    suspend operator fun invoke() : Flow<DomainUserInfoModel> {
         return repository.getUserInfo()
     }
 }
